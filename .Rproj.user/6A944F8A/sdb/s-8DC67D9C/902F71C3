@@ -1,12 +1,12 @@
 {
-    "contents" : "Package: metabolomics\nType: Package\nTitle: What the package does (short line)\nVersion: 1.0\nDate: 2014-10-08\nAuthor: Who wrote it\nMaintainer: Who to complain to <yourfault@somewhere.net>\nDescription: More about what it does (maybe more than one line)\nLicense: What license is it under?\n",
+    "contents" : "Package: metabolomicsUM\nType: Package\nTitle: What the package does (short line)\nVersion: 1.0\nDate: 2014-10-08\nAuthor: Who wrote it\nMaintainer: Who to complain to <yourfault@somewhere.net>\nDepends: R (>= 2.15.0)\nImports: compare, hyperSpec, ChemoSpec, baseline, rgl, \n\tGGally, ggplot2, ellipse, ggdendro, caret, pls, e1071, RWeka, \n\tpROC, kernlab, randomForest, pcaPP, plyr, RColorBrewer\nDescription: More about what it does (maybe more than one line)\nLicense: What license is it under?\n",
     "created" : 1412773558538.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2233032963",
+    "hash" : "1208935620",
     "id" : "902F71C3",
-    "lastKnownWriteTime" : 1412773974,
+    "lastKnownWriteTime" : 1412784978,
     "path" : "~/Dropbox/Metabolomics-finalpackage/metabolomics-package/DESCRIPTION",
     "project_path" : "DESCRIPTION",
     "properties" : {
