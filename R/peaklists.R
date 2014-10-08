@@ -8,7 +8,7 @@
   
   merged.peaks = merge.eq.peaks.samplelist(sample.list)
   samples.df = get.all.intensities(merged.peaks)
-  create_dataset(as.matrix(samples.df), metadata = metadata, type = "nmr-peaks", 
+  create.dataset(as.matrix(samples.df), metadata = metadata, type = "nmr-peaks", 
                  description = description)
 
 }
