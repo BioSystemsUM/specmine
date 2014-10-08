@@ -1,0 +1,16 @@
+{
+    "contents" : "* Edit the help file skeletons in 'man', possibly combining help files for multiple functions.\n* Edit the exports in 'NAMESPACE', and add necessary imports.\n* Put any C/C++/Fortran code in 'src'.\n* If you have compiled code, add a useDynLib() directive to 'NAMESPACE'.\n* Run R CMD build to build the package tarball.\n* Run R CMD check to check the package tarball.\n\nRead \"Writing R Extensions\" for more information.\n",
+    "created" : 1412773588754.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4024003257",
+    "id" : "19312783",
+    "lastKnownWriteTime" : 1412773514,
+    "path" : "~/Dropbox/Metabolomics-finalpackage/metabolomics-package/Read-and-delete-me",
+    "project_path" : "Read-and-delete-me",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "text"
+}

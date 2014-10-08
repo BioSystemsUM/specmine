@@ -1,0 +1,16 @@
+{
+    "contents" : "exportPattern(\"^[[:alpha:]]+\")\n",
+    "created" : 1412773618897.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4116331488",
+    "id" : "739622EE",
+    "lastKnownWriteTime" : 1412773514,
+    "path" : "~/Dropbox/Metabolomics-finalpackage/metabolomics-package/NAMESPACE",
+    "project_path" : "NAMESPACE",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_namespace"
+}
