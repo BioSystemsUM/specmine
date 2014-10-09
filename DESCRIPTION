@@ -5,7 +5,8 @@ Version: 1.0
 Date: 2014-10-08
 Author: Who wrote it
 Maintainer: Who to complain to <yourfault@somewhere.net>
-Depends: R (>= 2.15.0), compare, hyperSpec, ChemoSpec, baseline, rgl, 
+Depends: R (>= 2.15.0)
+Imports: compare, hyperSpec, ChemoSpec, baseline, rgl, 
 	GGally, ggplot2, ellipse, ggdendro, caret, pls, e1071, RWeka, 
 	pROC, kernlab, randomForest, pcaPP, plyr, RColorBrewer
 Description: More about what it does (maybe more than one line)
