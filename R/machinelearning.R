@@ -114,12 +114,11 @@ var.importance = function(train.result){
 	vip$importance
 }
 
-summary.var.importance = function(performances, number.rows){
+summary.var.importance.t = function(performances, number.rows){
 	for(i in 1:length(performances$vips)){
-		cat('\n')
-		print(names(performances$vips)[i])
-		print(performances$vips[[i]][1:number.rows,])
+		performances$vips[[i]] = performances$vips[[i]][1:number.rows,]
 	}
+	performances$vips
 }
 
 # PCA PLOTS
