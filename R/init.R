@@ -1,7 +1,7 @@
 names = c("genefilter", "xcms", "impute")
 
 for (n in names){
-	if (!require(n, character.only = TRUE)){
+	if (!(n %in% rownames(installed.packages()))){
 		source("http://bioconductor.org/biocLite.R")
 		biocLite(n, character.only = TRUE)
 	}
