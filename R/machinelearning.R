@@ -70,10 +70,13 @@ predict.samples = function(train.result, new.samples){
 train.models.performance = function(dataset, models, column.class, validation, num.folds = 10, 
                                     num.repeats = 10, tunelength = 10, tunegrid = NULL, class.in.metadata = T){
 	result.df = NULL
+	classification.flag = FALSE
 	vars.imp = list()
 	final.result = list()
   full.results = list()
-  confusion.matrices = list()
+  if ( is.factor(dataset$metadata[column.class,])){
+	classification.flag = TRUE
+  	confusion.matrices = list()
   best.tunes = list()
   final.models= list()
 	for (i in 1:length(models)){
@@ -87,21 +90,21 @@ train.models.performance = function(dataset, models, column.class, validation, n
 		vars.imp[[i]] = vips[order(vips$Mean, decreasing=T),]
 		vips = NULL
     full.results[[i]] = train.result$results
-    confusion.matrices[[i]] = confusionMatrix(train.result)
+    if (classification.flag) confusion.matrices[[i]] = confusionMatrix(train.result)
     best.tunes[[i]] = train.result$bestTune
     final.models[[i]] = train.result$finalModel
 	}
 	rownames(result.df) = models
 	names(vars.imp) = models
 	names(full.results) = models
-  names(confusion.matrices) = models
+  if (classification.flag) names(confusion.matrices) = models
   names(best.tunes) = models
   names(final.models) = models
   final.result$performance = result.df
 	final.result$vips = vars.imp
   final.result$full.results = full.results
   final.result$best.tunes = best.tunes
-  final.result$confusion.matrices = confusion.matrices
+  if (classification.flag) final.result$confusion.matrices = confusion.matrices
   final.result$final.models = final.models
 	final.result
 }
