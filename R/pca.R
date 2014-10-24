@@ -102,6 +102,7 @@ pca.scoresplot3D.rgl = function(dataset, pca.result, column.class, pcas = c(1,2,
 pca.scoresplot3D = function(dataset, pca.result, column.class, pcas=c(1,2,3))
 {
   require(scatterplot3d)
+  classes = dataset$metadata[,column.class]
   scatterplot3d(pca.result$x[,pcas], color=as.integer(dataset$metadata[,column.class]), pch=17)
   legend(-1.5, 2.5, levels(classes), col = 1:length(classes), pt.cex = 1.2, pch= 17)
 }
