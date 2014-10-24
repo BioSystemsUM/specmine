@@ -77,6 +77,7 @@ train.models.performance = function(dataset, models, column.class, validation, n
   if ( is.factor(dataset$metadata[column.class,])){
 	classification.flag = TRUE
   	confusion.matrices = list()
+  }
   best.tunes = list()
   final.models= list()
 	for (i in 1:length(models)){
