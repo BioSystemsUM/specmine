@@ -1,11 +1,13 @@
 
 # Smoothing - hyperSpec (spc.bin and spc.loess)
-smoothing.interpolation = function(dataset, method = "bin", reducing.factor = 2, x.axis = NULL){
+smoothing.interpolation = function(dataset, method = "bin", reducing.factor = 2, x.axis = NULL, p.order = 3, window = 11, deriv = 0){
   if (method == "bin") {
 		dataset = smoothing.spcbin.hyperspec(dataset, reducing.factor)
 	} 
   else if (method == "loess") {
 		dataset = smoothing.spcloess.hyperspec(dataset, x.axis)
+	} else if (method == "savitzky.golay"){
+		dataset = savitzky.golay(dataset, p.order, window, deriv)
 	}
 	dataset
 }
@@ -35,6 +37,7 @@ smoothing.spcloess.hyperspec = function(dataset, x.axis = NULL){
 }
 
 savitzky.golay = function(dataset, p.order, window, deriv = 0){
+	require(MASS)
     if (window %%2 != 1 || window < 0) 
         stop("window size (window) must be a positive odd number")
     if (p.order >= window) 
@@ -53,7 +56,11 @@ savitzky.golay = function(dataset, p.order, window, deriv = 0){
         result[i,] = factorial(deriv) * convolve(all, A[deriv+1,], type="f")
     }
     colnames(result) = colnames(X)
-    result
+    dataset$data = t(result)
+    rownames(dataset$data) = colnames(X)
+    colnames(dataset$data) = rownames(X)
+    dataset$description = paste(dataset$description, "smoothed with savitzky-golay filter", sep = "-")
+    dataset
 } 
 
 
