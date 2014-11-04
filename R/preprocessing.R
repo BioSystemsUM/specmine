@@ -43,7 +43,7 @@ savitzky.golay = function(dataset, p.order, window, deriv = 0){
         stop("polynomial order p (p.order) should be geater or equal to differentiation order (deriv)")
     X = t(dataset$data)
     half_window = (window -1)/2
-    b = outer(-half_window, half_window, 0:p.order, "^")
+    b = outer(-half_window:half_window, 0:p.order, "^")
     A = ginv(b)
     result = matrix(data = 0, ncol=ncol(X),nrow=nrow(X))
     for (i in 1:nrow(X)){
