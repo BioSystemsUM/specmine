@@ -51,9 +51,11 @@ dendrogram.plot.col(dataset, hc.result, classes.col, title = "", lab.cex = 1, ..
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
+\dontrun{
   ## Example of colored dendrogram
   dendrogram.plot.col(metabolomics.dataset, hc.result, "class", title = "Example")
-
+}
+}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~clustering }

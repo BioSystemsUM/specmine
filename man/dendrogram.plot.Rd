@@ -52,6 +52,7 @@ dendrogram.plot(dataset, hc.result, column.metadata = 1, labels = NULL, ...)
   ## Example of a dendrogram
   dendrogram.plot(metabolomics.experiment, hc.result)
 }
+}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~clustering }

@@ -45,6 +45,7 @@ Data frame with the clusters and the samples' names that belong to each one.
   ## Example of showing kmeans cluster's members
   kmeans.result.df = function(kmeans.result, 4)
 }
+}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~clustering }

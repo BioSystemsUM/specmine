@@ -51,6 +51,7 @@ hierarchical.clustering(dataset, distance = "euclidean", clustMethod = "complete
   ## Example of hierarchical clustering
   hc.result = hierarchical.clustering(metabolomics.dataset, distance = "euclidean", clustMethod = "complete", hc.type = "samples")
 }
+}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~clustering }
