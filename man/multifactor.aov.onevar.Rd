@@ -45,7 +45,7 @@ multifactor.aov.onevar(dataset, x.val, metadata.vars)
 }
 \examples{
 \dontrun{
-  ## Example of multifactor ANOVA in one variable (1.1 ppm)
+  ## Example of multifactor ANOVA on one variable (1.1 ppm)
   pvalues = multifactor.aov.onevar(metabolomics.dataset, 1.1, c("metadata1","metadata2"))
 }
 }

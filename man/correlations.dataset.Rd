@@ -26,7 +26,7 @@ correlations.dataset(dataset, method = "pearson", by.var = T)
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  correlation matrix.
+  Returns the correlation matrix
 }
 \references{
 %% ~put references to the literature/web site here ~

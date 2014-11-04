@@ -29,7 +29,7 @@ tTests.dataset(dataset, metadata.var, write.file = F, file.out = "ttests.csv")
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  table with the results of the t-tests, with p-value, -log10(p-value) and false discovery rate (fdr).
+  Table with the results of the t-tests, with p-value, -log10(p-value) and false discovery rate (fdr).
 }
 \references{
 %% ~put references to the literature/web site here ~

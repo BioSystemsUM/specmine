@@ -38,7 +38,7 @@ recursive.feature.elimination(datamat, samples.class, functions = rfFuncs, metho
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-caret's rfe result.
+A caret's rfe object with the result of recursive feature selection.
 }
 \references{
 %% ~put references to the literature/web site here ~

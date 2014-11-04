@@ -41,7 +41,7 @@ feature.selection(dataset, column.class, method = "rfe", functions, validation =
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  caret's result from rfe or sbf.
+  A caret's object with the result from rfe or sbf.
 }
 \references{
 %% ~put references to the literature/web site here ~

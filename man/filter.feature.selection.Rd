@@ -32,7 +32,7 @@ filter.feature.selection(datamat, samples.class, functions = rfSBF, method = "cv
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-caret's sbf result.
+A caret's sbf object with the result of selection by filter.
 }
 \references{
 %% ~put references to the literature/web site here ~

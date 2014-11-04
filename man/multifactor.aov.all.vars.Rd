@@ -2,10 +2,10 @@
 \alias{multifactor.aov.all.vars}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Multifactor ANOVA 
+  Multifactor ANOVA
 }
 \description{
-  Perform ANOVA on all variables with various metadata variables.
+  Perform multi-factor ANOVA on all variables with the selected metadata variables.
 }
 \usage{
 multifactor.aov.all.vars(dataset, metadata.vars, write.file = F, file.out = "anova-res.csv")
@@ -29,7 +29,7 @@ multifactor.aov.all.vars(dataset, metadata.vars, write.file = F, file.out = "ano
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  table with the p-values of all variables in the metadata variables.
+  Table with the p-values of all variables in the metadata variables.
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -49,7 +49,7 @@ multifactor.aov.all.vars(dataset, metadata.vars, write.file = F, file.out = "ano
 \examples{
 \dontrun{
   ## Example of multifactor ANOVA on all variables 
-  pvalues = multifactor.aov.onevar(metabolomics.dataset, c("metadata1","metadata2"), write.file = T, file.out = "anova.csv")
+  pvalues = multifactor.aov.all.vars(metabolomics.dataset, c("metadata1","metadata2"), write.file = T, file.out = "anova.csv")
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

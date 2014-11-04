@@ -72,9 +72,11 @@ create.dataset(datamatrix, type = "undefined", metadata = NULL, description = ""
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-  \dontrun{
+\dontrun{
   ## Example of creating a dataset
-  dataset = create.dataset(datamatrix, type = "nmr-spectra", metadata = dataset.metadata, description = "short description", sample.names = NULL, x.axis.values = NULL, label.x = "ppm", label.values = "intensity")
+  dataset = create.dataset(datamatrix, type = "nmr-spectra", metadata = dataset.metadata, 
+	description = "short description", sample.names = NULL, x.axis.values = NULL, 
+	label.x = "ppm", label.values = "intensity")
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

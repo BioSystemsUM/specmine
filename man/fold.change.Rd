@@ -32,7 +32,7 @@ fold.change(dataset, metadata.var, ref.value, write.file = F, file.out = "fold_c
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  table of results with fold change and log2 of fold change. 
+  Table of results with fold change and log2 of fold change. 
 }
 \references{
 %% ~put references to the literature/web site here ~
