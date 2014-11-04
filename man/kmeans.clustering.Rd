@@ -48,6 +48,7 @@ kmeans.clustering(dataset, num.clusters, type = "samples")
   ## Example of kmeans clustering
   kmeans.result = kmeans.clustering(metabolomics.dataset, num.clusters = 4, type = "samples")
 }
+}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~clustering }
