@@ -47,8 +47,12 @@ savitzky.golay = function(dataset, p.order, window, deriv = 0){
     A = ginv(b)
     result = matrix(data = 0, ncol=ncol(X),nrow=nrow(X))
     for (i in 1:nrow(X)){
-		result[i,] = factorial(deriv) * convolve(X[i,], A[deriv+1,], type="f")
+        first.values = X[i,1] - abs( X[i,1:(half_window)] - X[i,1] )
+        last.values = tail(X[i,], n = 1) + abs(X[i,(ncol(X)-half_window+1):ncol(X)] - tail(X[i,],n=1))
+        all = c(first.values, X[i,], last.values)
+        result[i,] = factorial(deriv) * convolve(all, A[deriv+1,], type="f")
     }
+    colnames(result) = colnames(X)
     result
 } 
 
