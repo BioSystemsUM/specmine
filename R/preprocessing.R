@@ -34,6 +34,24 @@ smoothing.spcloess.hyperspec = function(dataset, x.axis = NULL){
   res.dataset
 }
 
+savitzky.golay = function(dataset, p.order, window, deriv = 0){
+    if (window %%2 != 1 || window < 0) 
+        stop("window size (window) must be a positive odd number")
+    if (p.order >= window) 
+        stop("window size (window) is too small for the polynomial order (p.order)")
+    if (p.order < deriv) 
+        stop("polynomial order p (p.order) should be geater or equal to differentiation order (deriv)")
+    X = t(dataset$data)
+    half_window = (window -1)/2
+    b = outer(-half_window, half_window, 0:p.order, "^")
+    A = ginv(b)
+    result = matrix(data = 0, ncol=ncol(X),nrow=nrow(X))
+    for (i in 1:nrow(X)){
+		result[i,] = factorial(deriv) * convolve(X[i,], A[deriv+1,])
+    }
+    result
+} 
+
 
 # DATA CORRECTION - functions to do spectra correction
 
