@@ -24,7 +24,7 @@ create.dataset(datamatrix, type = "undefined", metadata = NULL, description = ""
     \item uvv-spectra
     \item concentrations
     \item undefined
-  }
+  }}
   \item{metadata}{
   data frame with the dataset's metadata: columns represent each metadata variable and rows represent the value of the metadata for the sample.
 }
