@@ -1,0 +1,57 @@
+\name{hierarchical.clustering}
+\alias{hierarchical.clustering}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+  Perform hierarchical clustering analysis
+}
+\description{
+  Perform hierarchical clustering analysis on the dataset.
+}
+\usage{
+hierarchical.clustering(dataset, distance = "euclidean", clustMethod = "complete", hc.type = "samples")
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{dataset}{
+    list representing the dataset from a metabolomics experiment.
+}
+  \item{distance}{
+    the distance measure to be used to compute the distances between the rows of a data matrix. Possible types are "euclidean", "manhattan", "pearson" or "spearman".
+}
+  \item{clustMethod}{
+    the agglomeration method to be used. Possible values are "ward", "single", "complete", "average", "mcquitty", "median" or "centroid".
+}
+  \item{hc.type}{
+    a string indicating if hierarchical cluster analysis will be performed on samples ("samples") or on variables ("variables")
+}
+}
+\details{
+%%  ~~ If necessary, more details than the description above ~~
+}
+\value{
+  An object of class hclust with the clustering results.
+}
+\references{
+%% ~put references to the literature/web site here ~
+}
+\author{
+%%  ~~who you are~~
+}
+\note{
+%%  ~~further notes~~
+}
+
+%% ~Make other sections like Warning with \section{Warning }{....} ~
+
+\seealso{
+%% ~~objects to See Also as \code{\link{help}}, ~~~
+}
+\examples{
+\dontrun{
+  ## Example of hierarchical clustering
+  hc.result = hierarchical.clustering(metabolomics.dataset, distance = "euclidean", clustMethod = "complete", hc.type = "samples")
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ ~clustering }
+\keyword{ ~hclust }% __ONLY ONE__ keyword per line
