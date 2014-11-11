@@ -80,11 +80,9 @@ data.correction = function(dataset, type = "background", method = "modpolyfit", 
 }
 
 background.correction = function(dataset) {
- print("here")
   hyper.object = convert.to.hyperspec(dataset)
-  print("there")
-	background = apply(hyper.object, 2, quantile, probs = 0.05)
-	correction.result = sweep(hyper.object, 2, background, "-")
+	background = hyperSpec:::apply(hyper.object, 2, quantile, probs = 0.05)
+	correction.result = hyperSpec:::sweep(hyper.object, 2, background, "-")
   res.dataset = convert.from.hyperspec(correction.result)
   res.dataset$description = paste(dataset$description, "background correction", sep="; ")
   res.dataset$type = dataset$type
@@ -93,8 +91,8 @@ background.correction = function(dataset) {
 
 offset.correction = function(dataset){
   hyper.object = convert.to.hyperspec(dataset)
-	offsets = apply(hyper.object, 1, min)
-	correction.result = sweep(hyper.object, 1, offsets, "-")
+	offsets = hyperSpec:::apply(hyper.object, 1, min)
+	correction.result = hyperSpec:::sweep(hyper.object, 1, offsets, "-")
   res.dataset = convert.from.hyperspec(correction.result)
   res.dataset$description = paste(dataset$description, "offset correction", sep="; ")
   res.dataset$type = dataset$type
