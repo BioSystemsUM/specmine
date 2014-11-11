@@ -7,8 +7,7 @@ convert.from.hyperspec = function(hsobj, type = "undefined", description = "") {
   if (!is.null(hsobj$..) && ncol(hsobj$..) >= 1)
     metadata = hsobj$..
   else metadata = NULL
-  labels = labels(hsobj)
-  print(labels(hsobj))
+  labels = hyperSpec:::labels(hsobj)
   dataset = create.dataset(datamatrix, type = type, metadata = metadata, description = description, 
                             x.axis.values = x.values, label.x = labels$.wavelength, label.values = labels$spc)
   dataset
