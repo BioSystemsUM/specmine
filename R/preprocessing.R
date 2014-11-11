@@ -66,7 +66,7 @@ savitzky.golay = function(dataset, p.order, window, deriv = 0){
 
 # DATA CORRECTION - functions to do spectra correction
 
-"data.correction" = function(dataset, type = "background", method = "modpolyfit", ...){
+data.correction = function(dataset, type = "background", method = "modpolyfit", ...){
 	if (type == "background"){
 		dataset = background.correction(dataset)
 	} 
@@ -120,7 +120,7 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
 # shift.val - value of the shift (for constant and interpolation methods); can be a single value for all spectra
 #			  "auto" - shifts are automatically determined
 # or a vector of length = number of samples; can also be the string "auto" for automatic calculation of shifts
-"shift.correction" = function(dataset, method = "constant", shift.val = 0, interp.function = "linear",
+shift.correction = function(dataset, method = "constant", shift.val = 0, interp.function = "linear",
                               ref.limits = NULL) {
   
   x.vals = get.x.values.as.num(dataset)
@@ -172,7 +172,7 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
 }
 
 # calculate shifts based on a band of the spectra (see hyperSpec vignette sect. 12.2.1)
-"calculate.shifts" = function(dataset, ref.limits = NULL)
+calculate.shifts = function(dataset, ref.limits = NULL)
 { 
   #x.vals = get.x.values.as.num(dataset)
   dataM = subset.x.values.by.interval (dataset, ref.limits[1], ref.limits[2])
@@ -182,7 +182,7 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
   refpos - bandpos
 }
 
-"find.max" = function (y, x){
+find.max = function (y, x){
   pos = which.max (y) + (-1:1)
   X = x [pos] - x [pos [2]]
   Y = y [pos] - y [pos [2]]
@@ -193,7 +193,7 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
 
 # multiplicative scatter correction
 
-"msc.correction" = function(dataset) {
+msc.correction = function(dataset) {
   require(pls)
   temp = t(dataset$data)
   newdata = msc(temp)
