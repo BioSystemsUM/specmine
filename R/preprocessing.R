@@ -80,7 +80,9 @@ data.correction = function(dataset, type = "background", method = "modpolyfit", 
 }
 
 background.correction = function(dataset) {
+ print("here")
   hyper.object = convert.to.hyperspec(dataset)
+  print("there")
 	background = apply(hyper.object, 2, quantile, probs = 0.05)
 	correction.result = sweep(hyper.object, 2, background, "-")
   res.dataset = convert.from.hyperspec(correction.result)
