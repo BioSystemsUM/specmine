@@ -2,9 +2,9 @@
 transmittance.to.absorbance = function(dataset, percent = T){
   datamat = dataset$data
   if (!percent){
-    absorbance.datamat = 2-log10(b*100)
+    absorbance.datamat = 2-log10(datamat*100)
   } else {
-    absorbance.datamat = 2-log10(b)
+    absorbance.datamat = 2-log10(datamat)
   }
   dataset$data = absorbance.datamat
   dataset$labels$val = "A"
