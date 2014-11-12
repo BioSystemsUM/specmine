@@ -1,3 +1,22 @@
+#convert transmittance to absorbance
+transmittance.to.absorbance = function(dataset, percent = T){
+  datamat = dataset$data
+  if (!percent){
+    absorbance.datamat = 2-log10(b*100)
+  } else {
+    absorbance.datamat = 2-log10(b)
+  }
+  dataset$data = absorbance.datamat
+  dataset$labels$val = "A"
+}
+
+#convert absorbance to transmittance
+absorbance.to.transmittance = function(dataset){
+  datamat = dataset$data
+  transmittance.datamat = 100*(10^(-datamat))
+  dataset$data = trasmittance.datamat
+  dataset$labels$val = "%T"
+}
 
 # Smoothing - hyperSpec (spc.bin and spc.loess)
 smoothing.interpolation = function(dataset, method = "bin", reducing.factor = 2, x.axis = NULL, p.order = 3, window = 11, deriv = 0){
@@ -66,7 +85,7 @@ savitzky.golay = function(dataset, p.order, window, deriv = 0){
 
 # DATA CORRECTION - functions to do spectra correction
 
-data.correction = function(dataset, type = "background", method = "modpolyfit", ...){
+"data.correction" = function(dataset, type = "background", method = "modpolyfit", ...){
 	if (type == "background"){
 		dataset = background.correction(dataset)
 	} 
@@ -81,8 +100,8 @@ data.correction = function(dataset, type = "background", method = "modpolyfit", 
 
 background.correction = function(dataset) {
   hyper.object = convert.to.hyperspec(dataset)
-	background = hyperSpec:::apply(hyper.object, 2, quantile, probs = 0.05)
-	correction.result = hyperSpec:::sweep(hyper.object, 2, background, "-")
+	background = apply(hyper.object, 2, quantile, probs = 0.05)
+	correction.result = sweep(hyper.object, 2, background, "-")
   res.dataset = convert.from.hyperspec(correction.result)
   res.dataset$description = paste(dataset$description, "background correction", sep="; ")
   res.dataset$type = dataset$type
@@ -91,8 +110,8 @@ background.correction = function(dataset) {
 
 offset.correction = function(dataset){
   hyper.object = convert.to.hyperspec(dataset)
-	offsets = hyperSpec:::apply(hyper.object, 1, min)
-	correction.result = hyperSpec:::sweep(hyper.object, 1, offsets, "-")
+	offsets = apply(hyper.object, 1, min)
+	correction.result = sweep(hyper.object, 1, offsets, "-")
   res.dataset = convert.from.hyperspec(correction.result)
   res.dataset$description = paste(dataset$description, "offset correction", sep="; ")
   res.dataset$type = dataset$type
@@ -120,7 +139,7 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
 # shift.val - value of the shift (for constant and interpolation methods); can be a single value for all spectra
 #			  "auto" - shifts are automatically determined
 # or a vector of length = number of samples; can also be the string "auto" for automatic calculation of shifts
-shift.correction = function(dataset, method = "constant", shift.val = 0, interp.function = "linear",
+"shift.correction" = function(dataset, method = "constant", shift.val = 0, interp.function = "linear",
                               ref.limits = NULL) {
   
   x.vals = get.x.values.as.num(dataset)
@@ -172,7 +191,7 @@ shift.correction = function(dataset, method = "constant", shift.val = 0, interp.
 }
 
 # calculate shifts based on a band of the spectra (see hyperSpec vignette sect. 12.2.1)
-calculate.shifts = function(dataset, ref.limits = NULL)
+"calculate.shifts" = function(dataset, ref.limits = NULL)
 { 
   #x.vals = get.x.values.as.num(dataset)
   dataM = subset.x.values.by.interval (dataset, ref.limits[1], ref.limits[2])
@@ -182,7 +201,7 @@ calculate.shifts = function(dataset, ref.limits = NULL)
   refpos - bandpos
 }
 
-find.max = function (y, x){
+"find.max" = function (y, x){
   pos = which.max (y) + (-1:1)
   X = x [pos] - x [pos [2]]
   Y = y [pos] - y [pos [2]]
@@ -193,7 +212,7 @@ find.max = function (y, x){
 
 # multiplicative scatter correction
 
-msc.correction = function(dataset) {
+"msc.correction" = function(dataset) {
   require(pls)
   temp = t(dataset$data)
   newdata = msc(temp)
