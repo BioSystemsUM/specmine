@@ -188,7 +188,7 @@ plot.ttests = function(dataset, tt.results, tt.threshold = 0.01) {
     if (i %in% tt.lower) cols[i] = "blue"
     else cols[i] = "gray"
   
-  plot(tt.orig$"-log10", xlab = get.x.label(dataset), ylab = "-log10(p)", col = cols, pch = 19)
+  plot(rownames(tt.orig),tt.orig$"-log10", xlab = get.x.label(dataset), ylab = "-log10(p)", col = cols, pch = 19)
   abline(h = -log10(tt.threshold), col = "lightblue")
 }
 
