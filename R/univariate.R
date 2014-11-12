@@ -127,7 +127,7 @@ plot.fold.change = function(dataset, fc.results, fc.threshold, plot.log = T) {
     else cols[i] = "gray"
   if (plot.log) {
     max = max ( max(abs(fc.orig$"log2(FC)")), abs(log2(fc.threshold)) )
-    plot(fc.orig$"log2(FC)", xlab = get.x.label(dataset), ylab = "Log2FoldChange", 
+    plot(rownames(fc.orig),fc.orig$"log2(FC)", xlab = get.x.label(dataset), ylab = "Log2FoldChange", 
          col = cols, pch = 19, ylim = c(-max,max))
     abline(h = log2(fc.threshold), col = "lightblue")
     abline(h = -log2(fc.threshold), col = "lightblue")
@@ -136,7 +136,7 @@ plot.fold.change = function(dataset, fc.results, fc.threshold, plot.log = T) {
   else {
     max = max ( max(fc.orig$FoldChange), fc.threshold )
     min = min ( min(fc.orig$FoldChange), 1/fc.threshold) 
-    plot(fc.orig$FoldChange, xlab = get.x.label(dataset), ylab = "FoldChange", 
+    plot(rownames(fc.orig),fc.orig$FoldChange, xlab = get.x.label(dataset), ylab = "FoldChange", 
          col = cols, pch = 19, ylim = c(min,max))
     abline(h = fc.threshold, col = "lightblue")
     abline(h = 1/fc.threshold, col = "lightblue")
