@@ -87,14 +87,14 @@
 		matplot(variables, dataset$data[variables,samples], type="l", lty=lty, col=as.integer(metadata), 
             xlab = xlab, ylab = ylab, xlim = xlim, ...)
     if (legend.place != "none")
-		  legend(legend.place, levels(metadata), cex=cex, fill = as.integer(factor(levels(metadata))))
+		  legend(legend.place, levels(metadata), cex=cex, fill = sort(as.integer(factor(levels(metadata))))) 
 	} 
   else {
 		aggregate.result = aggregate(t(dataset$data[variables,samples]), by = list(metadata), func)
 		matplot(variables, t(aggregate.result[-1]), type = "l", lty=1, col=as.integer(aggregate.result[,1]), 
             xlab = xlab, ylab = ylab, xlim = xlim, ...)
 		if (legend.place != "none")
-		  legend(legend.place, levels(metadata), cex=cex, fill = as.integer(factor(levels(metadata))))
+		  legend(legend.place, levels(metadata), cex=cex, fill = sort(as.integer(factor(levels(metadata)))))
 	}
 }
 
