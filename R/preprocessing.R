@@ -8,6 +8,7 @@ transmittance.to.absorbance = function(dataset, percent = T){
   }
   dataset$data = absorbance.datamat
   dataset$labels$val = "A"
+  dataset
 }
 
 #convert absorbance to transmittance
@@ -16,6 +17,7 @@ absorbance.to.transmittance = function(dataset){
   transmittance.datamat = 100*(10^(-datamat))
   dataset$data = trasmittance.datamat
   dataset$labels$val = "%T"
+  dataset
 }
 
 # Smoothing - hyperSpec (spc.bin and spc.loess)
