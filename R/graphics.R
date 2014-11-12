@@ -29,7 +29,7 @@
 # lty, lwd, col - parameters to pass to matplot
 # ... - extra parameters passed to matplot function
 "plot.spectra.simple" = function(dataset, samples = NULL, variable.bounds = NULL, xlab = NULL,
-                               ylab = NULL, lty = 1, lwd = 1, col = 1, ...) {
+                               ylab = NULL, lty = 1, lwd = 1, col = 1, reverse.x = F, ...) {
   
   if (is.null(xlab)) xlab = get.x.label(dataset)
   if (is.null(ylab)) ylab = get.value.label(dataset)
@@ -42,12 +42,15 @@
     variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
   }
   
+  if (reverse.x) xlim = c( max(as.numeric(variables)), min(as.numeric(variables)) )
+  else xlim = range(as.numeric(variables))
+  
   if (is.null(samples)){
     samples = colnames(dataset$data)
   } 
 
   matplot(variables, dataset$data[variables,samples,drop=F], type="l", lty=lty, col = col,
-            xlab = xlab, ylab = ylab, ...)
+            xlab = xlab, ylab = ylab, xlim = xlim, ...)
 }
 
 
