@@ -36,7 +36,7 @@ plot.spectra.simple(dataset, samples = NULL, variable.bounds = NULL, xlab = NULL
   \item{col}{
     parameter of matplot.
 }
-  \item(reverse.x){
+  \item{reverse.x}{
     boolean value indicating if the x-axis will be shown reversed or not.  
 }
   \item{\dots}{
