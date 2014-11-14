@@ -4,11 +4,11 @@
 # each sample is a data frame representing a peak list (with two columns)
 
 # returns a dataset in standard format from all peaks in all samples
-"dataset.from.peaks" = function(sample.list, metadata = NULL, description = "") {
+"dataset.from.peaks" = function(sample.list, metadata = NULL, description = "", type = "nmr-peaks") {
   
   merged.peaks = merge.eq.peaks.samplelist(sample.list)
   samples.df = get.all.intensities(merged.peaks)
-  create.dataset(as.matrix(samples.df), metadata = metadata, type = "nmr-peaks", 
+  create.dataset(as.matrix(samples.df), metadata = metadata, type = type, 
                  description = description)
 
 }
