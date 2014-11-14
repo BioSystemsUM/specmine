@@ -170,7 +170,7 @@ pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 
 
 #pca pairs with kmeans clusters plot
-pca.pairs.kmeans.plot = function(dataset, column.class, pca.result, num.clusters = 3, kmeans.result = NULL, pcas = c(1,2,3,4,5)){
+pca.pairs.kmeans.plot = function(dataset, pca.result, num.clusters = 3, kmeans.result = NULL, pcas = c(1,2,3,4,5)){
   require(GGally)
   if (is.null(kmeans.result)){
     kmeans.result = clustering(dataset, method = "kmeans", num.clusters = num.clusters)

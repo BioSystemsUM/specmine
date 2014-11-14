@@ -90,7 +90,7 @@
 # get the value of an internsity given the sample (data frame) and the frequency
 "get.intensity" = function(sample.df, freq, tolerance = 0.001)
 {
-  cond = (sample.df$ppm > freq - tolerance) & (sample.df$ppm < freq + tolerance)
+  cond = (sample.df[[1]] > freq - tolerance) & (sample.df[[1]] < freq + tolerance)
   if (any(cond)) res = sample.df[cond,][[2]]
   else res = NA
   res
@@ -162,8 +162,14 @@
 {
   d = diff(sample.df[[1]])
   indexes = which(d <= tolerance)
-  new.sample.df = sample.df[-(indexes+1),]
-  new.sample.df[[2]] = sum.vec(sample.df[[2]], indexes)
+  if (length(indexes) != 0){
+	new.sample.df = sample.df[-(indexes+1),]
+	new.sample.df[[2]] = sum.vec(sample.df[[2]], indexes)
+  }
+  else {
+	new.sample.df = sample.df
+  }
+
   new.sample.df
 }
 
