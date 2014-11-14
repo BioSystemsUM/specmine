@@ -1,5 +1,5 @@
 \name{pca.importance}
-\alias{pca.importance
+\alias{pca.importance}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
   PCA importance
