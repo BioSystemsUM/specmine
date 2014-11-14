@@ -48,7 +48,8 @@ Return the corresponding metadata value of the sample.
   ## Example of getting a metadata value
   metadata.value = get.metadata.value(dataset, "var1", "sample2")
 }
+}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~metadata }
+\keyword{ ~value }% __ONLY ONE__ keyword per line
