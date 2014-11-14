@@ -113,7 +113,7 @@ pca.biplot= function(pca.result, cex = 0.8, ...) {
 }
 
 pca.biplot3D = function(dataset, pca.result, column.class, pcas = c(1,2,3)){
-  pca.scoresplot3D(dataset, pca.result, column.class, pcas)
+  pca.scoresplot3D.rgl(dataset, pca.result, column.class, pcas)
   text3d(pca.result$x[,pcas], texts=colnames(dataset$data), cex=0.6)
   text3d(pca.result$rotation[,pcas], texts = rownames(pca.result$rotation), col = "red", cex=0.6)
   coords = NULL
