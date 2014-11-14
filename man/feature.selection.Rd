@@ -2,7 +2,7 @@
 \alias{feature.selection}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Perform feature Selection
+Perform feature selection
 }
 \description{
   Perform feature selection on the dataset.
@@ -41,7 +41,7 @@ feature.selection(dataset, column.class, method = "rfe", functions, validation =
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  A caret's object with the result from rfe or sbf.
+  caret's result from rfe or sbf.
 }
 \references{
 %% ~put references to the literature/web site here ~
