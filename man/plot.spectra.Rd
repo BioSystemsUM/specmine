@@ -39,10 +39,10 @@ plot.spectra(dataset, column.class, func = NULL, samples = NULL, variable.bounds
   \item{legend.place}{
     string indicating the place that the legend's box will be placed.
 }
-  \item(cex){
+  \item{cex}{
     numeric value that indicates the amount by which the legend is magnified relative to the default.
 }
-  \item(reverse.x){
+  \item{reverse.x}{
     boolean value indicating if the x-axis will be shown reversed or not.  
 }
   \item{\dots}{
