@@ -18,25 +18,28 @@ pca.analysis.dataset = function(dataset, scale = T, center = T,
 # returns information about importance of the PC's
 # pcs - PCs to get; sd - get std dev; prop - get proportion of variance; cumul - get cumulative
 # min.cum - allows to define minimum cumulative % of variance
-pca.importance = function(pca.res, method = "classical", pcs = 1:10, sd = T, prop = T, cumul = T, min.cum = NULL)
+pca.importance = function(pca.res, pcs = 1:10, sd = T, prop = T, cumul = T, min.cum = NULL)
 {
-  if (method == "classical"){
+  rows = c()
+  if (sd) rows = c(1)
+  if (prop) rows = c(rows, 2)
+  if (cumul) rows = c(rows, 3)
+  
+  if (class(pca.res) == "prcomp"){
 	  if (!is.null(min.cum)) {
 		cum = summary(pca.res)$importance[3,]
 		pcs = 1:(min(which(cum > min.cum)))
 	  }
-	  rows = c()
-	  if (sd) rows = c(1)
-	  if (prop) rows = c(rows, 2)
-	  if (cumul) rows = c(rows, 3)
-	  res = summary(pca.res)$importance[rows, pcs] 
-  } else if (method == "robust"){
+
+	  res = summary(pca.res)$importance
+  } else if (class(pca.res) == "princomp"){
 	  vars = pca.res$sdev^2
 	  vars = vars/sum(vars)
 	  cum = cumsum(vars)
+	  pcs = 1:(min(which(cum > min.cum)))
 	  res = rbind("Standard deviation" = pca.res$sdev, "Proportion of Variance" = vars, "Cumulative Proportion" = cum)
   }
-  res
+  res[rows, pcs]
 }
 
 # robust PCA analysis 
