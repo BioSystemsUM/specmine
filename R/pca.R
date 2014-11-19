@@ -141,12 +141,19 @@ pca.biplot= function(pca.result, cex = 0.8, ...) {
 }
 
 pca.biplot3D = function(dataset, pca.result, column.class, pcas = c(1,2,3)){
+  if (class(pca.result) == "prcomp"){
+	scores = pca.result$x
+	rotation = pca.result$rotation
+  } else if (class(pca.result) == "princomp"){
+	scores = pca.result$scores
+	rotation = pca.result$loadings
+  }  
   pca.scoresplot3D.rgl(dataset, pca.result, column.class, pcas)
-  text3d(pca.result$x[,pcas], texts=colnames(dataset$data), cex=0.6)
-  text3d(pca.result$rotation[,pcas], texts = rownames(pca.result$rotation), col = "red", cex=0.6)
+  text3d(scores[,pcas], texts=colnames(dataset$data), cex=0.6)
+  text3d(rotation[,pcas], texts = rownames(rotation), col = "red", cex=0.6)
   coords = NULL
-  for (i in 1:nrow(pca.result$rotation)){
-    coords = rbind(coords, rbind(c(0,0,0), pca.result$rotation[i, pcas]))
+  for (i in 1:nrow(rotation)){
+    coords = rbind(coords, rbind(c(0,0,0), rotation[i, pcas]))
   }
   lines3d(coords, col="red", lwd = 4)
 }
@@ -154,7 +161,12 @@ pca.biplot3D = function(dataset, pca.result, column.class, pcas = c(1,2,3)){
 #pca pairs plot
 pca.pairs.plot = function(dataset, column.class, pca.result, pcas = c(1,2,3,4,5), ...){
   require(GGally)
-  pairs.df = data.frame(pca.result$x[,pcas])
+  if (class(pca.result) == "prcomp"){
+	scores = pca.result$x
+  } else if (class(pca.result) == "princomp"){
+	scores = pca.result$scores
+  }  
+  pairs.df = data.frame(scores[,pcas])
   pairs.df$group = dataset$metadata[,column.class]
   ggpairs(pairs.df, colour = 'group', ...)
 }
