@@ -125,8 +125,13 @@ pca.scoresplot3D.rgl = function(dataset, pca.result, column.class, pcas = c(1,2,
 pca.scoresplot3D = function(dataset, pca.result, column.class, pcas=c(1,2,3))
 {
   require(scatterplot3d)
+  if (class(pca.result) == "prcomp"){
+	scores = pca.result$x
+  } else if (class(pca.result) == "princomp"){
+	scores = pca.result$scores
+  }
   classes = dataset$metadata[,column.class]
-  scatterplot3d(pca.result$x[,pcas], color=as.integer(dataset$metadata[,column.class]), pch=17)
+  scatterplot3d(scores[,pcas], color=as.integer(dataset$metadata[,column.class]), pch=17)
   legend(-1.5, 2.5, levels(classes), col = 1:length(classes), cex = 0.7, pt.cex = 1, pch= 17)
 }
 
