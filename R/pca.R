@@ -159,7 +159,7 @@ pca.biplot3D = function(dataset, pca.result, column.class, pcas = c(1,2,3)){
 }
 
 #pca pairs plot
-pca.pairs.plot = function(dataset, column.class, pca.result, pcas = c(1,2,3,4,5), ...){
+pca.pairs.plot = function(dataset, pca.result, column.class, pcas = c(1,2,3,4,5), ...){
   require(GGally)
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
@@ -175,12 +175,18 @@ pca.pairs.plot = function(dataset, column.class, pca.result, pcas = c(1,2,3,4,5)
 pca.kmeans.plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2,3), 
                              kmeans.result = NULL, labels = FALSE, size = 1,...) {
   require(rgl)
+  if (class(pca.result) == "prcomp"){
+	scores = pca.result$x
+  } else if (class(pca.result) == "princomp"){
+	scores = pca.result$scores
+  }
+  
   if (is.null(kmeans.result)){
     kmeans.result = clustering(dataset, method = "kmeans", num.clusters = num.clusters)
   }
-  plot3d(pca.result$x[,pcas], type = "s", col = kmeans.result$cluster, size=size,...)
+  plot3d(scores[,pcas], type = "s", col = kmeans.result$cluster, size=size,...)
   if (labels){
-    text3d(pca.result$x[,pcas],adj = c(1.2,1.2), texts=colnames(dataset$data), cex=0.6)
+    text3d(scores[,pcas],adj = c(1.2,1.2), texts=colnames(dataset$data), cex=0.6)
   }
 }
 
@@ -189,10 +195,16 @@ pca.kmeans.plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2), 
                              kmeans.result = NULL, labels = FALSE, ellipses = FALSE){
   require(ggplot2)
+  if (class(pca.result) == "prcomp"){
+	scores = pca.result$x
+  } else if (class(pca.result) == "princomp"){
+	scores = pca.result$scores
+  }
+  
   if (is.null(kmeans.result)){
     kmeans.result = clustering(dataset, method = "kmeans", num.clusters = num.clusters)
   }
-  pca.points = data.frame(pca.result$x[,pcas])
+  pca.points = data.frame(scores[,pcas])
   names(pca.points) = c("x","y")
   pca.points$group = factor(kmeans.result$cluster)
   pca.points$label = colnames(dataset$data)
@@ -212,10 +224,16 @@ pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 #pca pairs with kmeans clusters plot
 pca.pairs.kmeans.plot = function(dataset, pca.result, num.clusters = 3, kmeans.result = NULL, pcas = c(1,2,3,4,5)){
   require(GGally)
+  if (class(pca.result) == "prcomp"){
+	scores = pca.result$x
+  } else if (class(pca.result) == "princomp"){
+	scores = pca.result$scores
+  }
+  
   if (is.null(kmeans.result)){
     kmeans.result = clustering(dataset, method = "kmeans", num.clusters = num.clusters)
   }
-  pairs.df = data.frame(pca.result$x[,pcas])
+  pairs.df = data.frame(scores[,pcas])
   pairs.df$group = factor(kmeans.result$cluster)
   ggpairs(pairs.df, colour = 'group')
 }
