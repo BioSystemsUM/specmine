@@ -85,7 +85,12 @@ pca.scoresplot2D = function(dataset, pca.result, column.class, pcas = c(1,2), la
                             ellipses = FALSE, pallette = 2)
 {
   require(ggplot2)
-  pca.points = data.frame(pca.result$x[,pcas])
+  if (class(pca.result) == "prcomp"){
+	scores = pca.result$x
+  } else if (class(pca.result) == "princomp"){
+	scores = pca.result$scores
+  }
+  pca.points = data.frame(scores[,pcas])
   names(pca.points) = c("x","y")
   pca.points$group = dataset$metadata[,column.class]
   pca.points$label = colnames(dataset$data)
