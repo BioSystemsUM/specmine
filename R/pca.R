@@ -36,7 +36,9 @@ pca.importance = function(pca.res, pcs = 1:10, sd = T, prop = T, cumul = T, min.
 	  vars = pca.res$sdev^2
 	  vars = vars/sum(vars)
 	  cum = cumsum(vars)
-	  pcs = 1:(min(which(cum > min.cum)))
+	  if (!is.null(min.cum)) {
+		pcs = 1:(min(which(cum > min.cum)))
+	  }
 	  res = rbind("Standard deviation" = pca.res$sdev, "Proportion of Variance" = vars, "Cumulative Proportion" = cum)
   }
   res[rows, pcs]
