@@ -110,10 +110,15 @@ pca.scoresplot2D = function(dataset, pca.result, column.class, pcas = c(1,2), la
 pca.scoresplot3D.rgl = function(dataset, pca.result, column.class, pcas = c(1,2,3), size = 1, 
                             labels = FALSE) {
   require(rgl)
-  plot3d(pca.result$x[,pcas], type = "s", col = as.integer(dataset$metadata[,column.class]),
+  if (class(pca.result) == "prcomp"){
+	scores = pca.result$x
+  } else if (class(pca.result) == "princomp"){
+	scores = pca.result$scores
+  }
+  plot3d(scores[,pcas], type = "s", col = as.integer(dataset$metadata[,column.class]),
          size=size)
   if (labels){
-    text3d(pca.result$x[,pcas],texts=colnames(dataset$data), cex=0.6)
+    text3d(scores[,pcas],texts=colnames(dataset$data), cex=0.6)
   }
 }
 
