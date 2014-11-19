@@ -18,7 +18,7 @@ pca.analysis.dataset = function(dataset, scale = T, center = T,
 # returns information about importance of the PC's
 # pcs - PCs to get; sd - get std dev; prop - get proportion of variance; cumul - get cumulative
 # min.cum - allows to define minimum cumulative % of variance
-pca.importance = function(pca.res, pcs = 1:10, sd = T, prop = T, cumul = T, min.cum = NULL)
+pca.importance = function(pca.res, pcs = 1:length(pca.res$sdev), sd = T, prop = T, cumul = T, min.cum = NULL)
 {
   rows = c()
   if (sd) rows = c(1)
@@ -71,7 +71,7 @@ pca.screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "r
                          lab.text = c("individual percent","cumulative percent"), 
                          fill.col = c("blue","red"), ylab = "Percentage", xlab = "Principal components",
                          ...){
-  importance = summary(pca.result)$importance
+  importance = pca.importance(pca.result)
   if (is.null(num.pcs)) num.pcs = dim(importance)[2]
   par(mfrow=c(1,1))
   matplot(seq(1, num.pcs), data.frame(t(importance[2:3,1:num.pcs]*100)), type="l", lty=1, col=fill.col, 
