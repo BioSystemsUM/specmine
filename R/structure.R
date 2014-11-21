@@ -2,7 +2,7 @@
 
 list.of.spectral.types = c("nmr-spectra","ir-spectra", "uvv-spectra", "raman-spectra", "fluor-spectra")
 
-list.of.allowed.types = c(list.of.spectral.types, "nmr-peaks", "concentrations", "undefined")
+list.of.allowed.types = c(list.of.spectral.types, "nmr-peaks", "concentrations", "integrated-data", "undefined")
 
 
 # function to create a dataset from existing objects 
