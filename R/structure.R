@@ -278,6 +278,46 @@ list.of.allowed.types = c(list.of.spectral.types, "nmr-peaks", "concentrations",
 
 
 # UPDATE functions
+variables.as.metadata = function(dataset, variables, by.index = F){
+	if (!by.index) {
+		var.indexes = which(rownames(dataset$data) %in% variables)
+	}
+	else {
+		var.indexes = variables
+	}
+	vars = t(dataset$data)[,var.indexes]
+
+	if (!is.null(dataset$metadata)){
+		metadata = dataset$metadata
+		metadata = cbind(metadata,vars)
+	} else {
+		metadata = vars
+	}
+
+	metadata.names = rownames(dataset$data)[var.indexes]
+	metadata = as.matrix(metadata)
+	colnames(metadata) = metadata.names
+	rownames(metadata) = colnames(dataset$data)
+	dataset = set.metadata(dataset, metadata)
+	dataset$data = dataset$data[-var.indexes,]
+	dataset
+}
+
+metadata.as.variables = function(dataset, metadata.vars, by.index = F){
+	if (!by.index){
+		metadata.indexes = which(colnames(dataset$metadata) %in% metadata.vars)
+	} else {
+		metadata.indexes = metadata.vars
+	}
+	metadata.variables = dataset$metadata[,metadata.indexes]
+	var.names = colnames(dataset$metadata)[metadata.indexes]
+	metadata.variables = t(as.matrix(metadata.variables))
+	rownames(metadata.variables) = var.names
+	dataset$data = rbind(dataset$data, metadata.variables)
+	dataset$metadata = dataset$metadata[,-metadata.indexes]
+	if (ncol(dataset$metadata) == 0) dataset$metadata = NULL
+	dataset
+}
 
 "set.metadata" = function(dataset, new.metadata)
 {

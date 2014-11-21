@@ -63,6 +63,7 @@ predict.samples = function(train.result, new.samples){
 	colnames(new.samples.df) = paste("X",rnames, sep="")
 	predict.result = predict(train.result, newdata = new.samples.df)
 	result = data.frame(sample = rownames(new.samples.df), predicted.class = predict.result)
+	result$sample = as.character(result$sample)
 	result
 }
 
