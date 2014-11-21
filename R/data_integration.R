@@ -18,11 +18,12 @@
 	ds.fused
 }
 
-# assuming rownames are not duplicated
+# assuming rownames are not duplicated and first dataset contains all the metadata 
 "fusion.merge" = function(datasets){
 	ds.fused = datasets[[1]]
 	for (i in 2:length(datasets)){
 		ds.fused$data = rbind(ds.fused$data, datasets[[i]]$data)
 	}
+	ds.fused$metadata = datasets[[1]]$metadata
 	ds.fused
 }
