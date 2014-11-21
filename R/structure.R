@@ -289,13 +289,13 @@ variables.as.metadata = function(dataset, variables, by.index = F){
 
 	if (!is.null(dataset$metadata)){
 		metadata = dataset$metadata
+		metadata.names = c(colnames(metadata), rownames(dataset$data)[var.indexes])
 		metadata = cbind(metadata,vars)
 	} else {
 		metadata = vars
+		metadata.names = rownames(dataset$data)[var.indexes]
 	}
-
-	metadata.names = rownames(dataset$data)[var.indexes]
-	metadata = as.matrix(metadata)
+	metadata = as.data.frame(metadata)
 	colnames(metadata) = metadata.names
 	rownames(metadata) = colnames(dataset$data)
 	dataset = set.metadata(dataset, metadata)
