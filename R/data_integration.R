@@ -21,9 +21,12 @@
 # assuming rownames are not duplicated and first dataset contains all the metadata 
 "fusion.merge" = function(datasets){
 	ds.fused = datasets[[1]]
+	ds.fused$description = paste("Data integration from types: ", ds.fused$type, sep = "")
 	for (i in 2:length(datasets)){
 		ds.fused$data = rbind(ds.fused$data, datasets[[i]]$data)
+		ds.fused$description = paste(ds.fused.description, ds.fused$type, sep = ",")
 	}
 	ds.fused$metadata = datasets[[1]]$metadata
+	ds.fused$type = "integrated-data"
 	ds.fused
 }
