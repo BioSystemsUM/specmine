@@ -1,35 +1,33 @@
-\name{pca.biplot3D}
-\alias{pca.biplot3D}
+\name{remove.peaks.interval}
+\alias{remove.peaks.interval}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  3D PCA biplot (interactive)
+  Remove interval of peaks
 }
 \description{
-  Shows a interactive 3D PCA biplot.
+  Removes peaks from a given interval.
 }
 \usage{
-pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
+remove.peaks.interval(sample.df, peak.val.min, peak.val.max)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{dataset}{
-        list representing the dataset from a metabolomics experiment.
+  \item{sample.df}{
+    data frame with the samples' peaks.
 }
-  \item{pca.result}{
-    prcomp object with the PCA results.
+  \item{peak.val.min}{
+    minimum peak value.
 }
-  \item{column.class}{
-    metadata's variable.
-}
-  \item{pcas}{
-    the three principal components.
+  \item{peak.val.max}{
+    maximum peak value.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
-
-
+\value{
+  Returns a data frame with the filtered samples' peaks. 
+}
 \references{
 %% ~put references to the literature/web site here ~
 }
@@ -47,11 +45,11 @@ pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
 }
 \examples{
 \dontrun{
-  ## Example of a 3D PCA biplot
-  pca.biplot3D(dataset, pca.result, "metadata.var2", pcas = c(1,2,3))
+  ## Example of removing a interval of peaks
+  samples.df = remove.peaks.interval(sample.df, 2, 8.05)
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~pca }
-\keyword{ ~biplot }% __ONLY ONE__ keyword per line
+\keyword{ ~peak }
+\keyword{ ~sample }% __ONLY ONE__ keyword per line

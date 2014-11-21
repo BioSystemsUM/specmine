@@ -1,35 +1,30 @@
-\name{pca.biplot3D}
-\alias{pca.biplot3D}
+\name{get.peak.values}
+\alias{get.peak.values}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  3D PCA biplot (interactive)
+  Get peak values
 }
 \description{
-  Shows a interactive 3D PCA biplot.
+  Gets the peak values from a data frame of samples' peaks.
 }
 \usage{
-pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
+get.peak.values(samples.df, peak.val)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{dataset}{
-        list representing the dataset from a metabolomics experiment.
+  \item{samples.df}{
+    data frame with the samples' peaks.
 }
-  \item{pca.result}{
-    prcomp object with the PCA results.
-}
-  \item{column.class}{
-    metadata's variable.
-}
-  \item{pcas}{
-    the three principal components.
+  \item{peak.val}{
+    peak name.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
-
-
+\value{
+  Returns a vector with the peak values.
+}
 \references{
 %% ~put references to the literature/web site here ~
 }
@@ -47,11 +42,11 @@ pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
 }
 \examples{
 \dontrun{
-  ## Example of a 3D PCA biplot
-  pca.biplot3D(dataset, pca.result, "metadata.var2", pcas = c(1,2,3))
+  ## Example of getting the peak values
+  peak.values = get.peak.values(samples.df, 2.10)
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~pca }
-\keyword{ ~biplot }% __ONLY ONE__ keyword per line
+\keyword{ ~peak }
+\keyword{ ~sample }% __ONLY ONE__ keyword per line

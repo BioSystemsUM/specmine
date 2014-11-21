@@ -1,35 +1,33 @@
-\name{pca.biplot3D}
-\alias{pca.biplot3D}
+\name{get.intensity}
+\alias{get.intensity}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  3D PCA biplot (interactive)
+  Get intensity
 }
 \description{
-  Shows a interactive 3D PCA biplot.
+  Get the value of an internsity given the sample (data frame) and the frequency.
 }
 \usage{
-pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
+get.intensity(sample.df, freq, tolerance = 0.001)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{dataset}{
-        list representing the dataset from a metabolomics experiment.
+  \item{sample.df}{
+    data frame with the samples' peaks.
 }
-  \item{pca.result}{
-    prcomp object with the PCA results.
-}
-  \item{column.class}{
-    metadata's variable.
-}
-  \item{pcas}{
-    the three principal components.
+  \item{freq}{
+    frequence.
+  }
+  \item{tolerance}{
+    tolerance value of the frequency.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
-
-
+\value{
+    Returns the intensity (or a NA value in case that the frequency doesn't exist).
+}
 \references{
 %% ~put references to the literature/web site here ~
 }
@@ -47,11 +45,11 @@ pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
 }
 \examples{
 \dontrun{
-  ## Example of a 3D PCA biplot
-  pca.biplot3D(dataset, pca.result, "metadata.var2", pcas = c(1,2,3))
+    ## Example of getting the intensity
+    frequencies = get.intensity(sample, 2.01, tolerance = 0.001)
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~pca }
-\keyword{ ~biplot }% __ONLY ONE__ keyword per line
+\keyword{ ~frequencies }
+\keyword{ ~intensity }% __ONLY ONE__ keyword per line

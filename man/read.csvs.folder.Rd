@@ -1,35 +1,30 @@
-\name{pca.biplot3D}
-\alias{pca.biplot3D}
+\name{read.csvs.folder}
+\alias{read.csvs.folder}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  3D PCA biplot (interactive)
+  Read CSVs from folder
 }
 \description{
-  Shows a interactive 3D PCA biplot.
+  Reads multiple CSV files in a given folder.
 }
 \usage{
-pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
+read.csvs.folder(foldername, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{dataset}{
-        list representing the dataset from a metabolomics experiment.
+  \item{foldername}{
+    string with the name of the folder.
 }
-  \item{pca.result}{
-    prcomp object with the PCA results.
-}
-  \item{column.class}{
-    metadata's variable.
-}
-  \item{pcas}{
-    the three principal components.
+  \item{\dots}{
+    additional parameters to read.csv function.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
-
-
+\value{
+  Returns a list of data frames.
+}
 \references{
 %% ~put references to the literature/web site here ~
 }
@@ -47,11 +42,11 @@ pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
 }
 \examples{
 \dontrun{
-  ## Example of a 3D PCA biplot
-  pca.biplot3D(dataset, pca.result, "metadata.var2", pcas = c(1,2,3))
+    ## Example of reading multiple csvs
+    sample.list = read.csvs.folder("foldername")
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~pca }
-\keyword{ ~biplot }% __ONLY ONE__ keyword per line
+\keyword{ ~read }
+\keyword{ ~csv }% __ONLY ONE__ keyword per line

@@ -30,8 +30,9 @@ pca.robust(dataset, center = "median", scale = "mad", k = 10, write.file = F, fi
   \item{file.out}{
     name of the file that will store the results.
 }
-  \item{\dots}
+  \item{\dots}{
     additional parameters pass to or from other functions.
+}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~

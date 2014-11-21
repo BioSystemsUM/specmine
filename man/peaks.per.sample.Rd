@@ -1,35 +1,30 @@
-\name{pca.biplot3D}
-\alias{pca.biplot3D}
+\name{peaks.per.sample}
+\alias{peaks.per.sample}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  3D PCA biplot (interactive)
+  Peaks per sample
 }
 \description{
-  Shows a interactive 3D PCA biplot.
+  Counts number of peaks in a sample (given its index).
 }
 \usage{
-pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
+peaks.per.sample(sample.list, sample.index)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{dataset}{
-        list representing the dataset from a metabolomics experiment.
+  \item{sample.list}{
+    list of data frames with the samples' peaks.
 }
-  \item{pca.result}{
-    prcomp object with the PCA results.
-}
-  \item{column.class}{
-    metadata's variable.
-}
-  \item{pcas}{
-    the three principal components.
+  \item{sample.index}{
+    sample index.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
-
-
+\value{
+  Return a integer value with the number of peaks in the sample.
+}
 \references{
 %% ~put references to the literature/web site here ~
 }
@@ -47,11 +42,11 @@ pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
 }
 \examples{
 \dontrun{
-  ## Example of a 3D PCA biplot
-  pca.biplot3D(dataset, pca.result, "metadata.var2", pcas = c(1,2,3))
+    ## Example of counting the peaks in a sample
+    num.peaks.sample = peaks.per.sample(sample.list, 4)
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~pca }
-\keyword{ ~biplot }% __ONLY ONE__ keyword per line
+\keyword{ ~peak }
+\keyword{ ~sample }% __ONLY ONE__ keyword per line
