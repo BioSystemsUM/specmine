@@ -25,10 +25,10 @@ train.classifier = function(dataset, column.class, model, validation, num.folds 
                             num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = T) {
   if(class.in.metadata)
 	  train.result = trainClassifier(dataset$data, dataset$metadata[,column.class], model, validation, 
-                                 num.folds, num.repeats, tunelength, tunegrid, metric)
+                                 num.folds, num.repeats, tunelength, tunegrid, metric, summary.function)
   else
     train.result = trainClassifier(dataset$data, dataset$data[column.class,], model, validation, 
-                                   num.folds, num.repeats, tunelength, tunegrid, metric)
+                                   num.folds, num.repeats, tunelength, tunegrid, metric, summary.function)
 	train.result
 }
 
