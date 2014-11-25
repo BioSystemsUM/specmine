@@ -44,7 +44,6 @@ multiClassSummary <- function (data, lev = NULL, model = NULL){
     
     #Clean names and return
     names(stats) <- gsub('[[:blank:]]+', '_', names(stats))
-    print(names(stats))
     return(stats)
     
 }
