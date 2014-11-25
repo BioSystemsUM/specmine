@@ -1,3 +1,54 @@
+#summary function for multi class with ROC metric
+multiClassSummary <- function (data, lev = NULL, model = NULL){
+    
+    #Load Libraries
+    require(Metrics)
+    require(caret)
+    
+    #Check data
+    if (!all(levels(data[, "pred"]) == levels(data[, "obs"])))
+        stop("levels of observed and predicted data do not match")
+    
+    #Calculate custom one-vs-all stats for each class
+    prob_stats <- lapply(levels(data[, "pred"]), function(class){
+        
+        #Grab one-vs-all data for the class
+        pred <- ifelse(data[, "pred"] == class, 1, 0)
+        obs <- ifelse(data[, "obs"] == class, 1, 0)
+        prob <- data[,class]
+        
+        #Calculate one-vs-all AUC and logLoss and return
+        cap_prob <- pmin(pmax(prob, .000001), .999999)
+        prob_stats <- c(auc(obs, prob), logLoss(obs, cap_prob))
+        names(prob_stats) <- c('ROC', 'logLoss')
+        return(prob_stats)
+    })
+    prob_stats <- do.call(rbind, prob_stats)
+    rownames(prob_stats) <- paste('Class:', levels(data[, "pred"]))
+    
+    #Calculate confusion matrix-based statistics
+    CM <- confusionMatrix(data[, "pred"], data[, "obs"])
+    
+    #Aggregate and average class-wise stats
+    #Todo: add weights
+    class_stats <- cbind(CM$byClass, prob_stats)
+    class_stats <- colMeans(class_stats)
+    
+    #Aggregate overall stats
+    overall_stats <- c(CM$overall)
+    
+    #Combine overall with class-wise stats and remove some stats we don't want
+    stats <- c(overall_stats, class_stats)
+    stats <- stats[! names(stats) %in% c('AccuracyNull',
+                                         'Prevalence', 'Detection Prevalence')]
+    
+    #Clean names and return
+    names(stats) <- gsub('[[:blank:]]+', '_', names(stats))
+    return(stats)
+    
+}
+
+
 #MODEL SELECTION AND PREDICTION
 
 #train a classifier and predict new samples
@@ -87,7 +138,7 @@ predict.samples = function(train.result, new.samples){
 
 
 train.models.performance = function(dataset, models, column.class, validation, num.folds = 10, 
-                                    num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = T){
+                                    num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = "default", class.in.metadata = T){
 	result.df = NULL
 	classification.flag = FALSE
 	vars.imp = list()
@@ -97,11 +148,20 @@ train.models.performance = function(dataset, models, column.class, validation, n
 	classification.flag = TRUE
   	confusion.matrices = list()
   }
+  if (is.character(summary.function)){
+	  if (metric == "ROC" && summary.function == "default"){
+		summary.function = multiClassSummary
+	  } else if (summary.function == "default"){
+		summary.function = defaultSummary
+	  }
+  }
+  
   best.tunes = list()
   final.models= list()
 	for (i in 1:length(models)){
 		train.result = train.classifier(dataset, column.class, models[i], validation, num.folds, 
                                     num.repeats, tunelength, tunegrid, metric, summary.function, class.in.metadata = class.in.metadata)
+		print(train.result)
 		vips = var.importance(train.result)
 		rownames(vips) = substring(rownames(vips), 2, nchar(rownames(vips)))
 		vips$Mean = apply(vips, 1, mean) 
