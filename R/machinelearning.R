@@ -44,6 +44,7 @@ trainClassifier <- function(datamat, sampleclass, model, validation, num.folds =
 	colnames(samples.df.ml) = paste("X",rnames,sep="")
 	#names(samples.df.ml) = paste("X",rownames(datamat),sep="")
 	rownames(samples.df.ml) = colnames(datamat)
+	train.metric = metric
 	if (class.in.metadata){
 		samples.df.ml$class = sampleclass
 		if (is.null(metric) && is.factor(samples.df.ml$class)){
