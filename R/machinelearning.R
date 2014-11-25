@@ -11,9 +11,10 @@
 # tunelength: number of levels for each tuning parameters
 # tunegrid: dataframe with possible tuning values
 train.and.predict = function(dataset, new.samples, column.class, model, validation, num.folds = 10, 
-                             num.repeats = 10, tunelength = 10, tunegrid = NULL, summary.function = defaultSummary) {
+                             num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, 
+                             summary.function = defaultSummary) {
 	train.result = train.classifier(dataset, column.class, model, validation, num.folds, num.repeats, 
-                                  tunelength, tunegrid, summary.function)
+                                  tunelength, tunegrid, metric, summary.function)
 	predict.result = predict.samples(train.result, new.samples)
 	result = list(train.result = train.result, predictions.result = predict.result)
 	result
@@ -21,13 +22,13 @@ train.and.predict = function(dataset, new.samples, column.class, model, validati
 
 # train classifier
 train.classifier = function(dataset, column.class, model, validation, num.folds = 10, 
-                            num.repeats = 10, tunelength = 10, tunegrid = NULL, summary.function = defaultSummary, class.in.metadata = T) {
+                            num.repeats = 10, tunelength = 10, tunegrid = NULL, metric, summary.function = defaultSummary, class.in.metadata = T) {
   if(class.in.metadata)
 	  train.result = trainClassifier(dataset$data, dataset$metadata[,column.class], model, validation, 
-                                 num.folds, num.repeats, tunelength, tunegrid)
+                                 num.folds, num.repeats, tunelength, tunegrid, metric)
   else
     train.result = trainClassifier(dataset$data, dataset$data[column.class,], model, validation, 
-                                   num.folds, num.repeats, tunelength, tunegrid)
+                                   num.folds, num.repeats, tunelength, tunegrid, metric)
 	train.result
 }
 
@@ -35,7 +36,7 @@ train.classifier = function(dataset, column.class, model, validation, num.folds 
 #model: caret classifier
 #validation: caret resampling method -> boot, boot632, cv, repeatedcv, LOOCV, LGOCV, oob(only for random forests)
 trainClassifier <- function(datamat, sampleclass, model, validation, num.folds = 10, num.repeats = 10, 
-                            tunelength = 10, tunegrid = NULL, summary.function = defaultSummary, class.in.metadata = T)
+                            tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = T)
 {
 	require(caret)
 	samples.df.ml = data.frame(t(datamat))
@@ -43,14 +44,28 @@ trainClassifier <- function(datamat, sampleclass, model, validation, num.folds =
 	colnames(samples.df.ml) = paste("X",rnames,sep="")
 	#names(samples.df.ml) = paste("X",rownames(datamat),sep="")
 	rownames(samples.df.ml) = colnames(datamat)
-	if (class.in.metadata) samples.df.ml$class = sampleclass
-  
-  
+	if (class.in.metadata){
+		samples.df.ml$class = sampleclass
+		if (is.null(metric) && is.factor(samples.df.ml$class)){
+			train.metric = "Accuracy"
+		} else if (is.null(metric) && !is.factor(samples.df.ml$class)){
+			train.metric = "RMSE"
+		}
+	} else {
+		if (is.null(metric) && is.factor(samples.df.ml$sampleclass)){
+			train.metric = "Accuracy"
+		} else if (is.null(metric) && !is.factor(samples.df.ml$sampleclass)){
+			train.metric = "RMSE"
+		}
+	}
+	
 	train.control = trainControl(method=validation, number = num.folds, repeats=num.repeats, summaryFunction= summary.function)
 	if (class.in.metadata) 
-		result.train = train(class ~., data = samples.df.ml, method=model, tuneLength = tunelength, trControl = train.control, tuneGrid = tunegrid)
+		result.train = train(class ~., data = samples.df.ml, method=model, tuneLength = tunelength, metric = train.metric,
+						trControl = train.control, tuneGrid = tunegrid)
 	else
-		result.train = train(sampleclass ~., data = samples.df.ml, method=model, tuneLength = tunelength, trControl = train.control, tuneGrid = tunegrid)
+		result.train = train(sampleclass ~., data = samples.df.ml, method=model, tuneLength = tunelength, metric = train.metric, 
+						trControl = train.control, tuneGrid = tunegrid)
 	result.train
 } 
 
