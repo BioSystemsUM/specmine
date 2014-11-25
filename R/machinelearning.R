@@ -59,8 +59,10 @@ trainClassifier <- function(datamat, sampleclass, model, validation, num.folds =
 			train.metric = "RMSE"
 		}
 	}
-	
-	train.control = trainControl(method=validation, number = num.folds, repeats=num.repeats, summaryFunction= summary.function)
+	if (train.metric == "ROC") class.probs = T
+	else class.probs = F
+	train.control = trainControl(method=validation, number = num.folds, repeats=num.repeats, classProbs = class.probs, 
+					summaryFunction= summary.function)
 	if (class.in.metadata) 
 		result.train = train(class ~., data = samples.df.ml, method=model, tuneLength = tunelength, metric = train.metric,
 						trControl = train.control, tuneGrid = tunegrid)
