@@ -11,9 +11,9 @@
 # tunelength: number of levels for each tuning parameters
 # tunegrid: dataframe with possible tuning values
 train.and.predict = function(dataset, new.samples, column.class, model, validation, num.folds = 10, 
-                             num.repeats = 10, tunelength = 10, tunegrid = NULL) {
+                             num.repeats = 10, tunelength = 10, tunegrid = NULL, summary.function = defaultSummary) {
 	train.result = train.classifier(dataset, column.class, model, validation, num.folds, num.repeats, 
-                                  tunelength, tunegrid)
+                                  tunelength, tunegrid, summary.function)
 	predict.result = predict.samples(train.result, new.samples)
 	result = list(train.result = train.result, predictions.result = predict.result)
 	result
@@ -21,7 +21,7 @@ train.and.predict = function(dataset, new.samples, column.class, model, validati
 
 # train classifier
 train.classifier = function(dataset, column.class, model, validation, num.folds = 10, 
-                            num.repeats = 10, tunelength = 10, tunegrid = NULL, class.in.metadata = T) {
+                            num.repeats = 10, tunelength = 10, tunegrid = NULL, summary.function = defaultSummary, class.in.metadata = T) {
   if(class.in.metadata)
 	  train.result = trainClassifier(dataset$data, dataset$metadata[,column.class], model, validation, 
                                  num.folds, num.repeats, tunelength, tunegrid)
@@ -35,7 +35,7 @@ train.classifier = function(dataset, column.class, model, validation, num.folds 
 #model: caret classifier
 #validation: caret resampling method -> boot, boot632, cv, repeatedcv, LOOCV, LGOCV, oob(only for random forests)
 trainClassifier <- function(datamat, sampleclass, model, validation, num.folds = 10, num.repeats = 10, 
-                            tunelength = 10, tunegrid = NULL, class.in.metadata = T)
+                            tunelength = 10, tunegrid = NULL, summary.function = defaultSummary, class.in.metadata = T)
 {
 	require(caret)
 	samples.df.ml = data.frame(t(datamat))
@@ -46,7 +46,7 @@ trainClassifier <- function(datamat, sampleclass, model, validation, num.folds =
 	if (class.in.metadata) samples.df.ml$class = sampleclass
   
   
-	train.control = trainControl(method=validation, number = num.folds, repeats=num.repeats, summaryFunction= defaultSummary)
+	train.control = trainControl(method=validation, number = num.folds, repeats=num.repeats, summaryFunction= summary.function)
 	if (class.in.metadata) 
 		result.train = train(class ~., data = samples.df.ml, method=model, tuneLength = tunelength, trControl = train.control, tuneGrid = tunegrid)
 	else
@@ -69,7 +69,7 @@ predict.samples = function(train.result, new.samples){
 
 
 train.models.performance = function(dataset, models, column.class, validation, num.folds = 10, 
-                                    num.repeats = 10, tunelength = 10, tunegrid = NULL, class.in.metadata = T){
+                                    num.repeats = 10, tunelength = 10, tunegrid = NULL, summary.function = defaultSummary, class.in.metadata = T){
 	result.df = NULL
 	classification.flag = FALSE
 	vars.imp = list()
@@ -83,7 +83,7 @@ train.models.performance = function(dataset, models, column.class, validation, n
   final.models= list()
 	for (i in 1:length(models)){
 		train.result = train.classifier(dataset, column.class, models[i], validation, num.folds, 
-                                    num.repeats, tunelength, tunegrid, class.in.metadata = class.in.metadata)
+                                    num.repeats, tunelength, tunegrid, summary.function, class.in.metadata = class.in.metadata)
 		vips = var.importance(train.result)
 		rownames(vips) = substring(rownames(vips), 2, nchar(rownames(vips)))
 		vips$Mean = apply(vips, 1, mean) 
