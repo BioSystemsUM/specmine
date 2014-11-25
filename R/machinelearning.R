@@ -149,7 +149,7 @@ train.models.performance = function(dataset, models, column.class, validation, n
   	confusion.matrices = list()
   }
   if (is.character(summary.function)){
-	  if (metric == "ROC" && summary.function == "default"){
+	  if (!is.null(metric) && metric == "ROC" && summary.function == "default"){
 		summary.function = multiClassSummary
 	  } else if (summary.function == "default"){
 		summary.function = defaultSummary
@@ -161,7 +161,6 @@ train.models.performance = function(dataset, models, column.class, validation, n
 	for (i in 1:length(models)){
 		train.result = train.classifier(dataset, column.class, models[i], validation, num.folds, 
                                     num.repeats, tunelength, tunegrid, metric, summary.function, class.in.metadata = class.in.metadata)
-		print(train.result)
 		vips = var.importance(train.result)
 		rownames(vips) = substring(rownames(vips), 2, nchar(rownames(vips)))
 		vips$Mean = apply(vips, 1, mean) 
