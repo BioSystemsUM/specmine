@@ -47,7 +47,7 @@ export(pca.scoresplot2D)
 export(pca.scoresplot3D.rgl)
 export(pca.scoresplot3D)
 export(pca.biplot)
-export(pca.biplot3D
+export(pca.biplot3D)
 export(pca.pairs.plot)
 export(pca.kmeans.plot3D)
 export(pca.kmeans.plot2D)
