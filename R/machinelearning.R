@@ -22,7 +22,7 @@ train.and.predict = function(dataset, new.samples, column.class, model, validati
 
 # train classifier
 train.classifier = function(dataset, column.class, model, validation, num.folds = 10, 
-                            num.repeats = 10, tunelength = 10, tunegrid = NULL, metric, summary.function = defaultSummary, class.in.metadata = T) {
+                            num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = T) {
   if(class.in.metadata)
 	  train.result = trainClassifier(dataset$data, dataset$metadata[,column.class], model, validation, 
                                  num.folds, num.repeats, tunelength, tunegrid, metric)
@@ -84,7 +84,7 @@ predict.samples = function(train.result, new.samples){
 
 
 train.models.performance = function(dataset, models, column.class, validation, num.folds = 10, 
-                                    num.repeats = 10, tunelength = 10, tunegrid = NULL, summary.function = defaultSummary, class.in.metadata = T){
+                                    num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = T){
 	result.df = NULL
 	classification.flag = FALSE
 	vars.imp = list()
@@ -98,7 +98,7 @@ train.models.performance = function(dataset, models, column.class, validation, n
   final.models= list()
 	for (i in 1:length(models)){
 		train.result = train.classifier(dataset, column.class, models[i], validation, num.folds, 
-                                    num.repeats, tunelength, tunegrid, summary.function, class.in.metadata = class.in.metadata)
+                                    num.repeats, tunelength, tunegrid, metric, summary.function, class.in.metadata = class.in.metadata)
 		vips = var.importance(train.result)
 		rownames(vips) = substring(rownames(vips), 2, nchar(rownames(vips)))
 		vips$Mean = apply(vips, 1, mean) 
