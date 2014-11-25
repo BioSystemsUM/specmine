@@ -144,7 +144,7 @@ train.models.performance = function(dataset, models, column.class, validation, n
 	vars.imp = list()
 	final.result = list()
   full.results = list()
-  if ( is.factor(dataset$metadata[column.class,])){
+  if ( is.factor(dataset$metadata[,column.class])){
 	classification.flag = TRUE
   	confusion.matrices = list()
   }
