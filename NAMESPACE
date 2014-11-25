@@ -1,7 +1,7 @@
 export(create.dataset)
 export(check.dataset)
 export(sum.dataset)
-
+exportPattern("^[get]")
 export(num.samples)
 export(num.x.values)
 export(is.spectra)
