@@ -17,7 +17,7 @@ normalize(dataset, method, ref = NULL, constant = 1000)
 }
   \item{method}{
     string specifying the normalization method. The possible values are:
-      \itemzite{
+      \itemite{
         \item \bold{"sum"} normalization by sum.
         \item \bold{"median"} normalization by median.
         \item \bold{"ref.sample"} normalization by reference sample.
