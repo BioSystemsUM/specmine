@@ -186,10 +186,10 @@ group.peaks.metaboanalyst<-function(peaklist, samp.classes, samp.names,  mzwid =
 	res$groups <- groupmat[uindex,]
 	res$groupidx<- groupindex[uindex]
 	res$peaks <- peakmatrix
-	set.groups.metaboanalyst(res, samp.names, samp.classes)
+	set.groups.metaboanalyst(res, samp.names, samp.classes, ncol(peaklist[[1]]))
 }
 
-set.groups.metaboanalyst<-function(peaks.result, samp.names, samp.classes) {
+set.groups.metaboanalyst<-function(peaks.result, samp.names, samp.classes, num.col) {
     groupmat <- peaks.result$groups;
     groupindex <- peaks.result$groupidx;
 
@@ -213,9 +213,12 @@ set.groups.metaboanalyst<-function(peaks.result, samp.names, samp.classes) {
     }
 	values = data.frame(values)
     colnames(values) <- samp.names;
-
-    rownames(values) <- paste(round(groupmat[,paste("ppm", "med", sep="")],5));
-
+    print(groupmat[,"ppmmed"])
+    if (num.col == 2){
+		rownames(values) <- paste(round(groupmat[,paste("ppm", "med", sep="")],5));
+	} else {
+		rownames(values) <- paste(round(groupmat[,paste("ppm", "med", sep="")],5), "/", round(groupmat[,paste("rt", "med", sep="")],2), sep="");
+	}
 	values
 }
 
