@@ -4,8 +4,18 @@
 # samp.classes: column of metadata dataframe - needed in case of "metaboanalyst"
 # step used in "own" algorithm
 # returns dataset using standard structure
-"group.peaks" = function(sample.list, method = "own", metadata = NULL, samp.classes= 1, 
+"group.peaks" = function(sample.list, type, method = "own", metadata = NULL, samp.classes= 1, 
                          description = "", label.x = NULL, label.values = NULL, step = 0.03) {
+  if (type == "nmr-peaks"){
+	mzwid = 0.03
+	bw = 10
+  } else if (type == "lcms-peaks"){
+	mzwid = 0.25
+	bw = 30
+  } else if (type == "gcms-peaks"){
+	mzwid = 0.25
+	bw = 5
+  } else stop(paste("The ", type," type is not supported!", sep = ""))
 	
   if (method == "own"){
 		merged.peaks = merge.eq.peaks.samplelist(sample.list)
@@ -13,9 +23,9 @@
 		data = group.peaks.own(samples.df, step)
 	} 
   else if (method == "metaboanalyst"){
-		data = group.peaks.metaboanalyst(sample.list, metadata[,samp.classes], names(sample.list))
+		data = group.peaks.metaboanalyst(sample.list, metadata[,samp.classes], names(sample.list), mzwid = mzwid, bw = bw)
 	}
-	create.dataset(as.matrix(data), metadata = metadata, type = "nmr-peaks", 
+	create.dataset(as.matrix(data), metadata = metadata, type = type, 
                  description = description, label.x = label.x, label.values = label.values)
 }
 
@@ -215,9 +225,16 @@ set.groups.metaboanalyst<-function(peaks.result, samp.names, samp.classes) {
 create.metaboanalyst.mat <- function(sample.list){
   mat = matrix();
   allmat = NULL;
-  for (i in 1:length(sample.list)){
-    mat = cbind(sample.list[[i]][,"ppm"],1000, sample.list[[i]][,"INTENSITY"],i)
-    allmat = rbind(allmat,mat);
+  if (ncol(sample.list[[1]]) == 2){
+	for (i in 1:length(sample.list)){
+		mat = cbind(sample.list[[i]][,1],1000, sample.list[[i]][,2],i)
+		allmat = rbind(allmat,mat);
+	}
+  } else {
+	for (i in 1:length(sample.list)){
+		mat = cbind(sample.list[[i]][,1],sample.list[[i]][,2], sample.list[[i]][,3],i)
+		allmat = rbind(allmat,mat);
+	}
   }
   colnames(allmat) = c("ppm","rt","int", "sample")
   allmat  
