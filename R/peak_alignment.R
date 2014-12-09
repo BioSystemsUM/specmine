@@ -213,7 +213,6 @@ set.groups.metaboanalyst<-function(peaks.result, samp.names, samp.classes, num.c
     }
 	values = data.frame(values)
     colnames(values) <- samp.names;
-    print(groupmat[,"ppmmed"])
     if (num.col == 2){
 		rownames(values) <- paste(round(groupmat[,paste("ppm", "med", sep="")],5));
 	} else {
