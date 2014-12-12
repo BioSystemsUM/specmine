@@ -179,8 +179,8 @@ train.models.performance = function(dataset, models, column.class, validation, n
   if (classification.flag) names(confusion.matrices) = models
   names(best.tunes) = models
   names(final.models) = models
-  result.df = result.df[,colnames(result.df) %in% c("Accuracy","AccuracySD","Kappa","KappaSD","ROC","Sensitivity",
-														  "Specificity","SensitivitySD","SpecificitySD","ROCSD")]
+  result.df = result.df[,colnames(result.df) %in% c("RMSE", "Rsquared", "RMSESD","RsquaredSD","Accuracy","AccuracySD","Kappa","KappaSD",
+													"ROC","Sensitivity","Specificity","SensitivitySD","SpecificitySD","ROCSD")]
   final.result$performance = result.df
 	final.result$vips = vars.imp
   final.result$full.results = full.results
