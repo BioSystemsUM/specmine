@@ -2,10 +2,10 @@
 \alias{train.classifier}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+  Train classifier
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+  Train a specific classifier.
 }
 \usage{
 train.classifier(dataset, column.class, model, validation, num.folds = 10, num.repeats = 10, tunelength = 10, tunegrid = NULL)
