@@ -41,8 +41,10 @@ count.missing.values.per.variable(dataset, remove.zero = T)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
+\dontrun{
   ## Example of counting the missing values on each variable
   count.missing.values.per.variable(dataset)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

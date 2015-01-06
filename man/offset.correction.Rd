@@ -38,8 +38,10 @@ offset.correction(dataset)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
+\dontrun{
   ## Example of offset correction
   dataset.corrected = offset.correction(dataset)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
