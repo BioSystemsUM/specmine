@@ -40,7 +40,7 @@ ms.create.matrix<-function(xset, intvalue = "into"){
 }
 
 # A commonly used value is 30 (seconds) for LC-MS and 4 (seconds) for GC-MS spectra (fwhm).
-read.ms.spectra = function(folder.name, type = "undefined", metadata = NULL, descriptio = "", prof.method='bin', fwhm=30, bw=30, intvalue = "into"){
+read.ms.spectra = function(folder.name, type = "undefined", metadata = NULL, description = "", prof.method='bin', fwhm=30, bw=30, intvalue = "into"){
 	xset = read.ms.spec(folder.name, prof.method, fwhm, bw)
 	xset = ms.rt.correction(xset, bw)
 	xset = ms.fill.peaks(xset)
