@@ -231,6 +231,7 @@ volcano.plot.fc.tt = function(dataset, fc.results, tt.results,
   text(fc.orig$"log2(FC)", tt.orig$"-log10", texts, cex = 0.6, col = "blue", srt = -30, pos = 1)
   abline(h = -log10(tt.threshold), col = "lightblue")
   abline(v = log2(fc.threshold), , col = "lightblue")
+  rownames(dataset$data[to.color,])
 }
 
 
