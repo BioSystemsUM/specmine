@@ -82,7 +82,7 @@ pca.screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "r
 
 #2d scores plot
 pca.scoresplot2D = function(dataset, pca.result, column.class, pcas = c(1,2), labels = FALSE, 
-                            ellipses = FALSE, pallette = 2)
+                            ellipses = FALSE, pallette = 2, leg.pos = "right")
 {
   require(ggplot2)
   if (class(pca.result) == "prcomp"){
@@ -95,7 +95,8 @@ pca.scoresplot2D = function(dataset, pca.result, column.class, pcas = c(1,2), la
   pca.points$group = dataset$metadata[,column.class]
   pca.points$label = colnames(dataset$data)
   pca.plot = ggplot(data = pca.points, aes(x=x, y=y,colour=group)) + geom_point(size=3, alpha=1) +
-    scale_colour_brewer(type = "qual", palette=pallette) + xlab(paste("PC",pcas[1],sep="")) + ylab(paste("PC",pcas[2],sep=""))
+    scale_colour_brewer(type = "qual", palette=pallette) + xlab(paste("PC",pcas[1],sep="")) + ylab(paste("PC",pcas[2],sep="")) +
+    theme(legend.position = leg.pos)
   if (labels){
     pca.plot = pca.plot + geom_text(data = pca.points, aes(x,y,label=label),hjust=-0.1, vjust=0)
   }
@@ -193,7 +194,7 @@ pca.kmeans.plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 
 #kmeans clustering with 2 first PCs
 pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2), 
-                             kmeans.result = NULL, labels = FALSE, ellipses = FALSE){
+                             kmeans.result = NULL, labels = FALSE, ellipses = FALSE, leg.pos = "right"){
   require(ggplot2)
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
@@ -209,7 +210,8 @@ pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
   pca.points$group = factor(kmeans.result$cluster)
   pca.points$label = colnames(dataset$data)
   pca.plot = ggplot(data = pca.points, aes(x=x, y=y,colour=group)) + geom_point(size=3, alpha=.6) +
-    scale_colour_brewer(palette="Set1") + xlab(paste("PC",pcas[1],sep="")) + ylab(paste("PC",pcas[2],sep=""))
+    scale_colour_brewer(palette="Set1") + xlab(paste("PC",pcas[1],sep="")) + ylab(paste("PC",pcas[2],sep="")) +
+    theme(legend.position = leg.pos)
   if (labels){
     pca.plot = pca.plot + geom_text(data = pca.points, aes(x,y,label=label),hjust=-0.1, vjust=0, size = 3)
   }
