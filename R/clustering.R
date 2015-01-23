@@ -95,7 +95,7 @@ kmeans.plot = function(dataset, kmeans.result){
   ggdendrogram(hc.result, ...)
 }
 
-"dendrogram.plot.col" = function(dataset, hc.result, classes.col, title = "", lab.cex = 1.0, ...) 
+"dendrogram.plot.col" = function(dataset, hc.result, classes.col, title = "", lab.cex = 1.0, leg.pos = "topright", ...) 
 {
   classes = dataset$metadata[,classes.col]
   cluster = as.dendrogram(hc.result)
@@ -105,7 +105,8 @@ kmeans.plot = function(dataset, kmeans.result){
   leg.col = 1:length(levels(classes))
   leg.txt = c("Key", leg.txt)
   leg.col = c("black", leg.col)
-  legend("topright", leg.txt, text.col = leg.col, bty = "n")
+  if (leg.pos != "none")
+    legend("leg.pos", leg.txt, text.col = leg.col, bty = "n")
 }
 
 "color.leaf" = function (n, dataset, classes, lab.cex = 1.0) {
