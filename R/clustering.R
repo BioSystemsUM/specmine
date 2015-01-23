@@ -106,7 +106,7 @@ kmeans.plot = function(dataset, kmeans.result){
   leg.txt = c("Key", leg.txt)
   leg.col = c("black", leg.col)
   if (leg.pos != "none")
-    legend("leg.pos", leg.txt, text.col = leg.col, bty = "n")
+    legend(leg.pos, leg.txt, text.col = leg.col, bty = "n")
 }
 
 "color.leaf" = function (n, dataset, classes, lab.cex = 1.0) {
