@@ -82,7 +82,7 @@ pca.screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "r
 
 #2d scores plot
 pca.scoresplot2D = function(dataset, pca.result, column.class, pcas = c(1,2), labels = FALSE, 
-                            ellipses = FALSE, pallette = 2, leg.pos = "right")
+                            ellipses = FALSE, pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
 {
   require(ggplot2)
   if (class(pca.result) == "prcomp"){
@@ -97,6 +97,12 @@ pca.scoresplot2D = function(dataset, pca.result, column.class, pcas = c(1,2), la
   pca.plot = ggplot(data = pca.points, aes(x=x, y=y,colour=group)) + geom_point(size=3, alpha=1) +
     scale_colour_brewer(type = "qual", palette=pallette) + xlab(paste("PC",pcas[1],sep="")) + ylab(paste("PC",pcas[2],sep="")) +
     theme(legend.position = leg.pos)
+  if (!is.null(xlim)){
+	pca.plot = pca.plot + xlim(xlim[1],xlim[2])
+  }
+  if (!is.null(ylim)){
+	pca.plot = pca.plot + ylim(ylim[1],ylim[2])
+  }
   if (labels){
     pca.plot = pca.plot + geom_text(data = pca.points, aes(x,y,label=label),hjust=-0.1, vjust=0)
   }
@@ -194,7 +200,7 @@ pca.kmeans.plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 
 #kmeans clustering with 2 first PCs
 pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2), 
-                             kmeans.result = NULL, labels = FALSE, ellipses = FALSE, leg.pos = "right"){
+                             kmeans.result = NULL, labels = FALSE, ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL){
   require(ggplot2)
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
@@ -212,6 +218,12 @@ pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
   pca.plot = ggplot(data = pca.points, aes(x=x, y=y,colour=group)) + geom_point(size=3, alpha=.6) +
     scale_colour_brewer(palette="Set1") + xlab(paste("PC",pcas[1],sep="")) + ylab(paste("PC",pcas[2],sep="")) +
     theme(legend.position = leg.pos)
+  if (!is.null(xlim)){
+	pca.plot = pca.plot + xlim(xlim[1],xlim[2])
+  }
+  if (!is.null(ylim)){
+	pca.plot = pca.plot + ylim(ylim[1],ylim[2])
+  }
   if (labels){
     pca.plot = pca.plot + geom_text(data = pca.points, aes(x,y,label=label),hjust=-0.1, vjust=0, size = 3)
   }
