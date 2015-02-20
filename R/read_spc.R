@@ -1,4 +1,4 @@
-"read.dataset.spc" = function(folder.data, filename.meta= NULL, type = "undefined", description = "", modified = F,
+"read.dataset.spc" = function(folder.data, filename.meta= NULL, type = "undefined", description = "", nosubhdr = F,
                               label.x = NULL, label.values = NULL,  
                               header.col.meta = TRUE, header.row.meta = TRUE, sep.meta = ","){
 								
@@ -6,7 +6,7 @@
 		metadata = read.metadata(filename.meta, header.col = header.col.meta, header.row = header.row.meta, sep = sep.meta)
 	else metadata = NULL
 	
-	data.spc = read.data.spc(folder.data, modified = modified)
+	data.spc = read.data.spc(folder.data, nosubhdr = nosubhdr)
 	
 	freqs = data.spc[[1]]$wavelength # get frequencies from first spectrum
 	datamat = matrix(data = NA, nrow = length(freqs), ncol = length(data.spc))
@@ -24,7 +24,7 @@
 	dataset
 }
 
-"read.data.spc" = function(foldername, modified = F)
+"read.data.spc" = function(foldername, nosubhdr = F)
 {
   require(hyperSpec)
   filenames = dir(foldername, pattern=".[Ss][Pp][Cc]$", full.name=TRUE)
@@ -33,10 +33,10 @@
   snames <- gsub("\\.[^.]*$", "", basename(filenames));
   for (i in 1:length(filenames)) {
     print(paste("Reading sample ", filenames[i]))
-    if (!modified){
+    if (!nosubhdr){
 		sampleList[[i]] = read.spc(filenames[i], no.object = T)
 	} else {
-		sampleList[[i]] = read.spc.modified(filenames[i], no.object = T)
+		sampleList[[i]] = read.spc.nosubhdr(filenames[i], no.object = T)
 	}
   }
   sampleNames = snames
