@@ -15,6 +15,9 @@
 
 	rownames(datamat) = as.character(freqs)
 	colnames(datamat) = names(data.spc)
+	
+	if (is.null(label.x)) label.x = data.spc[[1]]$labels$.wavelength
+	if (is.null(label.values)) label.values = data.spc[[1]]$labels$spc
 
 	dataset = create.dataset(datamat, type = type, metadata = metadata, description = description, 
 						   label.x = label.x, label.values = label.values)
