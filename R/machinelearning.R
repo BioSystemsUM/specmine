@@ -169,7 +169,7 @@ train.models.performance = function(dataset, models, column.class, validation, n
 		vars.imp[[i]] = vips[order(vips$Mean, decreasing=T),]
 		vips = NULL
     full.results[[i]] = train.result$results
-    if (classification.flag) confusion.matrices[[i]] = confusionMatrix(train.result)
+    if (classification.flag) confusion.matrices[[i]] = try(confusionMatrix(train.result), TRUE)
     best.tunes[[i]] = train.result$bestTune
     final.models[[i]] = train.result$finalModel
 	}
