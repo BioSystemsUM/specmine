@@ -1,4 +1,4 @@
-"read.dataset.spc" = function(folder.data, filename.meta= NULL, type = "undefined", description = "", 
+"read.dataset.spc" = function(folder.data, filename.meta= NULL, type = "undefined", description = "", modified = F,
                               label.x = NULL, label.values = NULL,  
                               header.col.meta = TRUE, header.row.meta = TRUE, sep.meta = ","){
 								
@@ -6,7 +6,7 @@
 		metadata = read.metadata(filename.meta, header.col = header.col.meta, header.row = header.row.meta, sep = sep.meta)
 	else metadata = NULL
 	
-	data.spc = read.data.spc(folder.data)
+	data.spc = read.data.spc(folder.data, modified = modified)
 	
 	freqs = data.spc[[1]]$wavelength # get frequencies from first spectrum
 	datamat = matrix(data = NA, nrow = length(freqs), ncol = length(data.spc))
