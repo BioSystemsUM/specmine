@@ -207,11 +207,11 @@ summary.var.importance = function(performances, number.rows){
 
 # PCA PLOTS
 
-"pca.plot.3d" = function(dataset, model, var.class, pcas = 1:3, pt.cex = 1, ...) {
+"pca.plot.3d" = function(dataset, model, var.class, pcas = 1:3, pt.cex = 1, legend.place = "topright", ...) {
   require(scatterplot3d)
   if (length(pcas) != 3) stop("Wrong dimension in parameter pcas")
   classes = dataset$metadata[,var.class]
   scatterplot3d(model$scores[,pcas], color=as.integer(classes), pch=17, 
                 xlab = "Component 1", ylab = "Component 2", zlab = "Component 3")
-  legend(-1.5, 2.5, levels(classes), col = 1:length(classes), pt.cex = pt.cex, pch= 17, ...)
+  legend(legend.place, levels(classes), col = 1:length(classes), pt.cex = pt.cex, pch= 17, ...)
 }
