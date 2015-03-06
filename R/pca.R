@@ -181,7 +181,7 @@ biplot.princomp.modified = function (x, x.colors, choices = 1L:2L, scale = 1, pc
     if (pc.biplot) 
         lam <- lam/sqrt(n)
     biplot.default.modified(t(t(scores[, choices])/lam), t(t(x$loadings[, 
-        choices]) * lam), x.colors, ...)
+        choices]) * lam), x.colors = x.colors, ...)
     invisible()
 }
 
@@ -205,7 +205,7 @@ biplot.prcomp.modified = function (x, x.colors, choices = 1L:2L, scale = 1, pc.b
     if (pc.biplot) 
         lam <- lam/sqrt(n)
     biplot.default.modified(t(t(scores[, choices])/lam), t(t(x$rotation[, 
-        choices]) * lam), x.colors, y.colors, ...)
+        choices]) * lam), x.colors = x.colors, ...)
     invisible()
 }
 
