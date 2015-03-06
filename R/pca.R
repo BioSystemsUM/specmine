@@ -149,7 +149,9 @@ pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors 
 	x.colors.meta = as.integer(dataset$metadata[, x.colors])
 	x.flag = T
   }
-
+  if (x.flag){
+	legend(legend.place, levels(dataset$metadata[, x.colors]), cex=legend.cex, fill = sort(as.integer(factor(levels(dataset$metadata[, x.colors]))))) 
+  }
   if (class(pca.result) == "prcomp"){
 	biplot.prcomp.modified(pca.result, cex = cex, x.colors = x.colors.meta, ...)
   } else if (class(pca.result) == "princomp"){
@@ -157,9 +159,7 @@ pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors 
   } else {
 	stop("Class not supported");
   } 
-  if (x.flag){
-	legend(legend.place, levels(dataset$metadata[, x.colors]), cex=legend.cex, fill = sort(as.integer(factor(levels(dataset$metadata[, x.colors]))))) 
-  }
+
 }
 
 biplot.princomp.modified = function (x, x.colors, choices = 1L:2L, scale = 1, pc.biplot = FALSE, ...) 
