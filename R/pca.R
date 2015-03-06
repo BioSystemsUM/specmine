@@ -143,7 +143,7 @@ pca.scoresplot3D = function(dataset, pca.result, column.class, pcas=c(1,2,3))
 }
 
 #biplots
-pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors = 1, inset = c(-0.4, 0), legend.place = "topright", ...) {
+pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors = 1, inset = c(0, 0), legend.place = "topright", ...) {
   x.flag = F
   if (x.colors %in% colnames(dataset$metadata)){
 	x.colors.meta = x.colors
