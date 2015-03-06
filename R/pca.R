@@ -146,20 +146,21 @@ pca.scoresplot3D = function(dataset, pca.result, column.class, pcas=c(1,2,3))
 pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors = 1, inset = c(-0.4, 0), legend.place = "topright", ...) {
   x.flag = F
   if (x.colors %in% colnames(dataset$metadata)){
-	x.colors.meta = as.integer(dataset$metadata[, x.colors])
+	xcolors.meta = x.colors
+	x.colors = as.integer(dataset$metadata[, x.colors])
 	x.flag = T
 	par(xpd=T, mar=par()$mar+c(0,0,0,6))
   }
 
   if (class(pca.result) == "prcomp"){
-	biplot.prcomp.modified(pca.result, cex = cex, x.colors = x.colors.meta, ...)
+	biplot.prcomp.modified(pca.result, cex = cex, x.colors = x.colors, ...)
   } else if (class(pca.result) == "princomp"){
-	biplot.princomp.modified(pca.result, cex = cex, x.colors = x.colors.meta, ...)
+	biplot.princomp.modified(pca.result, cex = cex, x.colors = x.colors, ...)
   } else {
 	stop("Class not supported");
   } 
   if (x.flag){
-	legend(legend.place, inset = inset, levels(dataset$metadata[, x.colors]), cex=legend.cex, bty="n", fill = sort(as.integer(factor(levels(dataset$metadata[, x.colors]))))) 
+	legend(legend.place, inset = inset, levels(dataset$metadata[, x.colors.meta]), cex=legend.cex, bty="n", fill = sort(as.integer(factor(levels(dataset$metadata[, x.colors.meta]))))) 
 	par(mar=c(5, 4, 4, 2) + 0.1)
   }
 }
