@@ -209,7 +209,7 @@ biplot.prcomp.modified = function (x, x.colors, choices = 1L:2L, scale = 1, pc.b
     invisible()
 }
 
-biplot.default.modified = function (x, y, var.axes = TRUE, x.colors, colors, cex = rep(par("cex"), 2), 
+biplot.default.modified = function (x, y, var.axes = TRUE, col, x.colors, colors, cex = rep(par("cex"), 2), 
     xlabs = NULL, ylabs = NULL, expand = 1, xlim = NULL, ylim = NULL, 
     arrow.len = 0.1, main = NULL, sub = NULL, xlab = NULL, ylab = NULL, 
     ...) 
