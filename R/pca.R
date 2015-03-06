@@ -159,7 +159,6 @@ pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors 
 	stop("Class not supported");
   } 
   if (x.flag){
-	par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
 	legend(legend.place, levels(dataset$metadata[, x.colors]), cex=legend.cex, fill = sort(as.integer(factor(levels(dataset$metadata[, x.colors]))))) 
 	par(oldpar)
   }
