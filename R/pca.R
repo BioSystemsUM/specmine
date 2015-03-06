@@ -146,14 +146,14 @@ pca.scoresplot3D = function(dataset, pca.result, column.class, pcas=c(1,2,3))
 pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors = 1, legend.place = "topright", ...) {
   x.flag = F
   if (x.colors %in% colnames(dataset$metadata)){
-	x.colors = as.integer(dataset$metadata[, x.colors])
+	x.colors.meta = as.integer(dataset$metadata[, x.colors])
 	x.flag = T
   }
 
   if (class(pca.result) == "prcomp"){
-	biplot.prcomp.modified(pca.result, cex = cex, x.colors = x.colors, ...)
+	biplot.prcomp.modified(pca.result, cex = cex, x.colors = x.colors.meta, ...)
   } else if (class(pca.result) == "princomp"){
-	biplot.princomp.modified(pca.result, cex = cex, x.colors = x.colors, ...)
+	biplot.princomp.modified(pca.result, cex = cex, x.colors = x.colors.meta, ...)
   } else {
 	stop("Class not supported");
   } 
