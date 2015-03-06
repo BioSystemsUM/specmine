@@ -148,7 +148,7 @@ pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors 
   if (x.colors %in% colnames(dataset$metadata)){
 	x.colors.meta = as.integer(dataset$metadata[, x.colors])
 	x.flag = T
-	oldpar <- par(xpd=T, mar=par()$mar+c(0,0,0,6))
+	par(xpd=T, mar=par()$mar+c(0,0,0,6))
   }
 
   if (class(pca.result) == "prcomp"){
@@ -160,7 +160,7 @@ pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors 
   } 
   if (x.flag){
 	legend(3.2,1 , levels(dataset$metadata[, x.colors]), cex=legend.cex, fill = sort(as.integer(factor(levels(dataset$metadata[, x.colors]))))) 
-	par(oldpar)
+	par(mar=c(5, 4, 4, 2) + 0.1)
   }
 }
 
