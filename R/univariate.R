@@ -67,31 +67,35 @@
   aov.table
 }
 
-"multifactor.aov.onevar" = function(dataset, x.val, metadata.vars) {
+"multifactor.aov.onevar" = function(dataset, x.val, metadata.vars, combination) {
   values = get.data.values(dataset, x.val)
   sub.df = dataset$metadata[,metadata.vars]
   sub.df = cbind(values,sub.df)
   terms = names(sub.df)[2:ncol(sub.df)]
+  terms = cbind(terms, combination)
   resaov = aov(reformulate(terms, "values"), data = sub.df)
-  pvalues = summary(resaov)[[1]]$'Pr(>F)'[1:length(metadata.vars)]
-  pvalues
+  aov.summary = summary(resaov)[[1]]
+  aov.summary
 }
 
-"multifactor.aov.all.vars" = function(dataset, metadata.vars, write.file = F, file.out = "anova-res.csv" )
+"multifactor.aov.all.vars" = function(dataset, metadata.vars, combination, write.file = F, file.out = "anova-res.csv" )
 {
-  m = matrix(NA, nrow(dataset$data), length(metadata.vars))
+  #m = matrix(NA, nrow(dataset$data), length(metadata.vars))
+  #rownames(m) = rownames(dataset$data)
+  m = list()
   rownames(m) = rownames(dataset$data)
 
   for(i in 1:nrow(dataset$data))
   {
-    m[i,] = multifactor.aov.onevar(dataset, rownames(dataset$data)[i], metadata.vars)
+    m[[i]] = multifactor.aov.onevar(dataset, rownames(dataset$data)[i], metadata.vars, combination)
   }
   
-  aov.table = as.data.frame(m)
-  if (is.numeric(metadata.vars)) colnames(aov.table) = colnames(dataset$metadata)[metadata.vars]
-  else colnames(aov.table) = metadata.vars
-  if (write.file) write.csv(aov.table, file=file.out)
-  aov.table
+  #aov.table = as.data.frame(m)
+  #if (is.numeric(metadata.vars)) colnames(aov.table) = colnames(dataset$metadata)[metadata.vars]
+  #else colnames(aov.table) = metadata.vars
+  #if (write.file) write.csv(aov.table, file=file.out)
+  #aov.table
+  m
 }
 
 ##################### FOLD CHANGE ############################
