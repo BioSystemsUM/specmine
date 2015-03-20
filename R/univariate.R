@@ -82,14 +82,14 @@
 {
   #m = matrix(NA, nrow(dataset$data), length(metadata.vars))
   #rownames(m) = rownames(dataset$data)
-  m = vector("list", nrow(dataset$data))
-  rownames(m) = rownames(dataset$data)
+  m = list()
 
   for(i in 1:nrow(dataset$data))
   {
     m[[i]] = multifactor.aov.onevar(dataset, rownames(dataset$data)[i], metadata.vars, combination)
   }
-  
+  rownames(m) = rownames(dataset$data)
+
   #aov.table = as.data.frame(m)
   #if (is.numeric(metadata.vars)) colnames(aov.table) = colnames(dataset$metadata)[metadata.vars]
   #else colnames(aov.table) = metadata.vars
