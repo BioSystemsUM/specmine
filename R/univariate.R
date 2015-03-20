@@ -82,7 +82,7 @@
 {
   #m = matrix(NA, nrow(dataset$data), length(metadata.vars))
   #rownames(m) = rownames(dataset$data)
-  m = list()
+  m = vector("list",nrow(dataset$data))
 
   for(i in 1:nrow(dataset$data))
   {
