@@ -88,7 +88,7 @@
   {
     m[[i]] = multifactor.aov.onevar(dataset, rownames(dataset$data)[i], metadata.vars, combination)
   }
-  rownames(m) = rownames(dataset$data)
+  names(m) = rownames(dataset$data)
 
   #aov.table = as.data.frame(m)
   #if (is.numeric(metadata.vars)) colnames(aov.table) = colnames(dataset$metadata)[metadata.vars]
