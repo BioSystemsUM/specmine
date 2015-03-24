@@ -106,7 +106,7 @@ multifactor.aov.table = function(multifactor.aov.results, write.file = F, file.o
 		m[i,] = multifactor.aov.results[[i]]$'Pr(>F'[1:num_vars]
 	}
 	aov.table = as.data.frame(m)
-	colnames(aov.table) = trim(rownames(multifactor.aov.results[[1]]))
+	colnames(aov.table) = trim(head(rownames(multifactor.aov.results[[1]]),1))
 	if (write.file) write.csv(aov.table, file = file.out)
 	aov.table	
 }
