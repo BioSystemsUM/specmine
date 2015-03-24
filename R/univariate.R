@@ -78,7 +78,7 @@
   aov.summary
 }
 
-"multifactor.aov.all.vars" = function(dataset, metadata.vars, combination, write.file = F, file.out = "anova-res.csv" )
+"multifactor.aov.all.vars" = function(dataset, metadata.vars, combination)
 {
   #m = matrix(NA, nrow(dataset$data), length(metadata.vars))
   #rownames(m) = rownames(dataset$data)
@@ -96,6 +96,23 @@
   #if (write.file) write.csv(aov.table, file=file.out)
   #aov.table
   m
+}
+
+multifactor.aov.table = function(multifactor.aov.results, write.file = F, file.out = "anova-res.csv"){
+	num_vars = length(multifactor.aov.results[[1]]$'Pr(>F)') - 1
+	m = matrix(NA, length(multifactor.aov.results), num_vars)
+	rownames(m) = names(res)
+	for (i in 1:length(multifactor.aov.results){
+		m[i,] = multifactor.aov.results[[i]]$'Pr(>F'[1:num_vars]
+	}
+	aov.table = as.data.frame(m)
+	colnames(aov.table) = trim(rownames(multifactor.aov.results[[1]]))
+	if (write.file) write.csv(aov.table, file = file.out)
+	aov.table	
+}
+
+trim <- function( x ) {
+  gsub("(^[[:space:]]+|[[:space:]]+$)", "", x)
 }
 
 ##################### FOLD CHANGE ############################
