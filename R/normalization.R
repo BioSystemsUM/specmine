@@ -1,3 +1,24 @@
+#SNV
+snv.dataset = function(dataset){
+	datamat = dataset$data
+	datamat.snv = scale(datamat, center = T, scale = T)
+	dataset$data = datamat.snv
+	rownames(dataset$data) = rownames(datamat)
+	colnames(dataset$data) = colnames(datamat)
+	dataset
+}
+
+#mean centering
+mean.centering = function(dataset){
+	datamat = dataset$data
+	datamat.mean.cent = scale(datamat, center = T, scale = F)
+	datamat.mean.cent = t(apply(datamat.mean.cent, 1, function(x) x - mean(x)))
+	dataset$data = datamat.mean.cent
+	rownames(dataset$data) = rownames(datamat)
+	colnames(dataset$data) = colnames(datamat)
+	dataset
+}
+
 # SAMPLE NORMALIZATION
 
 # method: "sum", "median", "ref.sample", "ref.feature"
