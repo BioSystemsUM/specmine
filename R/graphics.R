@@ -36,28 +36,32 @@
   
   if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
 	if (is.null(variable.bounds)){
-		variables = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+		variables = 1:length(get.x.values.as.text(dataset))
+		vars = variables
 	} else {
-		x.vars = gsub("/.*", '', get.x.values.as.text(dataset))
-		variables = x.vars[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]]
+		x.vars = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+		variables = which(x.vars > variable.bounds[1] & x.vars < variable.bounds[2])
+		vars = x.vars[variables]
 	}
   } else {
 	  if (is.null(variable.bounds)){
 		variables = rownames(dataset$data)
+		vars = variables
 	  } 
 	  else {
 		x.vars = get.x.values.as.num(dataset)
 		variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
+		vars = variables
 	  }
   }
-  if (reverse.x) xlim = c( max(as.numeric(variables)), min(as.numeric(variables)) )
-  else xlim = range(as.numeric(variables))
+  if (reverse.x) xlim = c( max(as.numeric(vars)), min(as.numeric(vars)) )
+  else xlim = range(as.numeric(vars))
   
   if (is.null(samples)){
     samples = colnames(dataset$data)
   } 
 
-  matplot(variables, dataset$data[variables,samples,drop=F], type="l", lty=lty, col = col,
+  matplot(vars, dataset$data[variables,samples,drop=F], type="l", lty=lty, col = col,
             xlab = xlab, ylab = ylab, xlim = xlim, ...)
 }
 
@@ -73,25 +77,29 @@
   if (is.null(xlab)) xlab = get.x.label(dataset)
   if (is.null(ylab)) ylab = get.value.label(dataset)
   
-  if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
+ if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
 	if (is.null(variable.bounds)){
-		variables = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+		variables = 1:length(get.x.values.as.text(dataset))
+		vars = variables
 	} else {
-		x.vars = gsub("/.*", '', get.x.values.as.text(dataset))
-		variables = x.vars[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]]
+		x.vars = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+		variables = which(x.vars > variable.bounds[1] & x.vars < variable.bounds[2])
+		vars = x.vars[variables]
 	}
   } else {
 	  if (is.null(variable.bounds)){
 		variables = rownames(dataset$data)
+		vars = variables
 	  } 
 	  else {
 		x.vars = get.x.values.as.num(dataset)
 		variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
+		vars = variables
 	  }
   }
   
-  if (reverse.x) xlim = c( max(as.numeric(variables)), min(as.numeric(variables)) )
-  else xlim = range(as.numeric(variables))
+  if (reverse.x) xlim = c( max(as.numeric(vars)), min(as.numeric(vars)) )
+  else xlim = range(as.numeric(vars))
 	
   if (is.null(samples)){
 		samples = colnames(dataset$data)
@@ -101,14 +109,14 @@
 		metadata = factor(dataset$metadata[samples, column.class])
 	}
 	if (is.null(func)){
-		matplot(variables, dataset$data[variables,samples], type="l", lty=lty, col=as.integer(metadata), 
+		matplot(vars, dataset$data[variables,samples], type="l", lty=lty, col=as.integer(metadata), 
             xlab = xlab, ylab = ylab, xlim = xlim, ...)
     if (legend.place != "none")
 		  legend(legend.place, levels(metadata), cex=cex, fill = sort(as.integer(factor(levels(metadata))))) 
 	} 
   else {
 		aggregate.result = aggregate(t(dataset$data[variables,samples]), by = list(metadata), func)
-		matplot(variables, t(aggregate.result[-1]), type = "l", lty=1, col=as.integer(aggregate.result[,1]), 
+		matplot(vars, t(aggregate.result[-1]), type = "l", lty=1, col=as.integer(aggregate.result[,1]), 
             xlab = xlab, ylab = ylab, xlim = xlim, ...)
 		if (legend.place != "none")
 		  legend(legend.place, levels(metadata), cex=cex, fill = sort(as.integer(factor(levels(metadata)))))
