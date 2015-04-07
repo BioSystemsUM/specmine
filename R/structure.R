@@ -1,8 +1,8 @@
 ## FUNCTIONS TO DEFINE AND QUERY DATASET STRUCTURE
 
-list.of.spectral.types = c("nmr-spectra","ir-spectra", "uvv-spectra", "ms-spectra", "raman-spectra", "fluor-spectra")
+list.of.spectral.types = c("nmr-spectra","ir-spectra", "uvv-spectra", "raman-spectra", "fluor-spectra")
 
-list.of.allowed.types = c(list.of.spectral.types, "nmr-peaks", "lcms-peaks", "gcms-peaks", "concentrations", "integrated-data", "undefined")
+list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lcms-peaks", "gcms-peaks", "concentrations", "integrated-data", "undefined")
 
 
 # function to create a dataset from existing objects 
