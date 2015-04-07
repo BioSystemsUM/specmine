@@ -34,14 +34,22 @@
   if (is.null(xlab)) xlab = get.x.label(dataset)
   if (is.null(ylab)) ylab = get.value.label(dataset)
   
-  if (is.null(variable.bounds)){
-    variables = rownames(dataset$data)
-  } 
-  else {
-    x.vars = get.x.values.as.num(dataset)
-    variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
+  if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
+	if (is.null(variable.bounds)){
+		variables = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+	} else {
+		x.vars = gsub("/.*", '', get.x.values.as.text(dataset))
+		variables = x.vars[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]]
+	}
+  } else {
+	  if (is.null(variable.bounds)){
+		variables = rownames(dataset$data)
+	  } 
+	  else {
+		x.vars = get.x.values.as.num(dataset)
+		variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
+	  }
   }
-  
   if (reverse.x) xlim = c( max(as.numeric(variables)), min(as.numeric(variables)) )
   else xlim = range(as.numeric(variables))
   
@@ -65,12 +73,21 @@
   if (is.null(xlab)) xlab = get.x.label(dataset)
   if (is.null(ylab)) ylab = get.value.label(dataset)
   
-  if (is.null(variable.bounds)){
+  if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
+	if (is.null(variable.bounds)){
+		variables = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+	} else {
+		x.vars = gsub("/.*", '', get.x.values.as.text(dataset))
+		variables = x.vars[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]]
+	}
+  } else {
+	  if (is.null(variable.bounds)){
 		variables = rownames(dataset$data)
-	} 
-  else {
-    x.vars = get.x.values.as.num(dataset)
-    variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 	
+	  } 
+	  else {
+		x.vars = get.x.values.as.num(dataset)
+		variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
+	  }
   }
   
   if (reverse.x) xlim = c( max(as.numeric(variables)), min(as.numeric(variables)) )
