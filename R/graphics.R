@@ -37,7 +37,8 @@
   if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
 	if (is.null(variable.bounds)){
 		variables = 1:length(get.x.values.as.text(dataset))
-		vars = variables
+		vars = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+
 	} else {
 		x.vars = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
 		variables = which(x.vars > variable.bounds[1] & x.vars < variable.bounds[2])
@@ -80,7 +81,7 @@
  if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
 	if (is.null(variable.bounds)){
 		variables = 1:length(get.x.values.as.text(dataset))
-		vars = variables
+		vars = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
 	} else {
 		x.vars = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
 		variables = which(x.vars > variable.bounds[1] & x.vars < variable.bounds[2])
