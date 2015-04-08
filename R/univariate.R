@@ -232,8 +232,10 @@ volcano.plot.fc.tt = function(dataset, fc.results, tt.results,
   tt.orig = tt.results[orig.ord,]
   fc.orig = fc.results[orig.ord,]
   
+  fc.new.values = sapply(fc.orig$FoldChange, function(x){ if (x < 1) return (1/x) else return (x) })
+  
   to.color = which(tt.orig$p.value < tt.threshold & 
-                  fc.orig$FoldChange > fc.threshold)
+                  fc.new.values > fc.threshold)
   
   cols = vector("character", nrow(tt.orig))
   texts = vector("character", nrow(tt.orig))
@@ -252,6 +254,7 @@ volcano.plot.fc.tt = function(dataset, fc.results, tt.results,
   text(fc.orig$"log2(FC)", tt.orig$"-log10", texts, cex = 0.6, col = "blue", srt = -30, pos = 1)
   abline(h = -log10(tt.threshold), col = "lightblue")
   abline(v = log2(fc.threshold), , col = "lightblue")
+  abline(v = -(log2(fc.threshold)), , col = 'lightblue') 
   rownames(dataset$data[to.color,])
 }
 
