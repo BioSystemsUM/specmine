@@ -50,9 +50,9 @@ kmeans.clustering <- function(dataset, num.clusters, type = "samples")
 	result.kmeans
 }
 
-kmeans.result.df = function(kmeans.result, centers){
+kmeans.result.df = function(kmeans.result){
 	kmeans.result.df = NULL
-	for (i in 1:centers){
+	for (i in 1:max(kmeans.result$cluster)){
 		kmeans.result.df = rbind(kmeans.result.df, data.frame(cluster = i, samples = paste(names(kmeans.result$cluster[kmeans.result$cluster==i]),collapse=' ',sep=" ")))
 	}
 	kmeans.result.df = data.frame(kmeans.result.df)
