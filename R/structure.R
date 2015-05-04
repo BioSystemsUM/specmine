@@ -84,9 +84,17 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
           stop("Invalid non numeric values for variable names in rownames of matrix (given spectral type)")
   }
   
+  if (!is.null(metadata){
+	  if (!is.null(rownames(metadata))){
+		metadata.ordered = data.frame(metadata[match(rownames(metadata), colnames(datamatrix)),])
+		colnames(metadata.ordered) = colnames(metadata)
+		metadata = metadata.ordered
+	  } else {
+		rownames(metadata) = colnames(datamatrix)
+	  }
+  
   dataset = list(data = datamatrix, type = type, description = description, metadata = metadata, labels = labels)
   # make sure sample names are the same in data and metadata
-  if (!is.null(dataset$metadata)) rownames(dataset$metadata) = colnames(dataset$data)
   
   dataset
 }
