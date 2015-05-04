@@ -88,6 +88,7 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
 	  if (!is.null(rownames(metadata))){
 		metadata.ordered = data.frame(metadata[match(rownames(metadata), colnames(datamatrix)),])
 		colnames(metadata.ordered) = colnames(metadata)
+		rownames(metadata.ordered) = rownames(metadata)
 		metadata = metadata.ordered
 	  } else {
 		rownames(metadata) = colnames(datamatrix)
