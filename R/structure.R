@@ -92,7 +92,7 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
 	  } else {
 		rownames(metadata) = colnames(datamatrix)
 	  }
-  
+  }
   dataset = list(data = datamatrix, type = type, description = description, metadata = metadata, labels = labels)
   # make sure sample names are the same in data and metadata
   
