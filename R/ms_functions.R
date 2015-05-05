@@ -45,9 +45,6 @@ read.ms.spectra = function(folder.name, type = "undefined", metadata = NULL, des
 	xset = ms.rt.correction(xset, bw)
 	xset = ms.fill.peaks(xset)
 	mat = ms.create.matrix(xset, intvalue)
-	print(dim(mat))
-	print(colnames(mat))
-	print(rownames(metadata))
 	dataset = create.dataset(mat, type = type, metadata = metadata, description = description, 
 							 label.x = "mz/rt", label.values = "intensity")
 	dataset
