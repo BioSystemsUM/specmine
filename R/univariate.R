@@ -101,7 +101,7 @@
 multifactor.aov.table = function(multifactor.aov.results, write.file = F, file.out = "multi-anova-res.csv"){
 	num_vars = length(multifactor.aov.results[[1]]$'Pr(>F)') - 1
 	m = matrix(NA, length(multifactor.aov.results), num_vars)
-	rownames(m) = names(res)
+	rownames(m) = names(multifactor.aov.results)
 	for (i in 1:length(multifactor.aov.results)){
 		m[i,] = multifactor.aov.results[[i]]$'Pr(>F'[1:num_vars]
 	}
