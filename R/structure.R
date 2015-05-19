@@ -94,7 +94,15 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
 		rownames(metadata) = colnames(datamatrix)
 	  }
   }
+  
+   
   dataset = list(data = datamatrix, type = type, description = description, metadata = metadata, labels = labels)
+  
+  # removing duplicate variables
+  dup.indexes = which(duplicated(rownames(dataset$data)))
+  if (length(dup.indexes != 0){
+	dataset = remove.data.variables(dataset, dup.indexes, by.index = T)
+  }
   # make sure sample names are the same in data and metadata
   
   dataset
