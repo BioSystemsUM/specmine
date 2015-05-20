@@ -40,7 +40,7 @@
 }
 
 get.samples.names.dx = function(foldername){
-  files = list.files(foldername,pattern=".[Dd][Xx]$", recursive = TRUE, full.name= TRUE)
+  files = list.files(foldername,pattern=".[Dd][Xx]$", recursive = TRUE, full.names= TRUE)
   samples.names = gsub("\\.[^.]*$", "",basename(files))
   samples.names
 }
