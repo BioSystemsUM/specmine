@@ -98,7 +98,7 @@
   m
 }
 
-multifactor.aov.table = function(multifactor.aov.results, write.file = F, file.out = "multi-anova-res.csv"){
+multifactor.aov.pvalues.table = function(multifactor.aov.results, write.file = F, file.out = "multi-anova-pvalues.csv"){
 	num_vars = length(multifactor.aov.results[[1]]$'Pr(>F)') - 1
 	m = matrix(NA, length(multifactor.aov.results), num_vars)
 	rownames(m) = names(multifactor.aov.results)
@@ -111,6 +111,19 @@ multifactor.aov.table = function(multifactor.aov.results, write.file = F, file.o
 	aov.table	
 }
 
+multifactor.aov.varexp.table = function(multifactor.aov.results, write.file = F, file.out = "multi-anova-varexp.csv"){
+  num_vars = length(multifactor.aov.results[[1]]$'Sum Sq') # - 1
+  m = matrix(NA, length(multifactor.aov.results), num_vars)
+  rownames(m) = names(multifactor.aov.results)
+  for (i in 1:length(multifactor.aov.results)){
+    ssq = sum(multifactor.aov.results[[i]]$'Sum Sq')
+    m[i,] = multifactor.aov.results[[i]]$'Sum Sq'[1:num_vars] /ssq
+  }
+  aov.table = as.data.frame(m)
+  colnames(aov.table) = trim(rownames(multifactor.aov.results[[1]]))
+  if (write.file) write.csv(aov.table, file = file.out)
+  aov.table	
+}
 trim <- function( x ) {
   gsub("(^[[:space:]]+|[[:space:]]+$)", "", x)
 }
