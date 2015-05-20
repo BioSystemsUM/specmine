@@ -26,7 +26,7 @@
 "read.data.dx" = function(foldername, debug = F)
 {
   require(ChemoSpec)
-  filenames = dir(foldername, pattern=".[Dd][Xx]$", full.name=TRUE)
+  filenames = dir(foldername, pattern=".[Dd][Xx]$", full.names=TRUE)
   sampleList = list()
   sampleNames = c()
   snames <- gsub("\\.[^.]*$", "", basename(filenames));

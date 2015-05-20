@@ -36,7 +36,7 @@
 # returns list of data frames
 "read.csvs.folder" = function(foldername, ...)
 {
-  files<-dir(foldername, pattern=".[Cc][Ss][Vv]$", recursive=T, full.name=TRUE)
+  files<-dir(foldername, pattern=".[Cc][Ss][Vv]$", recursive=T, full.names=TRUE)
   sampleList = read.multiple.csvs(files, ext= "", ...);
   sampleList
 }

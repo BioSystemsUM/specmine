@@ -27,7 +27,7 @@
 "read.data.spc" = function(foldername, nosubhdr = F)
 {
   require(hyperSpec)
-  filenames = dir(foldername, pattern=".[Ss][Pp][Cc]$", full.name=TRUE)
+  filenames = dir(foldername, pattern=".[Ss][Pp][Cc]$", full.names=TRUE)
   sampleList = list()
   sampleNames = c()
   snames <- gsub("\\.[^.]*$", "", basename(filenames));
@@ -45,7 +45,7 @@
 }
 
 get.samples.names.spc = function(foldername){
-  files = list.files(foldername,pattern=".[Ss][Pp][Cc]$", recursive = TRUE, full.name= TRUE)
+  files = list.files(foldername,pattern=".[Ss][Pp][Cc]$", recursive = TRUE, full.names= TRUE)
   samples.names = gsub("\\.[^.]*$", "",basename(files))
   samples.names
 }
