@@ -39,5 +39,27 @@
 
 "apply.by.group" = function(dataset, fn.to.apply, metadata.var, var.value) {
   indexes = which(dataset$metadata[,metadata.var] %in% var.value)
-  apply.by.sample(dataset, fn.to.apply, indexes)
+  apply.by.variable(dataset, fn.to.apply, samples = indexes)
+}
+
+"apply.by.groups" = function(dataset, metadata.var, fn.to.apply = "mean",
+                             variables = NULL, variable.bounds = NULL) {
+  
+  if (is.null(variables)) {
+    if (is.null(variable.bounds)){
+      variables = rownames(dataset$data)
+    } 
+    else {
+      x.vars = get.x.values.as.num(dataset)
+      variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
+    }  
+  }
+  df = NULL
+  for (v in variables) {
+    row = tapply(dataset$data[v,], dataset$metadata[,metadata.var], fn.to.apply)
+    if (is.null(df)) df = row
+    else df = rbind(df, row)
+  }
+  rownames(df) = variables
+  df
 }

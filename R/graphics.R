@@ -16,11 +16,74 @@
   else 
     names.short = substr(variables, 1, nchar.label)
 
-  boxplot(t(dataset$data[variables,samples]), names = names.short, 
+  if (length(variables) > 1) {
+      boxplot(t(dataset$data[variables,samples]), names = names.short, 
           horizontal = horizontal, las = 2, 
           col = col, cex.axis = cex.axis, ...)
+  }
+  else {
+      boxplot(dataset$data[variables,samples], xlab = names.short,  
+            horizontal = F, las = 2, 
+            col = col, cex.axis = cex.axis, ...)
+  }
 }
 
+boxplot.vars.factor = function(dataset, meta.var, variables = NULL, samples = NULL, 
+                               horizontal = F, nchar.label = 10, col = NULL,
+                               vec.par = NULL, cex.axis = 0.8, ...)
+{
+  if (is.null(variables)) { # assume all
+    variables = rownames(dataset$data)
+  } 
+  
+  if (is.null(samples)) {
+    samples = colnames(dataset$data)
+  }
+  
+  if (is.numeric(variables))
+    names.short = substr(get.x.values.as.text(dataset)[variables], 1, nchar.label)
+  else 
+    names.short = substr(variables, 1, nchar.label)
+  
+  if (is.null(vec.par))
+    vec.par = c(length(variables), 1)
+  
+  par(mfrow = vec.par)
+  for (i in 1:length(variables)) {
+    if (is.null(col)) coli = i+1
+    else coli = col
+    boxplot(dataset$data[variables[i],samples] ~ dataset$metadata[,meta.var], 
+            horizontal = horizontal, las = 2, main = names.short[i], 
+            col = coli, cex.axis = cex.axis, ...)
+  }
+  par(mfrow = c(1,1))
+}
+
+plotvar.twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "darkblue", title = "", 
+                             xlabel = NULL, ylabel = NULL)
+{
+  require(ggplot2)
+  df = data.frame(dataset$data[variable,], dataset$metadata[,meta.var1], 
+                  dataset$metadata[,meta.var2])
+  if (is.numeric(variable)) n1 = rownames(dataset$data)[variable]
+  else n1 = variable
+  if (is.numeric(meta.var1)) n2 = colnames(dataset$metadata)[meta.var1]
+  else n2 = meta.var1
+  if (is.numeric(meta.var2)) n3 = colnames(dataset$metadata)[meta.var2]
+  else n3 = meta.var2
+  colnames(df) = c("name1", "name2", "name3")
+
+  g = ggplot(data = df)
+  g = g + aes(name2, name1)
+  g = g + geom_boxplot(fill= colour)
+  g = g + facet_grid(. ~ name3)
+  if (is.null(xlabel)) g = g + xlab(n2)
+  else g = g + xlab(xlabel)
+  if (is.null(ylabel)) g = g + ylab(n1)
+  else g = g + ylab(ylabel)
+  if (title != "") g = g + ggtitle(title)
+  print (g)
+}
 
 ##############################SPECTRA PLOTS###############################
 

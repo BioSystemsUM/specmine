@@ -138,10 +138,11 @@ predict.samples = function(train.result, new.samples){
 
 
 train.models.performance = function(dataset, models, column.class, validation, num.folds = 10, 
-                                    num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = "default", class.in.metadata = T){
+                                    num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, 
+                                    summary.function = "default", class.in.metadata = T, compute.varimp = T){
 	result.df = NULL
 	classification.flag = FALSE
-	vars.imp = list()
+	if (compute.varimp) vars.imp = list()
 	final.result = list()
   full.results = list()
   if ( is.factor(dataset$metadata[,column.class])){
@@ -161,20 +162,24 @@ train.models.performance = function(dataset, models, column.class, validation, n
 	for (i in 1:length(models)){
 		train.result = train.classifier(dataset, column.class, models[i], validation, num.folds, 
                                     num.repeats, tunelength, tunegrid, metric, summary.function, class.in.metadata = class.in.metadata)
-		vips = var.importance(train.result)
-		rownames(vips) = substring(rownames(vips), 2, nchar(rownames(vips)))
-		vips$Mean = apply(vips, 1, mean) 
+		if (compute.varimp) {
+      vips = var.importance(train.result)
+		  rownames(vips) = substring(rownames(vips), 2, nchar(rownames(vips)))
+		  vips$Mean = apply(vips, 1, mean) 
+		}
 		bestTune = train.result$bestTune
 		result.df = rbind(result.df, train.result$result[rownames(bestTune),-1])
-		vars.imp[[i]] = vips[order(vips$Mean, decreasing=T),]
-		vips = NULL
+		if (compute.varimp) {
+      vars.imp[[i]] = vips[order(vips$Mean, decreasing=T),]
+		  vips = NULL
+		}
     full.results[[i]] = train.result$results
     if (classification.flag) confusion.matrices[[i]] = try(confusionMatrix(train.result), TRUE)
     best.tunes[[i]] = train.result$bestTune
     final.models[[i]] = train.result$finalModel
 	}
 	rownames(result.df) = models
-	names(vars.imp) = models
+	if (compute.varimp) names(vars.imp) = models
 	names(full.results) = models
   if (classification.flag) names(confusion.matrices) = models
   names(best.tunes) = models
@@ -182,7 +187,7 @@ train.models.performance = function(dataset, models, column.class, validation, n
   result.df = result.df[,colnames(result.df) %in% c("RMSE", "Rsquared", "RMSESD","RsquaredSD","Accuracy","AccuracySD","Kappa","KappaSD",
 													"ROC","Sensitivity","Specificity","SensitivitySD","SpecificitySD","ROCSD")]
   final.result$performance = result.df
-	final.result$vips = vars.imp
+	if (compute.varimp) final.result$vips = vars.imp
   final.result$full.results = full.results
   final.result$best.tunes = best.tunes
   if (classification.flag) final.result$confusion.matrices = confusion.matrices

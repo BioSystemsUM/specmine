@@ -12,7 +12,7 @@ snv.dataset = function(dataset){
 mean.centering = function(dataset){
 	datamat = dataset$data
 	datamat.mean.cent = scale(datamat, center = T, scale = F)
-	datamat.mean.cent = t(apply(datamat.mean.cent, 1, function(x) x - mean(x)))
+	#datamat.mean.cent = t(apply(datamat.mean.cent, 1, function(x) x - mean(x)))
 	dataset$data = datamat.mean.cent
 	rownames(dataset$data) = rownames(datamat)
 	colnames(dataset$data) = colnames(datamat)
