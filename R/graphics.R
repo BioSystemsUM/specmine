@@ -82,7 +82,7 @@ plotvar.twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
   if (is.null(ylabel)) g = g + ylab(n1)
   else g = g + ylab(ylabel)
   if (title != "") g = g + ggtitle(title)
-  print (g)
+  g
 }
 
 ##############################SPECTRA PLOTS###############################
