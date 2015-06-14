@@ -56,3 +56,26 @@ linreg.rsquared = function(linreg.results, write.file = F, file.out = "linreg-rs
   if (write.file) write.csv(rsq.table, file = file.out)
   rsq.table  
 }
+
+plot.regression.coefs.pvalues = function(linreg.results, bar.col = NULL, coef.size = 5, ...){
+	coefs = linreg.coef.table(linreg.results)
+	pvalues = linreg.pvalue.table(linreg.results)
+	df.pvalues = data.frame(t(pvalues))
+	df.pvalues$names = colnames(pvalues)
+	num.variables = length(colnames(pvalues))
+	plots = list()
+	if (is.null(bar.col)){
+		bar.col = rep("bluesteel", num.variables)
+	}
+	
+	for (count in 1:num.variables){
+		plots[[count]] = ggplot(data = df.pvalues, aes(x=names, y=df.pvalues[,count])) + 
+		geom_bar(stat="identity", position = position_dodge(), fill = bar.col[count], ...) + 
+		geom_text(aes(label=round(df.coefs[,count],2)), vjust=-0.3, size=coef.size, ...) + 
+		ylab("-log10(pvalue)") + xlab(colnames(pvalues)[count])
+	}
+	
+	num.cols = num.variables %/% 2
+	
+	multiplot(plots, cols = num.cols)
+}
