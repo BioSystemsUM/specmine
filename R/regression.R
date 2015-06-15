@@ -60,19 +60,25 @@ linreg.rsquared = function(linreg.results, write.file = F, file.out = "linreg-rs
 plot.regression.coefs.pvalues = function(linreg.results, bar.col = NULL, coef.size = 5, ...){
 	coefs = linreg.coef.table(linreg.results)
 	pvalues = linreg.pvalue.table(linreg.results)
+	df.coefs = data.frame(t(coefs))
+	df.coefs = data.frame(round(df.coefs,2))
 	df.pvalues = data.frame(t(pvalues))
-	df.pvalues$names = colnames(pvalues)
-	num.variables = length(colnames(pvalues))
+	df.pvalues = data.frame(-log10(df.pvalues))
+	df.pvalues.coefs = data.frame(cbind(df.pvalues, df.coefs))
+	num.variables = length(rownames(pvalues))
+	colnames(df.pvalues.coefs) = paste("X",1:(num.variables*2), sep="")
+	df.pvalues.coefs$names = colnames(pvalues)
 	plots = list()
 	if (is.null(bar.col)){
-		bar.col = rep("bluesteel", num.variables)
+		bar.col = rep("steelblue", num.variables)
 	}
 	
 	for (count in 1:num.variables){
-		plots[[count]] = ggplot(data = df.pvalues, aes(x=names, y=df.pvalues[,count])) + 
-		geom_bar(stat="identity", position = position_dodge(), fill = bar.col[count], ...) + 
-		geom_text(aes(label=round(df.coefs[,count],2)), vjust=-0.3, size=coef.size, ...) + 
-		ylab("-log10(pvalue)") + xlab(colnames(pvalues)[count])
+			p = ggplot(data = df.pvalues.coefs, aes_string(x="names", y=paste("X",count,sep="") )) + 
+            geom_bar(stat="identity", position = position_dodge(), fill = bar.col[count], ...) + 
+            geom_text(aes_string(label=paste("X",count+num.variables,sep="")), vjust=-0.3, size=coef.size, ...) + 
+            ylab("-log10(pvalue)") + xlab(rownames(pvalues)[count])
+		plots[[count]] = p
 	}
 	
 	num.cols = num.variables %/% 2
