@@ -291,3 +291,32 @@ heatmap.correlations = function(correlations, col = NULL, ...) {
   else colors = col
   heatmap(correlations, col = colors, ...)
 }
+
+
+correlation.test = function(dataset, x,y, method = "pearson", alternative = "two.sided", by.var = T){
+	if (by.var) data.to.cor = data.frame(t(dataset$data))
+	else data.to.cor = data.frame(dataset$data)
+	result.cor = with(data.to.cor, cor.test(x,y,method = method,alternative = alternative))
+	result.cor
+}  
+
+
+correlations.test = function(dataset, method = "pearson", by.var = T, alternative = "two.sided") {
+	if (by.var) data.to.cor = t(dataset$data)
+	else data.to.cor = dataset$data
+	
+	data.names = colnames(data.to.cor)
+	cor.matrix = matrix(nrow=length(data.names)^2, ncol = 4)
+	i = 1
+	for (name in data.names){
+		for (name2 in data.names){
+			result.cor = correlation.test(dataset, eval(get(name)), eval(get(name2)), method = method, alternative = alternative, by.var = by.var)
+			cor.estimate = result.cor$estimate
+			cor.pvalue = result.cor$p.value
+			cor.matrix[i,] = c(name, name2, cor.estimate, cor.pvalue)
+			i = i+1
+		}
+	}
+	colnames(cor.matrix) = c("i","j","cor","p.value")
+	cor.matrix
+}
