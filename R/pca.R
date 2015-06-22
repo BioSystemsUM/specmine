@@ -81,10 +81,11 @@ pca.screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "r
 }
 
 #2d scores plot
-pca.scoresplot2D = function(dataset, pca.result, column.class, pcas = c(1,2), labels = FALSE, 
+pca.scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2), labels = FALSE, 
                             ellipses = FALSE, pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
 {
   require(ggplot2)
+  has.legend = FALSE
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
@@ -92,11 +93,17 @@ pca.scoresplot2D = function(dataset, pca.result, column.class, pcas = c(1,2), la
   }
   pca.points = data.frame(scores[,pcas])
   names(pca.points) = c("x","y")
-  pca.points$group = dataset$metadata[,column.class]
+  if (is.null(column.class)){
+	group.values = rep(4, ncol(dataset$data))  
+  } else {
+	group.values = dataset$metadata[,column.class]
+	has.legend = TRUE
+  }
+  pca.points$group = group.values
   pca.points$label = colnames(dataset$data)
   pca.plot = ggplot(data = pca.points, aes(x=x, y=y,colour=group)) + geom_point(size=3, alpha=1) +
-    scale_colour_brewer(type = "qual", palette=pallette) + xlab(paste("PC",pcas[1],sep="")) + ylab(paste("PC",pcas[2],sep="")) +
-    theme(legend.position = leg.pos)
+    scale_colour_brewer(type = "qual", palette=pallette) + xlab(paste("PC",pcas[1],sep="")) + ylab(paste("PC",pcas[2],sep=""))
+  if (has.legend) pca.plot = pca.plot + theme(legend.position = leg.pos)
   if (!is.null(xlim)){
 	pca.plot = pca.plot + xlim(xlim[1],xlim[2])
   }
@@ -114,7 +121,7 @@ pca.scoresplot2D = function(dataset, pca.result, column.class, pcas = c(1,2), la
 }
 
 #3d scores plot
-pca.scoresplot3D.rgl = function(dataset, pca.result, column.class, pcas = c(1,2,3), size = 1, 
+pca.scoresplot3D.rgl = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3), size = 1, 
                             labels = FALSE) {
   require(rgl)
   if (class(pca.result) == "prcomp"){
@@ -129,17 +136,29 @@ pca.scoresplot3D.rgl = function(dataset, pca.result, column.class, pcas = c(1,2,
   }
 }
 
-pca.scoresplot3D = function(dataset, pca.result, column.class, pcas=c(1,2,3))
+pca.scoresplot3D = function(dataset, pca.result, column.class = NULL, pcas=c(1,2,3))
 {
   require(scatterplot3d)
+  has.legend = FALSE
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
 	scores = pca.result$scores
   }
-  classes = dataset$metadata[,column.class]
-  scatterplot3d(scores[,pcas], color=as.integer(dataset$metadata[,column.class]), pch=17)
-  legend(-1.5, 2.5, levels(classes), col = 1:length(classes), cex = 0.7, pt.cex = 1, pch= 17)
+  if (is.null(column.class)){
+	group.values = rep(4, ncol(dataset$data))
+	
+  } else {
+	group.values = as.integer(dataset$metadata[,column.class])
+	has.legend = TRUE
+  }
+  pca.points$group = group.values
+  
+  scatterplot3d(scores[,pcas], color=group.values, pch=17)
+  if (has.legend){
+	classes = dataset$metadata[,column.class]
+	legend(-1.5, 2.5, levels(classes), col = 1:length(classes), cex = 0.7, pt.cex = 1, pch= 17)
+  }
 }
 
 #biplots
@@ -278,7 +297,7 @@ biplot.default.modified = function (x, y, var.axes = TRUE, col, x.colors, colors
     invisible()
 }
 
-pca.biplot3D = function(dataset, pca.result, column.class, pcas = c(1,2,3)){
+pca.biplot3D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3)){
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
 	rotation = pca.result$rotation
@@ -297,15 +316,22 @@ pca.biplot3D = function(dataset, pca.result, column.class, pcas = c(1,2,3)){
 }
 
 #pca pairs plot
-pca.pairs.plot = function(dataset, pca.result, column.class, pcas = c(1,2,3,4,5), ...){
+pca.pairs.plot = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3,4,5), ...){
   require(GGally)
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
 	scores = pca.result$scores
   }  
+  
+  if (is.null(column.class)){
+	group.values = rep(4, ncol(dataset$data))
+	
+  } else {
+	group.values = dataset$metadata[,column.class]
+  }
   pairs.df = data.frame(scores[,pcas])
-  pairs.df$group = dataset$metadata[,column.class]
+  pairs.df$group = group.values
   ggpairs(pairs.df, colour = 'group', ...)
 }
 
