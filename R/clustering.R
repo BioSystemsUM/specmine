@@ -29,7 +29,7 @@ hierarchical.clustering <- function(dataset, distance='euclidean', clustMethod='
   
 	if (distance == 'pearson' || distance == 'spearman'){
 		dist.matrix = dist(1-cor(t(datamat), method = distance))
-	} else 
+	} else {
 		dist.matrix = dist(datamat, method = distance);
 	}
 
