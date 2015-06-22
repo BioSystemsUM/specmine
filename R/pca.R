@@ -152,7 +152,6 @@ pca.scoresplot3D = function(dataset, pca.result, column.class = NULL, pcas=c(1,2
 	group.values = as.integer(dataset$metadata[,column.class])
 	has.legend = TRUE
   }
-  pca.points$group = group.values
   
   scatterplot3d(scores[,pcas], color=group.values, pch=17)
   if (has.legend){
