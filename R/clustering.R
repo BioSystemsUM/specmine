@@ -27,11 +27,10 @@ hierarchical.clustering <- function(dataset, distance='euclidean', clustMethod='
 	}
   else datamat = dataset$data
   
-	if (distance == 'euclidean' || distance == 'manhattan'){
-		dist.matrix = dist(datamat, method = distance);
-	} 
-  else if (distance == 'pearson' || distance == 'spearman'){
+	if (distance == 'pearson' || distance == 'spearman'){
 		dist.matrix = dist(1-cor(t(datamat), method = distance))
+	} else 
+		dist.matrix = dist(datamat, method = distance);
 	}
 
 	hc.tree = hclust(dist.matrix, method = clustMethod);
