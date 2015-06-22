@@ -94,7 +94,7 @@ pca.scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
   pca.points = data.frame(scores[,pcas])
   names(pca.points) = c("x","y")
   if (is.null(column.class)){
-	group.values = rep(4, ncol(dataset$data))  
+	group.values = factor(rep(4, ncol(dataset$data)))
   } else {
 	group.values = dataset$metadata[,column.class]
 	has.legend = TRUE
