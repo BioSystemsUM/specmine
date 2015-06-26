@@ -103,8 +103,8 @@ pca.scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
   pca.points$label = colnames(dataset$data)
   pca.plot = ggplot(data = pca.points, aes(x=x, y=y,colour=group)) + geom_point(size=3, alpha=1) +
     scale_colour_brewer(type = "qual", palette=pallette) + 
-    xlab(paste(paste("PC",pcas[1]," -",sep=""), pca.importance(pca.result, pcas[1], sd=F, prop=T, cumul = F)*100)) + 
-    ylab(paste(paste("PC",pcas[2]," -",sep=""), pca.importance(pca.result, pcas[2], sd=F, prop=T, cumul = F)*100))
+    xlab(paste(paste("PC",pcas[1]," -",sep=""), paste(pca.importance(pca.result, pcas[1], sd=F, prop=T, cumul = F)*100,"%",sep=""))) + 
+    ylab(paste(paste("PC",pcas[2]," -",sep=""), paste(pca.importance(pca.result, pcas[2], sd=F, prop=T, cumul = F)*100,"%",sep="")))
   if (has.legend) pca.plot = pca.plot + theme(legend.position = leg.pos)
   if (!is.null(xlim)){
 	pca.plot = pca.plot + xlim(xlim[1],xlim[2])
