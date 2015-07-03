@@ -296,8 +296,11 @@ heatmap.correlations = function(correlations, col = NULL, ...) {
 correlation.test = function(dataset, x,y, method = "pearson", alternative = "two.sided", by.var = T, all.dataset = F){
 	if (by.var) data.to.cor = data.frame(t(dataset$data))
 	else data.to.cor = data.frame(dataset$data)
-	if (all.dataset) with(data.to.cor, cor.test(eval(x),eval(y),method = method,alternative = alternative))
-	else result.cor = with(data.to.cor, cor.test(x,y,method = method,alternative = alternative))
+	if (all.dataset){ 
+		result.cor = with(data.to.cor, cor.test(eval(x),eval(y),method = method,alternative = alternative))
+	} else {
+		result.cor = with(data.to.cor, cor.test(x,y,method = method,alternative = alternative))
+	}
 	result.cor
 }  
 
