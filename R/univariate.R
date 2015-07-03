@@ -310,7 +310,7 @@ correlations.test = function(dataset, method = "pearson", by.var = T, alternativ
 	i = 1
 	for (name in data.names){
 		for (name2 in data.names){
-			result.cor = with(data.frame(data.to.cor), correlation.test(dataset, eval(get(name)), eval(get(name2)), method = method, alternative = alternative, by.var = by.var))
+			result.cor = with(data.frame(data.to.cor), correlation.test(dataset, as.name(name), as.name(name2), method = method, alternative = alternative, by.var = by.var))
 			cor.estimate = result.cor$estimate
 			cor.pvalue = result.cor$p.value
 			cor.matrix[i,] = c(name, name2, cor.estimate, cor.pvalue)
