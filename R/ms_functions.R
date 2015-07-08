@@ -49,7 +49,7 @@ read.ms.spectra = function(folder.name, type = "undefined", filename.meta= NULL,
 	xset = ms.fill.peaks(xset)
 	mat = ms.create.matrix(xset, intvalue)
 	dataset = create.dataset(mat, type = type, metadata = metadata, description = description, 
-							 label.x = "mz/rt", label.values = "intensity")
+							 label.x = "mz/rt", label.values = "intensity", xSet = xset)
 	dataset
   
 }

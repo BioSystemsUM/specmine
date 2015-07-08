@@ -12,7 +12,7 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
 
 "create.dataset" = function(datamatrix, type = "undefined", metadata = NULL, description = "", 
                             sample.names = NULL, x.axis.values = NULL, 
-                            label.x = NULL, label.values = NULL) {
+                            label.x = NULL, label.values = NULL, xSet = NULL) {
   
   if (is.null(datamatrix))
     stop("Invalid argument: datamatrix is null")
@@ -96,7 +96,7 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
   }
   
    
-  dataset = list(data = datamatrix, type = type, description = description, metadata = metadata, labels = labels)
+  dataset = list(data = datamatrix, type = type, description = description, metadata = metadata, labels = labels, xSet = xSet)
   
   # removing duplicate variables
   dup.indexes = which(duplicated(rownames(dataset$data)))
