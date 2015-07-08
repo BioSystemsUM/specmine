@@ -58,7 +58,8 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
 	  o= "./mzmatch/final_combined_related_identified.txt", databases=DBS,
 	  annotations="identification,ppm,adduct,relation.ship")
     
-
+	metabolites = PeakML.Read("./mzmatch/final_combined_related_identified.peakml")
+	metabolites
 }
 
 
