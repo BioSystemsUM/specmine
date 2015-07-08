@@ -1,6 +1,10 @@
 
 mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL, xSet = NULL, backend = "Ramp",
 										adducts = "M+H,M+ACN+Na,M+Na,M+K,M+ACN+H"){
+										
+	require(mzmatch.R)
+	mzmatch.init(version.1=FALSE)
+	
 	if (is.null(xSet)){
 		require(xcms)
 		files = list.files(data.folder, recursive=T, full.names=TRUE)
