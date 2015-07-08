@@ -14,6 +14,7 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
 	}
 	
 	peakml.files = gsub("(.+)/([^/]+\\..+$)","\\2", xSet@filepaths)
+	peakml.files = gsub("\\..+$", "\\.peakml", peakml.files)
 	peakml.files = paste("./peakml/", peakml.files, sep="")
 	dir.create("peakml")
 	PeakML.xcms.write.SingleMeasurement (xset=xSet,filename=peakml.files,
