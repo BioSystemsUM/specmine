@@ -3,6 +3,7 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
 										adducts = "M+H,M+ACN+Na,M+Na,M+K,M+ACN+H"){
 										
 	require(mzmatch.R)
+	require(rJava)
 	mzmatch.init(version.1=FALSE)
 	
 	if (is.null(xSet)){
