@@ -81,7 +81,7 @@ sampleProcessing.modified = function (dataDir = NULL, metadata = NULL, xSet = NU
     }
     
     if (!is.null(xSet)){
-		fPpeaks = list(xSet)
+		fPeaks = list(xSet)
     } else {
 		if (filterMethod == "matchedFilter") {
 			peaks <- xcmsSet(files = fileList, snthresh = snThres, 
