@@ -57,7 +57,7 @@ sampleProcessing.modified = function (dataDir = NULL, metadata = NULL, xSet = NU
 		classNum[2] <- secondClass 
 		classes <- rep(class, classNum)
 	} else {
-		#class = metadata
+		class = levels(metadata)
 		#classNum <- vector(length = length(table(class)))
 		#for (i in 1:length(classNum)){
 	#		classNum[i] = as.numeric(table(class)[i])
