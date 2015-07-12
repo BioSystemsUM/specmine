@@ -22,25 +22,25 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
                                        ionisation=ionisation,addscans=2,
                                        writeRejected=FALSE,ApodisationFilter=TRUE)
     
-	mzmatch.ipeak.Combine(i=paste(peakml.files,collapse=","),v=T,rtwindow=30,
+	mzmatch.ipeak.Combine.modified(i=paste(peakml.files,collapse=","),v=T,rtwindow=30,
 						  o="./mzmatch/combined.peakml",combination="set",ppm=5)
-	mzmatch.ipeak.filter.NoiseFilter (i="./mzmatch/combined.peakml",o="./mzmatch/combined_noisef.peakml",
+	mzmatch.ipeak.filter.NoiseFilter.modified (i="./mzmatch/combined.peakml",o="./mzmatch/combined_noisef.peakml",
 									  v=T,codadw=0.8)
-	mzmatch.ipeak.filter.SimpleFilter(i="./mzmatch/combined_noisef.peakml", 
+	mzmatch.ipeak.filter.SimpleFilter.modified(i="./mzmatch/combined_noisef.peakml", 
 									  o="./mzmatch/combined_sfdet.peakml", mindetections=3)
-	mzmatch.ipeak.filter.SimpleFilter(i="./mzmatch/combined_sfdet.peakml", 
+	mzmatch.ipeak.filter.SimpleFilter.modified(i="./mzmatch/combined_sfdet.peakml", 
 									  o="./mzmatch/combined_highintensity.peakml", 
 									  minintensity=100000)
 	PeakML.GapFiller.modified(filename = "./mzmatch/combined_highintensity.peakml", ionisation = ionisation, 
 					 outputfile = "./mzmatch/highintensity_gapfilled.peakml", 
 					 ppm=5, rtwin = 0, backend = backend)
-	mzmatch.ipeak.sort.RelatedPeaks (i="./mzmatch/highintensity_gapfilled.peakml",v=T,
+	mzmatch.ipeak.sort.RelatedPeaks.modified (i="./mzmatch/highintensity_gapfilled.peakml",v=T,
 									 o="./mzmatch/mzMatch_output.peakml",
 									 basepeaks="./mzmatch/mzMatch_basepeaks.peakml",ppm=3,
 									 rtwindow=6)
 									 
 	annot <- paste("relation.id,relation.ship,codadw,charge")
-	mzmatch.ipeak.convert.ConvertToText (i="./mzmatch/mzMatch_output.peakml",
+	mzmatch.ipeak.convert.ConvertToText.modified (i="./mzmatch/mzMatch_output.peakml",
 										 o="./mzmatch/mzMATCHoutput.txt",v=T,annotations=annot)
 
 	DBS <- dir(paste(find.package("mzmatch.R"), "/dbs", sep=""),
@@ -48,17 +48,17 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
 	DBS <- paste(DBS,collapse='","')
 	DBS <- paste('"',DBS,'"',sep="")
 
-	mzmatch.ipeak.util.Identify(i="./mzmatch/mzMatch_output.peakml", v=T,
-								o="./mzmatch/final_combined_related_identified.peakml", ppm=3, 
+	mzmatch.ipeak.util.Identify.modified(i="./mzmatch/mzMatch_output.peakml", v=T,
+								o="./mzmatch/metabolites.peakml", ppm=3, 
 								databases=DBS, adducts = adducts)
 
 
-	mzmatch.ipeak.convert.ConvertToText (
-	  i="./mzmatch/final_combined_related_identified.peakml",
-	  o= "./mzmatch/final_combined_related_identified.txt", databases=DBS,
-	  annotations="identification,ppm,adduct,relation.ship")
+	mzmatch.ipeak.convert.ConvertToText.modified (
+	  i="./mzmatch/metabolites.peakml",
+	  o= "./mzmatch/metabolites.txt", databases=DBS,
+	  annotations="identification,moleculeName,ppm,adduct,relation.ship")
     
-	metabolites = PeakML.Read("./mzmatch/final_combined_related_identified.peakml")
+	metabolites = PeakML.Read("./mzmatch/metabolites.peakml")
 	metabolites
 }
 
@@ -259,4 +259,309 @@ PeakML.GapFiller.modified = function (filename, ionisation = "detect", Rawpath =
         PeakML.Methods.writeGroupAnnotations(project, PeakMLdata$GroupAnnotations)
     }
     .jcall(project, returnSig = "V", method = "write", outputfile)
+}
+
+
+mzmatch.ipeak.util.Identify.modified = function (JHeapSize = 1425, i = NULL, o = NULL, ppm = NULL, databases = NULL, 
+    minrt = NULL, maxrt = NULL, rtwindow = NULL, rtwindowrelative = NULL, 
+    massOverride = NULL, polarity = NULL, adducts = NULL, h = NULL, 
+    v = NULL) 
+{
+    version.1 <- get("version.1", envir = .GlobalEnv)
+    java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
+    JHeapSize <- paste(JHeapSize, "m", sep = "")
+    java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
+        " -cp", sep = "")
+    if (version.1 == TRUE) {
+        mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+            "/java/mzmatch.jar", '"', sep = "")
+    }
+    else {
+        mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+            "/java/mzmatch_2.0.jar", '"', sep = "")
+    }
+    tool <- paste(mzmatch, "mzmatch.ipeak.util.Identify")
+    if (!is.null(i)) 
+        tool <- paste(tool, "-i", i)
+    if (!is.null(o)) 
+        tool <- paste(tool, "-o", o)
+    if (!is.null(ppm)) 
+        tool <- paste(tool, "-ppm", ppm)
+    if (!is.null(minrt)) 
+        tool <- paste(tool, "-minrt", minrt)
+    if (!is.null(maxrt)) 
+        tool <- paste(tool, "-maxrt", maxrt)
+    if (!is.null(rtwindow)) 
+        tool <- paste(tool, "-rtwindow", rtwindow)
+    if (!is.null(rtwindowrelative) && rtwindowrelative == T && 
+        !is.null(rtwindow)) 
+        tool <- paste(tool, "-rtwindowrelative true")
+    if (!is.null(massOverride)) 
+        tool <- paste(tool, "-massOverride", massOverride)
+    if (!is.null(polarity)) 
+        tool <- paste(tool, "-polarity", polarity)
+    if (!is.null(adducts)) 
+        tool <- paste(tool, "-adducts", adducts)
+	if (!is.null(databases)) 
+        tool <- paste(tool, "-databases", databases)
+    if (!is.null(h) && h == T) 
+        tool <- paste(tool, "-h")
+    if (!is.null(v) && v == T) 
+        tool <- paste(tool, "-v")
+    cat(tool)
+	print(tool)
+    system(tool)
+}
+
+mzmatch.ipeak.convert.ConvertToText.modified = function (JHeapSize = 1425, i = NULL, o = NULL, databases = NULL, 
+    annotations = NULL, h = NULL, v = NULL) 
+{
+    version.1 <- get("version.1", envir = .GlobalEnv)
+    java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
+    JHeapSize <- paste(JHeapSize, "m", sep = "")
+    java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
+        " -cp", sep = "")
+    if (version.1 == TRUE) {
+        mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+            "/java/mzmatch.jar", '"', sep = "")
+    }
+    else {
+        mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+            "/java/mzmatch_2.0.jar", '"', sep = "")
+    }
+    tool <- paste(mzmatch, "mzmatch.ipeak.convert.ConvertToText")
+    if (!is.null(i)) 
+        tool <- paste(tool, "-i", i)
+    if (!is.null(o)) 
+        tool <- paste(tool, "-o", o)
+    if (!is.null(databases)) 
+        tool <- paste(tool, "-databases", databases)
+    if (!is.null(annotations)) 
+        tool <- paste(tool, "-annotations", annotations)
+    if (!is.null(h) && h == T) 
+        tool <- paste(tool, "-h")
+    if (!is.null(v) && v == T) 
+        tool <- paste(tool, "-v")
+    system(tool)
+}
+
+mzmatch.ipeak.sort.RelatedPeaks.modified = function (JHeapSize = 1425, i = NULL, o = NULL, basepeaks = NULL, 
+    ppm = NULL, rtwindow = NULL, minrt = NULL, h = NULL, v = NULL) 
+{
+    version.1 <- get("version.1", envir = .GlobalEnv)
+    java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
+    JHeapSize <- paste(JHeapSize, "m", sep = "")
+    java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
+        " -cp", sep = "")
+    if (version.1 == TRUE) {
+        mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+            "/java/mzmatch.jar", '"', sep = "")
+    }
+    else {
+        mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+            "/java/mzmatch_2.0.jar", '"', sep = "")
+    }
+    tool <- paste(mzmatch, "mzmatch.ipeak.sort.RelatedPeaks")
+    if (!is.null(i)) 
+        tool <- paste(tool, "-i", i)
+    if (!is.null(o)) 
+        tool <- paste(tool, "-o", o)
+    if (!is.null(basepeaks)) 
+        tool <- paste(tool, "-basepeaks", basepeaks)
+    if (!is.null(ppm)) 
+        tool <- paste(tool, "-ppm", ppm)
+    if (!is.null(rtwindow)) 
+        tool <- paste(tool, "-rtwindow", rtwindow)
+    if (!is.null(minrt)) 
+        tool <- paste(tool, "-minrt", minrt)
+    if (!is.null(h) && h == T) 
+        tool <- paste(tool, "-h")
+    if (!is.null(v) && v == T) 
+        tool <- paste(tool, "-v")
+    system(tool)
+}
+
+mzmatch.ipeak.filter.SimpleFilter.modified = function (JHeapSize = 1425, i = NULL, o = NULL, rejected = NULL, 
+    databases = NULL, ppm = NULL, n = NULL, offset = NULL, mindetections = NULL, 
+    minscanid = NULL, maxscanid = NULL, minretentiontime = NULL, 
+    maxretentiontime = NULL, minmass = NULL, maxmass = NULL, 
+    minintensity = NULL, maxintensity = NULL, annotations = NULL, 
+    h = NULL, v = NULL) 
+{
+    version.1 <- get("version.1", envir = .GlobalEnv)
+    java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
+    JHeapSize <- paste(JHeapSize, "m", sep = "")
+    java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
+        " -cp", sep = "")
+    if (version.1 == TRUE) {
+        mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+            "/java/mzmatch.jar", '"', sep = "")
+    }
+    else {
+        mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+            "/java/mzmatch_2.0.jar", '"', sep = "")
+    }
+    tool <- paste(mzmatch, "mzmatch.ipeak.filter.SimpleFilter")
+    if (!is.null(i)) 
+        tool <- paste(tool, "-i", i)
+    if (!is.null(o)) 
+        tool <- paste(tool, "-o", o)
+    if (!is.null(rejected)) 
+        tool <- paste(tool, "-rejected", rejected)
+    if (!is.null(databases)) 
+        tool <- paste(tool, "-databases", databases)
+    if (!is.null(ppm)) 
+        tool <- paste(tool, "-ppm", ppm)
+    if (!is.null(n)) 
+        tool <- paste(tool, "-n", n)
+    if (!is.null(offset)) 
+        tool <- paste(tool, "-offset", offset)
+    if (!is.null(mindetections)) 
+        tool <- paste(tool, "-mindetections", mindetections)
+    if (!is.null(minscanid)) 
+        tool <- paste(tool, "-minscanid", minscanid)
+    if (!is.null(maxscanid)) 
+        tool <- paste(tool, "-maxscanid", maxscanid)
+    if (!is.null(minretentiontime)) 
+        tool <- paste(tool, "-minretentiontime", minretentiontime)
+    if (!is.null(maxretentiontime)) 
+        tool <- paste(tool, "-maxretentiontime", maxretentiontime)
+    if (!is.null(minmass)) 
+        tool <- paste(tool, "-minmass", minmass)
+    if (!is.null(maxmass)) 
+        tool <- paste(tool, "-maxmass", maxmass)
+    if (!is.null(minintensity)) 
+        tool <- paste(tool, "-minintensity", minintensity)
+    if (!is.null(maxintensity)) 
+        tool <- paste(tool, "-maxintensity", maxintensity)
+    if (!is.null(annotations)) 
+        tool <- paste(tool, "-annotations", annotations)
+    if (!is.null(h) && h == T) 
+        tool <- paste(tool, "-h")
+    if (!is.null(v) && v == T) 
+        tool <- paste(tool, "-v")
+    system(tool)
+}
+
+mzmatch.ipeak.filter.NoiseFilter.modified = function (JHeapSize = 1425, i = NULL, o = NULL, rejected = NULL, 
+    codadw = NULL, h = NULL, v = NULL) 
+{
+    version.1 <- get("version.1", envir = .GlobalEnv)
+    java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
+    JHeapSize <- paste(JHeapSize, "m", sep = "")
+    java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
+        " -cp", sep = "")
+    if (version.1 == TRUE) {
+        mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+            "/java/mzmatch.jar", '"',sep = "")
+    }
+    else {
+        mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+            "/java/mzmatch_2.0.jar", '"', sep = "")
+    }
+    tool <- paste(mzmatch, "mzmatch.ipeak.filter.NoiseFilter")
+    if (!is.null(i)) 
+        tool <- paste(tool, "-i", i)
+    if (!is.null(o)) 
+        tool <- paste(tool, "-o", o)
+    if (!is.null(rejected)) 
+        tool <- paste(tool, "-rejected", rejected)
+    if (!is.null(codadw)) 
+        tool <- paste(tool, "-codadw", codadw)
+    if (!is.null(h) && h == T) 
+        tool <- paste(tool, "-h")
+    if (!is.null(v) && v == T) 
+        tool <- paste(tool, "-v")
+    system(tool)
+}
+
+mzmatch.ipeak.Combine.modified= function (JHeapSize = 1425, i = NULL, o = NULL, label = NULL, 
+    labels = NULL, ppm = NULL, rtwindow = NULL, combination = NULL, 
+    h = NULL, v = NULL, sampleList = NULL, nSlaves = 1, outputfolder = "combined") 
+{
+    version.1 <- get("version.1", envir = .GlobalEnv)
+    java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
+    JHeapSize <- paste(JHeapSize, "m", sep = "")
+    java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
+        " -cp", sep = "")
+    if (!is.null(i)) {
+        if (version.1 == TRUE) {
+            mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+                "/java/mzmatch.jar", '"', sep = "")
+        }
+        else {
+            mzmatch <- paste(java, ' "', find.package("mzmatch.R"), 
+                "/java/mzmatch_2.0.jar", '"',sep = "")
+        }
+        tool <- paste(mzmatch, "mzmatch.ipeak.Combine")
+        if (!is.null(i)) 
+            tool <- paste(tool, "-i", i)
+        if (!is.null(o)) 
+            tool <- paste(tool, "-o", o)
+        if (!is.null(label)) 
+            tool <- paste(tool, "-label", label)
+        if (!is.null(labels)) 
+            tool <- paste(tool, "-labels", labels)
+        if (!is.null(ppm)) 
+            tool <- paste(tool, "-ppm", ppm)
+        if (!is.null(rtwindow)) 
+            tool <- paste(tool, "-rtwindow", rtwindow)
+        if (!is.null(combination)) 
+            tool <- paste(tool, "-combination", combination)
+        if (!is.null(h) && h == T) 
+            tool <- paste(tool, "-h")
+        if (!is.null(v) && v == T) 
+            tool <- paste(tool, "-v")
+        system(tool)
+    }
+    else {
+        MainClasses <- levels(as.factor(sampleList$sampleClass))
+        if (!file.exists(outputfolder)) {
+            dir.create(outputfolder)
+        }
+        combineFunction <- function(fnum) {
+            FILESf <- sampleList$outputfilenames[which(sampleList$sampleClass == 
+                MainClasses[fnum])]
+            OUTPUTf <- paste(outputfolder, "/", MainClasses[fnum], 
+                ".peakml", sep = "")
+            mzmatch <- paste(java, " ", find.package("mzmatch.R"), 
+                "/java/mzmatch_2.0.jar", sep = "")
+            tool <- paste(mzmatch, "mzmatch.ipeak.Combine")
+            i = paste(FILESf, collapse = ",")
+            tool <- paste(tool, "-i", i)
+            o = OUTPUTf
+            tool <- paste(tool, "-o", o)
+            label = MainClasses[fnum]
+            tool <- paste(tool, "-label", label)
+            if (!is.null(labels)) 
+                tool <- paste(tool, "-labels", labels)
+            if (!is.null(ppm)) 
+                tool <- paste(tool, "-ppm", ppm)
+            if (!is.null(rtwindow)) 
+                tool <- paste(tool, "-rtwindow", rtwindow)
+            if (!is.null(combination)) 
+                tool <- paste(tool, "-combination", combination)
+            if (!is.null(h) && h == T) 
+                tool <- paste(tool, "-h")
+            if (!is.null(v) && v == T) 
+                tool <- paste(tool, "-v")
+            cat(label, "\n")
+            system(tool)
+        }
+        if (nSlaves > 1) {
+            cl <- makeCluster(nSlaves)
+            envname <- environment()
+            clusterExport(cl, list = c("combineFunction", "MainClasses", 
+                "sampleList", "labels", "ppm", "rtwindow", "combination", 
+                "java", "h", "v"), envir = envname)
+            system.time(clusterApply(cl, 1:length(MainClasses), 
+                combineFunction))
+            stopCluster(cl)
+        }
+        else {
+            for (fnum in 1:length(MainClasses)) {
+                combineFunction(fnum)
+            }
+        }
+    }
 }
