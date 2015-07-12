@@ -85,7 +85,8 @@ sampleProcessing.modified = function (dataDir = NULL, metadata = NULL, xSet = NU
     }
     
     if (!is.null(xSet)){
-		xSet@phenoData$class = classes
+		#xSet@phenoData$class = classes
+		phenoData(xSet) <- classes
 		fPeaks = list(xSet)
     } else {
 		if (filterMethod == "matchedFilter") {
