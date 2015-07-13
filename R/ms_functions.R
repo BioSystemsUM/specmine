@@ -4,7 +4,7 @@
 read.ms.spec<-function(folder.name, metadata = NULL, profmethod='bin', fwhm=30, bw=30){
   suppressMessages(require(xcms));
   files <- list.files(folder.name, recursive=T, full.names=TRUE);
-  if (is.null(metadata) xset <- xcmsSet(files, profmethod = "bin", fwhm=fwhm);
+  if (is.null(metadata)) xset <- xcmsSet(files, profmethod = "bin", fwhm=fwhm);
   else xset = xcmsSet(files, profmethod = "bin", fwhm = fwhm, sclass = metadata[,1);
   xset<-group(xset, bw=bw);
   xset
