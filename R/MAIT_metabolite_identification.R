@@ -15,7 +15,7 @@ MAIT.identify.metabolites = function(dataset, metadata.variable, xSet = NULL, da
 	scoresTable = getScoresTable(MAIT.object = mait.sig, getExtendedTable = T)
 
 	if (!is.null(features) && length(features) == 1 && features == "all"){
-		mait.sig@FeatureData@featuresSigID = 1:length(scoresTable$extendedTable$mz)
+		mait.sig@FeatureData@featureSigID = 1:length(scoresTable$extendedTable$mz)
 	} else if (!is.null(features) && length(features) > 1){
 		mzs = scoresTable$extendedTable$mz
 		indexes = which(mzs > (features - mass.tolerance) & mzs < (features + mass.tolerance))
