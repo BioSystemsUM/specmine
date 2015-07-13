@@ -5,10 +5,6 @@ MAIT.identify.metabolites = function(dataset, metadata.variable, xSet = NULL, da
 	mait.object = sampleProcessing.modified(dataDir = data.folder, metadata = metadata.var, xSet = xSet, project = "MAIT")
 	mait.annotation = peakAnnotation(MAIT.object = mait.object, corrWithSamp = 0.7, corrBetSamp = 0.75, 
                             perfwhm = 0.6)
-    classes = classes(mait.annotation)
-	pk = getPeaklist(mait.annotation)
-	print(classes)
-	print(colnames(pk))
 	mait.sig = spectralSigFeatures(MAIT.object = mait.annotation, pvalue = 0.05, p.adj = "none",
                                scale = FALSE, printCSVfile = F)
     
@@ -24,7 +20,7 @@ MAIT.identify.metabolites = function(dataset, metadata.variable, xSet = NULL, da
 	
 	mait.bio = Biotransformations(MAIT.object = mait.sig, adductAnnotation = T, peakPrecision = 0.005)
 	mait.identify = identifyMetabolites(MAIT.object = mait.sig, peakTolerance = 0.005)
-
+	mait.identify
 }
 
 sampleProcessing.modified = function (dataDir = NULL, metadata = NULL, xSet = NULL, snThres = 2, Sigma = 5/2.3548, mzSlices = 0.3, 
