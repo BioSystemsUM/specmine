@@ -15,7 +15,7 @@ MAIT.identify.metabolites = function(dataset, metadata.variable, xSet = NULL, da
 	} else if (!is.null(features) && length(features) > 1){
 		mzs = scoresTable$extendedTable$mz
 		indexes = which(mzs > (features - mass.tolerance) & mzs < (features + mass.tolerance))
-		mait.sig@FeatureData@featuresSigID = indexes
+		mait.sig@FeatureData@featureSigID = indexes
     }
 	
 	mait.bio = Biotransformations(MAIT.object = mait.sig, adductAnnotation = T, peakPrecision = 0.005)
