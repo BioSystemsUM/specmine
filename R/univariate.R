@@ -129,6 +129,34 @@ trim <- function( x ) {
 }
 
 ##################### FOLD CHANGE ############################
+fold.change.var = function(dataset, metadata.var, variables, threshold.min.fc = NULL, 
+								write.file = F, file.out = "fold_change_reverse.csv"){
+	
+	samp.classes = dataset$metadata[,metadata.var]
+	datamat = t(dataset$data)
+	means = matrix(ncol = 2, nrow = length(levels(samp.classes)))
+	for (i in 1:length(levels(samp.classes))){
+		means[i,1] = mean(datamat[which(samp.classes == levels(samp.classes)[i]), variables[1]])
+		means[i,2] = mean(datamat[which(samp.classes == levels(samp.classes)[i]), variables[2]])
+	}	
+	#indexes = as.integer(samp.classes)
+	#dataset = aggregate.samples(dataset, indexes, aggreg.fn = "mean")
+	#datamat = t(dataset$data)
+	#mean1 = rowMeans(datamat)
+	
+	fc.all = means[,1] / means[,2]
+	fc.log = log2(fc.all)
+	fc.res = data.frame(fc.all, fc.log)
+	rownames(fc.res) = levels(samp.classes)
+	colnames(fc.res) = c("FoldChange", "log2(FC)")
+	  if (!is.null(threshold.min.fc)) {
+		fc.res = subset(fc.res, FoldChange > threshold.min.fc | FoldChange < 1/threshold.min.fc)
+	  }
+	  fold.order = order(abs(fc.res[,2]), decreasing = T)
+	  fc.res = fc.res[fold.order,,drop=F]
+	if (write.file) write.csv(fc.res, file = file.out)
+	fc.res 
+}
 
 fold.change = function(dataset, metadata.var, ref.value, threshold.min.fc = NULL,
                        write.file = F, file.out = "fold_change.csv" ) {
@@ -150,9 +178,15 @@ fold.change = function(dataset, metadata.var, ref.value, threshold.min.fc = NULL
 	fc.res 
 }
 
-plot.fold.change = function(dataset, fc.results, fc.threshold, plot.log = T) {
-  orig.ord = intersect (get.x.values.as.text(dataset), rownames(fc.results))
-  fc.orig = fc.results[orig.ord,]
+plot.fold.change = function(dataset, fc.results, fc.threshold, plot.log = T, var = F, xlab = "") {
+  if (var == F){
+	orig.ord = intersect (get.x.values.as.text(dataset), rownames(fc.results))
+	fc.orig = fc.results[orig.ord,]
+	xlabel = get.x.label(dataset)
+  } else {
+	fc.orig = fc.results
+	xlabel = xlab
+  }
   fc.higher = which(fc.orig$FoldChange > fc.threshold | 
                     fc.orig$FoldChange < 1/fc.threshold)
   cols = vector("character", nrow(fc.orig))
@@ -161,7 +195,7 @@ plot.fold.change = function(dataset, fc.results, fc.threshold, plot.log = T) {
     else cols[i] = "gray"
   if (plot.log) {
     max = max ( max(abs(fc.orig$"log2(FC)")), abs(log2(fc.threshold)) )
-    plot(fc.orig$"log2(FC)", xlab = get.x.label(dataset), ylab = "Log2FoldChange", 
+    plot(fc.orig$"log2(FC)", xlab = xlabel, ylab = "Log2FoldChange", 
          col = cols, pch = 19, ylim = c(-max,max), xaxt="n")
     axis(1, at = 1:length(rownames(fc.orig)),labels = rownames(fc.orig))
     abline(h = log2(fc.threshold), col = "lightblue")
@@ -171,7 +205,7 @@ plot.fold.change = function(dataset, fc.results, fc.threshold, plot.log = T) {
   else {
     max = max ( max(fc.orig$FoldChange), fc.threshold )
     min = min ( min(fc.orig$FoldChange), 1/fc.threshold) 
-    plot(fc.orig$FoldChange, xlab = get.x.label(dataset), ylab = "FoldChange", 
+    plot(fc.orig$FoldChange, xlab = xlabel, ylab = "FoldChange", 
          col = cols, pch = 19, ylim = c(min,max), xaxt="n")
     axis(1, at = 1:length(rownames(fc.orig)),labels = rownames(fc.orig))
     abline(h = fc.threshold, col = "lightblue")
