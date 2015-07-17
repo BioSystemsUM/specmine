@@ -1,5 +1,6 @@
 MAIT.identify.metabolites = function(dataset, metadata.variable, xSet = NULL, data.folder = NULL, features = NULL, 
 									 mass.tolerance = 0.5){
+	require(MAIT)
 	imports = parent.env(getNamespace("CAMERA"))
 	unlockBinding("groups", imports)
 	imports[["groups"]] = xcms::groups
