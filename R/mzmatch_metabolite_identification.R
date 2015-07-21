@@ -1,6 +1,6 @@
 
 mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL, xSet = NULL, backend = "Ramp",
-										adducts = "M+H,M+ACN+Na,M+Na,M+K,M+ACN+H"){
+										adducts = "M+H,M+ACN+Na,M+Na,M+K,M+ACN+H", databases = NULL){
 										
 	require(mzmatch.R)
 	require(rJava)
@@ -43,10 +43,15 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
 	mzmatch.ipeak.convert.ConvertToText.modified (i="./mzmatch/mzMatch_output.peakml",
 										 o="./mzmatch/mzMATCHoutput.txt",v=T,annotations=annot)
 
-	DBS <- dir(paste(find.package("mzmatch.R"), "/dbs", sep=""),
+	if (is.null(databases)){
+		DBS <- dir(paste(find.package("mzmatch.R"), "/dbs", sep=""),
 			   full.names=TRUE)
-	DBS <- paste(DBS,collapse='","')
-	DBS <- paste('"',DBS,'"',sep="")
+		DBS <- paste(DBS,collapse='","')
+		DBS <- paste('"',DBS,'"',sep="")
+	} else {
+		DBS = databases
+	}
+
 
 	mzmatch.ipeak.util.Identify.modified(i="./mzmatch/mzMatch_output.peakml", v=T,
 								o="./mzmatch/metabolites.peakml", ppm=3, 
