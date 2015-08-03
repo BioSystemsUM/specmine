@@ -52,7 +52,7 @@ boxplot.vars.factor = function(dataset, meta.var, variables = NULL, samples = NU
   for (i in 1:length(variables)) {
     if (is.null(col)) coli = i+1
     else coli = col
-	if (!is.null(ylabs))
+	if (!is.null(ylabs)){
 		ylab = ylabs[i]
 	} else {
 		ylab = NULL
