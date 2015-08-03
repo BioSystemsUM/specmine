@@ -30,7 +30,7 @@
 
 boxplot.vars.factor = function(dataset, meta.var, variables = NULL, samples = NULL, 
                                horizontal = F, nchar.label = 10, col = NULL,
-                               vec.par = NULL, cex.axis = 0.8, ...)
+                               vec.par = NULL, cex.axis = 0.8, ylabs = NULL, ...)
 {
   if (is.null(variables)) { # assume all
     variables = rownames(dataset$data)
@@ -52,9 +52,14 @@ boxplot.vars.factor = function(dataset, meta.var, variables = NULL, samples = NU
   for (i in 1:length(variables)) {
     if (is.null(col)) coli = i+1
     else coli = col
+	if (!is.null(ylabs))
+		ylab = ylabs[i]
+	} else {
+		ylab = NULL
+	}
     boxplot(dataset$data[variables[i],samples] ~ dataset$metadata[,meta.var], 
             horizontal = horizontal, las = 2, main = names.short[i], 
-            col = coli, cex.axis = cex.axis, ...)
+            col = coli, cex.axis = cex.axis, ylab = ylab, ...)
   }
   par(mfrow = c(1,1))
 }
