@@ -15,7 +15,7 @@ transmittance.to.absorbance = function(dataset, percent = T){
 absorbance.to.transmittance = function(dataset){
   datamat = dataset$data
   transmittance.datamat = 100*(10^(-datamat))
-  dataset$data = trasmittance.datamat
+  dataset$data = transmittance.datamat
   dataset$labels$val = "%T"
   dataset
 }
