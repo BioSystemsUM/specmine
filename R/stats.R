@@ -1,3 +1,12 @@
+"compare.regions.by.sample" = function(dataset1, dataset2, fn.to.apply, samples = NULL, ...){
+	stats1 = apply.by.sample(dataset1, fn.to.apply, ...)
+	stats2 = apply.by.sample(dataset2, fn.to.apply, ...)
+	stats.total = data.frame(cbind(stats1,stats2))
+	names(stats.total) = c(deparse(substitute(dataset1)), deparse(substitute(dataset2)))
+	stats.total$ratio = stats1/stats2
+	stats.total
+}
+
 # applies a function to the values of each variable
 # fn.to.apply - function to apply (e.g. mean, max, min)
 # variables - allows to define which variables to calculate the stats (if numbers, indexes are assumed)
