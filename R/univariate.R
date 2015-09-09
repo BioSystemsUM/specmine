@@ -128,6 +128,21 @@ trim <- function( x ) {
   gsub("(^[[:space:]]+|[[:space:]]+$)", "", x)
 }
 
+plot.anova = function(dataset, anova.results, anova.threshold = 0.01) {
+  orig.ord = intersect (get.x.values.as.text(dataset), rownames(anova.results))
+  anova.orig = anova.results[orig.ord,]
+  anova.lower = which(anova.orig$pvalues < anova.threshold)
+
+  cols = vector("character", nrow(anova.orig))
+  for(i in 1:nrow(anova.orig))
+    if (i %in% anova.lower) cols[i] = "blue"
+    else cols[i] = "gray"
+  
+  plot(anova.orig$"logs", xlab = get.x.label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xaxt="n")
+  axis(1, at = 1:length(rownames(anova.orig)),labels = rownames(anova.orig))
+  abline(h = -log10(anova.threshold), col = "lightblue")
+}
+
 ##################### FOLD CHANGE ############################
 fold.change.var = function(dataset, metadata.var, variables, threshold.min.fc = NULL, 
 								write.file = F, file.out = "fold_change_reverse.csv"){
