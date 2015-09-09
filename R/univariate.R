@@ -128,7 +128,7 @@ trim <- function( x ) {
   gsub("(^[[:space:]]+|[[:space:]]+$)", "", x)
 }
 
-plot.anova = function(dataset, anova.results, anova.threshold = 0.01) {
+plot.anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x = F) {
   orig.ord = intersect (get.x.values.as.text(dataset), rownames(anova.results))
   anova.orig = anova.results[orig.ord,]
   anova.lower = which(anova.orig$pvalues < anova.threshold)
@@ -138,8 +138,17 @@ plot.anova = function(dataset, anova.results, anova.threshold = 0.01) {
     if (i %in% anova.lower) cols[i] = "blue"
     else cols[i] = "gray"
   
-  plot(anova.orig$"logs", xlab = get.x.label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xaxt="n")
-  axis(1, at = 1:length(rownames(anova.orig)),labels = rownames(anova.orig))
+  vars = rownames(anova.orig)
+  if (reverse.x){
+	xlim = c(max(as.numeric(vars)), min(as.numeric(vars)))
+  } else {
+	xlim = range(as.numeric(vars))
+  }
+  if (round.xvalues){
+	vars = round(as.numeric(vars))
+  }
+  plot(vars,anova.orig$"logs", xlab = get.x.label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xlim = xlim)
+  #axis(1, at = 1:length(vars),labels = vars, xlim = xlim)
   abline(h = -log10(anova.threshold), col = "lightblue")
 }
 
