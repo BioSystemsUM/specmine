@@ -144,9 +144,7 @@ plot.anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x 
   } else {
 	xlim = range(as.numeric(vars))
   }
-  if (round.xvalues){
-	vars = round(as.numeric(vars))
-  }
+
   plot(vars,anova.orig$"logs", xlab = get.x.label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xlim = xlim)
   #axis(1, at = 1:length(vars),labels = vars, xlim = xlim)
   abline(h = -log10(anova.threshold), col = "lightblue")
