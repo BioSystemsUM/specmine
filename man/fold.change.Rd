@@ -8,7 +8,7 @@
   Perform fold change analysis on the dataset.
 }
 \usage{
-fold.change(dataset, metadata.var, ref.value, write.file = F, file.out = "fold_change.csv")
+fold.change(dataset, metadata.var, ref.value, threshold.min.fc = NULL, write.file = F, file.out = "fold_change.csv")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -21,6 +21,9 @@ fold.change(dataset, metadata.var, ref.value, write.file = F, file.out = "fold_c
   \item{ref.value}{
     class name to indicate the initial value.
 }
+  \item{threshold.min.fc}{
+    minimum threshold of the fold change value.
+}
   \item{write.file}{
     boolean value to write or not a file with the results.
 }
@@ -28,27 +31,12 @@ fold.change(dataset, metadata.var, ref.value, write.file = F, file.out = "fold_c
     name of the file.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   Table of results with fold change and log2 of fold change. 
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of fold change

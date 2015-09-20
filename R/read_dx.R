@@ -25,14 +25,13 @@
 
 "read.data.dx" = function(foldername, debug = F)
 {
-  require(ChemoSpec)
   filenames = dir(foldername, pattern=".[Dd][Xx]$", full.names=TRUE)
   sampleList = list()
   sampleNames = c()
   snames <- gsub("\\.[^.]*$", "", basename(filenames));
   for (i in 1:length(filenames)) {
     print(paste("Reading sample ", filenames[i]))
-    sampleList[[i]] = readJDX(filenames[i], debug = debug)
+    sampleList[[i]] = ChemoSpec::readJDX(filenames[i], debug = debug)
   }
   sampleNames = snames
   names(sampleList) = sampleNames

@@ -31,25 +31,8 @@ pca.scoresplot3D.rgl(dataset, pca.result, column.class, pcas = c(1, 2, 3), size 
     boolean value indicating if the samples' labels will be shown.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of a 3D PCA scores plot

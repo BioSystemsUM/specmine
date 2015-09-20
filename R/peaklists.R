@@ -60,14 +60,13 @@
 # finds samples that have the same peak values- x and y (equal data frames)
 "find.equal.samples" = function(sample.list)
 {
-  require(compare)
   eq1 = c()
   eq2 = c()
   for (i in 1:(length(sample.list)-1))
   {
     for(j in (i+1):length(sample.list)) 
     {
-      res = compare(sample.list[[i]], sample.list[[j]])
+      res = compare::compare(sample.list[[i]], sample.list[[j]])
       if(res$result == T) 
       {
         eq1 = c(eq1, names(sample.list)[i])

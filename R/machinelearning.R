@@ -1,9 +1,7 @@
 #summary function for multi class with ROC metric
 multiClassSummary <- function (data, lev = NULL, model = NULL){
     
-    #Load Libraries
-    require(Metrics)
-    require(caret)
+
     
     #Check data
     if (!all(levels(data[, "pred"]) == levels(data[, "obs"])))
@@ -19,7 +17,7 @@ multiClassSummary <- function (data, lev = NULL, model = NULL){
         
         #Calculate one-vs-all AUC and logLoss and return
         cap_prob <- pmin(pmax(prob, .000001), .999999)
-        prob_stats <- c(auc(obs, prob), logLoss(obs, cap_prob))
+        prob_stats <- c(Metrics::auc(obs, prob), Metrics::logLoss(obs, cap_prob))
         names(prob_stats) <- c('ROC', 'logLoss')
         return(prob_stats)
     })
@@ -89,7 +87,6 @@ train.classifier = function(dataset, column.class, model, validation, num.folds 
 trainClassifier <- function(datamat, sampleclass, model, validation, num.folds = 10, num.repeats = 10, 
                             tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = T)
 {
-	require(caret)
 	samples.df.ml = data.frame(t(datamat))
 	rnames = gsub('[-\ ]','_',rownames(datamat))
 	colnames(samples.df.ml) = paste("X",rnames,sep="")
@@ -112,13 +109,13 @@ trainClassifier <- function(datamat, sampleclass, model, validation, num.folds =
 	}
 	if (train.metric == "ROC") class.probs = T
 	else class.probs = F
-	train.control = trainControl(method=validation, number = num.folds, repeats=num.repeats, classProbs = class.probs, 
+	train.control = caret::trainControl(method=validation, number = num.folds, repeats=num.repeats, classProbs = class.probs, 
 					summaryFunction= summary.function)
 	if (class.in.metadata) 
-		result.train = train(class ~., data = samples.df.ml, method=model, tuneLength = tunelength, metric = train.metric,
+		result.train = caret::train(class ~., data = samples.df.ml, method=model, tuneLength = tunelength, metric = train.metric,
 						trControl = train.control, tuneGrid = tunegrid)
 	else
-		result.train = train(sampleclass ~., data = samples.df.ml, method=model, tuneLength = tunelength, metric = train.metric, 
+		result.train = caret::train(sampleclass ~., data = samples.df.ml, method=model, tuneLength = tunelength, metric = train.metric, 
 						trControl = train.control, tuneGrid = tunegrid)
 	result.train
 } 
@@ -153,7 +150,7 @@ train.models.performance = function(dataset, models, column.class, validation, n
 	  if (!is.null(metric) && metric == "ROC" && summary.function == "default"){
 		summary.function = multiClassSummary
 	  } else if (summary.function == "default"){
-		summary.function = defaultSummary
+		summary.function = caret::defaultSummary
 	  }
   }
   
@@ -198,8 +195,7 @@ train.models.performance = function(dataset, models, column.class, validation, n
 # VARIABLE IMPORTANCE
 
 var.importance = function(train.result){
-	require(caret)
-	vip = varImp(train.result)
+	vip = caret::varImp(train.result)
 	vip$importance
 }
 
@@ -213,8 +209,7 @@ summary.var.importance = function(performances, number.rows){
 # PCA PLOTS
 
 "pca.plot.3d" = function(dataset, model, var.class, pcas = 1:3, colors = NULL, legend.place = "topright", ...) {
-  require(scatterplot3d)
-  require(qdap)
+
   if (length(pcas) != 3) stop("Wrong dimension in parameter pcas")
   if (ncol(model$scores) < 3) stop("Less than 3 components")
   classes = dataset$metadata[,var.class]
@@ -222,8 +217,8 @@ summary.var.importance = function(performances, number.rows){
   if (is.null(colors)){
 	colors = 1:length(classes)
   }
-  colors_metadata = mgsub(levels(classes), colors, classes)
-  scatterplot3d(model$scores[,pcas], color=colors_metadata, pch=17, 
+  colors_metadata = qdap::mgsub(levels(classes), colors, classes)
+  scatterplot3d::scatterplot3d(model$scores[,pcas], color=colors_metadata, pch=17, 
                 xlab = labs[1], ylab = labs[2], zlab = labs[3])
   legend(legend.place, levels(classes), col = colors, pch= 17, ...)
 }

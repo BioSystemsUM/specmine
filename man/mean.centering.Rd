@@ -1,0 +1,33 @@
+\name{mean.centering}
+\alias{mean.centering}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+ Mean centering
+}
+\description{
+ Performs mean centering on the dataset.
+}
+\usage{
+mean.centering(dataset)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{dataset}{
+     list representing the dataset from a metabolomics experiment.
+}
+}
+
+\value{
+ Returns the dataset with mean centering applied.
+}
+
+\examples{
+  \dontrun{
+  ## Example of mean centering
+  dataset = mean.centering(dataset)
+}
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ ~mean }
+\keyword{ ~centering }% __ONLY ONE__ keyword per line

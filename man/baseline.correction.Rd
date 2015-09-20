@@ -5,7 +5,7 @@
   Baseline correction
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+  Performs baseline correction on the dataset.
 }
 \usage{
 baseline.correction(dataset, method = "modpolyfit", ...)
@@ -22,10 +22,10 @@ baseline.correction(dataset, method = "modpolyfit", ...)
       \item "fillPeaks" An iterative algorithm using suppression of baseline by means in local windows
       \item "irls" Iterative Restricted Least Squares, an algorithm with primary smoothing and repeated baseline suppressions and regressions with 2nd derivative constraint
       \item "lowpass" Low-pass filter, an algorithm for removing baselines based on Fast Fourier Transform filtering
-      \item "medianWindow" an implementation and extension of Mark S. Friedrichs’ model-free algorithm
-      \item "modpolyfit" Modified polynomial fitting, an implementation of Chad A. Lieber and Anita Mahadevan-Jansen’s algorithm for polynomial fitting
-      \item "peakDetection" A translation from Kevin R. Coombes et al.’s MATLAB code for detecting peaks and removing baselines
-      \item "rfbaseline" Robust Baseline Estimation, Wrapper for Andreas F. Ruckstuhl, Matthew P. Jacobson, Robert W. Field, James A. Dodd’s algorithm based on LOWESS and weighted regression
+      \item "medianWindow" an implementation and extension of Mark S. Friedrichs' model-free algorithm
+      \item "modpolyfit" Modified polynomial fitting, an implementation of Chad A. Lieber and Anita Mahadevan-Jansen's algorithm for polynomial fitting
+      \item "peakDetection" A translation from Kevin R. Coombes et al.'s MATLAB code for detecting peaks and removing baselines
+      \item "rfbaseline" Robust Baseline Estimation, Wrapper for Andreas F. Ruckstuhl, Matthew P. Jacobson, Robert W. Field, James A. Dodd's algorithm based on LOWESS and weighted regression
       \item "rollingBall" Ideas from Rolling Ball algorithm for X-ray spectra by M.A.Kneen and H.J. Annegarn. Variable window width has been left out
     }
 }
@@ -33,27 +33,11 @@ baseline.correction(dataset, method = "modpolyfit", ...)
   Additional parameters of the baseline correction method.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   Returns the dataset with the data's baseline corrected.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of baseline correction

@@ -8,7 +8,7 @@ Plot spectra
 Plot spectra from dataset.
 }
 \usage{
-plot.spectra(dataset, column.class, func = NULL, samples = NULL, variable.bounds = NULL, xlab = NULL, ylab = NULL, lty = 1, legend.place = "topright", cex = 0.0, reverse.x = F, ...)
+plot.spectra(dataset, column.class, func = NULL, samples = NULL, variable.bounds = NULL, xlab = NULL, ylab = NULL, lty = 1, legend.place = "topright", cex = 0.8, reverse.x = F, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -49,26 +49,7 @@ plot.spectra(dataset, column.class, func = NULL, samples = NULL, variable.bounds
     additional parameters to matplot.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 
-
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of plotting spectra (simple)

@@ -8,7 +8,7 @@
   Train a specific classifier.
 }
 \usage{
-train.classifier(dataset, column.class, model, validation, num.folds = 10, num.repeats = 10, tunelength = 10, tunegrid = NULL)
+train.classifier(dataset, column.class, model, validation, num.folds = 10, num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -36,28 +36,21 @@ train.classifier(dataset, column.class, model, validation, num.folds = 10, num.r
   \item{tunegrid}{
     dataframe with possible tuning values.
 }
+  \item{metric}{
+	metric used to evaluate the model's performance. Can be "Accuracy" or "ROC".
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+  \item{summary.function}{
+	summary function. For "ROC" the multiClassSummary function must be used.
 }
+  \item{class.in.metadata}{
+	boolean value to indicate if the class is in metadata.
+}
+}
+
 \value{
   Returns the train result object from caret.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of training a classifier

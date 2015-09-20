@@ -26,7 +26,6 @@
 
 "read.data.spc" = function(foldername, nosubhdr = F)
 {
-  require(hyperSpec)
   filenames = dir(foldername, pattern=".[Ss][Pp][Cc]$", full.names=TRUE)
   sampleList = list()
   sampleNames = c()
@@ -34,7 +33,7 @@
   for (i in 1:length(filenames)) {
     print(paste("Reading sample ", filenames[i]))
     if (!nosubhdr){
-		sampleList[[i]] = read.spc(filenames[i], no.object = T)
+		sampleList[[i]] = hyperSpec::read.spc(filenames[i], no.object = T)
 	} else {
 		sampleList[[i]] = read.spc.nosubhdr(filenames[i], no.object = T)
 	}

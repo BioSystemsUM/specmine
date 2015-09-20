@@ -28,27 +28,11 @@ filter.feature.selection(datamat, samples.class, functions = rfSBF, method = "cv
     for repeated k-fold cross-validation only: the number of complete sets of folds to compute.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
 A caret's sbf object with the result of selection by filter.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of selection by filter

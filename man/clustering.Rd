@@ -8,7 +8,7 @@ Perform cluster analysis
 Perform cluster analysis on the dataset.
 }
 \usage{
-clustering(dataset, method = "hc", distance = "euclidean", type = "samples", num.clusters = 5)
+clustering(dataset, method = "hc", distance = "euclidean", type = "samples", num.clusters = 5, clustMethod = "complete")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -31,28 +31,15 @@ clustering(dataset, method = "hc", distance = "euclidean", type = "samples", num
   \item{num.clusters}{
     the number of clusters in k-means cluster analysis.
 }
+  \item{clustMethod}{
+    Cluster method for hierarchical clustering.
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
+
 \value{
   An object of class kmeans or hclust with the clustering results.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of kmeans and hierarchical clustering

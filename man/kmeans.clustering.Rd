@@ -22,27 +22,11 @@ kmeans.clustering(dataset, num.clusters, type = "samples")
     a string indicating if k-means will be performed on samples ("samples") or on variables ("variables")
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   An object of class kmeans with the clustering results.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of kmeans clustering

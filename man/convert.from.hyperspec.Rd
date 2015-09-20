@@ -1,0 +1,39 @@
+\name{convert.from.hyperspec}
+\alias{convert.from.hyperspec}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+   Convert from hyperspec
+}
+\description{
+   Convert the dataset in the hyperspec format to a dataset of this package.
+}
+\usage{
+convert.from.hyperspec(hsobj, type = "undefined", description = "")
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{hsobj}{
+   hyperspec object representing the dataset.
+}
+  \item{type}{
+   string representing the type of the data.
+}
+  \item{description}{
+   string representing the description of the dataset.
+}
+}
+
+\value{
+   Returns a list representing the dataset converted.
+}
+
+\examples{
+\dontrun{
+  ## Example of converting a dataset from hyperspec 
+  dataset = convert.from.hyperspec(hyperspec.dataset, type = "nmr-peaks", description = "some description") 
+}
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ ~hyperspec }
+\keyword{ ~dataset }% __ONLY ONE__ keyword per line

@@ -240,8 +240,7 @@ plot.fold.change = function(dataset, fc.results, fc.threshold, plot.log = T, var
 ####################### T-TESTS ##################################
 
 tTests.pvalue = function(datamat, samp.classes) {
-	require(genefilter)
-	p.value = try(rowttests(datamat, samp.classes)$p.value);
+	p.value = try(genefilter::rowttests(datamat, samp.classes)$p.value);
 	if (class(p.value) == "try-error"){
 		p.value = NA
 	} else {
@@ -342,8 +341,8 @@ correlations.dataset = function(dataset, method = "pearson", by.var = T) {
 }
 
 heatmap.correlations = function(correlations, col = NULL, ...) {
-  require(RColorBrewer)
-  if (is.null(col)) colors = rev(colorRampPalette(brewer.pal(10, "RdBu"))(256))
+  require()
+  if (is.null(col)) colors = rev(colorRampPalette(RColorBrewer::brewer.pal(10, "RdBu"))(256))
   else colors = col
   heatmap(correlations, col = colors, ...)
 }

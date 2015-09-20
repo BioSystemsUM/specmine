@@ -19,26 +19,16 @@ impute.nas.value(dataset, value)
     value to replace the missing values.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   Returns the dataset with no missing values.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\examples{
+\dontrun{
+  ## Example of NA imputation with value replacing
+  dataset = impute.nas.value(dataset, 0.0005)
+}
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

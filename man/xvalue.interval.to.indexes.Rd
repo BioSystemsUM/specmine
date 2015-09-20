@@ -22,30 +22,14 @@ mininum x-value of the interval.
 maximum x-value of the interval.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
 Returns a numeric vector with the indexes of the x-values interval
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
-  ## Example of getting a the indexes of an interval of x-values
+  ## Example of getting the indexes of an interval of x-values
   indexes.interval = xvalue.interval.to.indexes(dataset, 2.0, 5.5)
 }
 }

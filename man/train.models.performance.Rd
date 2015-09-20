@@ -8,7 +8,7 @@
   Train various models.
 }
 \usage{
-train.models.performance(dataset, models, column.class, validation, num.folds = 10, num.repeats = 10, tunelength = 10, tunegrid = NULL)
+train.models.performance(dataset, models, column.class, validation, num.folds = 10, num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = "default", class.in.metadata = T, compute.varimp = T)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -36,10 +36,20 @@ train.models.performance(dataset, models, column.class, validation, num.folds = 
   \item{tunegrid}{
     dataframe with possible tuning values.
 }
+  \item{metric}{
+	metric used to evaluate the model's performance. Can be "Accuracy" or "ROC".
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+  \item{summary.function}{
+	summary function. For "ROC" the multiClassSummary function must be used.
 }
+  \item{class.in.metadata}{
+	boolean value to indicate if the class is in metadata.
+}
+  \item{compute.varimp}{
+	boolean value to indicate if the var importance is calculated.
+}
+}
+
 \value{
 Returns a list with the results from training
 \item{performance}{The results from the best tunes of the models}
@@ -49,21 +59,7 @@ Returns a list with the results from training
 \item{confusion.matrices}{The confusion matrices of the models (only in classification)}
 \item{final.models}{The final models}
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of training models

@@ -1,0 +1,39 @@
+\name{subset.samples}
+\alias{subset.samples}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+ Subset samples
+}
+\description{
+  Gets a subset of specific samples from the dataset.
+}
+\usage{
+subset.samples(dataset, samples, rebuild.factors = T)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{dataset}{
+    list representing the dataset from a metabolomics experiment.
+}
+  \item{samples}{
+    vector with indexes or names of the samples to select
+}
+  \item{rebuild.factors}{
+    if TRUE the metadata factors are rebuilded.
+}
+}
+
+\value{
+  Returns the dataset with the selected set of samples.
+}
+
+\examples{
+\dontrun{
+  ## Example of subsetting samples
+  subset = subset.samples(dataset, c("sample1","sample2"))
+}
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ ~subset }
+\keyword{ ~sample }% __ONLY ONE__ keyword per line

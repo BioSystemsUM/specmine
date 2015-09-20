@@ -8,7 +8,7 @@
   Performs a classical PCA analysis over the dataset.
 }
 \usage{
-pca.analysis.dataset(dataset, scale = T, center = T, write.file = F, file.out = "pca")
+pca.analysis.dataset(dataset, scale = T, center = T, write.file = F, file.out = "pca", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,28 +27,15 @@ pca.analysis.dataset(dataset, scale = T, center = T, write.file = F, file.out = 
   \item{file.out}{
     name of the file that will store the results.
 }
+  \item{\dots}{
+    additional parameters to ggplot function.
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
+
 \value{
   object of class 'prcomp' with the results from the PCA analysis.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of performing a classical PCA analysis

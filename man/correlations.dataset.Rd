@@ -22,27 +22,12 @@ correlations.dataset(dataset, method = "pearson", by.var = T)
     if TRUE then the correlations of the variables will be calculated, if not then the correlations of the samples will be calculated.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   Returns the correlation matrix
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of correlations of variables

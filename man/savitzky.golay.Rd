@@ -25,27 +25,11 @@ savitzky.golay(dataset, p.order, window, deriv = 0)
   integer value indicating the differentiation order.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
 Returns the dataset with the spectra smoothed using Savitzky-Golay.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of smoothing the spectra from dataset with Savitzky-Golay

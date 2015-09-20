@@ -8,7 +8,7 @@
   Perform multi-factor ANOVA on all variables with the selected metadata variables.
 }
 \usage{
-multifactor.aov.all.vars(dataset, metadata.vars, write.file = F, file.out = "anova-res.csv")
+multifactor.aov.all.vars(dataset, metadata.vars, combination)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -18,38 +18,19 @@ multifactor.aov.all.vars(dataset, metadata.vars, write.file = F, file.out = "ano
   \item{metadata.vars}{
     metadata variables to use in ANOVA.
 }
-  \item{write.file}{
-    boolean value to write or not a file with the results
+  \item{combination}{
+    a formula specifying the model.
 }
-  \item{file.out}{
-    name of the file.
-}
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-  Table with the p-values of all variables in the metadata variables.
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
+  List where each element is the multifactor anova result of a variable on the dataset.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of multifactor ANOVA on all variables 
-  pvalues = multifactor.aov.all.vars(metabolomics.dataset, c("metadata1","metadata2"), write.file = T, file.out = "anova.csv")
+  m.aov.results = multifactor.aov.all.vars(metabolomics.dataset, c("metadata1","metadata2"), "metadata1*metadata2")
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

@@ -8,43 +8,27 @@
   Shows a PCA pairs plot.
 }
 \usage{
-pca.pairs.plot(dataset, column.class, pca.result, pcas = c(1, 2, 3, 4, 5))
+pca.pairs.plot(dataset, pca.result, column.class = NULL, pcas = c(1, 2, 3, 4, 5), ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{dataset}{
         list representing the dataset from a metabolomics experiment.
 }
-  \item{column.class}{
-    metadata's variable.
-}
   \item{pca.result}{
     prcomp object with the PCA results.
+}
+  \item{column.class}{
+    metadata's variable.
 }
   \item{pcas}{
     the principal components to be shown.
 }
+  \item{\dots}{
+	additional parameters to ggpairs function from GGally package.
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
-
-
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of a PCA pairs plot

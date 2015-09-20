@@ -8,7 +8,7 @@
   Shows a interactive 3D PCA biplot.
 }
 \usage{
-pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
+pca.biplot3D(dataset, pca.result, column.class = NULL,pcas = c(1, 2, 3))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -25,26 +25,7 @@ pca.biplot3D(dataset, column.class, pca.result, pcas = c(1, 2, 3))
     the three principal components.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 
-
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of a 3D PCA biplot

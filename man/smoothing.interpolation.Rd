@@ -34,27 +34,11 @@ smoothing.interpolation(dataset, method = "bin", reducing.factor = 2, x.axis = N
   numeric value indicating the differentiation order for savitzky-golay method. 
   }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   Returns the dataset with the spectra smoothed.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of smoothing the spectra from dataset

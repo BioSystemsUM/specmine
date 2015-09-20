@@ -28,10 +28,10 @@ read.dataset.csv(filename.data, filename.meta = NULL, type = "undefined", descri
   the label for the x values.
 }
   \item{label.values}{
-  the label for the y values
+  the label for the y values.
 }
   \item{sample.names}{
-  the names of the samples
+  the names of the samples.
 }
   \item{format}{
   format which the data are in the CSV file. It can be "row" if the samples are in the rows or "col" if the samples are in the columns.
@@ -55,27 +55,11 @@ read.dataset.csv(filename.data, filename.meta = NULL, type = "undefined", descri
   the separator character of the metadata file.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   Returns the dataset from the CSV file.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of reading a dataset from a CSV file

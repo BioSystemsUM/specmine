@@ -8,7 +8,7 @@
   Run t-Tests for each row of the data from the dataset.
 }
 \usage{
-tTests.dataset(dataset, metadata.var, write.file = F, file.out = "ttests.csv")
+tTests.dataset(dataset, metadata.var, threshold = NULL, write.file = F, file.out = "ttests.csv")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -18,6 +18,9 @@ tTests.dataset(dataset, metadata.var, write.file = F, file.out = "ttests.csv")
   \item{metadata.var}{
     metadata variable to use in the t-tests.
 }
+  \item{threshold}{
+    threshold value of the p-value.
+}
   \item{write.file}{
     boolean value to write or not a file with the results.
 }
@@ -25,27 +28,12 @@ tTests.dataset(dataset, metadata.var, write.file = F, file.out = "ttests.csv")
     name of the file.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   Table with the results of the t-tests, with p-value, -log10(p-value) and false discovery rate (fdr).
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of t-Tests on dataset

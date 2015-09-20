@@ -11,27 +11,21 @@
 multiClassSummary(data, lev = NULL, model = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
-
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+\arguments{
+  \item{data}{
+	data parameter.
+}
+  \item{lev}{
+	lev parameter.
+}
+  \item{model}{
+	model parameter.
+}
 }
 
 \references{
-%% ~put references to the literature/web site here ~
+http://www.r-bloggers.com/error-metrics-for-multi-class-problems-in-r-beyond-accuracy-and-kappa/
 }
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

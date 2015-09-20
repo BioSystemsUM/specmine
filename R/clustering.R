@@ -80,7 +80,6 @@ kmeans.plot = function(dataset, kmeans.result){
 
 #dendrogram
 "dendrogram.plot" = function(dataset, hc.result, column.metadata = 1, labels = NULL, ...){
-  require(ggdendro)
   if (!is.null(labels)){
     labels.hc = labels
   } else {
@@ -91,7 +90,7 @@ kmeans.plot = function(dataset, kmeans.result){
 	}
   }
   hc.result$labels = labels.hc
-  ggdendrogram(hc.result, ...)
+  ggdendro::ggdendrogram(hc.result, ...)
 }
 
 "dendrogram.plot.col" = function(dataset, hc.result, classes.col, title = "", lab.cex = 1.0, leg.pos = "topright", ...) 

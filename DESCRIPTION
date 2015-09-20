@@ -7,7 +7,8 @@ Author: Who wrote it
 Maintainer: Who to complain to <yourfault@somewhere.net>
 Depends: R (>= 2.15.0)
 Imports: compare, hyperSpec, ChemoSpec, baseline, rgl, Metrics, 
-	GGally, ggplot2, ellipse, ggdendro, caret, pls, e1071, RWeka, 
-	pROC, kernlab, randomForest, pcaPP, plyr, RColorBrewer, rJava
+	GGally, ggplot2, ellipse, ggdendro, caret, pls, 
+	pcaPP, RColorBrewer, grid, 
+	qdap, MASS, scatterplot3d
 Description: More about what it does (maybe more than one line)
 License: What license is it under?

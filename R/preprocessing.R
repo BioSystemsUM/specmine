@@ -36,7 +36,7 @@ smoothing.interpolation = function(dataset, method = "bin", reducing.factor = 2,
 # spc.bin hyperSpec smoothing interpolation
 smoothing.spcbin.hyperspec = function(dataset, reducing.factor = 2) {
 	hyper.object = convert.to.hyperspec(dataset)
-	smooth.result = spc.bin(hyper.object, reducing.factor, na.rm = TRUE)
+	smooth.result = hyperSpec::spc.bin(hyper.object, reducing.factor, na.rm = TRUE)
 	res.dataset = convert.from.hyperspec(smooth.result)
   res.dataset$description = paste(dataset$description, "smoothed with hyperSpec spc.bin", sep="-")
   res.dataset$type = res.dataset$type
@@ -47,9 +47,9 @@ smoothing.spcbin.hyperspec = function(dataset, reducing.factor = 2) {
 smoothing.spcloess.hyperspec = function(dataset, x.axis = NULL){
   hyper.object = convert.to.hyperspec(dataset)
 	if (is.null(x.axis)){
-		smooth.result = spc.loess(hyper.object, wl(hyper.object), na.rm = TRUE)
+		smooth.result = hyperSpec::spc.loess(hyper.object, wl(hyper.object), na.rm = TRUE)
 	} else {
-		smooth.result = spc.loess(hyper.object, x.axis, na.rm = TRUE)
+		smooth.result = hyperSpec::spc.loess(hyper.object, x.axis, na.rm = TRUE)
 	}
   res.dataset = convert.from.hyperspec(smooth.result)
   res.dataset$description = paste(dataset$description, "smoothed with hyperSpec spc.loess", sep="-")
@@ -58,7 +58,6 @@ smoothing.spcloess.hyperspec = function(dataset, x.axis = NULL){
 }
 
 savitzky.golay = function(dataset, p.order, window, deriv = 0){
-	require(MASS)
     if (window %%2 != 1 || window < 0) 
         stop("window size (window) must be a positive odd number")
     if (p.order >= window) 
@@ -68,7 +67,7 @@ savitzky.golay = function(dataset, p.order, window, deriv = 0){
     X = t(dataset$data)
     half_window = (window -1)/2
     b = outer(-half_window:half_window, 0:p.order, "^")
-    A = ginv(b)
+    A = MASS::ginv(b)
     result = matrix(data = 0, ncol=ncol(X),nrow=nrow(X))
     for (i in 1:nrow(X)){
         first.values = X[i,1] - abs( X[i,1:(half_window)] - X[i,1] )
@@ -102,8 +101,8 @@ savitzky.golay = function(dataset, p.order, window, deriv = 0){
 
 background.correction = function(dataset) {
   hyper.object = convert.to.hyperspec(dataset)
-	background = hyperSpec:::apply(hyper.object, 2, quantile, probs = 0.05)
-	correction.result = hyperSpec:::sweep(hyper.object, 2, background, "-")
+	background = hyperSpec::apply(hyper.object, 2, quantile, probs = 0.05)
+	correction.result = hyperSpec::sweep(hyper.object, 2, background, "-")
   res.dataset = convert.from.hyperspec(correction.result)
   res.dataset$description = paste(dataset$description, "background correction", sep="; ")
   res.dataset$type = dataset$type
@@ -112,8 +111,8 @@ background.correction = function(dataset) {
 
 offset.correction = function(dataset){
   hyper.object = convert.to.hyperspec(dataset)
-	offsets = hyperSpec:::apply(hyper.object, 1, min)
-	correction.result = hyperSpec:::sweep(hyper.object, 1, offsets, "-")
+	offsets = hyperSpec::apply(hyper.object, 1, min)
+	correction.result = hyperSpec::sweep(hyper.object, 1, offsets, "-")
   res.dataset = convert.from.hyperspec(correction.result)
   res.dataset$description = paste(dataset$description, "offset correction", sep="; ")
   res.dataset$type = dataset$type
@@ -122,12 +121,11 @@ offset.correction = function(dataset){
 
 # ... - extra parameters to baseline function
 baseline.correction = function(dataset, method = "modpolyfit", ...){
-	require(baseline)
 	rnames = rownames(dataset$data)
 	cnames = colnames(dataset$data)
 	samples.df = t(dataset$data)
-	bl = baseline(samples.df, method = method, ...)
-	samples.df = getCorrected(bl)
+	bl = baseline::baseline(samples.df, method = method, ...)
+	samples.df = baseline::getCorrected(bl)
   dataset$data = t(samples.df)
 	rownames(dataset$data) = rnames
 	colnames(dataset$data) = cnames
@@ -215,9 +213,8 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
 # multiplicative scatter correction
 
 "msc.correction" = function(dataset) {
-  require(pls)
   temp = t(dataset$data)
-  newdata = msc(temp)
+  newdata = pls::msc(temp)
   dataset$data = t(newdata)
   dataset
 }

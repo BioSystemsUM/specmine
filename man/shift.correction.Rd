@@ -32,27 +32,11 @@ shift.correction(dataset, method = "constant", shift.val = 0, interp.function = 
   vector with 2 elements that represents the reference limits to calculate the shifts.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
 Returns the dataset with the spectras shifted.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of shift correction with linear interpolation and shifts calculated based on a reference band of the spectra

@@ -8,7 +8,7 @@
   Performs a robust PCA analysis.
 }
 \usage{
-pca.robust(dataset, center = "median", scale = "mad", k = 10, write.file = F, file.out = "robpca")
+pca.robust(dataset, center = "median", scale = "mad", k = 10, write.file = F, file.out = "robpca", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -34,27 +34,11 @@ pca.robust(dataset, center = "median", scale = "mad", k = 10, write.file = F, fi
     additional parameters pass to or from other functions.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   Returns an object of class 'princomp' with the PCA results.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of performing a robust PCA analysis

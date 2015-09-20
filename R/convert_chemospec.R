@@ -1,7 +1,6 @@
 ## functions to convert ChemoSpec objects into our own
 
 convert.from.chemospec = function(csobj, type = "undefined", description = "") {
-  require(ChemoSpec)
   datamatrix = t(csobj$data)
   x.values = csobj$freq
   metadata = data.frame(csobj$groups)

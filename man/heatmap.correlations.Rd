@@ -8,37 +8,23 @@
   Plots a heatmap with the correlations.
 }
 \usage{
-heatmap.correlations(correlations, ...)
+heatmap.correlations(correlations, col = NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{correlations}{
     correlation matrix
 }
+  \item{col}{
+    colors to be used on heatmap.
+}
   \item{\dots}{
     extra parameters to visual purposes.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 
 
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of correlations heatmap

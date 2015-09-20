@@ -8,7 +8,7 @@
   Groups the points with the clusters given by k-means in a interactive 3D PCA scores plot.
 }
 \usage{
-pca.kmeans.plot3D(dataset, pca.result, num.clusters = 3, pcas = c(1, 2, 3), kmeans.result = NULL, labels = FALSE, size = 1)
+pca.kmeans.plot3D(dataset, pca.result, num.clusters = 3, pcas = c(1, 2, 3), kmeans.result = NULL, labels = FALSE, size = 1, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -33,27 +33,11 @@ pca.kmeans.plot3D(dataset, pca.result, num.clusters = 3, pcas = c(1, 2, 3), kmea
   \item{size}{
     parameter of plot3d from rgl package.
 }
+  \item{\dots}{
+	additional parameters of plot3d function from rgl package.
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
-
-
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of a 3D PCA k-means plot

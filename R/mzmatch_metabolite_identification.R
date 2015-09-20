@@ -2,14 +2,11 @@
 mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL, xSet = NULL, backend = "Ramp",
 										adducts = "M+H,M+ACN+Na,M+Na,M+K,M+ACN+H", databases = NULL){
 										
-	require(mzmatch.R)
-	require(rJava)
-	mzmatch.init(version.1=FALSE)
+	mzmatch.R::mzmatch.init(version.1=FALSE)
 	
 	if (is.null(xSet)){
-		require(xcms)
 		files = list.files(data.folder, recursive=T, full.names=TRUE)
-		xSet <- xcmsSet(files, method='centWave', ppm=2, peakwidth=c(5,100), 
+		xSet <- xcms::xcmsSet(files, method='centWave', ppm=2, peakwidth=c(5,100), 
                   snthresh=5, prefilter=c(3,1000), integrate=1, mzdiff=0.001, 
                   verbose.columns=TRUE, fitgauss=FALSE, nSlaves=4)
 	}
@@ -18,7 +15,7 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
 	peakml.files = gsub("\\..+$", "\\.peakml", peakml.files)
 	peakml.files = paste("./peakml/", peakml.files, sep="")
 	dir.create("peakml")
-	PeakML.xcms.write.SingleMeasurement (xset=xSet,filename=peakml.files,
+	mzmatch.R::PeakML.xcms.write.SingleMeasurement (xset=xSet,filename=peakml.files,
                                        ionisation=ionisation,addscans=2,
                                        writeRejected=FALSE,ApodisationFilter=TRUE)
     
@@ -63,7 +60,7 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
 	  o= "./mzmatch/metabolites.txt", databases=DBS,
 	  annotations="identification,moleculeName,ppm,adduct,relation.ship")
     
-	metabolites = PeakML.Read("./mzmatch/metabolites.peakml")
+	metabolites = mzmatch.R::PeakML.Read("./mzmatch/metabolites.peakml")
 	metabolites
 }
 

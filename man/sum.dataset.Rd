@@ -19,9 +19,6 @@ sum.dataset(dataset, stats = T)
     if TRUE prints some global statistics of the data values.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
   Returns the summary of the dataset containing:
     \itemize{
@@ -42,21 +39,7 @@ sum.dataset(dataset, stats = T)
       \item Quantiles
     }
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of summarizing a dataset

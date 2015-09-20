@@ -36,26 +36,9 @@ flat.pattern.filter(dataset, filter.function = "iqr", by.percent = T, by.thresho
     it can be the percentage or the threshold number. If red.value = "auto", will calculate number of variables to remove automatically
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
   Returns the dataset with the data filtered.
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
 \dontrun{

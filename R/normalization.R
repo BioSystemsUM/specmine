@@ -5,6 +5,8 @@ snv.dataset = function(dataset){
 	dataset$data = datamat.snv
 	rownames(dataset$data) = rownames(datamat)
 	colnames(dataset$data) = colnames(datamat)
+	add.desc = "Normalization with Standard Normal Variate"
+	dataset$description = paste(dataset$description, add.desc, sep="; ")
 	dataset
 }
 
@@ -16,6 +18,8 @@ mean.centering = function(dataset){
 	dataset$data = datamat.mean.cent
 	rownames(dataset$data) = rownames(datamat)
 	colnames(dataset$data) = colnames(datamat)
+	add.desc = "Mean centering"
+	dataset$description = paste(dataset$description, add.desc, sep="; ")
 	dataset
 }
 

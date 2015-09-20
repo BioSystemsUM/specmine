@@ -25,14 +25,13 @@ feature.selection = function(dataset, column.class, method = "rfe", functions, v
 #funcs list: lmFuncs, rfFuncs, treebagFuncs, ldaFuncs, nbFuncs, gamFuncs, lrFuncs
 recursive.feature.elimination = function(datamat, samples.class, functions = rfFuncs, method = "cv", 
                                          repeats = 5, number = 10, subsets = 2^(2:4)){
-	require(caret)
 	samples.df = data.frame(t(datamat))
-	ctrl <- rfeControl(functions = functions,
+	ctrl <- caret::rfeControl(functions = functions,
                    method = method,
                    repeats = repeats,
                    number = number,
                    verbose = FALSE)
-	rfe.result <- rfe(samples.df, samples.class,
+	rfe.result <- caret::rfe(samples.df, samples.class,
                  sizes = subsets,
                  rfeControl = ctrl)
 	
@@ -44,9 +43,8 @@ recursive.feature.elimination = function(datamat, samples.class, functions = rfF
 #functions list: lmSBF, rfSBF, treebagSBF, ldaSBF and nbSBF.
 filter.feature.selection = function(datamat, samples.class, functions = rfSBF, method = "cv", 
                                     repeats = 5) { 
-	require(caret)
 	samples.df = data.frame(t(datamat))
-	filterCtrl = sbfControl(functions = functions, method = method, repeats = repeats)
-	filter.result = sbf(samples.df, samples.class, sbfControl = filterCtrl)
+	filterCtrl = caret::sbfControl(functions = functions, method = method, repeats = repeats)
+	filter.result = caret::sbf(samples.df, samples.class, sbfControl = filterCtrl)
 	filter.result
 }

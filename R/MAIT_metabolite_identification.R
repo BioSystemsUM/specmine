@@ -1,18 +1,17 @@
 MAIT.identify.metabolites = function(dataset, metadata.variable, xSet = NULL, data.folder = NULL, features = NULL, 
 									 mass.tolerance = 0.5){
-	require(MAIT)
 	imports = parent.env(getNamespace("CAMERA"))
 	unlockBinding("groups", imports)
 	imports[["groups"]] = xcms::groups
 	lockBinding("groups", imports)
 	metadata.var = dataset$metadata[,metadata.variable]
 	mait.object = sampleProcessing.modified(dataDir = data.folder, metadata = metadata.var, xSet = xSet, project = "MAIT")
-	mait.annotation = peakAnnotation(MAIT.object = mait.object, corrWithSamp = 0.7, corrBetSamp = 0.75, 
+	mait.annotation = MAIT::peakAnnotation(MAIT.object = mait.object, corrWithSamp = 0.7, corrBetSamp = 0.75, 
                             perfwhm = 0.6)
-	mait.sig = spectralSigFeatures(MAIT.object = mait.annotation, pvalue = 0.05, p.adj = "none",
+	mait.sig = MAIT::spectralSigFeatures(MAIT.object = mait.annotation, pvalue = 0.05, p.adj = "none",
                                scale = FALSE, printCSVfile = F)
     
-	scoresTable = getScoresTable(MAIT.object = mait.sig, getExtendedTable = T)
+	scoresTable = MAIT::getScoresTable(MAIT.object = mait.sig, getExtendedTable = T)
 
 	if (!is.null(features) && length(features) == 1 && features == "all"){
 		mait.sig@FeatureData@featureSigID = 1:length(scoresTable$extendedTable$mz)
@@ -22,8 +21,8 @@ MAIT.identify.metabolites = function(dataset, metadata.variable, xSet = NULL, da
 		mait.sig@FeatureData@featureSigID = indexes
     }
 	
-	mait.bio = Biotransformations(MAIT.object = mait.sig, adductAnnotation = T, peakPrecision = 0.005)
-	mait.identify = identifyMetabolites(MAIT.object = mait.sig, peakTolerance = 0.005)
+	mait.bio = MAIT::Biotransformations(MAIT.object = mait.sig, adductAnnotation = T, peakPrecision = 0.005)
+	mait.identify = MAIT::identifyMetabolites(MAIT.object = mait.sig, peakTolerance = 0.005)
 	mait.identify
 }
 
@@ -92,31 +91,31 @@ sampleProcessing.modified = function (dataDir = NULL, metadata = NULL, xSet = NU
 		fPeaks = list(xSet)
     } else {
 		if (filterMethod == "matchedFilter") {
-			peaks <- xcmsSet(files = fileList, snthresh = snThres, 
+			peaks <- xcms::xcmsSet(files = fileList, snthresh = snThres, 
 				method = filterMethod, sigma = Sigma, max = 3, step = rtStep, 
 				mzdiff = mzSlices, sclass = classes, nSlaves = nSlaves, 
 				fwhm = fwhm)
 		} 	
 		if (filterMethod == "centWave") {
-			peaks <- xcmsSet(files = fileList, snthresh = snThres, 
+			peaks <- xcms::xcmsSet(files = fileList, snthresh = snThres, 
 				method = filterMethod, ppm = ppm, mzdiff = mzSlices, 
 				sclass = classes, nSlaves = nSlaves, peakwidth = peakwidth)
 		}
 		
 		cat("Peak detection done", fill = TRUE)
-		groups <- group(peaks, method = groupMethod, bw = bwGroup, 
+		groups <- xcms::group(peaks, method = groupMethod, bw = bwGroup, 
 			mzwid = mzWidGroup, max = 50, minfrac = minfrac, minsamp = minsamp)
 		if (retcorrMethod != "none") {
-			retcorr_groups <- retcor(groups, method = retcorrMethod, family = family, span = span)
+			retcorr_groups <- xcms::retcor(groups, method = retcorrMethod, family = family, span = span)
 			cat("Retention time correction done", fill = TRUE)
-			groups <- group(retcorr_groups, method = groupMethod, 
+			groups <- xcms::group(retcorr_groups, method = groupMethod, 
 				bw = bwGroup, mzwid = mzWidGroup, max = 50)
 			cat("Peak grouping after samples done", fill = TRUE)
 		}
 		else {
 			cat("Skipping retention time correction...", fill = TRUE)
 		}
-		fPeaks <- fillPeaks(groups)
+		fPeaks <- xcms::fillPeaks(groups)
 		cat("Missing Peak integration done", fill = TRUE)
 		fPeaks <- list(fPeaks)
 	}

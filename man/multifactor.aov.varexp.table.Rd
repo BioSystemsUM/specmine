@@ -1,0 +1,39 @@
+\name{multifactor.aov.varexp.table}
+\alias{multifactor.aov.varexp.table}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+  Multifactor ANOVA variability explained table
+}
+\description{
+  Gets the variability explained table from the multifactor ANOVA results.
+}
+\usage{
+multifactor.aov.varexp.table(multifactor.aov.results, write.file = F, file.out = "multi-anova-varexp.csv")
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{multifactor.aov.results}{
+   multifactor anova results.
+}
+  \item{write.file}{
+   boolean value to indicate if a file is written.
+}
+  \item{file.out}{
+   name of the file.
+}
+}
+
+\value{
+ Returns a data.frame with the variability explained.
+}
+
+\examples{
+\dontrun{
+  ## Example of multifactor ANOVA variability explained table
+  m.aov.varepx = multifactor.aov.varexp.table(multifactor.aov.results)
+}
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ ~varexp }
+\keyword{ ~anova }% __ONLY ONE__ keyword per line

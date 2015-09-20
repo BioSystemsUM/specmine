@@ -8,7 +8,7 @@
     Groups the points with the clusters given by k-means in a 2D PCA scores plot.
 }
 \usage{
-pca.kmeans.plot2D(dataset, pca.result, num.clusters = 3, pcas = c(1, 2), kmeans.result = NULL, labels = FALSE, ellipses = FALSE)
+pca.kmeans.plot2D(dataset, pca.result, num.clusters = 3, pcas = c(1, 2), kmeans.result = NULL, labels = FALSE, ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -33,27 +33,17 @@ pca.kmeans.plot2D(dataset, pca.result, num.clusters = 3, pcas = c(1, 2), kmeans.
   \item{ellipses}{
     boolean value that indicates if an ellipse will be drawn on each group of the metadata's variable.
 }
+  \item{leg.pos}{
+    legend position.
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+  \item{xlim}{
+    vector with two positions with the x-axis limits.
 }
-
-
-\references{
-%% ~put references to the literature/web site here ~
+  \item{ylim}{
+    vector with two positions with the y-axis limits.
 }
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of a 2D PCA k-means plot

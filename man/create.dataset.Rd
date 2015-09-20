@@ -8,7 +8,7 @@
   Create a dataset from existing objects
 }
 \usage{
-create.dataset(datamatrix, type = "undefined", metadata = NULL, description = "", sample.names = NULL, x.axis.values = NULL, label.x = NULL, label.values = NULL)
+create.dataset(datamatrix, type = "undefined", metadata = NULL, description = "", sample.names = NULL, x.axis.values = NULL, label.x = NULL, label.values = NULL, xSet = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,6 +22,12 @@ create.dataset(datamatrix, type = "undefined", metadata = NULL, description = ""
     \item nmr-peaks
     \item ir-spectra
     \item uvv-spectra
+    \item raman-spectra
+    \item fluor-spectra
+    \item ms-spectra
+    \item lcms-peaks
+    \item gcms-peaks
+    \item integrated-data
     \item concentrations
     \item undefined
   }}
@@ -43,10 +49,11 @@ create.dataset(datamatrix, type = "undefined", metadata = NULL, description = ""
   \item{label.values}{
   values label.
 }
+  \item{xSet}{
+  xcmsSet object from xcms package to store the reading and preprocessing results from MS spectra. Used for metabolite identification purposes.
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
 }
+
 \value{
   list representing the dataset:
     \item{data }{matrix with the data}
@@ -54,23 +61,10 @@ create.dataset(datamatrix, type = "undefined", metadata = NULL, description = ""
     \item{description }{short description of the dataset}
     \item{metadata }{data frame with the metadata variables}
     \item{labels }{list with labels of x axis and values}
+    \item{xSet }{xcmsSet object}
 %% ...
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of creating a dataset

@@ -43,26 +43,7 @@ plot.spectra.simple(dataset, samples = NULL, variable.bounds = NULL, xlab = NULL
     additional parameters to pass to matplot.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 
-
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of plotting spectra (simple)

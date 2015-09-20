@@ -106,7 +106,6 @@
 # default mzwid MS 0.25 m/z, NMR 0.03 ppm
 # bw 30 for LCMS, 5 for GCMS
 group.peaks.metaboanalyst<-function(peaklist, samp.classes, samp.names,  mzwid = 0.03, bw = 10, minfrac = 0.5, minsamp = 1, max = 50) {
-	require('xcms')
     samples <- samp.names;
     classlabel <- samp.classes;
     classnames <- levels(classlabel)
@@ -146,7 +145,7 @@ group.peaks.metaboanalyst<-function(peaklist, samp.classes, samp.names,  mzwid =
         gmat <- matrix(nrow = 5, ncol = 2+length(classnum))
         snum <- 0
         while (deny[maxy <- which.max(deny)] > maxden/20 && snum < max) {
-            grange <- xcms:::descendMin(deny, maxy)
+            grange <- xcms::descendMin(deny, maxy)
             deny[grange[1]:grange[2]] <- 0
             gidx <- which(speakmat[,"rt"] >= den$x[grange[1]] & speakmat[,"rt"] <= den$x[grange[2]])
             gnum <- classlabel[unique(speakmat[gidx,"sample"])]
@@ -179,7 +178,7 @@ group.peaks.metaboanalyst<-function(peaklist, samp.classes, samp.names,  mzwid =
     # Remove groups that overlap with more "well-behaved" groups
     numsamp <- rowSums(groupmat[,(match("npeaks", colnames(groupmat))+1):ncol(groupmat),drop=FALSE])
     uorder <- order(-numsamp, groupmat[,"npeaks"])
-    uindex <- xcms:::rectUnique(groupmat[,c("ppmmin","ppmmax","rtmin","rtmax"),drop=FALSE],
+    uindex <- xcms::rectUnique(groupmat[,c("ppmmin","ppmmax","rtmin","rtmax"),drop=FALSE],
                          uorder)
 	
 	res = list()

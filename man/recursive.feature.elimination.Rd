@@ -34,27 +34,11 @@ recursive.feature.elimination(datamat, samples.class, functions = rfFuncs, metho
     a numeric vector of integers corresponding to the number of features that should be retained.
 }
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
+
 \value{
 A caret's rfe object with the result of recursive feature selection.
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of recursive feature elimination

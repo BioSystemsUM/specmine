@@ -67,7 +67,7 @@ boxplot.vars.factor = function(dataset, meta.var, variables = NULL, samples = NU
 plotvar.twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "darkblue", title = "", 
                              xlabel = NULL, ylabel = NULL)
 {
-  require(ggplot2)
+
   df = data.frame(dataset$data[variable,], dataset$metadata[,meta.var1], 
                   dataset$metadata[,meta.var2])
   if (is.numeric(variable)) n1 = rownames(dataset$data)[variable]
@@ -78,15 +78,15 @@ plotvar.twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
   else n3 = meta.var2
   colnames(df) = c("name1", "name2", "name3")
 
-  g = ggplot(data = df)
-  g = g + aes(name2, name1)
-  g = g + geom_boxplot(fill= colour)
-  g = g + facet_grid(. ~ name3)
-  if (is.null(xlabel)) g = g + xlab(n2)
-  else g = g + xlab(xlabel)
-  if (is.null(ylabel)) g = g + ylab(n1)
-  else g = g + ylab(ylabel)
-  if (title != "") g = g + ggtitle(title)
+  g = ggplot2::ggplot(data = df)
+  g = g + ggplot2::aes(name2, name1)
+  g = g + ggplot2::geom_boxplot(fill= colour)
+  g = g + ggplot2::facet_grid(. ~ name3)
+  if (is.null(xlabel)) g = g + ggplot2::xlab(n2)
+  else g = g + ggplot2::xlab(xlabel)
+  if (is.null(ylabel)) g = g + ggplot2::ylab(n1)
+  else g = g + ggplot2::ylab(ylabel)
+  if (title != "") g = g + ggplot2::ggtitle(title)
   g
 }
 
@@ -197,7 +197,7 @@ plotvar.twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 ## Multiplot from ggplot2 - function taken from http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_%28ggplot2%29/
 
 multiplot <- function(plots, plotlist=NULL, file, cols=1, layout=NULL) {
-  library(grid)
+
 
   # Make a list from the ... arguments and plotlist
   plots <- c(plots, plotlist)
@@ -218,8 +218,8 @@ multiplot <- function(plots, plotlist=NULL, file, cols=1, layout=NULL) {
 
   } else {
     # Set up the page
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    grid::grid.newpage()
+    grid::pushViewport(viewport(layout = grid::grid.layout(nrow(layout), ncol(layout))))
 
     # Make each plot, in the correct location
     for (i in 1:numPlots) {

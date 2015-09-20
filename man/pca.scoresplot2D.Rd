@@ -8,7 +8,7 @@
   Shows a 2D PCA scores plot of two principal componets.
 }
 \usage{
-pca.scoresplot2D(dataset, pca.result, column.class, pcas = c(1, 2), labels = FALSE, ellipses = FALSE, pallette = 2)
+pca.scoresplot2D(dataset, pca.result, column.class, pcas = c(1, 2), labels = FALSE, ellipses = FALSE, pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -33,27 +33,17 @@ pca.scoresplot2D(dataset, pca.result, column.class, pcas = c(1, 2), labels = FAL
   \item{pallette}{
     parameter of scale_colour_brewer from ggplot2.
 }
+  \item{leg.pos}{
+    position of the legend.
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+  \item{xlim}{
+    vector with two numeric values indicating the limits of the x axis.
 }
-
-
-\references{
-%% ~put references to the literature/web site here ~
+  \item{ylim}{
+    vector with two numeric values indicating the limits of the y axis.
 }
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of a 2D PCA scores plot

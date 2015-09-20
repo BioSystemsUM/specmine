@@ -2,14 +2,13 @@
 # read LC/GC-MS spectra(.netCDF, .mzXML, mzData)
 # use functions in XCMS package
 read.ms.spec<-function(folder.name, metadata = NULL, profmethod='bin', fwhm=30, bw=30){
-  suppressMessages(require(xcms));
   files <- list.files(folder.name, recursive=T, full.names=TRUE);
   if (is.null(metadata)) {
-	xset <- xcmsSet(files, profmethod = "bin", fwhm=fwhm)
+	xset <- xcms::xcmsSet(files, profmethod = "bin", fwhm=fwhm)
   } else {
-	xset = xcmsSet(files, profmethod = "bin", fwhm = fwhm, sclass = metadata[,1])
+	xset = xcms::xcmsSet(files, profmethod = "bin", fwhm = fwhm, sclass = metadata[,1])
   }
-  xset<-group(xset, bw=bw);
+  xset<-xcms::group(xset, bw=bw);
   xset
 }
 
@@ -17,9 +16,9 @@ read.ms.spec<-function(folder.name, metadata = NULL, profmethod='bin', fwhm=30, 
 
 # retention time correction for LC/GC-MS spectra
 ms.rt.correction<-function(xset, bw=30){
-  xset2<-retcor(xset)
+  xset2<-xcms::retcor(xset)
   # re-group peaks after retention time correction
-  xset2<-group(xset2, bw=30)
+  xset2<-xcms::group(xset2, bw=30)
   xset2
 }
 
@@ -27,7 +26,7 @@ ms.rt.correction<-function(xset, bw=30){
 
 # fill in missing peaks
 ms.fill.peaks<-function(xset){
-  xset2<-fillPeaks(xset);
+  xset2<-xcms::fillPeaks(xset);
   xset2
 }
 
@@ -38,7 +37,7 @@ ms.fill.peaks<-function(xset){
 # maxf:  maximum intensity of filtered peak
 
 ms.create.matrix<-function(xset, intvalue = "into"){
-  values <- groupval(xset, "medret", value = intvalue);
+  values <- xcms::groupval(xset, "medret", value = intvalue);
   values
 }
 

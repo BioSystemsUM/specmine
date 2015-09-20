@@ -8,7 +8,7 @@
   3D plot from 3 components
 }
 \usage{
-pca.plot.3d(dataset, model, var.class, pcas = 1:3)
+pca.plot.3d(dataset, model, var.class, pcas = 1:3, colors = NULL, legend.place = "topright", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,27 +24,17 @@ pca.plot.3d(dataset, model, var.class, pcas = 1:3)
   \item{pcas}{
     the components to be plotted.
 }
+  \item{colors}{
+	colors of the groups.
 }
-\details{
-%%  ~~ If necessary, more details than the description above ~~
+  \item{legend.place}{
+	legend place.
 }
-
-
-\references{
-%% ~put references to the literature/web site here ~
+  \item{\dots}{
+	additional parameters to legend function.
 }
-\author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 \dontrun{
   ## Example of a 3d pca plot

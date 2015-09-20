@@ -54,8 +54,7 @@ pca.importance = function(pca.res, pcs = 1:length(pca.res$sdev), sd = T, prop = 
 pca.robust = function(dataset, center = "median", scale = "mad", k = 10,
                       write.file = F, file.out = "robpca", ...)
 {
-  require(pcaPP)
-  pca.res = PCAgrid(t(dataset$data), k = k, center = center, scale = scale, scores = T, ...)
+  pca.res = pcaPP::PCAgrid(t(dataset$data), k = k, center = center, scale = scale, scores = T, ...)
   if (write.file) {
     write.csv(pca.result$scores, file=paste(file.out,"_scores.csv",sep=""))
     write.csv(pca.result$loadings, file=paste(file.out,"_loadings.csv", sep= ""))
@@ -84,7 +83,6 @@ pca.screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "r
 pca.scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2), labels = FALSE, 
                             ellipses = FALSE, pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
 {
-  require(ggplot2)
   has.legend = FALSE
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
@@ -101,23 +99,23 @@ pca.scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
   }
   pca.points$group = group.values
   pca.points$label = colnames(dataset$data)
-  pca.plot = ggplot(data = pca.points, aes(x=x, y=y,colour=group)) + geom_point(size=3, alpha=1) +
-    scale_colour_brewer(type = "qual", palette=pallette) + 
-    xlab(paste(paste("PC",pcas[1]," -",sep=""), paste(pca.importance(pca.result, pcas[1], sd=F, prop=T, cumul = F)*100,"%",sep=""))) + 
-    ylab(paste(paste("PC",pcas[2]," -",sep=""), paste(pca.importance(pca.result, pcas[2], sd=F, prop=T, cumul = F)*100,"%",sep="")))
-  if (has.legend) pca.plot = pca.plot + theme(legend.position = leg.pos)
+  pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes(x=x, y=y,colour=group)) + ggplot2::geom_point(size=3, alpha=1) +
+    ggplot2::scale_colour_brewer(type = "qual", palette=pallette) + 
+    ggplot2::xlab(paste(paste("PC",pcas[1]," -",sep=""), paste(pca.importance(pca.result, pcas[1], sd=F, prop=T, cumul = F)*100,"%",sep=""))) + 
+    ggplot2::ylab(paste(paste("PC",pcas[2]," -",sep=""), paste(pca.importance(pca.result, pcas[2], sd=F, prop=T, cumul = F)*100,"%",sep="")))
+  if (has.legend) pca.plot = pca.plot + ggplot2::theme(legend.position = leg.pos)
   if (!is.null(xlim)){
-	pca.plot = pca.plot + xlim(xlim[1],xlim[2])
+	pca.plot = pca.plot + ggplot2::xlim(xlim[1],xlim[2])
   }
   if (!is.null(ylim)){
-	pca.plot = pca.plot + ylim(ylim[1],ylim[2])
+	pca.plot = pca.plot + ggplot2::ylim(ylim[1],ylim[2])
   }
   if (labels){
-    pca.plot = pca.plot + geom_text(data = pca.points, aes(x,y,label=label),hjust=-0.1, vjust=0)
+    pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes(x,y,label=label),hjust=-0.1, vjust=0)
   }
   if (ellipses){
     df.ellipses = calculate.ellipses(pca.points)
-    pca.plot = pca.plot + geom_path(data=df.ellipses, aes(x=x, y=y,colour=group), size=1, linetype=2) 
+    pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes(x=x, y=y,colour=group), size=1, linetype=2) 
   }
   pca.plot
 }
@@ -125,22 +123,20 @@ pca.scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
 #3d scores plot
 pca.scoresplot3D.rgl = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3), size = 1, 
                             labels = FALSE) {
-  require(rgl)
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
 	scores = pca.result$scores
   }
-  plot3d(scores[,pcas], type = "s", col = as.integer(dataset$metadata[,column.class]),
+  rgl::plot3d(scores[,pcas], type = "s", col = as.integer(dataset$metadata[,column.class]),
          size=size)
   if (labels){
-    text3d(scores[,pcas],texts=colnames(dataset$data), cex=0.6)
+    rgl::text3d(scores[,pcas],texts=colnames(dataset$data), cex=0.6)
   }
 }
 
 pca.scoresplot3D = function(dataset, pca.result, column.class = NULL, pcas=c(1,2,3))
 {
-  require(scatterplot3d)
   has.legend = FALSE
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
@@ -155,7 +151,7 @@ pca.scoresplot3D = function(dataset, pca.result, column.class = NULL, pcas=c(1,2
 	has.legend = TRUE
   }
   
-  scatterplot3d(scores[,pcas], color=group.values, pch=17)
+  scatterplot3d::scatterplot3d(scores[,pcas], color=group.values, pch=17)
   if (has.legend){
 	classes = dataset$metadata[,column.class]
 	legend(-1.5, 2.5, levels(classes), col = 1:length(classes), cex = 0.7, pt.cex = 1, pch= 17)
@@ -307,18 +303,17 @@ pca.biplot3D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3
 	rotation = pca.result$loadings
   }  
   pca.scoresplot3D.rgl(dataset, pca.result, column.class, pcas)
-  text3d(scores[,pcas], texts=colnames(dataset$data), cex=0.6)
-  text3d(rotation[,pcas], texts = rownames(rotation), col = "red", cex=0.6)
+  rgl::text3d(scores[,pcas], texts=colnames(dataset$data), cex=0.6)
+  rgl::text3d(rotation[,pcas], texts = rownames(rotation), col = "red", cex=0.6)
   coords = NULL
   for (i in 1:nrow(rotation)){
     coords = rbind(coords, rbind(c(0,0,0), rotation[i, pcas]))
   }
-  lines3d(coords, col="red", lwd = 4)
+  rgl::lines3d(coords, col="red", lwd = 4)
 }
 
 #pca pairs plot
 pca.pairs.plot = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3,4,5), ...){
-  require(GGally)
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
@@ -333,13 +328,12 @@ pca.pairs.plot = function(dataset, pca.result, column.class = NULL, pcas = c(1,2
   }
   pairs.df = data.frame(scores[,pcas])
   pairs.df$group = group.values
-  ggpairs(pairs.df, colour = 'group', ...)
+  GGally::ggpairs(pairs.df, colour = 'group', ...)
 }
 
 #kmeans clustering with 3 PCs
 pca.kmeans.plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2,3), 
                              kmeans.result = NULL, labels = FALSE, size = 1,...) {
-  require(rgl)
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
@@ -349,9 +343,9 @@ pca.kmeans.plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
   if (is.null(kmeans.result)){
     kmeans.result = clustering(dataset, method = "kmeans", num.clusters = num.clusters)
   }
-  plot3d(scores[,pcas], type = "s", col = kmeans.result$cluster, size=size,...)
+  rgl::plot3d(scores[,pcas], type = "s", col = kmeans.result$cluster, size=size,...)
   if (labels){
-    text3d(scores[,pcas],adj = c(1.2,1.2), texts=colnames(dataset$data), cex=0.6)
+    rgl::text3d(scores[,pcas],adj = c(1.2,1.2), texts=colnames(dataset$data), cex=0.6)
   }
 }
 
@@ -359,7 +353,6 @@ pca.kmeans.plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 #kmeans clustering with 2 first PCs
 pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2), 
                              kmeans.result = NULL, labels = FALSE, ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL){
-  require(ggplot2)
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
@@ -373,21 +366,21 @@ pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
   names(pca.points) = c("x","y")
   pca.points$group = factor(kmeans.result$cluster)
   pca.points$label = colnames(dataset$data)
-  pca.plot = ggplot(data = pca.points, aes(x=x, y=y,colour=group)) + geom_point(size=3, alpha=.6) +
-    scale_colour_brewer(palette="Set1") + xlab(paste("PC",pcas[1],sep="")) + ylab(paste("PC",pcas[2],sep="")) +
-    theme(legend.position = leg.pos)
+  pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes(x=x, y=y,colour=group)) + ggplot2::geom_point(size=3, alpha=.6) +
+    ggplot2::scale_colour_brewer(palette="Set1") + ggplot2::xlab(paste("PC",pcas[1],sep="")) + ggplot2::ylab(paste("PC",pcas[2],sep="")) +
+    ggplot2::theme(legend.position = leg.pos)
   if (!is.null(xlim)){
-	pca.plot = pca.plot + xlim(xlim[1],xlim[2])
+	pca.plot = pca.plot + ggplot2::xlim(xlim[1],xlim[2])
   }
   if (!is.null(ylim)){
-	pca.plot = pca.plot + ylim(ylim[1],ylim[2])
+	pca.plot = pca.plot + ggplot2::ylim(ylim[1],ylim[2])
   }
   if (labels){
-    pca.plot = pca.plot + geom_text(data = pca.points, aes(x,y,label=label),hjust=-0.1, vjust=0, size = 3)
+    pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes(x,y,label=label),hjust=-0.1, vjust=0, size = 3)
   }
   if (ellipses){
     df.ellipses = calculate.ellipses(pca.points)
-    pca.plot = pca.plot + geom_path(data=df.ellipses, aes(x=x, y=y,colour=group), size=1, linetype=2) 
+    pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes(x=x, y=y,colour=group), size=1, linetype=2) 
   }
   pca.plot
 }
@@ -395,7 +388,6 @@ pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 
 #pca pairs with kmeans clusters plot
 pca.pairs.kmeans.plot = function(dataset, pca.result, num.clusters = 3, kmeans.result = NULL, pcas = c(1,2,3,4,5)){
-  require(GGally)
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
@@ -407,15 +399,14 @@ pca.pairs.kmeans.plot = function(dataset, pca.result, num.clusters = 3, kmeans.r
   }
   pairs.df = data.frame(scores[,pcas])
   pairs.df$group = factor(kmeans.result$cluster)
-  ggpairs(pairs.df, colour = 'group')
+  GGally::ggpairs(pairs.df, colour = 'group')
 }
 
 #draw ellipses
 calculate.ellipses = function(data){
-  require(ellipse)
   df_ell <- data.frame()
   for(g in levels(data$group)){
-    df_ell <- rbind(df_ell, cbind(as.data.frame(with(data[data$group==g,], ellipse(cor(x, y), 
+    df_ell <- rbind(df_ell, cbind(as.data.frame(with(data[data$group==g,], ellipse::ellipse(cor(x, y), 
                       scale=c(sd(x),sd(y)), centre=c(mean(x),mean(y))))),group=g))
   }
   df_ell
