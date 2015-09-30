@@ -1,7 +1,7 @@
 
 ### BOXPLOT of each variable ####
 
-"boxplot.variables" = function(dataset, variables = NULL, samples = NULL, horizontal = T, 
+"boxplot_variables" = function(dataset, variables = NULL, samples = NULL, horizontal = T, 
                                col = "lightblue", nchar.label = 10, cex.axis = 0.8, ...) {
   
   if (is.null(variables)) { # assume all
@@ -12,7 +12,7 @@
     samples = colnames(dataset$data)
   }
   if (is.numeric(variables))
-    names.short = substr(get.x.values.as.text(dataset)[variables], 1, nchar.label)
+    names.short = substr(get_x_values_as_text(dataset)[variables], 1, nchar.label)
   else 
     names.short = substr(variables, 1, nchar.label)
 
@@ -28,7 +28,7 @@
   }
 }
 
-boxplot.vars.factor = function(dataset, meta.var, variables = NULL, samples = NULL, 
+boxplot_vars_factor = function(dataset, meta.var, variables = NULL, samples = NULL, 
                                horizontal = F, nchar.label = 10, col = NULL,
                                vec.par = NULL, cex.axis = 0.8, ylabs = NULL, ...)
 {
@@ -41,7 +41,7 @@ boxplot.vars.factor = function(dataset, meta.var, variables = NULL, samples = NU
   }
   
   if (is.numeric(variables))
-    names.short = substr(get.x.values.as.text(dataset)[variables], 1, nchar.label)
+    names.short = substr(get_x_values_as_text(dataset)[variables], 1, nchar.label)
   else 
     names.short = substr(variables, 1, nchar.label)
   
@@ -64,7 +64,7 @@ boxplot.vars.factor = function(dataset, meta.var, variables = NULL, samples = NU
   par(mfrow = c(1,1))
 }
 
-plotvar.twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "darkblue", title = "", 
+plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "darkblue", title = "", 
                              xlabel = NULL, ylabel = NULL)
 {
 
@@ -96,19 +96,19 @@ plotvar.twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 # variable.bounds - interval of x values to plot: [1] - minimum value; [2] - maximum value
 # lty, lwd, col - parameters to pass to matplot
 # ... - extra parameters passed to matplot function
-"plot.spectra.simple" = function(dataset, samples = NULL, variable.bounds = NULL, xlab = NULL,
+"plot_spectra_simple" = function(dataset, samples = NULL, variable.bounds = NULL, xlab = NULL,
                                ylab = NULL, lty = 1, lwd = 1, col = 1, reverse.x = F, ...) {
   
-  if (is.null(xlab)) xlab = get.x.label(dataset)
-  if (is.null(ylab)) ylab = get.value.label(dataset)
+  if (is.null(xlab)) xlab = get_x_label(dataset)
+  if (is.null(ylab)) ylab = get_value_label(dataset)
   
   if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
 	if (is.null(variable.bounds)){
-		variables = 1:length(get.x.values.as.text(dataset))
-		vars = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+		variables = 1:length(get_x_values_as_text(dataset))
+		vars = as.numeric(gsub("/.*", '', get_x_values_as_text(dataset)))
 
 	} else {
-		x.vars = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+		x.vars = as.numeric(gsub("/.*", '', get_x.values_as_text(dataset)))
 		variables = which(x.vars > variable.bounds[1] & x.vars < variable.bounds[2])
 		vars = x.vars[variables]
 	}
@@ -118,7 +118,7 @@ plotvar.twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 		vars = variables
 	  } 
 	  else {
-		x.vars = get.x.values.as.num(dataset)
+		x.vars = get_x_values_as_num(dataset)
 		variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
 		vars = variables
 	  }
@@ -139,19 +139,19 @@ plotvar.twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 
 # legend.place = "none" if no legend or other accepted string in legend function
 # 
-"plot.spectra" = function(dataset, column.class, func = NULL, samples = NULL, 
+"plot_spectra" = function(dataset, column.class, func = NULL, samples = NULL, 
                         variable.bounds = NULL, xlab = NULL, ylab = NULL, lty = 1,
                         legend.place = "topright", cex = 0.8, reverse.x = F, ...) {
   
-  if (is.null(xlab)) xlab = get.x.label(dataset)
-  if (is.null(ylab)) ylab = get.value.label(dataset)
+  if (is.null(xlab)) xlab = get_x_label(dataset)
+  if (is.null(ylab)) ylab = get_value_label(dataset)
   
  if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
 	if (is.null(variable.bounds)){
-		variables = 1:length(get.x.values.as.text(dataset))
-		vars = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+		variables = 1:length(get_x_values_as_text(dataset))
+		vars = as.numeric(gsub("/.*", '', get_x_values_as_text(dataset)))
 	} else {
-		x.vars = as.numeric(gsub("/.*", '', get.x.values.as.text(dataset)))
+		x.vars = as.numeric(gsub("/.*", '', get_x_values_as_text(dataset)))
 		variables = which(x.vars > variable.bounds[1] & x.vars < variable.bounds[2])
 		vars = x.vars[variables]
 	}
@@ -161,7 +161,7 @@ plotvar.twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 		vars = variables
 	  } 
 	  else {
-		x.vars = get.x.values.as.num(dataset)
+		x.vars = get_x_values_as_num(dataset)
 		variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
 		vars = variables
 	  }

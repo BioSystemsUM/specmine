@@ -2,7 +2,7 @@
 ######################## LOW LEVEL FUSION ##############################
 ########################################################################
 
-"low.level.fusion" = function(datasets){
+"low_level_fusion" = function(datasets){
 	sample.names = colnames(datasets[[1]]$data)
 	for (i in 2:length(datasets)){
 		sample.names = intersect(sample.names, colnames(datasets[[i]]$data))
@@ -11,15 +11,15 @@
 	for (i in 1:length(datasets)){
 		if (!is.null(datasets[[i]]$metadata)) r.factors = T
 		else r.factors = F
-		subsets[[i]] = subset.samples(datasets[[i]], samples = sample.names, rebuild.factors = r.factors)
+		subsets[[i]] = subset_samples(datasets[[i]], samples = sample.names, rebuild.factors = r.factors)
 	}
 	
-	ds.fused = fusion.merge(subsets)
+	ds.fused = fusion_merge(subsets)
 	ds.fused
 }
 
 # assuming rownames are not duplicated and first dataset contains all the metadata 
-"fusion.merge" = function(datasets){
+"fusion_merge" = function(datasets){
 	ds.fused = datasets[[1]]
 	ds.fused$description = paste("Data integration from types: ", datasets[[1]]$type, sep = "")
 	for (i in 2:length(datasets)){

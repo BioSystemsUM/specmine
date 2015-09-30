@@ -43,5 +43,5 @@ normalize(dataset, method, ref = NULL, constant = 1000)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~normalization }
-\keyword{ ~data }% __ONLY ONE__ keyword per line
+\keyword{ normalization }
+\keyword{ data }% __ONLY ONE__ keyword per line

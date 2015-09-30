@@ -1,6 +1,6 @@
-"compare.regions.by.sample" = function(dataset1, dataset2, fn.to.apply, samples = NULL, ...){
-	stats1 = apply.by.sample(dataset1, fn.to.apply, ...)
-	stats2 = apply.by.sample(dataset2, fn.to.apply, ...)
+"compare_regions_by_sample" = function(dataset1, dataset2, fn.to.apply, samples = NULL, ...){
+	stats1 = apply_by_sample(dataset1, fn.to.apply, ...)
+	stats2 = apply_by_sample(dataset2, fn.to.apply, ...)
 	stats.total = data.frame(cbind(stats1,stats2))
 	names(stats.total) = c(deparse(substitute(dataset1)), deparse(substitute(dataset2)))
 	stats.total$ratio = stats1/stats2
@@ -12,7 +12,7 @@
 # variables - allows to define which variables to calculate the stats (if numbers, indexes are assumed)
 # variable.bounds - allow to define an interval of variables (if numeric)
 # samples - if defined restricts the application to a given set of samples 
-"apply.by.variable" = function(dataset, fn.to.apply, variables = NULL, variable.bounds = NULL, 
+"apply_by_variable" = function(dataset, fn.to.apply, variables = NULL, variable.bounds = NULL, 
                                samples = NULL, ...) {
   
   if (is.null(variables)) {
@@ -20,7 +20,7 @@
       variables = rownames(dataset$data)
     } 
     else {
-      x.vars = get.x.values.as.num(dataset)
+      x.vars = get_x_values_as_num(dataset)
       variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
     }  
   }  
@@ -31,27 +31,27 @@
   apply(dataset$data[variables,samples,drop=F], 1, fn.to.apply, ...)
 }
 
-"apply.by.sample" = function(dataset, fn.to.apply, samples = NULL, ...) {
+"apply_by_sample" = function(dataset, fn.to.apply, samples = NULL, ...) {
   if (is.null(samples)) {
     samples = colnames(dataset$data)
   }
   apply(dataset$data[,samples,drop=F], 2, fn.to.apply, ...)
 }
 
-"stats.by.variable" = function(dataset, variables = NULL, variable.bounds = NULL) {
-  apply.by.variable(dataset, summary, variables, variable.bounds)
+"stats_by_variable" = function(dataset, variables = NULL, variable.bounds = NULL) {
+  apply_by_variable(dataset, summary, variables, variable.bounds)
 }
 
-"stats.by.sample" = function(dataset, samples = NULL) {
-  apply.by.sample(dataset, summary, samples)
+"stats_by_sample" = function(dataset, samples = NULL) {
+  apply_by_sample(dataset, summary, samples)
 }
 
-"apply.by.group" = function(dataset, fn.to.apply, metadata.var, var.value) {
+"apply_by_group" = function(dataset, fn.to.apply, metadata.var, var.value) {
   indexes = which(dataset$metadata[,metadata.var] %in% var.value)
-  apply.by.variable(dataset, fn.to.apply, samples = indexes)
+  apply_by_variable(dataset, fn.to.apply, samples = indexes)
 }
 
-"apply.by.groups" = function(dataset, metadata.var, fn.to.apply = "mean",
+"apply_by_groups" = function(dataset, metadata.var, fn.to.apply = "mean",
                              variables = NULL, variable.bounds = NULL) {
   
   if (is.null(variables)) {
@@ -59,7 +59,7 @@
       variables = rownames(dataset$data)
     } 
     else {
-      x.vars = get.x.values.as.num(dataset)
+      x.vars = get_x_values_as_num(dataset)
       variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
     }  
   }

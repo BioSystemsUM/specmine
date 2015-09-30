@@ -1,5 +1,5 @@
 
-mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL, xSet = NULL, backend = "Ramp",
+mzmatch_identify_metabolites = function(ionisation="detect", data.folder = NULL, xSet = NULL, backend = "Ramp",
 										adducts = "M+H,M+ACN+Na,M+Na,M+K,M+ACN+H", databases = NULL){
 										
 	mzmatch.R::mzmatch.init(version.1=FALSE)
@@ -19,25 +19,25 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
                                        ionisation=ionisation,addscans=2,
                                        writeRejected=FALSE,ApodisationFilter=TRUE)
     
-	mzmatch.ipeak.Combine.modified(i=paste(peakml.files,collapse=","),v=T,rtwindow=30,
+	mzmatch.ipeak.Combine_modified(i=paste(peakml.files,collapse=","),v=T,rtwindow=30,
 						  o="./mzmatch/combined.peakml",combination="set",ppm=5)
-	mzmatch.ipeak.filter.NoiseFilter.modified (i="./mzmatch/combined.peakml",o="./mzmatch/combined_noisef.peakml",
+	mzmatch.ipeak.filter.NoiseFilter_modified (i="./mzmatch/combined.peakml",o="./mzmatch/combined_noisef.peakml",
 									  v=T,codadw=0.8)
-	mzmatch.ipeak.filter.SimpleFilter.modified(i="./mzmatch/combined_noisef.peakml", 
+	mzmatch.ipeak.filter.SimpleFilter_modified(i="./mzmatch/combined_noisef.peakml", 
 									  o="./mzmatch/combined_sfdet.peakml", mindetections=3)
-	mzmatch.ipeak.filter.SimpleFilter.modified(i="./mzmatch/combined_sfdet.peakml", 
+	mzmatch.ipeak.filter.SimpleFilter_modified(i="./mzmatch/combined_sfdet.peakml", 
 									  o="./mzmatch/combined_highintensity.peakml", 
 									  minintensity=100000)
-	PeakML.GapFiller.modified(filename = "./mzmatch/combined_highintensity.peakml", ionisation = ionisation, 
+	PeakML.GapFiller_modified(filename = "./mzmatch/combined_highintensity.peakml", ionisation = ionisation, 
 					 outputfile = "./mzmatch/highintensity_gapfilled.peakml", 
 					 ppm=5, rtwin = 0, backend = backend)
-	mzmatch.ipeak.sort.RelatedPeaks.modified (i="./mzmatch/highintensity_gapfilled.peakml",v=T,
+	mzmatch.ipeak.sort.RelatedPeaks_modified (i="./mzmatch/highintensity_gapfilled.peakml",v=T,
 									 o="./mzmatch/mzMatch_output.peakml",
 									 basepeaks="./mzmatch/mzMatch_basepeaks.peakml",ppm=3,
 									 rtwindow=6)
 									 
 	annot <- paste("relation.id,relation.ship,codadw,charge")
-	mzmatch.ipeak.convert.ConvertToText.modified (i="./mzmatch/mzMatch_output.peakml",
+	mzmatch.ipeak.convert.ConvertToText_modified (i="./mzmatch/mzMatch_output.peakml",
 										 o="./mzmatch/mzMATCHoutput.txt",v=T,annotations=annot)
 
 	if (is.null(databases)){
@@ -50,12 +50,12 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
 	}
 
 
-	mzmatch.ipeak.util.Identify.modified(i="./mzmatch/mzMatch_output.peakml", v=T,
+	mzmatch.ipeak.util.Identify_modified(i="./mzmatch/mzMatch_output.peakml", v=T,
 								o="./mzmatch/metabolites.peakml", ppm=3, 
 								databases=DBS, adducts = adducts)
 
 
-	mzmatch.ipeak.convert.ConvertToText.modified (
+	mzmatch.ipeak.convert.ConvertToText_modified (
 	  i="./mzmatch/metabolites.peakml",
 	  o= "./mzmatch/metabolites.txt", databases=DBS,
 	  annotations="identification,moleculeName,ppm,adduct,relation.ship")
@@ -65,7 +65,7 @@ mzmatch.identify.metabolites = function(ionisation="detect", data.folder = NULL,
 }
 
 
-PeakML.GapFiller.modified = function (filename, ionisation = "detect", Rawpath = NULL, outputfile, 
+PeakML.GapFiller_modified = function (filename, ionisation = "detect", Rawpath = NULL, outputfile, 
     ppm = 0, rtwin = 0, nSlaves = 1, fillAll = FALSE, backend = "Ramp") 
 {
     version.1 <- get("version.1", envir = .GlobalEnv)
@@ -264,7 +264,7 @@ PeakML.GapFiller.modified = function (filename, ionisation = "detect", Rawpath =
 }
 
 
-mzmatch.ipeak.util.Identify.modified = function (JHeapSize = 1425, i = NULL, o = NULL, ppm = NULL, databases = NULL, 
+mzmatch.ipeak.util.Identify_modified = function (JHeapSize = 1425, i = NULL, o = NULL, ppm = NULL, databases = NULL, 
     minrt = NULL, maxrt = NULL, rtwindow = NULL, rtwindowrelative = NULL, 
     massOverride = NULL, polarity = NULL, adducts = NULL, h = NULL, 
     v = NULL) 
@@ -315,7 +315,7 @@ mzmatch.ipeak.util.Identify.modified = function (JHeapSize = 1425, i = NULL, o =
     system(tool)
 }
 
-mzmatch.ipeak.convert.ConvertToText.modified = function (JHeapSize = 1425, i = NULL, o = NULL, databases = NULL, 
+mzmatch.ipeak.convert.ConvertToText_modified = function (JHeapSize = 1425, i = NULL, o = NULL, databases = NULL, 
     annotations = NULL, h = NULL, v = NULL) 
 {
     version.1 <- get("version.1", envir = .GlobalEnv)
@@ -347,7 +347,7 @@ mzmatch.ipeak.convert.ConvertToText.modified = function (JHeapSize = 1425, i = N
     system(tool)
 }
 
-mzmatch.ipeak.sort.RelatedPeaks.modified = function (JHeapSize = 1425, i = NULL, o = NULL, basepeaks = NULL, 
+mzmatch.ipeak.sort.RelatedPeaks_modified = function (JHeapSize = 1425, i = NULL, o = NULL, basepeaks = NULL, 
     ppm = NULL, rtwindow = NULL, minrt = NULL, h = NULL, v = NULL) 
 {
     version.1 <- get("version.1", envir = .GlobalEnv)
@@ -383,7 +383,7 @@ mzmatch.ipeak.sort.RelatedPeaks.modified = function (JHeapSize = 1425, i = NULL,
     system(tool)
 }
 
-mzmatch.ipeak.filter.SimpleFilter.modified = function (JHeapSize = 1425, i = NULL, o = NULL, rejected = NULL, 
+mzmatch.ipeak.filter.SimpleFilter_modified = function (JHeapSize = 1425, i = NULL, o = NULL, rejected = NULL, 
     databases = NULL, ppm = NULL, n = NULL, offset = NULL, mindetections = NULL, 
     minscanid = NULL, maxscanid = NULL, minretentiontime = NULL, 
     maxretentiontime = NULL, minmass = NULL, maxmass = NULL, 
@@ -445,7 +445,7 @@ mzmatch.ipeak.filter.SimpleFilter.modified = function (JHeapSize = 1425, i = NUL
     system(tool)
 }
 
-mzmatch.ipeak.filter.NoiseFilter.modified = function (JHeapSize = 1425, i = NULL, o = NULL, rejected = NULL, 
+mzmatch.ipeak.filter.NoiseFilter_modified = function (JHeapSize = 1425, i = NULL, o = NULL, rejected = NULL, 
     codadw = NULL, h = NULL, v = NULL) 
 {
     version.1 <- get("version.1", envir = .GlobalEnv)
@@ -477,7 +477,7 @@ mzmatch.ipeak.filter.NoiseFilter.modified = function (JHeapSize = 1425, i = NULL
     system(tool)
 }
 
-mzmatch.ipeak.Combine.modified= function (JHeapSize = 1425, i = NULL, o = NULL, label = NULL, 
+mzmatch.ipeak.Combine_modified= function (JHeapSize = 1425, i = NULL, o = NULL, label = NULL, 
     labels = NULL, ppm = NULL, rtwindow = NULL, combination = NULL, 
     h = NULL, v = NULL, sampleList = NULL, nSlaves = 1, outputfolder = "combined") 
 {

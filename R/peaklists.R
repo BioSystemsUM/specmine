@@ -4,11 +4,11 @@
 # each sample is a data frame representing a peak list (with two columns)
 
 # returns a dataset in standard format from all peaks in all samples
-"dataset.from.peaks" = function(sample.list, metadata = NULL, description = "", type = "nmr-peaks") {
+"dataset_from_peaks" = function(sample.list, metadata = NULL, description = "", type = "nmr-peaks") {
   
-  merged.peaks = merge.eq.peaks.samplelist(sample.list)
-  samples.df = get.all.intensities(merged.peaks)
-  create.dataset(as.matrix(samples.df), metadata = metadata, type = type, 
+  merged.peaks = merge_eq_peaks_samplelist(sample.list)
+  samples.df = get_all_intensities(merged.peaks)
+  create_dataset(as.matrix(samples.df), metadata = metadata, type = type, 
                  description = description)
 
 }
@@ -18,7 +18,7 @@
 # reads csv files, each with a sample; 
 # filenames - list of file names of the files to read
 # returns list of data frames
-"read.multiple.csvs" = function(filenames, ext = ".csv", ...)
+"read_multiple_csvs" = function(filenames, ext = ".csv", ...)
 {
   sampleList = list()
   sampleNames = c()
@@ -34,31 +34,31 @@
 
 # reads list of CSV files from a given folder
 # returns list of data frames
-"read.csvs.folder" = function(foldername, ...)
+"read_csvs_folder" = function(foldername, ...)
 {
   files<-dir(foldername, pattern=".[Cc][Ss][Vv]$", recursive=T, full.names=TRUE)
-  sampleList = read.multiple.csvs(files, ext= "", ...);
+  sampleList = read_multiple_csvs(files, ext= "", ...);
   sampleList
 }
 
 # GETTING INFO
 
 # counts number of peaks in a sample (given its index)
-"peaks.per.sample" = function(sample.list, sample.index)
+"peaks_per_sample" = function(sample.list, sample.index)
 {
   nrow(sample.list[[sample.index]])
 }
 
 # counts the number of peaks in each sample in the peaklist
-"peaks.per.samples" = function(sample.list)
+"peaks_per_samples" = function(sample.list)
 {
   res = c()
-  for(i in 1:length(sample.list)) res[i] = peaks.per.sample(sample.list, i)
+  for(i in 1:length(sample.list)) res[i] = peaks_per_sample(sample.list, i)
   res
 }
 
 # finds samples that have the same peak values- x and y (equal data frames)
-"find.equal.samples" = function(sample.list)
+"find_equal_samples" = function(sample.list)
 {
   eq1 = c()
   eq2 = c()
@@ -78,7 +78,7 @@
 }
 
 # get the full list of frequencies from all samples in a list
-"get.overall.freq.list" = function(sample.list)
+"get_overall_freq_list" = function(sample.list)
 {
   res = sample.list[[1]][[1]]
   for(i in 2:length(sample.list))
@@ -87,7 +87,7 @@
 }
 
 # get the value of an internsity given the sample (data frame) and the frequency
-"get.intensity" = function(sample.df, freq, tolerance = 0.001)
+"get_intensity" = function(sample.df, freq, tolerance = 0.001)
 {
   cond = (sample.df[[1]] > freq - tolerance) & (sample.df[[1]] < freq + tolerance)
   if (any(cond)) res = sample.df[cond,][[2]]
@@ -96,16 +96,16 @@
 }
 
 # gets all intensities for a sample list; result is a data frame
-"get.all.intensities" = function(sample.list, tol = 0.001)
+"get_all_intensities" = function(sample.list, tol = 0.001)
 {
-  all.freqs = get.overall.freq.list(sample.list)
+  all.freqs = get_overall_freq_list(sample.list)
   
   for(i in 1:length(sample.list))
   {
     intens.vals = c()
     for(k in 1:length(all.freqs)) 
     {
-      intens.vals[k] = get.intensity(sample.list[[i]], all.freqs[k], tol)
+      intens.vals[k] = get_intensity(sample.list[[i]], all.freqs[k], tol)
     }
     if (i==1) res.df = data.frame(intens.vals)
     else res.df = cbind(res.df, intens.vals)
@@ -115,21 +115,21 @@
   res.df
 }
 
-"remove.peaks.interval" = function(sample.df, peak.val.min, peak.val.max) {
+"remove_peaks_interval" = function(sample.df, peak.val.min, peak.val.max) {
   subset(sample.df, ppm < peak.val.min | ppm > peak.val.max)
 }
 
-"remove.peaks.interval.sample.list" = function(sample.list, peak.val.min, peak.val.max) {
+"remove_peaks_interval_sample_list" = function(sample.list, peak.val.min, peak.val.max) {
   sample.list.res = list()
   for(i in 1:length(sample.list)) {
-    sample.list.res[[i]] = remove.peaks.interval(sample.list[[i]], peak.val.min, peak.val.max)
+    sample.list.res[[i]] = remove_peaks_interval(sample.list[[i]], peak.val.min, peak.val.max)
   }
   names(sample.list.res) = names(sample.list)
   sample.list.res
 }
 
 # functions working over the list of all intensities
-"get.peak.values" = function(samples.df, peak.val)
+"get_peak_values" = function(samples.df, peak.val)
 {
   index = which(rownames(samples.df) == peak.val)
   values = c()
@@ -139,14 +139,14 @@
   values
 }
 
-"values.per.peak" = function(samples.df)
+"values_per_peak" = function(samples.df)
 {
   res = c()
   for(i in 1:nrow(samples.df)) res[i] = sum(!is.na(samples.df[i,]))
   res
 }
 
-"values.per.sample" = function(samples.df)
+"values_per_sample" = function(samples.df)
 {
   res = c()
   for(i in 1:ncol(samples.df)) res[i] = sum(!is.na(samples.df[,i]))
@@ -157,13 +157,13 @@
 
 # merge peaks with equal frequencies (ppm) in a sample given by a data frame
 # intensity values are summed
-"merge.equal.peaks" = function(sample.df, tolerance = 0.0)
+"merge_equal_peaks" = function(sample.df, tolerance = 0.0)
 {
   d = diff(sample.df[[1]])
   indexes = which(d <= tolerance)
   if (length(indexes) != 0){
 	new.sample.df = sample.df[-(indexes+1),]
-	new.sample.df[[2]] = sum.vec(sample.df[[2]], indexes)
+	new.sample.df[[2]] = sum_vec(sample.df[[2]], indexes)
   }
   else {
 	new.sample.df = sample.df
@@ -172,7 +172,7 @@
   new.sample.df
 }
 
-"sum.vec" = function(orig.vec, indexes)
+"sum_vec" = function(orig.vec, indexes)
 {
   newvec = c()
   for (i in 1:length(orig.vec)) newvec[i] = orig.vec[i]
@@ -186,19 +186,19 @@
 }
 
 # merge peaks with equal freqs (ppm) in all samples of a list 
-"merge.eq.peaks.samplelist" = function(sample.list, tolerance = 0.0)
+"merge_eq_peaks_samplelist" = function(sample.list, tolerance = 0.0)
 {
   newlist = list()
   for(i in 1:length(sample.list))
   {
-    newlist[[i]] = merge.equal.peaks(sample.list[[i]], tolerance)
+    newlist[[i]] = merge_equal_peaks(sample.list[[i]], tolerance)
   }
   names(newlist) = names(sample.list)
   newlist
 }
 
 # create a matrix with all values for all samples (as used by MetaboAnalyst)
-"create.full.matrix" = function(sample.list)
+"create_full_matrix" = function(sample.list)
 {
   resmat = NULL
   for(i in 1:length(sample.list))

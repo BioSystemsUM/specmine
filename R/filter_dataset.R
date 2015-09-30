@@ -4,31 +4,31 @@
 
 # returns dataset with selected set of samples
 # samples - vector with indexes or names of the samples to select
-"subset.samples" = function(dataset, samples, rebuild.factors = T) {
+"subset_samples" = function(dataset, samples, rebuild.factors = T) {
   
   dataset$metadata = dataset$metadata[samples,,drop= F]
-  if (rebuild.factors) dataset$metadata = rebuild.factors.df(dataset$metadata)
+  if (rebuild.factors) dataset$metadata = rebuild_factors_df(dataset$metadata)
   
   dataset$data = dataset$data[,samples, drop=F]
   dataset
 }
 
 # selects set of samples by the value of a metadata variable
-"subset.samples.by.metadata.values" = function(dataset, metadata.varname, values)
+"subset_samples_by_metadata_values" = function(dataset, metadata.varname, values)
 {
   indexes = which(dataset$metadata[,metadata.varname] %in% values)
-  subset.samples(dataset, indexes)
+  subset_samples(dataset, indexes)
 }
 
 # selects a random subset of nsamples from the dataset
 # returns a new dataset with the selected samples
-"subset.random.samples" = function(dataset, nsamples)
+"subset_random_samples" = function(dataset, nsamples)
 {
-  indexes = sample(num.samples(dataset), nsamples)
-  subset.samples(dataset, indexes)
+  indexes = sample(num_samples(dataset), nsamples)
+  subset_samples(dataset, indexes)
 }
 
-"subset.x.values" = function(dataset, variables, by.index = FALSE) {
+"subset_x_values" = function(dataset, variables, by.index = FALSE) {
   if (!by.index) {
     variables = as.character(variables)
     indexes = which(rownames(dataset$data) %in% variables)
@@ -38,14 +38,14 @@
   dataset
 }
 
-"subset.x.values.by.interval" = function(dataset, min.value, max.value)
+"subset_x_values_by_interval" = function(dataset, min.value, max.value)
 {
-  x.values = get.x.values.as.num(dataset)
+  x.values = get_x_values_as_num(dataset)
   indexes = which(x.values >= min.value & x.values <= max.value)
-  subset.x.values(dataset, indexes, by.index = T)
+  subset_x_values(dataset, indexes, by.index = T)
 }
 
-"subset.by.samples.and.xvalues" = function(dataset, samples, variables = NULL, by.index = F, 
+"subset_by_samples_and_xvalues" = function(dataset, samples, variables = NULL, by.index = F, 
                                            variable.bounds = NULL, rebuild.factors = T)
 {
   if (!by.index) {
@@ -53,7 +53,7 @@
       if (is.null(variable.bounds)) 
         stop("One of variables or variable.bounds parameters needs to be defined")
       else {
-        x.values = get.x.values.as.num(dataset)
+        x.values = get_x_values_as_num(dataset)
         x.indexes = which(x.values >= variable.bounds[1] & x.values <= variable.bounds[2])
       }
     }
@@ -65,13 +65,13 @@
   else x.indexes = variables
   
   dataset$metadata = dataset$metadata[samples,,drop= F]
-  if (rebuild.factors) dataset$metadata = rebuild.factors.df(dataset$metadata)
+  if (rebuild.factors) dataset$metadata = rebuild_factors_df(dataset$metadata)
   
   dataset$data = dataset$data[x.indexes,samples, drop=F]
   dataset
 }
 
-"subset.metadata" = function(dataset, variables)
+"subset_metadata" = function(dataset, variables)
 {
   dataset$metadata = dataset$metadata[,variables, drop = F]
   dataset
@@ -89,28 +89,28 @@
 # disapear are removed (this does not maintain order of the levels)
 # xaxis.num - indicates if data.to.remove for data variables is given as numeric vector (if T) or text
 
-"remove.data" = function(dataset, data.to.remove, type = "sample", by.index = F, rebuild.factors = T) {
+"remove_data" = function(dataset, data.to.remove, type = "sample", by.index = F, rebuild.factors = T) {
   if (type == "sample")
-    dataset = remove.samples(dataset, data.to.remove, rebuild.factors)
+    dataset = remove_samples(dataset, data.to.remove, rebuild.factors)
   else if(type == "data")
-    dataset = remove.data.variables(dataset, data.to.remove, by.index)
+    dataset = remove_data_variables(dataset, data.to.remove, by.index)
   else if(type == "metadata")
-    dataset = remove.metadata.variables(dataset, data.to.remove)
+    dataset = remove_metadata_variables(dataset, data.to.remove)
   else stop("Type of data to remove is undefined")
   dataset
 }   
 
-"remove.samples" = function(dataset, samples.to.remove, rebuild.factors = T) {
+"remove_samples" = function(dataset, samples.to.remove, rebuild.factors = T) {
   if (is.numeric(samples.to.remove))
-    res = subset.samples(dataset, -samples.to.remove, rebuild.factors = rebuild.factors)
+    res = subset_samples(dataset, -samples.to.remove, rebuild.factors = rebuild.factors)
   else {
     indexes.to.remove = which(colnames(dataset$data) %in% samples.to.remove)
-    res = subset.samples(dataset, -indexes.to.remove, rebuild.factors = rebuild.factors)
+    res = subset_samples(dataset, -indexes.to.remove, rebuild.factors = rebuild.factors)
   }
   res
 }
 
-"remove.data.variables" = function(dataset, variables.to.remove, by.index = FALSE) {
+"remove_data_variables" = function(dataset, variables.to.remove, by.index = FALSE) {
   if (length(variables.to.remove) == 0) {
     warning("No variables to remove")
     return (dataset)
@@ -121,17 +121,17 @@
     indexes.to.remove = which(rownames(dataset$data) %in% variables.to.remove)
   }
   else indexes.to.remove = variables.to.remove
-  subset.x.values(dataset, -indexes.to.remove, by.index = T)
+  subset_x_values(dataset, -indexes.to.remove, by.index = T)
 }
 
-"remove.x.values.by.interval" = function(dataset, min.value, max.value)
+"remove_x_values_by_interval" = function(dataset, min.value, max.value)
 {
-  x.values = get.x.values.as.num(dataset)
+  x.values = get_x_values_as_num(dataset)
   indexes.to.remove = which(x.values >= min.value & x.values <= max.value)
-  subset.x.values(dataset, -indexes.to.remove, by.index = T)
+  subset_x_values(dataset, -indexes.to.remove, by.index = T)
 }
 
-"remove.metadata.variables" = function(dataset, variables.to.remove)
+"remove_metadata_variables" = function(dataset, variables.to.remove)
 {
   if (!is.numeric(variables.to.remove))
     indexes.to.remove = which(colnames(dataset$metadata) %in% variables.to.remove)
@@ -145,26 +145,26 @@
 
 # functions to remove samples / variables with NAs
 
-"remove.samples.by.nas" = function(dataset, max.nas = 0, by.percent = F)
+"remove_samples_by_nas" = function(dataset, max.nas = 0, by.percent = F)
 {
-  if (by.percent== T) max.nas = 100 * max.nas / num.x.values(dataset)
+  if (by.percent== T) max.nas = 100 * max.nas / num_x_values(dataset)
   res = apply(dataset$data, 2, function(x) sum(is.na(x)))
   to.remove = which(res > max.nas)
-  remove.samples(dataset, to.remove)
+  remove_samples(dataset, to.remove)
 }
 
-"remove.samples.by.na.metadata" = function(dataset, metadata.var)
+"remove_samples_by_na_metadata" = function(dataset, metadata.var)
 {
   to.remove = which(is.na(dataset$metadata[,metadata.var]))
-  remove.samples(dataset, to.remove)
+  remove_samples(dataset, to.remove)
 }
 
-"remove.variables.by.nas" = function(dataset, max.nas = 0, by.percent = F)
+"remove_variables_by_nas" = function(dataset, max.nas = 0, by.percent = F)
 {
-  if (by.percent== T) max.nas = 100 * max.nas / num.samples(dataset)
+  if (by.percent== T) max.nas = 100 * max.nas / num_samples(dataset)
   res = apply(dataset$data, 1, function(x) { sum(is.na(x)) } )
   to.remove = which(res > max.nas)
-  remove.data.variables(dataset, to.remove, by.index = T)
+  remove_data_variables(dataset, to.remove, by.index = T)
 }
 
 # aggregate samples 
@@ -176,7 +176,7 @@
 # metadata variables are handled as data variables if numeric; if factor, the most common value is taken
 # meta.to.remove - metadata variables to be removed 
 
-"aggregate.samples" = function(dataset, indexes, aggreg.fn = "mean", meta.to.remove = c()) {
+"aggregate_samples" = function(dataset, indexes, aggreg.fn = "mean", meta.to.remove = c()) {
   groups = unique(indexes)
   newdata = matrix(NA, nrow(dataset$data), length(groups))
   rownames(newdata) = rownames(dataset$data)
@@ -215,7 +215,7 @@
   newdataset$labels = dataset$labels
   newdataset$type = dataset$type
   newdataset$description = dataset$description
-  newdataset = remove.metadata.variables(newdataset, meta.to.remove)
+  newdataset = remove_metadata_variables(newdataset, meta.to.remove)
   newdataset
 }
 
@@ -223,15 +223,15 @@
 # samples - if defined, allows to specify which samples will be kept; if undefined, all samples
 # x.values - if defined, allows to specify which x.values to keep; if undefined, all will be kept 
 # metadata.vars - if defined, allows to specify which metadata to keep; if undefined, all will be kept
-"merge.data.metadata" = function(dataset, samples = NULL, metadata.vars = NULL, x.values = NULL, 
+"merge_data_metadata" = function(dataset, samples = NULL, metadata.vars = NULL, x.values = NULL, 
                                  by.index = F)
 {
   if (!is.null(samples) )
-    dataset = subset.samples(dataset, samples, rebuild.factors = T)
+    dataset = subsetsamples(dataset, samples, rebuild.factors = T)
   if (!is.null(x.values) )
-    dataset = subset.x.values(dataset, variables, by.index = by.index)
+    dataset = subset_x_values(dataset, variables, by.index = by.index)
   if (!is.null(metadata.vars))
-    dataset = subset.metadata(dataset, metadata.vars)
+    dataset = subset_metadata(dataset, metadata.vars)
   
   df = as.data.frame(t(dataset$data))
   df = cbind(df, dataset$metadata)

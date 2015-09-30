@@ -59,18 +59,18 @@ multiClassSummary <- function (data, lev = NULL, model = NULL){
 # num.repeats: number of repeats
 # tunelength: number of levels for each tuning parameters
 # tunegrid: dataframe with possible tuning values
-train.and.predict = function(dataset, new.samples, column.class, model, validation, num.folds = 10, 
+train_and_predict = function(dataset, new.samples, column.class, model, validation, num.folds = 10, 
                              num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, 
                              summary.function = defaultSummary) {
-	train.result = train.classifier(dataset, column.class, model, validation, num.folds, num.repeats, 
+	train.result = train_classifier(dataset, column.class, model, validation, num.folds, num.repeats, 
                                   tunelength, tunegrid, metric, summary.function)
-	predict.result = predict.samples(train.result, new.samples)
+	predict.result = predict_samples(train.result, new.samples)
 	result = list(train.result = train.result, predictions.result = predict.result)
 	result
 }
 
 # train classifier
-train.classifier = function(dataset, column.class, model, validation, num.folds = 10, 
+train_classifier = function(dataset, column.class, model, validation, num.folds = 10, 
                             num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, summary.function = defaultSummary, class.in.metadata = T) {
   if(class.in.metadata)
 	  train.result = trainClassifier(dataset$data, dataset$metadata[,column.class], model, validation, 
@@ -123,7 +123,7 @@ trainClassifier <- function(datamat, sampleclass, model, validation, num.folds =
 #predict new samples
 #train.result: result object of training a classifier
 #new.samples: dataframe with new samples
-predict.samples = function(train.result, new.samples){
+predict_samples = function(train.result, new.samples){
 	new.samples.df = data.frame(t(new.samples))
 	rnames = gsub('[-\ ]','_',rownames(new.samples))
 	colnames(new.samples.df) = paste("X",rnames, sep="")
@@ -134,7 +134,7 @@ predict.samples = function(train.result, new.samples){
 }
 
 
-train.models.performance = function(dataset, models, column.class, validation, num.folds = 10, 
+train_models_performance = function(dataset, models, column.class, validation, num.folds = 10, 
                                     num.repeats = 10, tunelength = 10, tunegrid = NULL, metric = NULL, 
                                     summary.function = "default", class.in.metadata = T, compute.varimp = T){
 	result.df = NULL
@@ -157,10 +157,10 @@ train.models.performance = function(dataset, models, column.class, validation, n
   best.tunes = list()
   final.models= list()
 	for (i in 1:length(models)){
-		train.result = train.classifier(dataset, column.class, models[i], validation, num.folds, 
+		train.result = train_classifier(dataset, column.class, models[i], validation, num.folds, 
                                     num.repeats, tunelength, tunegrid, metric, summary.function, class.in.metadata = class.in.metadata)
 		if (compute.varimp) {
-      vips = var.importance(train.result)
+      vips = var_importance(train.result)
 		  rownames(vips) = substring(rownames(vips), 2, nchar(rownames(vips)))
 		  vips$Mean = apply(vips, 1, mean) 
 		}
@@ -194,12 +194,12 @@ train.models.performance = function(dataset, models, column.class, validation, n
 
 # VARIABLE IMPORTANCE
 
-var.importance = function(train.result){
+var_importance = function(train.result){
 	vip = caret::varImp(train.result)
 	vip$importance
 }
 
-summary.var.importance = function(performances, number.rows){
+summary_var_importance = function(performances, number.rows){
 	for(i in 1:length(performances$vips)){
 		performances$vips[[i]] = performances$vips[[i]][1:number.rows,]
 	}
@@ -208,7 +208,7 @@ summary.var.importance = function(performances, number.rows){
 
 # PCA PLOTS
 
-"pca.plot.3d" = function(dataset, model, var.class, pcas = 1:3, colors = NULL, legend.place = "topright", ...) {
+"pca_plot_3d" = function(dataset, model, var.class, pcas = 1:3, colors = NULL, legend.place = "topright", ...) {
 
   if (length(pcas) != 3) stop("Wrong dimension in parameter pcas")
   if (ncol(model$scores) < 3) stop("Less than 3 components")

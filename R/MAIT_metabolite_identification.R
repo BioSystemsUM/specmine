@@ -1,11 +1,11 @@
-MAIT.identify.metabolites = function(dataset, metadata.variable, xSet = NULL, data.folder = NULL, features = NULL, 
+MAIT_identify_metabolites = function(dataset, metadata.variable, xSet = NULL, data.folder = NULL, features = NULL, 
 									 mass.tolerance = 0.5){
 	imports = parent.env(getNamespace("CAMERA"))
 	unlockBinding("groups", imports)
 	imports[["groups"]] = xcms::groups
 	lockBinding("groups", imports)
 	metadata.var = dataset$metadata[,metadata.variable]
-	mait.object = sampleProcessing.modified(dataDir = data.folder, metadata = metadata.var, xSet = xSet, project = "MAIT")
+	mait.object = sampleProcessing_modified(dataDir = data.folder, metadata = metadata.var, xSet = xSet, project = "MAIT")
 	mait.annotation = MAIT::peakAnnotation(MAIT.object = mait.object, corrWithSamp = 0.7, corrBetSamp = 0.75, 
                             perfwhm = 0.6)
 	mait.sig = MAIT::spectralSigFeatures(MAIT.object = mait.annotation, pvalue = 0.05, p.adj = "none",
@@ -26,7 +26,7 @@ MAIT.identify.metabolites = function(dataset, metadata.variable, xSet = NULL, da
 	mait.identify
 }
 
-sampleProcessing.modified = function (dataDir = NULL, metadata = NULL, xSet = NULL, snThres = 2, Sigma = 5/2.3548, mzSlices = 0.3, 
+sampleProcessing_modified = function (dataDir = NULL, metadata = NULL, xSet = NULL, snThres = 2, Sigma = 5/2.3548, mzSlices = 0.3, 
     retcorrMethod = "loess", groupMethod = "density", bwGroup = 3, 
     mzWidGroup = 0.25, filterMethod = "matchedFilter", rtStep = 0.03, 
     nSlaves = 0, minfrac = 0.5, minsamp = 1, peakwidth = c(5, 

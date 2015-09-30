@@ -1,14 +1,14 @@
 # functions to read JDX spectra files 
 
-"read.dataset.dx" = function(folder.data, filename.meta= NULL, type = "undefined", description = "", 
+"read_dataset_dx" = function(folder.data, filename.meta= NULL, type = "undefined", description = "", 
                               label.x = NULL, label.values = NULL,  
                               header.col.meta = TRUE, header.row.meta = TRUE, sep.meta = ",")
 {
   if (!is.null(filename.meta))
-    metadata = read.metadata(filename.meta, header.col = header.col.meta, header.row = header.row.meta, sep = sep.meta)
+    metadata = read_metadata(filename.meta, header.col = header.col.meta, header.row = header.row.meta, sep = sep.meta)
   else metadata = NULL
   
-  data.dx = read.data.dx(folder.data)
+  data.dx = read_data_dx(folder.data)
   
   freqs = data.dx[[1]][,1] # get frequencies from first spectrum
   datamat = matrix(data = NA, nrow = length(freqs), ncol = length(data.dx))
@@ -18,12 +18,12 @@
   rownames(datamat) = as.character(freqs)
   colnames(datamat) = names(data.dx)
   
-  dataset = create.dataset(datamat, type = type, metadata = metadata, description = description, 
+  dataset = create_dataset(datamat, type = type, metadata = metadata, description = description, 
                            label.x = label.x, label.values = label.values)
   dataset
 }
 
-"read.data.dx" = function(foldername, debug = F)
+"read_data_dx" = function(foldername, debug = F)
 {
   filenames = dir(foldername, pattern=".[Dd][Xx]$", full.names=TRUE)
   sampleList = list()
@@ -38,7 +38,7 @@
   sampleList
 }
 
-get.samples.names.dx = function(foldername){
+get_samples_names_dx = function(foldername){
   files = list.files(foldername,pattern=".[Dd][Xx]$", recursive = TRUE, full.names= TRUE)
   samples.names = gsub("\\.[^.]*$", "",basename(files))
   samples.names

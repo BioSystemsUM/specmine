@@ -586,7 +586,7 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE) {
 ##' plot (spc [[1]], lines.args = list (type = "h"))
 ##' }
 ##' 
-read.spc.nosubhdr <- function (filename,
+read_spc_nosubhdr <- function (filename,
 		keys.hdr2data = c('fexper', 'fres', 'fsource'), keys.hdr2log = c('fdate', 'fpeakpt'),
 		keys.log2data = FALSE, keys.log2log = TRUE,
 		log.txt = TRUE, log.bin = FALSE, log.disk = FALSE,

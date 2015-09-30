@@ -1,5 +1,5 @@
 #convert transmittance to absorbance
-transmittance.to.absorbance = function(dataset, percent = T){
+transmittance_to_absorbance = function(dataset, percent = T){
   datamat = dataset$data
   if (!percent){
     absorbance.datamat = 2-log10(datamat*100)
@@ -12,7 +12,7 @@ transmittance.to.absorbance = function(dataset, percent = T){
 }
 
 #convert absorbance to transmittance
-absorbance.to.transmittance = function(dataset){
+absorbance_to_transmittance = function(dataset){
   datamat = dataset$data
   transmittance.datamat = 100*(10^(-datamat))
   dataset$data = transmittance.datamat
@@ -21,43 +21,43 @@ absorbance.to.transmittance = function(dataset){
 }
 
 # Smoothing - hyperSpec (spc.bin and spc.loess)
-smoothing.interpolation = function(dataset, method = "bin", reducing.factor = 2, x.axis = NULL, p.order = 3, window = 11, deriv = 0){
+smoothing_interpolation = function(dataset, method = "bin", reducing.factor = 2, x.axis = NULL, p.order = 3, window = 11, deriv = 0){
   if (method == "bin") {
-		dataset = smoothing.spcbin.hyperspec(dataset, reducing.factor)
+		dataset = smoothing_spcbin_hyperspec(dataset, reducing.factor)
 	} 
   else if (method == "loess") {
-		dataset = smoothing.spcloess.hyperspec(dataset, x.axis)
+		dataset = smoothing_spcloess_hyperspec(dataset, x.axis)
 	} else if (method == "savitzky.golay"){
-		dataset = savitzky.golay(dataset, p.order, window, deriv)
+		dataset = savitzky_golay(dataset, p.order, window, deriv)
 	}
 	dataset
 }
 
 # spc.bin hyperSpec smoothing interpolation
-smoothing.spcbin.hyperspec = function(dataset, reducing.factor = 2) {
-	hyper.object = convert.to.hyperspec(dataset)
+smoothing_spcbin_hyperspec = function(dataset, reducing.factor = 2) {
+	hyper.object = convert_to_hyperspec(dataset)
 	smooth.result = hyperSpec::spc.bin(hyper.object, reducing.factor, na.rm = TRUE)
-	res.dataset = convert.from.hyperspec(smooth.result)
+	res.dataset = convert_from_hyperspec(smooth.result)
   res.dataset$description = paste(dataset$description, "smoothed with hyperSpec spc.bin", sep="-")
   res.dataset$type = res.dataset$type
   res.dataset
 }
 
 # spc.loess hyperSpec smoothing interpolation 
-smoothing.spcloess.hyperspec = function(dataset, x.axis = NULL){
-  hyper.object = convert.to.hyperspec(dataset)
+smoothing_spcloess_hyperspec = function(dataset, x.axis = NULL){
+  hyper.object = convert_to_hyperspec(dataset)
 	if (is.null(x.axis)){
 		smooth.result = hyperSpec::spc.loess(hyper.object, wl(hyper.object), na.rm = TRUE)
 	} else {
 		smooth.result = hyperSpec::spc.loess(hyper.object, x.axis, na.rm = TRUE)
 	}
-  res.dataset = convert.from.hyperspec(smooth.result)
+  res.dataset = convert_from_hyperspec(smooth.result)
   res.dataset$description = paste(dataset$description, "smoothed with hyperSpec spc.loess", sep="-")
   res.dataset$type = res.dataset$type
   res.dataset
 }
 
-savitzky.golay = function(dataset, p.order, window, deriv = 0){
+savitzky_golay = function(dataset, p.order, window, deriv = 0){
     if (window %%2 != 1 || window < 0) 
         stop("window size (window) must be a positive odd number")
     if (p.order >= window) 
@@ -86,41 +86,41 @@ savitzky.golay = function(dataset, p.order, window, deriv = 0){
 
 # DATA CORRECTION - functions to do spectra correction
 
-"data.correction" = function(dataset, type = "background", method = "modpolyfit", ...){
+"data_correction" = function(dataset, type = "background", method = "modpolyfit", ...){
 	if (type == "background"){
-		dataset = background.correction(dataset)
+		dataset = background_correction(dataset)
 	} 
   else if (type == "offset"){
-		dataset = offset.correction(dataset)
+		dataset = offset_correction(dataset)
 	} 
   else if (type == "baseline"){
-		dataset = baseline.correction(dataset, method, ...)
+		dataset = baseline_correction(dataset, method, ...)
 	} 
 	dataset
 }
 
-background.correction = function(dataset) {
-  hyper.object = convert.to.hyperspec(dataset)
+background_correction = function(dataset) {
+  hyper.object = convert_to_hyperspec(dataset)
 	background = hyperSpec::apply(hyper.object, 2, quantile, probs = 0.05)
 	correction.result = hyperSpec::sweep(hyper.object, 2, background, "-")
-  res.dataset = convert.from.hyperspec(correction.result)
+  res.dataset = convert_from_hyperspec(correction.result)
   res.dataset$description = paste(dataset$description, "background correction", sep="; ")
   res.dataset$type = dataset$type
   res.dataset
 }
 
-offset.correction = function(dataset){
-  hyper.object = convert.to.hyperspec(dataset)
+offset_correction = function(dataset){
+  hyper.object = convert_to_hyperspec(dataset)
 	offsets = hyperSpec::apply(hyper.object, 1, min)
 	correction.result = hyperSpec::sweep(hyper.object, 1, offsets, "-")
-  res.dataset = convert.from.hyperspec(correction.result)
+  res.dataset = convert_from_hyperspec(correction.result)
   res.dataset$description = paste(dataset$description, "offset correction", sep="; ")
   res.dataset$type = dataset$type
   res.dataset
 }
 
 # ... - extra parameters to baseline function
-baseline.correction = function(dataset, method = "modpolyfit", ...){
+baseline_correction = function(dataset, method = "modpolyfit", ...){
 	rnames = rownames(dataset$data)
 	cnames = colnames(dataset$data)
 	samples.df = t(dataset$data)
@@ -139,12 +139,12 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
 # shift.val - value of the shift (for constant and interpolation methods); can be a single value for all spectra
 #			  "auto" - shifts are automatically determined
 # or a vector of length = number of samples; can also be the string "auto" for automatic calculation of shifts
-"shift.correction" = function(dataset, method = "constant", shift.val = 0, interp.function = "linear",
+"shift_correction" = function(dataset, method = "constant", shift.val = 0, interp.function = "linear",
                               ref.limits = NULL) {
   
-  x.vals = get.x.values.as.num(dataset)
+  x.vals = get_x_values_as_num(dataset)
   
-  if(! length(shift.val) %in% c(1,num.samples(dataset)) ) {
+  if(! length(shift.val) %in% c(1,num_samples(dataset)) ) {
     stop("Shift.val parameter has incorrect size: should be 1 or number of samples in the dataset")
   }
   else if (length(shift.val) == 1) {
@@ -153,33 +153,33 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
 			stop("Parameter ref.limits incorrect for automatic determination of shifts")
 		}
         else { 
-			shift.val = calculate.shifts(dataset, ref.limits)
+			shift.val = calculate_shifts(dataset, ref.limits)
 		}
 	}
   }
   if (method == "constant") {
     new.x.values = x.vals + shift.val
-    dataset = set.x.values(dataset, new.x.values)
+    dataset = set_x_values(dataset, new.x.values)
   }
   else if (method == "interpolation") {
     if (interp.function == "spline") {
-      interp.fn = function(data, shift, x.values) {
+      interp_fn = function(data, shift, x.values) {
         spline (x.values + shift, data, xout = x.values, method = "natural")$y
       }     
     }
     else if(interp.function == "linear") {
-      interp.fn = function(data, shift, x.values) {
+      interp_fn = function(data, shift, x.values) {
         approx(x.values + shift, data, xout = x.values, method = "linear")$y
       }
     }
     else stop("Interpolation function not defined")
     
     if (length(shift.val) == 1)
-      newdata = apply(dataset$data, 2, interp.fn, shift = shift.val, x.values = x.vals)
+      newdata = apply(dataset$data, 2, interp_fn, shift = shift.val, x.values = x.vals)
     else {
       newdata = matrix(NA, nrow(dataset$data), ncol(dataset$data))
       for (i in 1:length(shift.val))
-        newdata[,i] = interp.fn(dataset$data[,i], shift.val[i], x.vals)
+        newdata[,i] = interp_fn(dataset$data[,i], shift.val[i], x.vals)
     }
     rownames(newdata) = rownames(dataset$data)
     colnames(newdata) = colnames(dataset$data)
@@ -191,17 +191,17 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
 }
 
 # calculate shifts based on a band of the spectra (see hyperSpec vignette sect. 12.2.1)
-"calculate.shifts" = function(dataset, ref.limits = NULL)
+"calculate_shifts" = function(dataset, ref.limits = NULL)
 { 
   #x.vals = get.x.values.as.num(dataset)
-  dataM = subset.x.values.by.interval (dataset, ref.limits[1], ref.limits[2])
+  dataM = subset_x_values_by_interval (dataset, ref.limits[1], ref.limits[2])
   #xvalsM = x.vals[x.vals >= ref.limits[1] & x.vals <= ref.limits[2]]
-  bandpos = apply (t(dataM$data), 1, find.max, get.x.values.as.num(dataM))
-  refpos = find.max (colMeans(t(dataM$data)), get.x.values.as.num(dataM))
+  bandpos = apply (t(dataM$data), 1, find.max, get_x_values_as_num(dataM))
+  refpos = find.max (colMeans(t(dataM$data)), get_x_values_as_num(dataM))
   refpos - bandpos
 }
 
-"find.max" = function (y, x){
+"find_max" = function (y, x){
   pos = which.max (y) + (-1:1)
   X = x [pos] - x [pos [2]]
   Y = y [pos] - y [pos [2]]
@@ -212,7 +212,7 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
 
 # multiplicative scatter correction
 
-"msc.correction" = function(dataset) {
+"msc_correction" = function(dataset) {
   temp = t(dataset$data)
   newdata = pls::msc(temp)
   dataset$data = t(newdata)
@@ -221,7 +221,7 @@ baseline.correction = function(dataset, method = "modpolyfit", ...){
 
 # first derivative
 
-first.derivative = function(dataset) {
+first_derivative = function(dataset) {
   new.data = apply(dataset$data, 2, diff)
   dataset$data = new.data
   dataset

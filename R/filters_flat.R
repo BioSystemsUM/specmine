@@ -10,7 +10,7 @@
 # threshold is defined by red.value that defines the minimum value of the function 
 # needed to keep the variable
 
-"flat.pattern.filter" = function(dataset, filter.function = "iqr", by.percent = T, 
+"flat_pattern_filter" = function(dataset, filter.function = "iqr", by.percent = T, 
                                  by.threshold = F, red.value = 0){
 	
   if (by.percent & by.threshold) 
@@ -19,12 +19,12 @@
     stop ("Either by.percent or by.threshold need to be T")
     
   # apply filter function to all variables
-  filter.values = apply.filter.function(dataset$data, filter.function)
+  filter.values = apply_filter_function(dataset$data, filter.function)
   
   if (by.percent)
-    dataset$data = flat.pattern.filter.percentage(dataset$data, filter.values, red.value)
+    dataset$data = flat_pattern_filter_percentage(dataset$data, filter.values, red.value)
   else if(by.threshold)
-    dataset$data = flat.pattern.filter.threshold(dataset$data, filter.values, red.value)
+    dataset$data = flat_pattern.filter_threshold(dataset$data, filter.values, red.value)
   
 	add.desc = paste("Flat pattern filtering with function", filter.function, sep=" ")
 	dataset$description = paste(dataset$description, add.desc, sep="; ")
@@ -35,7 +35,7 @@
 # FLAT PATTERN FILTERING
 
 # method: iqr, rsd, rnsd, sd, mad, mean, median
-"apply.filter.function" = function(datamat, filter.fn = "iqr"){
+"apply_filter_function" = function(datamat, filter.fn = "iqr"){
 	if (filter.fn == "iqr"){
 		filter.values = apply(datamat, 1, IQR, na.rm=T);
 	}
@@ -64,7 +64,7 @@
 	filter.values
 }
 
-"flat.pattern.filter.percentage" = function(datamat, filter.values, percentage = "auto") {
+"flat_pattern_filter_percentage" = function(datamat, filter.values, percentage = "auto") {
   
   rk = rank(-filter.values, ties.method="first")
 	var.num = nrow(datamat)
@@ -83,7 +83,7 @@
 }
 
 
-"flat.pattern.filter.threshold" = function(datamat, filter.values, threshold = 0) {
+"flat_pattern_filter_threshold" = function(datamat, filter.values, threshold = 0) {
   var.remain = filter.values >= threshold
   datamat[var.remain,]
 }

@@ -1,5 +1,5 @@
-"linregression.onevar" = function(dataset, x.val, metadata.vars, combination) {
-  values = get.data.values(dataset, x.val)
+"linregression_onevar" = function(dataset, x.val, metadata.vars, combination) {
+  values = get_data_values(dataset, x.val)
   sub.df = dataset$metadata[,metadata.vars]
   sub.df = cbind(values,sub.df)
   terms = names(sub.df)[2:ncol(sub.df)]
@@ -9,16 +9,16 @@
   lm.summary
 }
 
-"linreg.all.vars" = function(dataset, metadata.vars, combination)
+"linreg_all_vars" = function(dataset, metadata.vars, combination)
 {
   m = vector("list",nrow(dataset$data))
   for(i in 1:nrow(dataset$data))
-    m[[i]] = linregression.onevar(dataset, rownames(dataset$data)[i], metadata.vars, combination)
+    m[[i]] = linregression_onevar(dataset, rownames(dataset$data)[i], metadata.vars, combination)
   names(m) = rownames(dataset$data)  
   m
 }
 
-linreg.coef.table = function(linreg.results, write.file = F, file.out = "linreg-coefs.csv"){
+linreg_coef_table = function(linreg.results, write.file = F, file.out = "linreg-coefs.csv"){
   num_vars = dim(linreg.results[[1]]$coefficients)[1]
   m = matrix(NA, length(linreg.results), num_vars)
   rownames(m) = names(linreg.results)
@@ -31,7 +31,7 @@ linreg.coef.table = function(linreg.results, write.file = F, file.out = "linreg-
   coef.table  
 }
 
-linreg.pvalue.table = function(linreg.results, write.file = F, file.out = "linreg-pvalues.csv"){
+linreg_pvalue_table = function(linreg.results, write.file = F, file.out = "linreg-pvalues.csv"){
   num_vars = dim(linreg.results[[1]]$coefficients)[1]
   m = matrix(NA, length(linreg.results), num_vars)
   rownames(m) = names(linreg.results)
@@ -44,7 +44,7 @@ linreg.pvalue.table = function(linreg.results, write.file = F, file.out = "linre
   pv.table  
 }
 
-linreg.rsquared = function(linreg.results, write.file = F, file.out = "linreg-rsquared.csv"){
+linreg_rsquared = function(linreg.results, write.file = F, file.out = "linreg-rsquared.csv"){
   m = matrix(NA, length(linreg.results), 2)
   rownames(m) = names(linreg.results)
   for (i in 1:length(linreg.results)){
@@ -57,9 +57,9 @@ linreg.rsquared = function(linreg.results, write.file = F, file.out = "linreg-rs
   rsq.table  
 }
 
-plot.regression.coefs.pvalues = function(linreg.results, bar.col = NULL, coef.size = 5, ...){
-	coefs = linreg.coef.table(linreg.results)
-	pvalues = linreg.pvalue.table(linreg.results)
+plot_regression_coefs_pvalues = function(linreg.results, bar.col = NULL, coef.size = 5, ...){
+	coefs = linreg_coef_table(linreg.results)
+	pvalues = linreg_pvalue_table(linreg.results)
 	df.coefs = data.frame(t(coefs))
 	df.coefs = data.frame(round(df.coefs,2))
 	df.pvalues = data.frame(t(pvalues))

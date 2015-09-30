@@ -1,20 +1,20 @@
 # reads a dataset from CSV files: one for data and (optionally) one for metadata
 
-"read.dataset.csv" = function(filename.data, filename.meta= NULL, type = "undefined", description = "", 
+"read_dataset_csv" = function(filename.data, filename.meta= NULL, type = "undefined", description = "", 
                               label.x = NULL, label.values = NULL, sample.names = NULL,
                               format = "row", header.col = TRUE, header.row = TRUE, sep = ",", 
                               header.col.meta = TRUE, header.row.meta = TRUE, sep.meta = ",")
 {
   if (!is.null(filename.meta))
-    metadata = read.metadata(filename.meta, header.col = header.col.meta, header.row = header.row.meta, sep = sep.meta)
+    metadata = read_metadata(filename.meta, header.col = header.col.meta, header.row = header.row.meta, sep = sep.meta)
   else metadata = NULL
   
-  data = read.data.csv(filename.data, format = format, header.col = header.col, header.row = header.row, sep = sep)
+  data = read_data_csv(filename.data, format = format, header.col = header.col, header.row = header.row, sep = sep)
   if (!is.null(sample.names))
-      dataset = create.dataset(data, type = type, metadata = metadata, description = description, 
+      dataset = create_dataset(data, type = type, metadata = metadata, description = description, 
                              sample.names = sample.names, label.x = label.x, label.values = label.values)
   else
-      dataset = create.dataset(data, type = type, metadata = metadata, description = description, 
+      dataset = create_dataset(data, type = type, metadata = metadata, description = description, 
                            label.x = label.x, label.values = label.values)
   dataset
 }
@@ -27,7 +27,7 @@
 #               if header.row is T, value labels are in the first column)
 # returns dataset with the default structure
 
-"read.data.csv" = function(filename, format = "row", header.col = TRUE, header.row = TRUE, sep = ",")
+"read_data_csv" = function(filename, format = "row", header.col = TRUE, header.row = TRUE, sep = ",")
 {
   if (header.row) rownames = 1
   else rownames = NULL
@@ -45,7 +45,7 @@
   data
 }
 
-"read.metadata" = function(filename, header.col = T, header.row = T, sep = ",")
+"read_metadata" = function(filename, header.col = T, header.row = T, sep = ",")
 {
   if (header.row) rownames = 1
   else rownames = NULL

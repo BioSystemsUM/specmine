@@ -4,7 +4,7 @@
 # samp.classes: column of metadata dataframe - needed in case of "metaboanalyst"
 # step used in "own" algorithm
 # returns dataset using standard structure
-"group.peaks" = function(sample.list, type, method = "own", metadata = NULL, samp.classes= 1, 
+"group_peaks" = function(sample.list, type, method = "own", metadata = NULL, samp.classes= 1, 
                          description = "", label.x = NULL, label.values = NULL, step = 0.03) {
   if (type == "nmr-peaks"){
 	mzwid = 0.03
@@ -18,23 +18,23 @@
   } else stop(paste("The ", type," type is not supported!", sep = ""))
 	
   if (method == "own"){
-		merged.peaks = merge.eq.peaks.samplelist(sample.list)
-		samples.df = get.all.intensities(merged.peaks)
-		data = group.peaks.own(samples.df, step)
+		merged.peaks = merge_eq_peaks_samplelist(sample.list)
+		samples.df = get_all_intensities(merged.peaks)
+		data = group_peaks_own(samples.df, step)
 	} 
   else if (method == "metaboanalyst"){
-		data = group.peaks.metaboanalyst(sample.list, metadata[,samp.classes], names(sample.list), mzwid = mzwid, bw = bw)
+		data = group_peaks_metaboanalyst(sample.list, metadata[,samp.classes], names(sample.list), mzwid = mzwid, bw = bw)
 	}
-	create.dataset(as.matrix(data), metadata = metadata, type = type, 
+	create_dataset(as.matrix(data), metadata = metadata, type = type, 
                  description = description, label.x = label.x, label.values = label.values)
 }
 
 
 # grouping peaks: our algorithm
-"group.peaks.own" = function(samples.df, step = 0.03)
+"group_peaks_own" = function(samples.df, step = 0.03)
 {
   freqs = as.numeric(rownames(samples.df))
-  st_intervals = create.intervals(freqs, step)
+  st_intervals = create_intervals(freqs, step)
   initialized = F
   for (cent in st_intervals)
   {
@@ -81,7 +81,7 @@
 
 # auxiliary function for our own grouping algorithm
 
-"create.intervals" = function(freqs, step = 0.03)
+"create_intervals" = function(freqs, step = 0.03)
 {
   st = freqs[1]
   res = c(st)
@@ -105,7 +105,7 @@
 # 3-col MS can be used directly
 # default mzwid MS 0.25 m/z, NMR 0.03 ppm
 # bw 30 for LCMS, 5 for GCMS
-group.peaks.metaboanalyst<-function(peaklist, samp.classes, samp.names,  mzwid = 0.03, bw = 10, minfrac = 0.5, minsamp = 1, max = 50) {
+group_peaks_metaboanalyst<-function(peaklist, samp.classes, samp.names,  mzwid = 0.03, bw = 10, minfrac = 0.5, minsamp = 1, max = 50) {
     samples <- samp.names;
     classlabel <- samp.classes;
     classnames <- levels(classlabel)
@@ -116,7 +116,7 @@ group.peaks.metaboanalyst<-function(peaklist, samp.classes, samp.names,  mzwid =
         classnum[i] <- sum(classlabel == i)
     }
 
-    peakmatrix = create.metaboanalyst.mat(peaklist)
+    peakmatrix = create_metaboanalyst_mat(peaklist)
     porder <- order(peakmatrix[,"ppm"])
     peakmat <- peakmatrix[porder,,drop=F]
     rownames(peakmat) <- NULL
@@ -178,17 +178,17 @@ group.peaks.metaboanalyst<-function(peaklist, samp.classes, samp.names,  mzwid =
     # Remove groups that overlap with more "well-behaved" groups
     numsamp <- rowSums(groupmat[,(match("npeaks", colnames(groupmat))+1):ncol(groupmat),drop=FALSE])
     uorder <- order(-numsamp, groupmat[,"npeaks"])
-    uindex <- xcms::rectUnique(groupmat[,c("ppmmin","ppmmax","rtmin","rtmax"),drop=FALSE],
+    uindex <- rectUnique(groupmat[,c("ppmmin","ppmmax","rtmin","rtmax"),drop=FALSE],
                          uorder)
 	
 	res = list()
 	res$groups <- groupmat[uindex,]
 	res$groupidx<- groupindex[uindex]
 	res$peaks <- peakmatrix
-	set.groups.metaboanalyst(res, samp.names, samp.classes, ncol(peaklist[[1]]))
+	set_groups_metaboanalyst(res, samp.names, samp.classes, ncol(peaklist[[1]]))
 }
 
-set.groups.metaboanalyst<-function(peaks.result, samp.names, samp.classes, num.col) {
+set_groups_metaboanalyst<-function(peaks.result, samp.names, samp.classes, num.col) {
     groupmat <- peaks.result$groups;
     groupindex <- peaks.result$groupidx;
 
@@ -223,7 +223,7 @@ set.groups.metaboanalyst<-function(peaks.result, samp.names, samp.classes, num.c
 # auxiliary functions for grouping using metaboanalyst algorithm 
 
 # create matrix as used by MetaboAnalyst
-create.metaboanalyst.mat <- function(sample.list){
+create_metaboanalyst_mat <- function(sample.list){
   mat = matrix();
   allmat = NULL;
   if (ncol(sample.list[[1]]) == 2){
@@ -251,8 +251,7 @@ findEqualGreaterM = function(x, values) {
      length(x),
      values,
      length(values),
-     index = integer(length(values)),
-     DUP = FALSE, PACKAGE = "xcms")$index + 1
+     index = integer(length(values)), PACKAGE = "xcms")$index + 1
 }
 
 rectUnique = function(m, order = seq(length = nrow(m)), xdiff = 0, ydiff = 0) {
@@ -268,6 +267,5 @@ rectUnique = function(m, order = seq(length = nrow(m)), xdiff = 0, ydiff = 0) {
      nc,
      as.double(xdiff),
      as.double(ydiff),
-     logical(nrow(m)),
-     DUP = FALSE, PACKAGE = "xcms")[[7]]
+     logical(nrow(m)), PACKAGE = "xcms")[[7]]
 }

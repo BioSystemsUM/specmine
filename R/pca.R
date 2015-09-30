@@ -4,7 +4,7 @@
 
 # perform pca analysis - classical
 
-pca.analysis.dataset = function(dataset, scale = T, center = T, 
+pca_analysis_dataset = function(dataset, scale = T, center = T, 
                                 write.file = F, file.out = "pca", ...) {
   
 	pca.result = prcomp(t(dataset$data), center = center, scale. = scale, ...)
@@ -18,7 +18,7 @@ pca.analysis.dataset = function(dataset, scale = T, center = T,
 # returns information about importance of the PC's
 # pcs - PCs to get; sd - get std dev; prop - get proportion of variance; cumul - get cumulative
 # min.cum - allows to define minimum cumulative % of variance
-pca.importance = function(pca.res, pcs = 1:length(pca.res$sdev), sd = T, prop = T, cumul = T, min.cum = NULL)
+pca_importance = function(pca.res, pcs = 1:length(pca.res$sdev), sd = T, prop = T, cumul = T, min.cum = NULL)
 {
   rows = c()
   if (sd) rows = c(1)
@@ -51,7 +51,7 @@ pca.importance = function(pca.res, pcs = 1:length(pca.res$sdev), sd = T, prop = 
 # k - number of PCs to compute
 
 # returns objects of class princomp
-pca.robust = function(dataset, center = "median", scale = "mad", k = 10,
+pca_robust = function(dataset, center = "median", scale = "mad", k = 10,
                       write.file = F, file.out = "robpca", ...)
 {
   pca.res = pcaPP::PCAgrid(t(dataset$data), k = k, center = center, scale = scale, scores = T, ...)
@@ -66,11 +66,11 @@ pca.robust = function(dataset, center = "median", scale = "mad", k = 10,
 ########################## PCA PLOTS ##################################
 
 #scree plot
-pca.screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "right", 
+pca_screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "right", 
                          lab.text = c("individual percent","cumulative percent"), 
                          fill.col = c("blue","red"), ylab = "Percentage", xlab = "Principal components",
                          ...){
-  importance = pca.importance(pca.result)
+  importance = pca_importance(pca.result)
   if (is.null(num.pcs)) num.pcs = dim(importance)[2]
   par(mfrow=c(1,1))
   matplot(seq(1, num.pcs), data.frame(t(importance[2:3,1:num.pcs]*100)), type="l", lty=1, col=fill.col, 
@@ -80,7 +80,7 @@ pca.screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "r
 }
 
 #2d scores plot
-pca.scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2), labels = FALSE, 
+pca_scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2), labels = FALSE, 
                             ellipses = FALSE, pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
 {
   has.legend = FALSE
@@ -101,8 +101,8 @@ pca.scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
   pca.points$label = colnames(dataset$data)
   pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes(x=x, y=y,colour=group)) + ggplot2::geom_point(size=3, alpha=1) +
     ggplot2::scale_colour_brewer(type = "qual", palette=pallette) + 
-    ggplot2::xlab(paste(paste("PC",pcas[1]," -",sep=""), paste(pca.importance(pca.result, pcas[1], sd=F, prop=T, cumul = F)*100,"%",sep=""))) + 
-    ggplot2::ylab(paste(paste("PC",pcas[2]," -",sep=""), paste(pca.importance(pca.result, pcas[2], sd=F, prop=T, cumul = F)*100,"%",sep="")))
+    ggplot2::xlab(paste(paste("PC",pcas[1]," -",sep=""), paste(pca_importance(pca.result, pcas[1], sd=F, prop=T, cumul = F)*100,"%",sep=""))) + 
+    ggplot2::ylab(paste(paste("PC",pcas[2]," -",sep=""), paste(pca_importance(pca.result, pcas[2], sd=F, prop=T, cumul = F)*100,"%",sep="")))
   if (has.legend) pca.plot = pca.plot + ggplot2::theme(legend.position = leg.pos)
   if (!is.null(xlim)){
 	pca.plot = pca.plot + ggplot2::xlim(xlim[1],xlim[2])
@@ -114,14 +114,14 @@ pca.scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
     pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes(x,y,label=label),hjust=-0.1, vjust=0)
   }
   if (ellipses){
-    df.ellipses = calculate.ellipses(pca.points)
+    df.ellipses = calculate_ellipses(pca.points)
     pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes(x=x, y=y,colour=group), size=1, linetype=2) 
   }
   pca.plot
 }
 
 #3d scores plot
-pca.scoresplot3D.rgl = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3), size = 1, 
+pca_scoresplot3D_rgl = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3), size = 1, 
                             labels = FALSE) {
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
@@ -135,7 +135,7 @@ pca.scoresplot3D.rgl = function(dataset, pca.result, column.class = NULL, pcas =
   }
 }
 
-pca.scoresplot3D = function(dataset, pca.result, column.class = NULL, pcas=c(1,2,3))
+pca_scoresplot3D = function(dataset, pca.result, column.class = NULL, pcas=c(1,2,3))
 {
   has.legend = FALSE
   if (class(pca.result) == "prcomp"){
@@ -159,7 +159,7 @@ pca.scoresplot3D = function(dataset, pca.result, column.class = NULL, pcas=c(1,2
 }
 
 #biplots
-pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors = 1, inset = c(0, 0), legend.place = "topright", ...) {
+pca_biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors = 1, inset = c(0, 0), legend.place = "topright", ...) {
   x.flag = F
   if (x.colors %in% colnames(dataset$metadata)){
 	x.colors.meta = x.colors
@@ -169,9 +169,9 @@ pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors 
   }
 
   if (class(pca.result) == "prcomp"){
-	biplot.prcomp.modified(pca.result, cex = cex, x.colors = x.colors, ...)
+	biplot_prcomp_modified(pca.result, cex = cex, x.colors = x.colors, ...)
   } else if (class(pca.result) == "princomp"){
-	biplot.princomp.modified(pca.result, cex = cex, x.colors = x.colors, ...)
+	biplot_princomp_modified(pca.result, cex = cex, x.colors = x.colors, ...)
   } else {
 	stop("Class not supported");
   } 
@@ -181,7 +181,7 @@ pca.biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors 
   }
 }
 
-biplot.princomp.modified = function (x, x.colors, choices = 1L:2L, scale = 1, pc.biplot = FALSE, ...) 
+biplot_princomp_modified = function (x, x.colors, choices = 1L:2L, scale = 1, pc.biplot = FALSE, ...) 
 {
     if (length(choices) != 2L) 
         stop("length of choices must be 2")
@@ -199,12 +199,12 @@ biplot.princomp.modified = function (x, x.colors, choices = 1L:2L, scale = 1, pc
     else lam <- 1
     if (pc.biplot) 
         lam <- lam/sqrt(n)
-    biplot.default.modified(t(t(scores[, choices])/lam), t(t(x$loadings[, 
+    biplot_default_modified(t(t(scores[, choices])/lam), t(t(x$loadings[, 
         choices]) * lam), x.colors = x.colors, ...)
     invisible()
 }
 
-biplot.prcomp.modified = function (x, x.colors, choices = 1L:2L, scale = 1, pc.biplot = FALSE, ...) 
+biplot_prcomp_modified = function (x, x.colors, choices = 1L:2L, scale = 1, pc.biplot = FALSE, ...) 
 {
     if (length(choices) != 2L) 
         stop("length of choices must be 2")
@@ -223,12 +223,12 @@ biplot.prcomp.modified = function (x, x.colors, choices = 1L:2L, scale = 1, pc.b
     else lam <- 1
     if (pc.biplot) 
         lam <- lam/sqrt(n)
-    biplot.default.modified(t(t(scores[, choices])/lam), t(t(x$rotation[, 
+    biplot_default_modified(t(t(scores[, choices])/lam), t(t(x$rotation[, 
         choices]) * lam), x.colors = x.colors, ...)
     invisible()
 }
 
-biplot.default.modified = function (x, y, var.axes = TRUE, col, x.colors, colors, cex = rep(par("cex"), 2), 
+biplot_default_modified = function (x, y, var.axes = TRUE, col, x.colors, colors, cex = rep(par("cex"), 2), 
     xlabs = NULL, ylabs = NULL, expand = 1, xlim = NULL, ylim = NULL, 
     arrow.len = 0.1, main = NULL, sub = NULL, xlab = NULL, ylab = NULL, 
     ...) 
@@ -259,7 +259,7 @@ biplot.default.modified = function (x, y, var.axes = TRUE, col, x.colors, colors
     }
     else if (length(col) == 1L) 
         col <- c(col, col)
-    unsigned.range <- function(x) c(-abs(min(x, na.rm = TRUE)), 
+    unsigned_range <- function(x) c(-abs(min(x, na.rm = TRUE)), 
         abs(max(x, na.rm = TRUE)))
     rangx1 <- unsigned.range(x[, 1L])
     rangx2 <- unsigned.range(x[, 2L])
@@ -294,7 +294,7 @@ biplot.default.modified = function (x, y, var.axes = TRUE, col, x.colors, colors
     invisible()
 }
 
-pca.biplot3D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3)){
+pca_biplot3D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3)){
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
 	rotation = pca.result$rotation
@@ -302,7 +302,7 @@ pca.biplot3D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3
 	scores = pca.result$scores
 	rotation = pca.result$loadings
   }  
-  pca.scoresplot3D.rgl(dataset, pca.result, column.class, pcas)
+  pca_scoresplot3D_rgl(dataset, pca.result, column.class, pcas)
   rgl::text3d(scores[,pcas], texts=colnames(dataset$data), cex=0.6)
   rgl::text3d(rotation[,pcas], texts = rownames(rotation), col = "red", cex=0.6)
   coords = NULL
@@ -313,7 +313,7 @@ pca.biplot3D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3
 }
 
 #pca pairs plot
-pca.pairs.plot = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3,4,5), ...){
+pca_pairs_plot = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3,4,5), ...){
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
@@ -332,7 +332,7 @@ pca.pairs.plot = function(dataset, pca.result, column.class = NULL, pcas = c(1,2
 }
 
 #kmeans clustering with 3 PCs
-pca.kmeans.plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2,3), 
+pca_kmeans_plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2,3), 
                              kmeans.result = NULL, labels = FALSE, size = 1,...) {
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
@@ -351,7 +351,7 @@ pca.kmeans.plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 
 
 #kmeans clustering with 2 first PCs
-pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2), 
+pca_kmeans_plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2), 
                              kmeans.result = NULL, labels = FALSE, ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL){
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
@@ -379,7 +379,7 @@ pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
     pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes(x,y,label=label),hjust=-0.1, vjust=0, size = 3)
   }
   if (ellipses){
-    df.ellipses = calculate.ellipses(pca.points)
+    df.ellipses = calculate_ellipses(pca.points)
     pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes(x=x, y=y,colour=group), size=1, linetype=2) 
   }
   pca.plot
@@ -387,7 +387,7 @@ pca.kmeans.plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 
 
 #pca pairs with kmeans clusters plot
-pca.pairs.kmeans.plot = function(dataset, pca.result, num.clusters = 3, kmeans.result = NULL, pcas = c(1,2,3,4,5)){
+pca_pairs_kmeans_plot = function(dataset, pca.result, num.clusters = 3, kmeans.result = NULL, pcas = c(1,2,3,4,5)){
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
@@ -403,7 +403,7 @@ pca.pairs.kmeans.plot = function(dataset, pca.result, num.clusters = 3, kmeans.r
 }
 
 #draw ellipses
-calculate.ellipses = function(data){
+calculate_ellipses = function(data){
   df_ell <- data.frame()
   for(g in levels(data$group)){
     df_ell <- rbind(df_ell, cbind(as.data.frame(with(data[data$group==g,], ellipse::ellipse(cor(x, y), 

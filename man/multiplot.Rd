@@ -5,7 +5,7 @@
  Multiplot
 }
 \description{
- Multiplot from ggplot2 - function taken from http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_%28ggplot2%29/
+ Multiplot from ggplot2 - function taken from (see references).
 }
 \usage{
 multiplot(plots, plotlist = NULL, file, cols = 1, layout = NULL)
@@ -42,5 +42,5 @@ multiplot(plots, plotlist = NULL, file, cols = 1, layout = NULL)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~multiplot }
-\keyword{ ~ggplot }% __ONLY ONE__ keyword per line
+\keyword{ multiplot }
+\keyword{ ggplot }% __ONLY ONE__ keyword per line

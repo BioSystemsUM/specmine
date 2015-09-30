@@ -8,7 +8,8 @@ Perform cluster analysis
 Perform cluster analysis on the dataset.
 }
 \usage{
-clustering(dataset, method = "hc", distance = "euclidean", type = "samples", num.clusters = 5, clustMethod = "complete")
+clustering(dataset, method = "hc", distance = "euclidean", 
+type = "samples", num.clusters = 5, clustMethod = "complete")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -43,12 +44,14 @@ clustering(dataset, method = "hc", distance = "euclidean", type = "samples", num
 \examples{
 \dontrun{
   ## Example of kmeans and hierarchical clustering
-  hc.result = clustering(metabolomics.dataset, method = "hc", distance = "euclidean")
-  kmeans.result = clustering(metabolomics.dataset, method = "kmeans", num.clusters = 4)
+  hc.result = clustering(metabolomics.dataset, method = "hc", 
+	      distance = "euclidean")
+  kmeans.result = clustering(metabolomics.dataset, method = "kmeans", 
+		  num.clusters = 4)
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~clustering }
-\keyword{ ~kmeans }% __ONLY ONE__ keyword per line
-\keyword{ ~hclust }
+\keyword{ clustering }
+\keyword{ kmeans }% __ONLY ONE__ keyword per line
+\keyword{ hclust }

@@ -1,20 +1,20 @@
 ## functions to convert hyperspec objects into our own
 
-convert.from.hyperspec = function(hsobj, type = "undefined", description = "") {
+convert_from_hyperspec = function(hsobj, type = "undefined", description = "") {
   datamatrix = t(hsobj$spc)
   x.values = wl(hsobj)
   if (!is.null(hsobj$..) && ncol(hsobj$..) >= 1)
     metadata = hsobj$..
   else metadata = NULL
   labels = hyperSpec::labels(hsobj)
-  dataset = create.dataset(datamatrix, type = type, metadata = metadata, description = description, 
+  dataset = create_dataset(datamatrix, type = type, metadata = metadata, description = description, 
                             x.axis.values = x.values, label.x = labels$.wavelength, label.values = labels$spc)
   dataset
 }
 
 ## functions to convert our datasets into hyperspec objects
 
-convert.to.hyperspec = function(dataset) {
+convert_to_hyperspec = function(dataset) {
   if (is.null(dataset$metadata))
     hyper.object = new("hyperSpec", spc = t(dataset$data), 
                        wavelength = as.numeric(rownames(dataset$data)) )  

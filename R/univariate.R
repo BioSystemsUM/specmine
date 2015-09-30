@@ -5,19 +5,19 @@
 # method: method used in correlation analysis
 
 ### TO REMOVE THIS HIGH-LEVEL FUNCTION - DOESN'T MAKE SENSE ###
-"univariate.analysis" = function(dataset, type = "anova", column.class, ref.class, 
+"univariate_analysis" = function(dataset, type = "anova", column.class, ref.class, 
                                  method = "pearson"){
 	if (type == "anova"){
-		result = aov.all.vars(dataset, column.class)
+		result = aov_all_vars(dataset, column.class)
 	} 
   else if (type == "ttest"){
-		result = tTests.dataset(dataset, column.class)
+		result = tTests_dataset(dataset, column.class)
 	} 
   else if (type == "foldchange"){
-		result = fold.change(dataset, column.class, ref.class)
+		result = fold_change(dataset, column.class, ref.class)
 	} 
   else if (type == "correlation"){
-		result = correlations.dataset(dataset, method)
+		result = correlations_dataset(dataset, method)
 	}
   else stop("Type of univariate analysis not defined")
 	result
@@ -26,9 +26,52 @@
 
 # ANALYSIS OF VARIANCE
 
-"aov.one.var" = function(dataset, x.val, groups, doTukey= T)
+
+####################### Kruskal-Wallis #######################
+
+kruskalTest_dataset = function(dataset, metadata.var, threshold = NULL, write.file = F, file.out = "kruskal.csv"){
+	classes = dataset$metadata[,metadata.var]
+	kruskal.results = c()
+	
+	for (i in 1:length(rownames(dataset$data))){
+		kruskal.result = kruskal.test(dataset$data[i,], classes)
+		kruskal.results = c(kruskal.results, kruskal.result$p.value)
+	}
+	
+	p.log = -log10(kruskal.results)
+	fdr.p = p.adjust(kruskal.results, "fdr")
+	kr.table = data.frame(cbind(kruskal.results, p.log, fdr.p))
+	colnames(kr.table) = c("p.value","-log10","fdr")
+	rownames(kr.table) = rownames(dataset$data)
+	
+	if (!is.null(threshold)) {
+		kr.table = subset(kr.table, p.value <= threshold)    
+	}
+	
+	kr.order = order(kr.table[,1])
+	kr.table = kr.table[kr.order,,drop=F]
+	if (write.file) write.csv(kr.table, file=file.out)
+	kr.table
+}
+
+plot_kruskaltest = function(dataset, kr.results, kr.threshold = 0.01) {
+  orig.ord = intersect (get_x_values_as_text(dataset), rownames(kr.results))
+  kr.orig = kr.results[orig.ord,]
+  kr.lower = which(kr.orig$p.value < kr.threshold)
+
+  cols = vector("character", nrow(kr.orig))
+  for(i in 1:nrow(kr.orig))
+    if (i %in% kr.lower) cols[i] = "blue"
+    else cols[i] = "gray"
+  
+  plot(kr.orig$"-log10", xlab = get_x_label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xaxt="n")
+  axis(1, at = 1:length(rownames(kr.orig)),labels = rownames(kr.orig))
+  abline(h = -log10(kr.threshold), col = "lightblue")
+}
+
+"aov_one_var" = function(dataset, x.val, groups, doTukey= T)
 {
-  values = get.data.values(dataset, x.val)
+  values = get_data_values(dataset, x.val)
   resaov = aov(values ~ groups)
   res = list()
   res$pvalue = summary(resaov)[[1]]$'Pr(>F)'[1]
@@ -42,7 +85,7 @@
   res
 }
 
-"aov.all.vars" = function(dataset, column.class, doTukey= T, 
+"aov_all_vars" = function(dataset, column.class, doTukey= T, 
                           write.file = F, file.out = "anova-res.csv" )
 {
   groups = dataset$metadata[,column.class]
@@ -52,7 +95,7 @@
   if (doTukey) tukeys = c()
   for(i in 1:nrow(dataset$data))
   {
-    resi = aov.one.var(dataset, rownames(dataset$data)[i], groups, doTukey)
+    resi = aov_one_var(dataset, rownames(dataset$data)[i], groups, doTukey)
     pvalues[i] = resi$pvalue
     logs[i] = resi$log
     if (doTukey) tukeys[i] = resi$tukey
@@ -67,8 +110,8 @@
   aov.table
 }
 
-"multifactor.aov.onevar" = function(dataset, x.val, metadata.vars, combination) {
-  values = get.data.values(dataset, x.val)
+"multifactor_aov_onevar" = function(dataset, x.val, metadata.vars, combination) {
+  values = get_data_values(dataset, x.val)
   sub.df = dataset$metadata[,metadata.vars]
   sub.df = cbind(values,sub.df)
   terms = names(sub.df)[2:ncol(sub.df)]
@@ -78,7 +121,7 @@
   aov.summary
 }
 
-"multifactor.aov.all.vars" = function(dataset, metadata.vars, combination)
+"multifactor_aov_all_vars" = function(dataset, metadata.vars, combination)
 {
   #m = matrix(NA, nrow(dataset$data), length(metadata.vars))
   #rownames(m) = rownames(dataset$data)
@@ -86,7 +129,7 @@
 
   for(i in 1:nrow(dataset$data))
   {
-    m[[i]] = multifactor.aov.onevar(dataset, rownames(dataset$data)[i], metadata.vars, combination)
+    m[[i]] = multifactor_aov_onevar(dataset, rownames(dataset$data)[i], metadata.vars, combination)
   }
   names(m) = rownames(dataset$data)
 
@@ -98,7 +141,7 @@
   m
 }
 
-multifactor.aov.pvalues.table = function(multifactor.aov.results, write.file = F, file.out = "multi-anova-pvalues.csv"){
+multifactor_aov_pvalues_table = function(multifactor.aov.results, write.file = F, file.out = "multi-anova-pvalues.csv"){
 	num_vars = length(multifactor.aov.results[[1]]$'Pr(>F)') - 1
 	m = matrix(NA, length(multifactor.aov.results), num_vars)
 	rownames(m) = names(multifactor.aov.results)
@@ -111,7 +154,7 @@ multifactor.aov.pvalues.table = function(multifactor.aov.results, write.file = F
 	aov.table	
 }
 
-multifactor.aov.varexp.table = function(multifactor.aov.results, write.file = F, file.out = "multi-anova-varexp.csv"){
+multifactor_aov_varexp_table = function(multifactor.aov.results, write.file = F, file.out = "multi-anova-varexp.csv"){
   num_vars = length(multifactor.aov.results[[1]]$'Sum Sq') # - 1
   m = matrix(NA, length(multifactor.aov.results), num_vars)
   rownames(m) = names(multifactor.aov.results)
@@ -128,8 +171,8 @@ trim <- function( x ) {
   gsub("(^[[:space:]]+|[[:space:]]+$)", "", x)
 }
 
-plot.anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x = F) {
-  orig.ord = intersect (get.x.values.as.text(dataset), rownames(anova.results))
+plot_anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x = F) {
+  orig.ord = intersect (get_x_values_as_text(dataset), rownames(anova.results))
   anova.orig = anova.results[orig.ord,]
   anova.lower = which(anova.orig$pvalues < anova.threshold)
 
@@ -151,7 +194,7 @@ plot.anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x 
 }
 
 ##################### FOLD CHANGE ############################
-fold.change.var = function(dataset, metadata.var, variables, threshold.min.fc = NULL, 
+fold_change_var = function(dataset, metadata.var, variables, threshold.min.fc = NULL, 
 								write.file = F, file.out = "fold_change_reverse.csv"){
 	
 	samp.classes = dataset$metadata[,metadata.var]
@@ -180,7 +223,7 @@ fold.change.var = function(dataset, metadata.var, variables, threshold.min.fc = 
 	fc.res 
 }
 
-fold.change = function(dataset, metadata.var, ref.value, threshold.min.fc = NULL,
+fold_change = function(dataset, metadata.var, ref.value, threshold.min.fc = NULL,
                        write.file = F, file.out = "fold_change.csv" ) {
   datamat = dataset$data
   samp.classes = dataset$metadata[,metadata.var]
@@ -200,11 +243,11 @@ fold.change = function(dataset, metadata.var, ref.value, threshold.min.fc = NULL
 	fc.res 
 }
 
-plot.fold.change = function(dataset, fc.results, fc.threshold, plot.log = T, var = F, xlab = "") {
+plot_fold_change = function(dataset, fc.results, fc.threshold, plot.log = T, var = F, xlab = "") {
   if (var == F){
-	orig.ord = intersect (get.x.values.as.text(dataset), rownames(fc.results))
+	orig.ord = intersect (get_x_values_as_text(dataset), rownames(fc.results))
 	fc.orig = fc.results[orig.ord,]
-	xlabel = get.x.label(dataset)
+	xlabel = get_x_label(dataset)
   } else {
 	fc.orig = fc.results
 	xlabel = xlab
@@ -237,9 +280,54 @@ plot.fold.change = function(dataset, fc.results, fc.threshold, plot.log = T, var
   
 }
 
+####################### Kolmogorov-Smirnov #######################
+
+ksTest_dataset = function(dataset, metadata.var, threshold = NULL, write.file = F, file.out = "ks.csv"){
+	classes = dataset$metadata[,metadata.var]
+	class.levels = levels(classes)
+	sub.ds1 = subset_samples_by_metadata_values(dataset, metadata.var, class.levels[1])
+	sub.ds2 = subset_samples_by_metadata_values(dataset, metadata.var, class.levels[2])
+	ks.results = c()
+	for (i in rownames(dataset$data)){
+		ks.result = ks.test(sub.ds1$data[i,], sub.ds2$data[i,])
+		ks.results = c(ks.results, ks.result$p.value)
+	}
+	
+	p.log = -log10(ks.results)
+	fdr.p = p.adjust(ks.results, "fdr")
+	ks.table = data.frame(cbind(ks.results, p.log, fdr.p))
+	colnames(ks.table) = c("p.value","-log10","fdr")
+	rownames(ks.table) = rownames(dataset$data)
+	
+	if (!is.null(threshold)) {
+		ks.table = subset(ks.table, p.value <= threshold)    
+	}
+	
+	ks.order = order(ks.table[,1])
+	ks.table = ks.table[ks.order,,drop=F]
+	if (write.file) write.csv(ks.table, file=file.out)
+	ks.table
+}
+
+plot_kstest = function(dataset, ks.results, ks.threshold = 0.01) {
+  orig.ord = intersect (get_x_values_as_text(dataset), rownames(ks.results))
+  ks.orig = ks.results[orig.ord,]
+  ks.lower = which(ks.orig$p.value < ks.threshold)
+
+  cols = vector("character", nrow(ks.orig))
+  for(i in 1:nrow(ks.orig))
+    if (i %in% ks.lower) cols[i] = "blue"
+    else cols[i] = "gray"
+  
+  plot(ks.orig$"-log10", xlab = get_x_label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xaxt="n")
+  axis(1, at = 1:length(rownames(ks.orig)),labels = rownames(ks.orig))
+  abline(h = -log10(ks.threshold), col = "lightblue")
+}
+
+
 ####################### T-TESTS ##################################
 
-tTests.pvalue = function(datamat, samp.classes) {
+tTests_pvalue = function(datamat, samp.classes) {
 	p.value = try(genefilter::rowttests(datamat, samp.classes)$p.value);
 	if (class(p.value) == "try-error"){
 		p.value = NA
@@ -251,11 +339,11 @@ tTests.pvalue = function(datamat, samp.classes) {
   res[order(p.value),,drop=F]
 }
 
-tTests.dataset = function(dataset, metadata.var, threshold = NULL,
+tTests_dataset = function(dataset, metadata.var, threshold = NULL,
                           write.file= F, file.out = "ttests.csv") {
 	datamat = dataset$data
   samp.classes = dataset$metadata[,metadata.var]
-  res.p.values = tTests.pvalue (datamat, samp.classes)
+  res.p.values = tTests_pvalue (datamat, samp.classes)
 	p.log = -log10(res.p.values$p.value)
   fdr.p = p.adjust(res.p.values$p.value, "fdr")
 	ttests.table = cbind(res.p.values, p.log, fdr.p)
@@ -269,8 +357,8 @@ tTests.dataset = function(dataset, metadata.var, threshold = NULL,
 	ttests.table
 }
 
-plot.ttests = function(dataset, tt.results, tt.threshold = 0.01) {
-  orig.ord = intersect (get.x.values.as.text(dataset), rownames(tt.results))
+plot_ttests = function(dataset, tt.results, tt.threshold = 0.01) {
+  orig.ord = intersect (get_x_values_as_text(dataset), rownames(tt.results))
   tt.orig = tt.results[orig.ord,]
   tt.lower = which(tt.orig$p.value < tt.threshold)
 
@@ -279,14 +367,14 @@ plot.ttests = function(dataset, tt.results, tt.threshold = 0.01) {
     if (i %in% tt.lower) cols[i] = "blue"
     else cols[i] = "gray"
   
-  plot(tt.orig$"-log10", xlab = get.x.label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xaxt="n")
+  plot(tt.orig$"-log10", xlab = get_x_label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xaxt="n")
   axis(1, at = 1:length(rownames(tt.orig)),labels = rownames(tt.orig))
   abline(h = -log10(tt.threshold), col = "lightblue")
 }
 
 ####################### VOLCANO PLOT FOR T-TESTS & FOLD CHANGES #######
 
-volcano.plot.fc.tt = function(dataset, fc.results, tt.results, 
+volcano_plot_fc_tt = function(dataset, fc.results, tt.results, 
                               fc.threshold = 2, tt.threshold = 0.01) 
 {
   ## test if compatible
@@ -296,7 +384,7 @@ volcano.plot.fc.tt = function(dataset, fc.results, tt.results,
   if (length(int) != nrow(fc.results))
     stop("Fold change and ttest results are not compatible")
  
-  orig.ord = intersect (get.x.values.as.text(dataset), rownames(tt.results))
+  orig.ord = intersect (get_x_values_as_text(dataset), rownames(tt.results))
   tt.orig = tt.results[orig.ord,]
   fc.orig = fc.results[orig.ord,]
   
@@ -331,7 +419,7 @@ volcano.plot.fc.tt = function(dataset, fc.results, tt.results,
 		
 # method: pearson, kendall or spearman
 # by.var - if T, correlations of variables (rows); if F, correlations of samples (columns)
-correlations.dataset = function(dataset, method = "pearson", by.var = T) {
+correlations_dataset = function(dataset, method = "pearson", by.var = T) {
   
   if (by.var) data.to.cor = t(dataset$data)
   else data.to.cor = dataset$data
@@ -340,7 +428,7 @@ correlations.dataset = function(dataset, method = "pearson", by.var = T) {
   cor.matrix
 }
 
-heatmap.correlations = function(correlations, col = NULL, ...) {
+heatmap_correlations = function(correlations, col = NULL, ...) {
   require()
   if (is.null(col)) colors = rev(colorRampPalette(RColorBrewer::brewer.pal(10, "RdBu"))(256))
   else colors = col
@@ -348,7 +436,7 @@ heatmap.correlations = function(correlations, col = NULL, ...) {
 }
 
 
-correlation.test = function(dataset, x,y, method = "pearson", alternative = "two.sided", by.var = T){
+correlation_test = function(dataset, x,y, method = "pearson", alternative = "two.sided", by.var = T){
 	if (by.var) data.to.cor = data.frame(t(dataset$data))
 	else data.to.cor = data.frame(dataset$data)
 
@@ -358,7 +446,7 @@ correlation.test = function(dataset, x,y, method = "pearson", alternative = "two
 }  
 
 
-correlations.test = function(dataset, method = "pearson", by.var = T, alternative = "two.sided") {
+correlations_test = function(dataset, method = "pearson", by.var = T, alternative = "two.sided") {
 	if (by.var) data.to.cor = t(dataset$data)
 	else data.to.cor = dataset$data
 	
@@ -367,7 +455,7 @@ correlations.test = function(dataset, method = "pearson", by.var = T, alternativ
 	i = 1
 	for (name in data.names){
 		for (name2 in data.names){
-			result.cor = with(data.frame(data.to.cor), correlation.test(dataset, as.name(name), as.name(name2), method = method, alternative = alternative, by.var = by.var))
+			result.cor = with(data.frame(data.to.cor), correlation_test(dataset, as.name(name), as.name(name2), method = method, alternative = alternative, by.var = by.var))
 			cor.estimate = result.cor$estimate
 			cor.pvalue = result.cor$p.value
 			cor.matrix[i,] = c(name, name2, cor.estimate, cor.pvalue)

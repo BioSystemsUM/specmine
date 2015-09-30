@@ -8,18 +8,18 @@
 clustering = function(dataset, method = "hc", distance = "euclidean",  
                       type = "samples", num.clusters = 5, clustMethod = "complete"){
 	if (method == "hc") {
-		result = hierarchical.clustering(dataset, distance, hc.type = type, 
+		result = hierarchical_clustering(dataset, distance, hc.type = type, 
                                      clustMethod = clustMethod)
 	} 
   else if (method == "kmeans") {
-		result = kmeans.clustering(dataset, num.clusters, type)
+		result = kmeans_clustering(dataset, num.clusters, type)
 	}
 	result
 }
 
 
 # HIERARCHICAL CLUSTERING
-hierarchical.clustering <- function(dataset, distance='euclidean', clustMethod='complete', 
+hierarchical_clustering <- function(dataset, distance='euclidean', clustMethod='complete', 
                                     hc.type = "samples")
 {
 	if (hc.type == "samples"){
@@ -38,7 +38,7 @@ hierarchical.clustering <- function(dataset, distance='euclidean', clustMethod='
 }
 
 # K-MEANS
-kmeans.clustering <- function(dataset, num.clusters, type = "samples")
+kmeans_clustering <- function(dataset, num.clusters, type = "samples")
 {	
   if (type == "samples"){
     datamat = t(dataset$data)
@@ -49,7 +49,7 @@ kmeans.clustering <- function(dataset, num.clusters, type = "samples")
 	result.kmeans
 }
 
-kmeans.result.df = function(kmeans.result){
+kmeans_result_df = function(kmeans.result){
 	kmeans.result.df = NULL
 	for (i in 1:max(kmeans.result$cluster)){
 		kmeans.result.df = rbind(kmeans.result.df, data.frame(cluster = i, samples = paste(names(kmeans.result$cluster[kmeans.result$cluster==i]),collapse=' ',sep=" ")))
@@ -65,7 +65,7 @@ kmeans.result.df = function(kmeans.result){
 
 
 #kmeans plot
-kmeans.plot = function(dataset, kmeans.result){
+kmeans_plot = function(dataset, kmeans.result){
   num.clusters = max(kmeans.result$cluster)
   par(mfrow=c(num.clusters, 1), mar = c(2,2,2,2))
   for (i in 1:num.clusters){
@@ -79,7 +79,7 @@ kmeans.plot = function(dataset, kmeans.result){
 
 
 #dendrogram
-"dendrogram.plot" = function(dataset, hc.result, column.metadata = 1, labels = NULL, ...){
+"dendrogram_plot" = function(dataset, hc.result, column.metadata = 1, labels = NULL, ...){
   if (!is.null(labels)){
     labels.hc = labels
   } else {
@@ -93,11 +93,11 @@ kmeans.plot = function(dataset, kmeans.result){
   ggdendro::ggdendrogram(hc.result, ...)
 }
 
-"dendrogram.plot.col" = function(dataset, hc.result, classes.col, title = "", lab.cex = 1.0, leg.pos = "topright", ...) 
+"dendrogram_plot_col" = function(dataset, hc.result, classes.col, title = "", lab.cex = 1.0, leg.pos = "topright", ...) 
 {
   classes = dataset$metadata[,classes.col]
   cluster = as.dendrogram(hc.result)
-  cluster = dendrapply(cluster, color.leaf, dataset, classes, lab.cex)
+  cluster = dendrapply(cluster, color_leaf, dataset, classes, lab.cex)
   plot(cluster, main = title, horiz = FALSE, ...)
   leg.txt = levels(classes)
   leg.col = 1:length(levels(classes))
@@ -107,7 +107,7 @@ kmeans.plot = function(dataset, kmeans.result){
     legend(leg.pos, leg.txt, text.col = leg.col, bty = "n")
 }
 
-"color.leaf" = function (n, dataset, classes, lab.cex = 1.0) {
+"color_leaf" = function (n, dataset, classes, lab.cex = 1.0) {
     if (is.leaf(n)) {
       a <- attributes(n)
       i <- match(a$label, get.sample.names(dataset))

@@ -10,7 +10,7 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
 # type - type of data: can be one of the following: "nmr-spectra", "nmr-peaks", "ir-spectra", "uvv-spectra", 
 # "concentrations", "undefined", ...
 
-"create.dataset" = function(datamatrix, type = "undefined", metadata = NULL, description = "", 
+"create_dataset" = function(datamatrix, type = "undefined", metadata = NULL, description = "", 
                             sample.names = NULL, x.axis.values = NULL, 
                             label.x = NULL, label.values = NULL, xSet = NULL) {
   
@@ -101,14 +101,14 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
   # removing duplicate variables
   dup.indexes = which(duplicated(rownames(dataset$data)))
   if (length(dup.indexes) != 0){
-	dataset = remove.data.variables(dataset, dup.indexes, by.index = T)
+	dataset = remove_data_variables(dataset, dup.indexes, by.index = T)
   }
   # make sure sample names are the same in data and metadata
   
   dataset
 }
 
-"check.dataset" = function(dataset)
+"check_dataset" = function(dataset)
 {
   if (is.null(dataset$data)) 
     stop("Invalid dataset: Data matrix is null")
@@ -131,10 +131,10 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
 
 # provides a summary of the dataset, printing its main features
 # stats - if TRUE prints some global statistics of the data values
-"sum.dataset" = function(dataset, stats = T)
+"sum_dataset" = function(dataset, stats = T)
 {
   cat("Dataset summary:\n")
-  check.dataset(dataset)
+  check_dataset(dataset)
   cat ("Description: ", dataset$description, "\n")
   cat("Type of data: ", dataset$type, "\n")
   cat("Number of samples: ", ncol(dataset$data), "\n")
@@ -162,53 +162,53 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
 # functions to access data from a dataset
 
 # returns data matrix
-"get.data" = function(dataset)
+"get_data" = function(dataset)
 {
   dataset$data
 }
 
 # returns data matrix as a data frame
-"get.data.as.df" = function(dataset)
+"get_data_as_df" = function(dataset)
 {
   as.data.frame(dataset$data)
 }
 
 # returns metadata (data frame)
-"get.metadata" = function(dataset)
+"get_metadata" = function(dataset)
 {
   dataset$metadata
 }
 
 # returns values of a metadata variable
 # var - index or name of the metadata variable
-"get.metadata.var" = function(dataset, var)
+"get_metadata_var" = function(dataset, var)
 {
   dataset$metadata[,var]
 }
 
-"num.samples" = function(dataset)
+"num_samples" = function(dataset)
 {
   ncol(dataset$data)
 }
 
-"get.sample.names" = function(dataset)
+"get_sample_names" = function(dataset)
 {
   sample.names = colnames(dataset$data)
   sample.names
 }
 
-"num.x.values" = function(dataset)
+"num_x_values" = function(dataset)
 {
   nrow(dataset$data)
 }
 
-"get.x.values.as.text" = function(dataset)
+"get_x_values_as_text" = function(dataset)
 {
   x.values = rownames(dataset$data)
   as.character(x.values)
 }
 
-"get.x.values.as.num" = function(dataset)
+"get_x_values_as_num" = function(dataset)
 {
   x.values = rownames(dataset$data)
   res = as.numeric(x.values)
@@ -216,28 +216,28 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
   res
 }
 
-"get.x.label" = function(dataset) {
+"get_x_label" = function(dataset) {
   if (is.null(dataset$labels) | is.null(dataset$labels$x)) return ("")
   else return (dataset$labels$x)
 }
 
 
-"get.value.label" = function(dataset) {
+"get_value_label" = function(dataset) {
   if (is.null(dataset$labels) | is.null(dataset$labels$val)) return ("")
   else return (dataset$labels$val)
 }
 
-"get.type" = function(dataset) {
+"get_type" = function(dataset) {
   dataset$type
 }
 
 # specifies if a dataset is from spectral data where x.values are numeric
-"is.spectra" = function(dataset) {
+"is_spectra" = function(dataset) {
   dataset$type %in% list.of.spectral.types
 }
 
 # returns a data value given the x axis labes (as index or name) and the sample (as index or name)
-"get.data.value" = function(dataset, x.axis.val, sample, by.index = F) {
+"get_data_value" = function(dataset, x.axis.val, sample, by.index = F) {
   if (!by.index) {
     x.axis.val = as.character(x.axis.val)
     x.axis.index = which(rownames(dataset$data) == x.axis.val)
@@ -249,13 +249,13 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
 }
 
 # can use both indexes or names
-"get.metadata.value" = function(dataset, variable, sample)
+"get_metadata_value" = function(dataset, variable, sample)
 {
   dataset$metadata[sample, variable]
 }
 
 # returns values of all samples given a set of x axis names (or indexes of by,index is T)
-"get.data.values" = function(dataset, x.axis.val, by.index = FALSE)
+"get_data_values" = function(dataset, x.axis.val, by.index = FALSE)
 {
   if (!by.index) {
     if (length(x.axis.val) >= 1) {
@@ -273,29 +273,29 @@ list.of.allowed.types = c(list.of.spectral.types, "ms-spectra", "nmr-peaks", "lc
 }
 
 # returns indexes corresponding to a vector of x-values (assuming numerical values - spectra)
-"x.values.to.indexes" = function(dataset, x.values)
+"x_values_to_indexes" = function(dataset, x.values)
 {
-  x.values.ds = get.x.values.as.num(dataset)
+  x.values.ds = get_x_values_as_num(dataset)
   indexes = which(x.values.ds %in% x.values)
   indexes
 }
 
 # returns indexes corresponding to an interval of x-values (assuming numerical values - spectra)
-"xvalue.interval.to.indexes" = function(dataset, min.value, max.value) {
-  x.values = get.x.values.as.num(dataset)
+"xvalue_interval_to_indexes" = function(dataset, min.value, max.value) {
+  x.values = get_x_values_as_num(dataset)
   indexes = which(x.values >= min.value & x.values <= max.value)
   indexes
 }
 
-"indexes.to.xvalue.interval" = function(dataset, indexes) {
-  x.values = get.x.values.as.num(dataset)
+"indexes_to_xvalue_interval" = function(dataset, indexes) {
+  x.values = get_x_values_as_num(dataset)
   x.val.inds = x.values[indexes]
   c(min(x.val.inds), max(x.val.inds))
 }
 
 
 # UPDATE functions
-variables.as.metadata = function(dataset, variables, by.index = F){
+variables_as_metadata = function(dataset, variables, by.index = F){
 	if (!by.index) {
 		var.indexes = which(rownames(dataset$data) %in% variables)
 	}
@@ -315,12 +315,12 @@ variables.as.metadata = function(dataset, variables, by.index = F){
 	metadata = as.data.frame(metadata)
 	colnames(metadata) = metadata.names
 	rownames(metadata) = colnames(dataset$data)
-	dataset = set.metadata(dataset, metadata)
+	dataset = set_metadata(dataset, metadata)
 	dataset$data = dataset$data[-var.indexes,]
 	dataset
 }
 
-metadata.as.variables = function(dataset, metadata.vars, by.index = F){
+metadata_as_variables = function(dataset, metadata.vars, by.index = F){
 	if (!by.index){
 		metadata.indexes = which(colnames(dataset$metadata) %in% metadata.vars)
 	} else {
@@ -336,7 +336,7 @@ metadata.as.variables = function(dataset, metadata.vars, by.index = F){
 	dataset
 }
 
-"set.metadata" = function(dataset, new.metadata)
+"set_metadata" = function(dataset, new.metadata)
 {
   if (nrow(new.metadata) != ncol(dataset$data)) 
     stop("Number of columns in data matrix not the same as number of rows in metadata")
@@ -349,17 +349,17 @@ metadata.as.variables = function(dataset, metadata.vars, by.index = F){
   dataset
 }
 
-"set.x.values" = function(dataset, new.x.values, new.x.label = NULL)
+"set_x_values" = function(dataset, new.x.values, new.x.label = NULL)
 {
   if (length(new.x.values) != nrow(dataset$data) )
     stop("Length of new vector is not consistent with dataset")
   rownames(dataset$data) = as.character(new.x.values)
   if (!is.null(new.x.label))
-    dataset = set.x.label(dataset, new.x.label)
+    dataset = set_x_label(dataset, new.x.label)
   dataset
 }
 
-"set.x.label" = function(dataset, new.x.label)
+"set_x_label" = function(dataset, new.x.label)
 {
   if (!is.null(dataset$label))
     dataset$labels$x = new.x.label 
@@ -370,7 +370,7 @@ metadata.as.variables = function(dataset, metadata.vars, by.index = F){
   dataset
 }
 
-"set.value.label" = function(dataset, new.val.label)
+"set_value_label" = function(dataset, new.val.label)
 {
   if (!is.null(dataset$label))
     dataset$labels$val = new.val.label 
@@ -381,7 +381,7 @@ metadata.as.variables = function(dataset, metadata.vars, by.index = F){
   dataset
 }
 
-"set.sample.names" = function(dataset, new.sample.names)
+"set_sample_names" = function(dataset, new.sample.names)
 {
   if (length(new.sample.names) != ncol(dataset$data))
     stop("Length of new sample names not consistent with dataset dimensions")
@@ -392,7 +392,7 @@ metadata.as.variables = function(dataset, metadata.vars, by.index = F){
   dataset
 }
 
-"replace.data.value" = function(dataset, x.axis.val, sample, new.value, by.index = F) {
+"replace_data_value" = function(dataset, x.axis.val, sample, new.value, by.index = F) {
   if (!by.index) {
     x.axis.val = as.character(x.axis.val)
     x.axis.index = which(rownames(dataset$data) == x.axis.val)
@@ -404,13 +404,13 @@ metadata.as.variables = function(dataset, metadata.vars, by.index = F){
   dataset
 }
 
-"replace.metadata.value" = function(dataset, variable, sample, new.value)
+"replace_metadata_value" = function(dataset, variable, sample, new.value)
 {
   dataset$metadata[sample, variable] = new.value
   dataset
 }
 
-"convert.to.factor" = function(dataset, metadata.var)
+"convert_to_factor" = function(dataset, metadata.var)
 {
   dataset$metadata[,metadata.var] = factor(dataset$metadata[,metadata.var])
   dataset
@@ -419,7 +419,7 @@ metadata.as.variables = function(dataset, metadata.vars, by.index = F){
 # MERGE DATASETS
 # merges two datasets; data and metadata variables are assumed to be the same and kept from dataset1
 # samples from both datasets are merged
-"merge.datasets" = function(dataset1, dataset2)
+"merge_datasets" = function(dataset1, dataset2)
 {
   if (ncol(dataset1$metadata) != ncol(dataset2$metadata))
     stop("Different number of metadata variables")

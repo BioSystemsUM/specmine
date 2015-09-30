@@ -1,0 +1,47 @@
+\name{ksTest_dataset}
+\alias{ksTest_dataset}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+  Kolmogorov-Smirnov tests on dataset
+}
+\description{
+  Run Kolmogorov-Smirnov Tests for each row of the data from the dataset.
+}
+\usage{
+ksTest_dataset(dataset, metadata.var, threshold = NULL, 
+write.file = F, file.out = "ks.csv")
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{dataset}{
+    list representing the dataset from a metabolomics experiment.
+}
+  \item{metadata.var}{
+    metadata variable to use in the t-tests.
+}
+  \item{threshold}{
+    threshold value of the p-value.
+}
+  \item{write.file}{
+    boolean value to write or not a file with the results.
+}
+  \item{file.out}{
+    name of the file.
+}
+}
+
+\value{
+  Table with the results of the Kolmogorov-Smirnov tests, with p-value, -log10(p-value) and false discovery rate (fdr).
+}
+
+
+\examples{
+\dontrun{
+  ## Example of ks-Tests on dataset
+  ksests.result = ksTest_dataset(metabolomics.dataset, "class", 
+		  write.file = T, file.out = "kstests.csv")
+}
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ Kolmogorov-Smirnov }

@@ -24,10 +24,10 @@ multiClassSummary(data, lev = NULL, model = NULL)
 }
 
 \references{
-http://www.r-bloggers.com/error-metrics-for-multi-class-problems-in-r-beyond-accuracy-and-kappa/
+www.r-bloggers.com/error-metrics-for-multi-class-problems-in-r-beyond-accuracy-and-kappa/
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~caret }
-\keyword{ ~summaryfunction }% __ONLY ONE__ keyword per line
+\keyword{ caret }
+\keyword{ summaryfunction }% __ONLY ONE__ keyword per line
