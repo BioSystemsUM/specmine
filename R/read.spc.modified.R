@@ -725,3 +725,63 @@ getbynames = function (x, e) {
         list ()
     }
 }
+
+###-----------------------------------------------------------------------------
+###
+### split.line - split line into list of key-value pairs
+###
+###
+
+split.line <- function (x, separator, trim.blank = TRUE) {
+  tmp <- regexpr (separator, x)
+  #if (length (tmp) == 1 && tmp [[1]] == -1)
+  #  warning ("line without separator", separator)
+
+  key   <- substr (x, 1, tmp - 1)
+  value <- substr (x, tmp + 1, nchar (x))
+
+  if (trim.blank){
+    blank.pattern <- "^[[:blank:]]*([^[:blank:]]+.*[^[:blank:]]+)[[:blank:]]*$"
+    key <- sub (blank.pattern, "\\1", key)
+    value <- sub (blank.pattern, "\\1", value)
+  }
+
+  value <- as.list (value)
+  names (value) <- key
+
+  value
+}
+
+###-----------------------------------------------------------------------------
+###
+### split.string - split string at pattern
+###
+###
+
+split.string <- function (x, separator, trim.blank = TRUE, remove.empty = TRUE) {
+  pos <- gregexpr (separator, x)
+  if (length (pos) == 1 && pos [[1]] == -1)
+    return (x)
+
+  pos <- pos [[1]]
+
+  pos <- matrix (c (1, pos + attr (pos, "match.length"),
+                    pos - 1, nchar (x)),
+                 ncol = 2)
+
+  if (pos [nrow (pos), 1] > nchar (x))
+    pos <- pos [- nrow (pos), ]
+
+  x <- apply (pos, 1, function (p, x) substr (x, p [1], p [2]), x)
+
+  if (trim.blank){
+    blank.pattern <- "^[[:blank:]]*([^[:blank:]]+.*[^[:blank:]]+)[[:blank:]]*$"
+    x <- sub (blank.pattern, "\\1", x)
+  }
+
+  if (remove.empty){
+    x <- x [sapply (x, nchar) > 0]
+  }
+
+  x
+}

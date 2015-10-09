@@ -153,7 +153,6 @@ mean_centering = function(dataset){
     else if (method == "range") res = t(apply(res, 1, range_scale)) #res[i,] = range.scale(res[i,])
     else if (method == "pareto") res = t(apply(res, 1, pareto_scale)) #res[i,] = pareto.scale(res[i,])
     else if (method == "tointerval") res = t(apply(res, 1, scale_to_interval)) #res[i,] = scale.to.interval(res[i,]) 
-    else res[i,] = res[i,] # do nothing
   colnames(res) = colnames(datamat)
   rownames(res) = rownames(datamat)
   res

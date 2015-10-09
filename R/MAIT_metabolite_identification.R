@@ -86,8 +86,8 @@ sampleProcessing_modified = function (dataDir = NULL, metadata = NULL, xSet = NU
     if (!is.null(xSet)){
 		#xSet@phenoData$class = classes
 		snames = rownames(xSet@phenoData)
-		phenoData(xSet) = classes
-		rownames(phenoData(xSet)) <- snames
+		xcms::phenoData(xSet) = classes
+		rownames(xcms::phenoData(xSet)) <- snames
 		fPeaks = list(xSet)
     } else {
 		if (filterMethod == "matchedFilter") {

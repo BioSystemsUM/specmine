@@ -68,7 +68,8 @@ mzmatch_identify_metabolites = function(ionisation="detect", data.folder = NULL,
 PeakML.GapFiller_modified = function (filename, ionisation = "detect", Rawpath = NULL, outputfile, 
     ppm = 0, rtwin = 0, nSlaves = 1, fillAll = FALSE, backend = "Ramp") 
 {
-    version.1 <- get("version.1", envir = .GlobalEnv)
+    pos = 1
+    version.1 <- get("version.1", envir = as.environment(pos))
     FillinPeaks <- function(peaknum) {
         whichpeakset <- numchromsexpected[fillinnums[peaknum], 
             1]
@@ -97,7 +98,7 @@ PeakML.GapFiller_modified = function (filename, ionisation = "detect", Rawpath =
         if (scan_start == 0) 
             scan_start = 1
         scan_finis <- which(correctedRT >= rt_finis)[1]
-        C <- try(PeakML.Methods.getRawMat(allRawPeaks, scan_start, 
+        C <- try(mzmatch.R::PeakML.Methods.getRawMat(allRawPeaks, scan_start, 
             scan_finis, mz_start, mz_finis, correctedRT, uncorrectedRT))
         if (class(C) == "try-error") {
             C <- c(1, 1, 1, 1, 1)
@@ -118,7 +119,7 @@ PeakML.GapFiller_modified = function (filename, ionisation = "detect", Rawpath =
         OUT <- rbind(masses, intensities, retentiontimes, scanids - 
             1)
     }
-    st <- system.time(PeakMLdata <- PeakML.Read(filename, ionisation, 
+    st <- system.time(PeakMLdata <- mzmatch.R::PeakML.Read(filename, ionisation, 
         Rawpath))
     ionisation <- PeakMLdata$massCorrection[[2]]
     massCorrection <- PeakMLdata$massCorrection[[1]]
@@ -165,11 +166,11 @@ PeakML.GapFiller_modified = function (filename, ionisation = "detect", Rawpath =
             samplefile <- samplenums[filenum]
             cat("Working on file: ", rawdatafullpaths[samplefile], 
                 "\n")
-            rawfile <- openMSfile(rawdatafullpaths[samplefile], 
+            rawfile <- mzR::openMSfile(rawdatafullpaths[samplefile], 
                 verbose = FALSE, backend = backend)
-            allRawPeaks <- peaks(rawfile)
+            allRawPeaks <- mzR::peaks(rawfile)
             correctedRT <- as.numeric(PeakMLdata$correctedRTList[[samplefile]])
-            uncorrectedRT <- header(rawfile)$retentionTime
+            uncorrectedRT <- mzR::header(rawfile)$retentionTime
             if (all(correctedRT == uncorrectedRT)) {
                 rtCorrection <- FALSE
             }
@@ -179,36 +180,37 @@ PeakML.GapFiller_modified = function (filename, ionisation = "detect", Rawpath =
             fillinnums <- notdetected[whichfiles == samplefile]
             isSnow <- FALSE
             if (nSlaves > 1) {
-                HIT <- grep("snow", installed.packages()[, 1])
+                HIT <- grep("parallel", installed.packages()[, 1])
                 if (!is.null(HIT)) {
                   isSnow == TRUE
                 }
                 else {
-                  cat("Pleae install package snow to use multiple processors. \n We will continue with a single processor for the time being.", 
+                  cat("Pleae install package parallel to use multiple processors. \n We will continue with a single processor for the time being.", 
                     "\\n")
                 }
             }
             if (isSnow == TRUE) {
                 if (filenum == 1) {
-                  cat("Package snow loaded.", "\n")
+                  cat("Package parallel loaded.", "\n")
                 }
-                cl <- makeCluster(nSlaves)
-                assign("rtwin", rtwin, envir = .GlobalEnv)
-                assign("rawfile", rawfile, envir = .GlobalEnv)
+		rawMat = NULL
+                cl <- parallel::makeCluster(nSlaves)
+                assign("rtwin", rtwin, envir = as.environment(pos))
+                assign("rawfile", rawfile, envir = as.environment(pos))
                 assign("numchromsexpected", numchromsexpected, 
-                  envir = .GlobalEnv)
-                assign("fillinnums", fillinnums, envir = .GlobalEnv)
+                  envir = as.environment(pos))
+                assign("fillinnums", fillinnums, envir = as.environment(pos))
                 assign("PeakMLdata$peakDataMtx", PeakMLdata$peakDataMtx, 
-                  envir = .GlobalEnv)
-                assign("ppm", ppm, envir = .GlobalEnv)
-                assign("FillinPeaks", FillinPeaks, ppm, envir = .GlobalEnv)
-                assign("rawMat", rawMat, envir = .GlobalEnv)
-                clusterExport(cl, list = c("rtwin", "rawfile", 
+                  envir = as.environment(pos))
+                assign("ppm", ppm, envir = as.environment(pos))
+                assign("FillinPeaks", FillinPeaks, ppm, envir = as.environment(pos))
+                assign("rawMat", rawMat, envir = as.environment(pos))
+                parallel::clusterExport(cl, list = c("rtwin", "rawfile", 
                   "numchromsexpected", "fillinnums", "PeakMLdata$peakDataMtx", 
                   "ppm", "FillinPeaks", "rawMat"))
-                filledlist <- parLapply(cl, c(1:length(fillinnums)), 
+                filledlist <- parallel::parLapply(cl, c(1:length(fillinnums)), 
                   FillinPeaks)
-                stopCluster(cl)
+                parallel::stopCluster(cl)
             }
             else {
                 filledlist <- lapply(1:length(fillinnums), FillinPeaks)
@@ -220,16 +222,16 @@ PeakML.GapFiller_modified = function (filename, ionisation = "detect", Rawpath =
             rm(filledlist)
         }
     }
-    project <- .jnew("peakml/util/rjava/Project", samplenames, 
+    project <- rJava::.jnew("peakml/util/rjava/Project", samplenames, 
         rawdatafullpaths, as.character(PeakMLdata$phenoData))
-    .jcall(project, returnSig = "V", method = "addHeaderAnnotation", 
+    rJava::.jcall(project, returnSig = "V", method = "addHeaderAnnotation", 
         as.character("peakproc"), as.character("XCMS_Gapfilled"))
     for (measurementid in 1:length(samplenames)) {
         for (scannum in 1:length(PeakMLdata$correctedRTList[[measurementid]])) {
-            .jcall(project, returnSig = "V", method = "addScanInfo", 
+            rJava::.jcall(project, returnSig = "V", method = "addScanInfo", 
                 as.integer(measurementid - 1), as.numeric(PeakMLdata$correctedRTList[[measurementid]][scannum]), 
                 as.character(ionisation))
-            .jcall(project, returnSig = "V", method = "addScanAnnotation", 
+            rJava::.jcall(project, returnSig = "V", method = "addScanAnnotation", 
                 as.integer(measurementid - 1), as.integer(scannum - 
                   1), as.character("RT_raw"), as.character(PeakMLdata$rawRTList[[measurementid]][scannum]))
         }
@@ -242,7 +244,7 @@ PeakML.GapFiller_modified = function (filename, ionisation = "detect", Rawpath =
             ind <- numchromsexpected[i, 4]
             chrom <- PeakMLdata$chromDataList[[ind]]
         }
-        .jcall(project, returnSig = "V", method = "addMassChromatogram", 
+        rJava::.jcall(project, returnSig = "V", method = "addMassChromatogram", 
             as.integer(numchromsexpected[i, 3] - 1), as.integer(chrom[4, 
                 ]), as.numeric(chrom[3, ]), as.numeric(chrom[1, 
                 ]), as.numeric(chrom[2, ]), as.character(ionisation))
@@ -254,13 +256,13 @@ PeakML.GapFiller_modified = function (filename, ionisation = "detect", Rawpath =
             1] == indexnumber)
     }
     for (ind in 1:length(setindexes)) {
-        .jcall(project, returnSig = "V", method = "addPeakSet", 
+        rJava::.jcall(project, returnSig = "V", method = "addPeakSet", 
             as.integer(setindexes[[ind]] - 1))
     }
     if (!is.null(PeakMLdata$GroupAnnotations)) {
-        PeakML.Methods.writeGroupAnnotations(project, PeakMLdata$GroupAnnotations)
+        mzmatch.R::PeakML.Methods.writeGroupAnnotations(project, PeakMLdata$GroupAnnotations)
     }
-    .jcall(project, returnSig = "V", method = "write", outputfile)
+    rJava::.jcall(project, returnSig = "V", method = "write", outputfile)
 }
 
 
@@ -269,7 +271,8 @@ mzmatch.ipeak.util.Identify_modified = function (JHeapSize = 1425, i = NULL, o =
     massOverride = NULL, polarity = NULL, adducts = NULL, h = NULL, 
     v = NULL) 
 {
-    version.1 <- get("version.1", envir = .GlobalEnv)
+    pos = 1
+    version.1 <- get("version.1", envir = as.environment(pos))
     java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
     JHeapSize <- paste(JHeapSize, "m", sep = "")
     java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
@@ -318,7 +321,8 @@ mzmatch.ipeak.util.Identify_modified = function (JHeapSize = 1425, i = NULL, o =
 mzmatch.ipeak.convert.ConvertToText_modified = function (JHeapSize = 1425, i = NULL, o = NULL, databases = NULL, 
     annotations = NULL, h = NULL, v = NULL) 
 {
-    version.1 <- get("version.1", envir = .GlobalEnv)
+    pos = 1
+    version.1 <- get("version.1", envir = as.environment(pos))
     java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
     JHeapSize <- paste(JHeapSize, "m", sep = "")
     java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
@@ -350,7 +354,8 @@ mzmatch.ipeak.convert.ConvertToText_modified = function (JHeapSize = 1425, i = N
 mzmatch.ipeak.sort.RelatedPeaks_modified = function (JHeapSize = 1425, i = NULL, o = NULL, basepeaks = NULL, 
     ppm = NULL, rtwindow = NULL, minrt = NULL, h = NULL, v = NULL) 
 {
-    version.1 <- get("version.1", envir = .GlobalEnv)
+    pos = 1
+    version.1 <- get("version.1", envir = as.environment(pos))
     java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
     JHeapSize <- paste(JHeapSize, "m", sep = "")
     java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
@@ -390,7 +395,8 @@ mzmatch.ipeak.filter.SimpleFilter_modified = function (JHeapSize = 1425, i = NUL
     minintensity = NULL, maxintensity = NULL, annotations = NULL, 
     h = NULL, v = NULL) 
 {
-    version.1 <- get("version.1", envir = .GlobalEnv)
+    pos = 1
+    version.1 <- get("version.1", envir = as.environment(pos))
     java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
     JHeapSize <- paste(JHeapSize, "m", sep = "")
     java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
@@ -448,7 +454,8 @@ mzmatch.ipeak.filter.SimpleFilter_modified = function (JHeapSize = 1425, i = NUL
 mzmatch.ipeak.filter.NoiseFilter_modified = function (JHeapSize = 1425, i = NULL, o = NULL, rejected = NULL, 
     codadw = NULL, h = NULL, v = NULL) 
 {
-    version.1 <- get("version.1", envir = .GlobalEnv)
+    pos = 1
+    version.1 <- get("version.1", envir = as.environment(pos))
     java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
     JHeapSize <- paste(JHeapSize, "m", sep = "")
     java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
@@ -481,7 +488,8 @@ mzmatch.ipeak.Combine_modified= function (JHeapSize = 1425, i = NULL, o = NULL, 
     labels = NULL, ppm = NULL, rtwindow = NULL, combination = NULL, 
     h = NULL, v = NULL, sampleList = NULL, nSlaves = 1, outputfolder = "combined") 
 {
-    version.1 <- get("version.1", envir = .GlobalEnv)
+    pos = 1
+    version.1 <- get("version.1", envir = as.environment(pos))
     java <- "java -da -dsa -Xmn1g -Xss228k -XX:+UseParallelGC -XX:ParallelGCThreads=10"
     JHeapSize <- paste(JHeapSize, "m", sep = "")
     java <- paste(java, " -Xms", JHeapSize, " -Xmx", JHeapSize, 
@@ -551,14 +559,14 @@ mzmatch.ipeak.Combine_modified= function (JHeapSize = 1425, i = NULL, o = NULL, 
             system(tool)
         }
         if (nSlaves > 1) {
-            cl <- makeCluster(nSlaves)
+            cl <- parallel::makeCluster(nSlaves)
             envname <- environment()
-            clusterExport(cl, list = c("combineFunction", "MainClasses", 
+            parallel::clusterExport(cl, list = c("combineFunction", "MainClasses", 
                 "sampleList", "labels", "ppm", "rtwindow", "combination", 
                 "java", "h", "v"), envir = envname)
-            system.time(clusterApply(cl, 1:length(MainClasses), 
+            system.time(parallel::clusterApply(cl, 1:length(MainClasses), 
                 combineFunction))
-            stopCluster(cl)
+            parallel::stopCluster(cl)
         }
         else {
             for (fnum in 1:length(MainClasses)) {

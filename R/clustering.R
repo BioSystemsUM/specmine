@@ -110,7 +110,7 @@ kmeans_plot = function(dataset, kmeans.result){
 "color_leaf" = function (n, dataset, classes, lab.cex = 1.0) {
     if (is.leaf(n)) {
       a <- attributes(n)
-      i <- match(a$label, get.sample.names(dataset))
+      i <- match(a$label, get_sample_names(dataset))
       attr(n, "nodePar") <- c(a$nodePar, list(lab.col = as.integer(classes[i]), 
                                               lab.cex = lab.cex, pch = NA))
     }

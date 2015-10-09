@@ -116,7 +116,7 @@
 }
 
 "remove_peaks_interval" = function(sample.df, peak.val.min, peak.val.max) {
-  subset(sample.df, ppm < peak.val.min | ppm > peak.val.max)
+  sample.df[sample.df$ppm < peak.val.min | sample.df$ppm > peak.val.max,]
 }
 
 "remove_peaks_interval_sample_list" = function(sample.list, peak.val.min, peak.val.max) {

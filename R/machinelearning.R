@@ -25,7 +25,7 @@ multiClassSummary <- function (data, lev = NULL, model = NULL){
     rownames(prob_stats) <- paste('Class:', levels(data[, "pred"]))
     
     #Calculate confusion matrix-based statistics
-    CM <- confusionMatrix(data[, "pred"], data[, "obs"])
+    CM <- caret::confusionMatrix(data[, "pred"], data[, "obs"])
     
     #Aggregate and average class-wise stats
     #Todo: add weights
@@ -171,7 +171,7 @@ train_models_performance = function(dataset, models, column.class, validation, n
 		  vips = NULL
 		}
     full.results[[i]] = train.result$results
-    if (classification.flag) confusion.matrices[[i]] = try(confusionMatrix(train.result), TRUE)
+    if (classification.flag) confusion.matrices[[i]] = try(caret::confusionMatrix(train.result), TRUE)
     best.tunes[[i]] = train.result$bestTune
     final.models[[i]] = train.result$finalModel
 	}

@@ -48,7 +48,7 @@
 
 impute_nas_linapprox = function(dataset){
   hyper.object = convert_to_hyperspec(dataset)
-	linapprox.res = spc.NA.linapprox(hyper.object)
+	linapprox.res = hyperSpec::spc.NA.linapprox(hyper.object)
   res.dataset = convert_from_hyperspec(linapprox.res)
   res.dataset$type = dataset$type
   res.dataset

@@ -24,7 +24,7 @@
   if (by.percent)
     dataset$data = flat_pattern_filter_percentage(dataset$data, filter.values, red.value)
   else if(by.threshold)
-    dataset$data = flat_pattern.filter_threshold(dataset$data, filter.values, red.value)
+    dataset$data = flat_pattern_filter_threshold(dataset$data, filter.values, red.value)
   
 	add.desc = paste("Flat pattern filtering with function", filter.function, sep=" ")
 	dataset$description = paste(dataset$description, add.desc, sep="; ")

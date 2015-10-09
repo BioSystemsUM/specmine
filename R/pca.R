@@ -56,8 +56,8 @@ pca_robust = function(dataset, center = "median", scale = "mad", k = 10,
 {
   pca.res = pcaPP::PCAgrid(t(dataset$data), k = k, center = center, scale = scale, scores = T, ...)
   if (write.file) {
-    write.csv(pca.result$scores, file=paste(file.out,"_scores.csv",sep=""))
-    write.csv(pca.result$loadings, file=paste(file.out,"_loadings.csv", sep= ""))
+    write.csv(pca.res$scores, file=paste(file.out,"_scores.csv",sep=""))
+    write.csv(pca.res$loadings, file=paste(file.out,"_loadings.csv", sep= ""))
   }
   pca.res
 }
@@ -99,7 +99,7 @@ pca_scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
   }
   pca.points$group = group.values
   pca.points$label = colnames(dataset$data)
-  pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes(x=x, y=y,colour=group)) + ggplot2::geom_point(size=3, alpha=1) +
+  pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y',colour='group')) + ggplot2::geom_point(size=3, alpha=1) +
     ggplot2::scale_colour_brewer(type = "qual", palette=pallette) + 
     ggplot2::xlab(paste(paste("PC",pcas[1]," -",sep=""), paste(pca_importance(pca.result, pcas[1], sd=F, prop=T, cumul = F)*100,"%",sep=""))) + 
     ggplot2::ylab(paste(paste("PC",pcas[2]," -",sep=""), paste(pca_importance(pca.result, pcas[2], sd=F, prop=T, cumul = F)*100,"%",sep="")))
@@ -111,11 +111,11 @@ pca_scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
 	pca.plot = pca.plot + ggplot2::ylim(ylim[1],ylim[2])
   }
   if (labels){
-    pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes(x,y,label=label),hjust=-0.1, vjust=0)
+    pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes_string(x = 'x',y = 'y',label='label'),hjust=-0.1, vjust=0)
   }
   if (ellipses){
     df.ellipses = calculate_ellipses(pca.points)
-    pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes(x=x, y=y,colour=group), size=1, linetype=2) 
+    pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes_string(x='x', y='y',colour='group'), size=1, linetype=2) 
   }
   pca.plot
 }
@@ -259,7 +259,7 @@ biplot_default_modified = function (x, y, var.axes = TRUE, col, x.colors, colors
     }
     else if (length(col) == 1L) 
         col <- c(col, col)
-    unsigned_range <- function(x) c(-abs(min(x, na.rm = TRUE)), 
+    unsigned.range <- function(x) c(-abs(min(x, na.rm = TRUE)), 
         abs(max(x, na.rm = TRUE)))
     rangx1 <- unsigned.range(x[, 1L])
     rangx2 <- unsigned.range(x[, 2L])
@@ -366,7 +366,7 @@ pca_kmeans_plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
   names(pca.points) = c("x","y")
   pca.points$group = factor(kmeans.result$cluster)
   pca.points$label = colnames(dataset$data)
-  pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes(x=x, y=y,colour=group)) + ggplot2::geom_point(size=3, alpha=.6) +
+  pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y',colour='group')) + ggplot2::geom_point(size=3, alpha=.6) +
     ggplot2::scale_colour_brewer(palette="Set1") + ggplot2::xlab(paste("PC",pcas[1],sep="")) + ggplot2::ylab(paste("PC",pcas[2],sep="")) +
     ggplot2::theme(legend.position = leg.pos)
   if (!is.null(xlim)){
@@ -376,11 +376,11 @@ pca_kmeans_plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 	pca.plot = pca.plot + ggplot2::ylim(ylim[1],ylim[2])
   }
   if (labels){
-    pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes(x,y,label=label),hjust=-0.1, vjust=0, size = 3)
+    pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes_string(x='x',y='y',label='label'),hjust=-0.1, vjust=0, size = 3)
   }
   if (ellipses){
     df.ellipses = calculate_ellipses(pca.points)
-    pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes(x=x, y=y,colour=group), size=1, linetype=2) 
+    pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes_string(x='x', y='y',colour='group'), size=1, linetype=2) 
   }
   pca.plot
 }

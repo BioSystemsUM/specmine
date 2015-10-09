@@ -47,7 +47,7 @@ smoothing_spcbin_hyperspec = function(dataset, reducing.factor = 2) {
 smoothing_spcloess_hyperspec = function(dataset, x.axis = NULL){
   hyper.object = convert_to_hyperspec(dataset)
 	if (is.null(x.axis)){
-		smooth.result = hyperSpec::spc.loess(hyper.object, wl(hyper.object), na.rm = TRUE)
+		smooth.result = hyperSpec::spc.loess(hyper.object, hyperSpec::wl(hyper.object), na.rm = TRUE)
 	} else {
 		smooth.result = hyperSpec::spc.loess(hyper.object, x.axis, na.rm = TRUE)
 	}
@@ -196,8 +196,8 @@ baseline_correction = function(dataset, method = "modpolyfit", ...){
   #x.vals = get.x.values.as.num(dataset)
   dataM = subset_x_values_by_interval (dataset, ref.limits[1], ref.limits[2])
   #xvalsM = x.vals[x.vals >= ref.limits[1] & x.vals <= ref.limits[2]]
-  bandpos = apply (t(dataM$data), 1, find.max, get_x_values_as_num(dataM))
-  refpos = find.max (colMeans(t(dataM$data)), get_x_values_as_num(dataM))
+  bandpos = apply (t(dataM$data), 1, find_max, get_x_values_as_num(dataM))
+  refpos = find_max (colMeans(t(dataM$data)), get_x_values_as_num(dataM))
   refpos - bandpos
 }
 

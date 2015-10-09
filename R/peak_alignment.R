@@ -145,7 +145,7 @@ group_peaks_metaboanalyst<-function(peaklist, samp.classes, samp.names,  mzwid =
         gmat <- matrix(nrow = 5, ncol = 2+length(classnum))
         snum <- 0
         while (deny[maxy <- which.max(deny)] > maxden/20 && snum < max) {
-            grange <- xcms::descendMin(deny, maxy)
+            grange <- descendMin(deny, maxy)
             deny[grange[1]:grange[2]] <- 0
             gidx <- which(speakmat[,"rt"] >= den$x[grange[1]] & speakmat[,"rt"] <= den$x[grange[2]])
             gnum <- classlabel[unique(speakmat[gidx,"sample"])]
@@ -242,30 +242,74 @@ create_metaboanalyst_mat <- function(sample.list){
 }
 
 
-findEqualGreaterM = function(x, values) {
-  
-  if (!is.double(x)) x <- as.double(x)
-  if (!is.double(values)) values <- as.double(values)
-  .C("FindEqualGreaterM",
-     x,
-     length(x),
-     values,
-     length(values),
-     index = integer(length(values)), PACKAGE = "xcms")$index + 1
+descendMin = function (y, istart = which.max(y)) 
+{
+    if (!is.double(y)) 
+        y <- as.double(y)
+    unlist(.C("DescendMin", y, length(y), as.integer(istart - 
+        1), ilower = integer(1), iupper = integer(1), DUP = FALSE, 
+        PACKAGE = "xcms")[4:5]) + 1
 }
 
-rectUnique = function(m, order = seq(length = nrow(m)), xdiff = 0, ydiff = 0) {
-  
-  nr <- nrow(m)
-  nc <- ncol(m)
-  if (!is.double(m))
-    m <- as.double(m)
-  .C("RectUnique",
-     m,
-     as.integer(order-1),
-     nr,
-     nc,
-     as.double(xdiff),
-     as.double(ydiff),
-     logical(nrow(m)), PACKAGE = "xcms")[[7]]
+findEqualGreaterM = function(x, val){
+    idx = 1
+    index = integer(length(val))
+    for (i in 1:length(val)){
+        while(idx <= length(x) && x[idx] < val[i]){
+            idx = idx + 1
+        }
+        index[i] = idx
+    }
+    index
+}
+descendMin = function(y, istart = which.max(y)){
+    if (!is.double(y)) 
+        y <- as.double(y)
+    istart = as.integer(istart)
+    i = istart
+    while (i > 1){
+	if (y[i-1] >= y[i])
+	    break
+	i = i-1
+    }
+    ilower = i
+    i = istart
+    while (i < length(y)){
+	if (y[i+1] >= y[i])
+	    break
+        i = i+1
+    }
+    iupper = i
+    c(ilower= ilower, iupper=iupper)
+}
+
+rectUnique = function(m, order = seq(length = nrow(m)), xdiff = 0, ydiff = 0){
+    nr = nrow(m)
+    if (!is.double(m))
+	m = as.double(m)
+    x1 = 0
+    x2 = nr
+    y1 = nr * 2
+    y2 = nr * 3
+    xdiff = as.double(xdiff)
+    ydiff = as.double(ydiff)
+    keep = logical(nrow(m))
+    i = 1
+
+    while (i <= nr){
+	io = order[i]
+	keep[io] = 1
+	j = 1
+   	while (j<i){
+	    jo = order[j]
+	    if (keep[jo] && 
+		!(m[x1+io] - m[x2+jo] > xdiff || m[x1+jo] - m[x2+io] > xdiff ||
+		  m[y1+io] - m[y2+jo] > ydiff || m[y1+jo] - m[y2+io] > ydiff)) {
+		keep[io] = 0
+		break	
+	    }
+	    j = j+1
+	}
+    	i = i+1
+    }
 }

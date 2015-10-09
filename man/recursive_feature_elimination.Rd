@@ -9,7 +9,7 @@ Perform recursive feature elimination on the dataset using caret's package.
 }
 \usage{
 recursive_feature_elimination(datamat, samples.class, 
-functions = rfFuncs, method = "cv", repeats = 5, 
+functions = caret::rfFuncs, method = "cv", repeats = 5, 
 number = 10, subsets = 2^(2:4))
 }
 %- maybe also 'usage' for other objects documented here.

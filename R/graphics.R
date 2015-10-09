@@ -79,7 +79,7 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
   colnames(df) = c("name1", "name2", "name3")
 
   g = ggplot2::ggplot(data = df)
-  g = g + ggplot2::aes(name2, name1)
+  g = g + ggplot2::aes_string('name2', 'name1')
   g = g + ggplot2::geom_boxplot(fill= colour)
   g = g + ggplot2::facet_grid(. ~ name3)
   if (is.null(xlabel)) g = g + ggplot2::xlab(n2)
@@ -108,7 +108,7 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 		vars = as.numeric(gsub("/.*", '', get_x_values_as_text(dataset)))
 
 	} else {
-		x.vars = as.numeric(gsub("/.*", '', get_x.values_as_text(dataset)))
+		x.vars = as.numeric(gsub("/.*", '', get_x_values_as_text(dataset)))
 		variables = which(x.vars > variable.bounds[1] & x.vars < variable.bounds[2])
 		vars = x.vars[variables]
 	}

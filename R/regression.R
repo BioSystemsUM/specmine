@@ -40,7 +40,7 @@ linreg_pvalue_table = function(linreg.results, write.file = F, file.out = "linre
   }
   pv.table = as.data.frame(m)
   colnames(pv.table) = trim(rownames(linreg.results[[1]]$coefficients))
-  if (write.file) write.csv(coef.table, file = file.out)
+  if (write.file) write.csv(pv.table, file = file.out)
   pv.table  
 }
 
@@ -74,10 +74,10 @@ plot_regression_coefs_pvalues = function(linreg.results, bar.col = NULL, coef.si
 	}
 	
 	for (count in 1:num.variables){
-			p = ggplot(data = df.pvalues.coefs, aes_string(x="names", y=paste("X",count,sep="") )) + 
-            geom_bar(stat="identity", position = position_dodge(), fill = bar.col[count], ...) + 
-            geom_text(aes_string(label=paste("X",count+num.variables,sep="")), vjust=-0.3, size=coef.size, ...) + 
-            ylab("-log10(pvalue)") + xlab(rownames(pvalues)[count])
+			p = ggplot2::ggplot(data = df.pvalues.coefs, ggplot2::aes_string(x="names", y=paste("X",count,sep="") )) + 
+            ggplot2::geom_bar(stat="identity", position = ggplot2::position_dodge(), fill = bar.col[count], ...) + 
+            ggplot2::geom_text(ggplot2::aes_string(label=paste("X",count+num.variables,sep="")), vjust=-0.3, size=coef.size, ...) + 
+            ggplot2::ylab("-log10(pvalue)") + ggplot2::xlab(rownames(pvalues)[count])
 		plots[[count]] = p
 	}
 	

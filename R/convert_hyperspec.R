@@ -2,7 +2,7 @@
 
 convert_from_hyperspec = function(hsobj, type = "undefined", description = "") {
   datamatrix = t(hsobj$spc)
-  x.values = wl(hsobj)
+  x.values = hyperSpec::wl(hsobj)
   if (!is.null(hsobj$..) && ncol(hsobj$..) >= 1)
     metadata = hsobj$..
   else metadata = NULL

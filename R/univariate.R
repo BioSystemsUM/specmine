@@ -45,7 +45,7 @@ kruskalTest_dataset = function(dataset, metadata.var, threshold = NULL, write.fi
 	rownames(kr.table) = rownames(dataset$data)
 	
 	if (!is.null(threshold)) {
-		kr.table = subset(kr.table, p.value <= threshold)    
+	    kr.table = kr.table[kr.table$p.value <= threshold,]    
 	}
 	
 	kr.order = order(kr.table[,1])
@@ -167,6 +167,7 @@ multifactor_aov_varexp_table = function(multifactor.aov.results, write.file = F,
   if (write.file) write.csv(aov.table, file = file.out)
   aov.table	
 }
+
 trim <- function( x ) {
   gsub("(^[[:space:]]+|[[:space:]]+$)", "", x)
 }
@@ -188,7 +189,7 @@ plot_anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x 
 	xlim = range(as.numeric(vars))
   }
 
-  plot(vars,anova.orig$"logs", xlab = get.x.label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xlim = xlim)
+  plot(vars,anova.orig$"logs", xlab = get_x_label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xlim = xlim)
   #axis(1, at = 1:length(vars),labels = vars, xlim = xlim)
   abline(h = -log10(anova.threshold), col = "lightblue")
 }
@@ -215,7 +216,7 @@ fold_change_var = function(dataset, metadata.var, variables, threshold.min.fc = 
 	rownames(fc.res) = levels(samp.classes)
 	colnames(fc.res) = c("FoldChange", "log2(FC)")
 	  if (!is.null(threshold.min.fc)) {
-		fc.res = subset(fc.res, FoldChange > threshold.min.fc | FoldChange < 1/threshold.min.fc)
+	      fc.res = fc.res[fc.res$FoldChange > threshold.min.fc | fc.res$FoldChange < 1/threshold.min.fc,]
 	  }
 	  fold.order = order(abs(fc.res[,2]), decreasing = T)
 	  fc.res = fc.res[fold.order,,drop=F]
@@ -235,7 +236,7 @@ fold_change = function(dataset, metadata.var, ref.value, threshold.min.fc = NULL
 	rownames(fc.res) = rownames(datamat)
 	colnames(fc.res) = c("FoldChange", "log2(FC)")
   if (!is.null(threshold.min.fc)) {
-    fc.res = subset(fc.res, FoldChange > threshold.min.fc | FoldChange < 1/threshold.min.fc)
+    fc.res = fc.res[fc.res$FoldChange > threshold.min.fc | fc.res$FoldChange < 1/threshold.min.fc,]
   }
   fold.order = order(abs(fc.res[,2]), decreasing = T)
   fc.res = fc.res[fold.order,,drop=F]
@@ -300,7 +301,7 @@ ksTest_dataset = function(dataset, metadata.var, threshold = NULL, write.file = 
 	rownames(ks.table) = rownames(dataset$data)
 	
 	if (!is.null(threshold)) {
-		ks.table = subset(ks.table, p.value <= threshold)    
+	    ks.table = ks.table[ks.table$p.value <= threshold,]    
 	}
 	
 	ks.order = order(ks.table[,1])
@@ -349,7 +350,7 @@ tTests_dataset = function(dataset, metadata.var, threshold = NULL,
 	ttests.table = cbind(res.p.values, p.log, fdr.p)
 	colnames(ttests.table) = c("p.value","-log10","fdr")
 	if (!is.null(threshold)) {
-    ttests.table = subset(ttests.table, p.value <= threshold)    
+    ttests.table = ttests.table[ttests.table$p.value <= threshold,]
 	}
 	ttests.order = order(ttests.table[,1])
 	ttests.table = ttests.table[ttests.order,,drop=F]

@@ -8,7 +8,7 @@ Maintainer: Christopher Costa <chrisbcl@hotmail.com>
 Depends: R (>= 2.15.0)
 Imports: compare, hyperSpec, ChemoSpec, baseline, rgl, Metrics, 
 	GGally, ggplot2, ellipse, ggdendro, caret, pls, 
-	pcaPP, RColorBrewer, grid, 
+	pcaPP, RColorBrewer, grid, parallel, rJava,
 	qdap, MASS, scatterplot3d, xcms, MAIT, genefilter, impute, mzR, mzmatch.R
 Description: Package for metabolomics data analysis
 License: GPL (>= 2)

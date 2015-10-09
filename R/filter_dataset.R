@@ -227,9 +227,9 @@
                                  by.index = F)
 {
   if (!is.null(samples) )
-    dataset = subsetsamples(dataset, samples, rebuild.factors = T)
+    dataset = subset_samples(dataset, samples, rebuild.factors = T)
   if (!is.null(x.values) )
-    dataset = subset_x_values(dataset, variables, by.index = by.index)
+    dataset = subset_x_values(dataset, x.values, by.index = by.index)
   if (!is.null(metadata.vars))
     dataset = subset_metadata(dataset, metadata.vars)
   

@@ -23,7 +23,7 @@ feature_selection = function(dataset, column.class, method = "rfe", functions, v
 
 #Recursive Feature Elimination
 #funcs list: lmFuncs, rfFuncs, treebagFuncs, ldaFuncs, nbFuncs, gamFuncs, lrFuncs
-recursive_feature_elimination = function(datamat, samples.class, functions = rfFuncs, method = "cv", 
+recursive_feature_elimination = function(datamat, samples.class, functions = caret::rfFuncs, method = "cv", 
                                          repeats = 5, number = 10, subsets = 2^(2:4)){
 	samples.df = data.frame(t(datamat))
 	ctrl <- caret::rfeControl(functions = functions,
@@ -41,7 +41,7 @@ recursive_feature_elimination = function(datamat, samples.class, functions = rfF
 
 #Feature Selection Using Univariate Filters
 #functions list: lmSBF, rfSBF, treebagSBF, ldaSBF and nbSBF.
-filter_feature_selection = function(datamat, samples.class, functions = rfSBF, method = "cv", 
+filter_feature_selection = function(datamat, samples.class, functions = caret::rfSBF, method = "cv", 
                                     repeats = 5) { 
 	samples.df = data.frame(t(datamat))
 	filterCtrl = caret::sbfControl(functions = functions, method = method, repeats = repeats)

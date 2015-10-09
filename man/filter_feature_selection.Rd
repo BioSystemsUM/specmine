@@ -9,7 +9,7 @@ Perform selection by filter using univariate filters, from caret's package.
 }
 \usage{
 filter_feature_selection(datamat, samples.class, 
-functions = rfSBF, method = "cv", repeats = 5)
+functions = caret::rfSBF, method = "cv", repeats = 5)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
