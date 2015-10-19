@@ -1,14 +1,27 @@
-Package: metabolomicsUM
+Package: specmine
 Type: Package
-Title: metabolomicsUM
+Title: specmine
 Version: 1.0
 Date: 2015-09-21
-Author: Christopher Costa
+Author: Christopher Costa <chrisbcl@hotmail.com>,
+	Marcelo Maraschin <mtocsy@gmail.com>,
+	Miguel Rocha <mrocha@di.uminho.pt>
 Maintainer: Christopher Costa <chrisbcl@hotmail.com>
-Depends: R (>= 2.15.0)
+Depends: R (>= 3.1.0)
 Imports: compare, hyperSpec, ChemoSpec, baseline, rgl, Metrics, 
 	GGally, ggplot2, ellipse, ggdendro, caret, pls, 
 	pcaPP, RColorBrewer, grid, parallel, rJava,
-	qdap, MASS, scatterplot3d, xcms, MAIT, genefilter, impute, mzR, mzmatch.R
-Description: Package for metabolomics data analysis
+	qdap, MASS, scatterplot3d, xcms, MAIT, genefilter, impute, 
+	mzR, mzmatch.R
+Description: Metabolomics and spectral data analysis and mining. A R package 
+	that provides a set of methods for metabolomics data analysis, including 
+	data loading in different formats, pre-processing, metabolite 
+	identification, univariate and multivariate data analysis, machine 
+	learning and feature selection. The implemented methods provide adequate 
+	support for the analysis of data from diverse experimental techniques, 
+	integrating a large set of functions from several R packages in a 
+	powerful, yet simple to use environment. In order to install the package, 
+	the packages from BioConductor (xcms, MAIT, genefilter, impute, mzR) and 
+	mzmatch.R from http://mzmatch.sourceforge.net/installation.php must be 
+	installed. Also, case studies can be found on the website: http://darwin.di.uminho.pt/metabolomics	
 License: GPL (>= 2)
