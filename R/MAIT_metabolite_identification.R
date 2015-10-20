@@ -1,9 +1,6 @@
 MAIT_identify_metabolites = function(dataset, metadata.variable, xSet = NULL, data.folder = NULL, features = NULL, 
 									 mass.tolerance = 0.5){
-	imports = parent.env(getNamespace("CAMERA"))
-	unlockBinding("groups", imports)
-	imports[["groups"]] = xcms::groups
-	lockBinding("groups", imports)
+
 	metadata.var = dataset$metadata[,metadata.variable]
 	mait.object = sampleProcessing_modified(dataDir = data.folder, metadata = metadata.var, xSet = xSet, project = "MAIT")
 	mait.annotation = MAIT::peakAnnotation(MAIT.object = mait.object, corrWithSamp = 0.7, corrBetSamp = 0.75, 
