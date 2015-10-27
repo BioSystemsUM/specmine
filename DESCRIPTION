@@ -1,6 +1,6 @@
 Package: specmine
 Type: Package
-Title: specmine: Metabolomics and spectral data analysis and mining
+Title: Metabolomics and Spectral Data Analysis and Mining
 Version: 1.0
 Date: 2015-10-19
 Author: Christopher Costa <chrisbcl@hotmail.com>,
@@ -10,12 +10,11 @@ Maintainer: Christopher Costa <chrisbcl@hotmail.com>
 Depends: R (>= 3.1.0)
 Imports: compare, hyperSpec, ChemoSpec, baseline, rgl, Metrics, 
 	GGally, ggplot2, ellipse, ggdendro, caret, pls, 
-	pcaPP, RColorBrewer, grid, parallel, rJava,
-	qdap, MASS, scatterplot3d, xcms, MAIT, genefilter, impute, 
-	mzR, mzmatch.R
+	pcaPP, RColorBrewer, grid, methods,
+	qdap, MASS, scatterplot3d, xcms, MAIT, genefilter, impute
 Description: An R package that provides a set of methods for metabolomics 
 	data analysis, including data loading in different formats, 
 	pre-processing, metabolite identification, univariate and multivariate 
 	data analysis, machine learning and feature selection. Case studies 
-	can be found on the website: http://darwin.di.uminho.pt/metabolomics	
+	can be found on the website: http://darwin.di.uminho.pt/metabolomics .
 License: GPL (>= 2)
