@@ -197,8 +197,11 @@
     to.merge = which(indexes == groups[g])
     newdata[,g] = apply(dataset$data[,to.merge,drop=F], 1, aggreg.fn)
     for (i in 1:length(dataset$metadata)) {
-      if (is.numeric(dataset$metadata[[i]])) 
-        newmeta[g,i] = eval(parse(text=paste(aggreg.fn,"(",dataset$metadata[to.merge,i],")",sep="")))
+      if (is.numeric(dataset$metadata[[i]])) {
+        func= match.fun(aggreg.fn)
+        newmeta[g,i] = func(dataset$metadata[to.merge,i])
+      }
+#        newmeta[g,i] = eval(parse(text=paste(aggreg.fn,"(",dataset$metadata[to.merge,i],")",sep="")))
       else if (is.factor(dataset$metadata[[i]]))
         newmeta[g,i] = levels(newmeta[[i]])[which.max(table(dataset$metadata[to.merge,i]))]
       else 
