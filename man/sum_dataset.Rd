@@ -41,9 +41,10 @@ sum_dataset(dataset, stats = T)
 }
 
 \examples{
-\dontrun{
+\dontshow{
   ## Example of summarizing a dataset
-  sum_dataset(dataset, stats = T)
+  data(cachexia)
+  sum_dataset(cachexia, stats = TRUE)
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

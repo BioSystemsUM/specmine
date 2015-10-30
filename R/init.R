@@ -7,6 +7,6 @@ for (n in 1:length(names)){
 	}
 }
 
-if (!("mzmatch.R" %in% rownames(installed.packages()))){
-	source ("http://puma.ibls.gla.ac.uk/mzmatch.R/install_mzmatch.R")
-}
+#if (!("mzmatch.R" %in% rownames(installed.packages()))){
+#	source ("http://puma.ibls.gla.ac.uk/mzmatch.R/install_mzmatch.R")
+#}
