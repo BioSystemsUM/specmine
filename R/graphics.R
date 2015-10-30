@@ -102,7 +102,7 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
   if (is.null(xlab)) xlab = get_x_label(dataset)
   if (is.null(ylab)) ylab = get_value_label(dataset)
   
-  if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
+  if (!is.null(dataset$labels$x) && !is.expression(dataset$labels$x) && dataset$labels$x == "mz/rt"){
 	if (is.null(variable.bounds)){
 		variables = 1:length(get_x_values_as_text(dataset))
 		vars = as.numeric(gsub("/.*", '', get_x_values_as_text(dataset)))
@@ -146,7 +146,7 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
   if (is.null(xlab)) xlab = get_x_label(dataset)
   if (is.null(ylab)) ylab = get_value_label(dataset)
   
- if (!is.null(dataset$labels$x) && dataset$labels$x == "mz/rt"){
+ if (!is.null(dataset$labels$x) && !is.expression(dataset$labels$x) && dataset$labels$x == "mz/rt"){
 	if (is.null(variable.bounds)){
 		variables = 1:length(get_x_values_as_text(dataset))
 		vars = as.numeric(gsub("/.*", '', get_x_values_as_text(dataset)))
