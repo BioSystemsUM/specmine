@@ -21,10 +21,9 @@ count_missing_values(dataset)
   Returns the number of missing values on the dataset.
 }
 \examples{
-\dontrun{
   ## Example of counting the missing values
-  count_missing_values(dataset)
-}
+  data(cachexia)
+  count_missing_values(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -28,10 +28,9 @@ remove_samples(dataset, samples.to.remove, rebuild.factors = T)
 }
 
 \examples{
-\dontrun{
   ## Example of removing samples
-  dataset = remove_samples(dataset, c("sample1","sample2"))
-}
+  data(cachexia)
+  cachexia = remove_samples(cachexia, c("PIF_178","PIF_090"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

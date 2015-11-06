@@ -28,11 +28,10 @@ Returns a matrix with the values of all samples in the specified x axis.
 }
 
 \examples{
-\dontrun{
   ## Example of getting a metadata value
-  data.values = get_data_values(dataset, c("var1","var3","var4"), 
-		by.index = F)
-}
+  data(cachexia)
+  data.values = get_data_values(cachexia, c("Creatine","Serine","Lactate"), 
+		by.index = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

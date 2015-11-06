@@ -28,10 +28,10 @@ set_x_values(dataset, new.x.values, new.x.label = NULL)
 }
 
 \examples{
-\dontrun{
   ## Example of setting new x-values to the dataset
-  dataset = set_x_values(dataset, new.xvalues, new.x.label = NULL)
-}
+  data(cachexia)
+  new.xvalues = 1:63
+  cachexia = set_x_values(cachexia, new.xvalues, new.x.label = NULL)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

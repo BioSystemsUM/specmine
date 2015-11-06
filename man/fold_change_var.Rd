@@ -39,11 +39,10 @@ file.out = "fold_change_reverse.csv")
 }
 
 \examples{
-\dontrun{
   ## Example of fold change reverse
-  fold.change.results = fold_change_var(dataset, "Treatment", 
-			c("Caratenoids", "Var2"))
-}
+  data(cachexia)
+  fold.change.results = fold_change_var(cachexia, "Muscle.loss", 
+			c("Creatine", "Serine"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

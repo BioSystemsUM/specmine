@@ -28,10 +28,9 @@ remove_samples_by_nas(dataset, max.nas = 0, by.percent = F)
 }
 
 \examples{
-\dontrun{
   ## Example of removing samples by NAs
-  dataset = remove_samples_by_nas(dataset, 40, by.percent = T)
-}
+  data(propolis)
+  propolis = remove_samples_by_nas(propolis, 40, by.percent = TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

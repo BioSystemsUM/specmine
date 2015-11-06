@@ -22,10 +22,10 @@ Data frame with the clusters and the samples' names that belong to each one.
 }
 
 \examples{
-\dontrun{
   ## Example of showing kmeans cluster's members
-  kmeans.result.df = function(kmeans.result)
-}
+  data(cassavaPPD)
+  kmeans.result = kmeans_clustering(cassavaPPD, 3)
+  kmeans_result_df(kmeans.result)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

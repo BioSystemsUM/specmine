@@ -47,11 +47,10 @@ lty = 1, lwd = 1, col = 1, reverse.x = F, ...)
 }
 
 \examples{
-\dontrun{
   ## Example of plotting spectra (simple)
-  plot_spectra_simple(dataset, samples = c("sample1", "sample2"), 
-  variable.bounds = c(200,2000))
-}
+  data(cassavaPPD)
+  plot_spectra_simple(cassavaPPD, samples = c("IAC5_4", "BRA_1"), 
+  variable.bounds = c(1000,2000))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

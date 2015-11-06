@@ -25,10 +25,9 @@ set_x_label(dataset, new.x.label)
 }
 
 \examples{
-\dontrun{
   ## Example of setting a new x-label to the dataset
-  dataset = set_x_label(dataset, "new x-label")
-}
+  data(cachexia)
+  cachexia = set_x_label(cachexia, "new x-label")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -25,10 +25,9 @@ Returns a numeric vector with the interval of x-values from the indexes vector
 }
 
 \examples{
-\dontrun{
   ## Example of getting the interval of x-values from indexes
-  xvalue.interval = indexes_to_xvalue_interval(dataset, c(2.0, 2.5, 5.5))
-}
+  data(cassavaPPD)
+  xvalue.interval = indexes_to_xvalue_interval(cassavaPPD, c(10,50))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

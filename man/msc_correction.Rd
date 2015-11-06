@@ -23,10 +23,9 @@ msc_correction(dataset)
 
 
 \examples{
-\dontrun{
   ## Example of multiplicative scatter correction
-  dataset.msc = msc_correction(dataset)
-}
+  data(cassavaPPD)
+  propolis.msc = msc_correction(cassavaPPD)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

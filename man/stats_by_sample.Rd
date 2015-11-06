@@ -25,10 +25,9 @@ stats_by_sample(dataset, samples = NULL)
 }
 
 \examples{
-   \dontrun{
      ## Example of getting stats of samples
-     samples.stats.result = stats_by_samples(dataset)
-   }
+     data(cachexia)
+     samples.stats.result = stats_by_sample(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

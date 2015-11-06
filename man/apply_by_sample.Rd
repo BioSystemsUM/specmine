@@ -33,10 +33,9 @@ apply_by_sample(dataset, fn.to.apply, samples = NULL, ...)
 
 
 \examples{
-   \dontrun{
      ## Example of applying a function to variables
-     apply.samples.result = apply_by_sample(dataset, mean)
-   }
+     data(cachexia)
+     apply.samples.result = apply_by_sample(cachexia, mean)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

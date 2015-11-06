@@ -31,10 +31,10 @@ pcas = c(1, 2, 3, 4, 5), ...)
 }
 
 \examples{
-\dontrun{
   ## Example of a PCA pairs plot
-  pca_pairs_plot(dataset, "metadata.var2", pca.result, pcas = c(1,2,3))
-}
+  data(cachexia)
+  pca.result = pca_analysis_dataset(cachexia)
+  pca_pairs_plot(cachexia, pca.result, "Muscle.loss", pcas = c(1,2,3))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

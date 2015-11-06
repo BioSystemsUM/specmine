@@ -22,10 +22,9 @@ get_data_as_df(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the data matrix as data frame
-  datamatrix.dataframe = get_data_as_df(dataset)
-}
+  data(cachexia)
+  cachexia.dt = get_data_as_df(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

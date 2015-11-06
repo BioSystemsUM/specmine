@@ -22,10 +22,9 @@ num_x_values(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the number of x-axis values
-  number.x.values = num_x_values(dataset)
-}
+  data(cassavaPPD)
+  number.x.values = num_x_values(cassavaPPD)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

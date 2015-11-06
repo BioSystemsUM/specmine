@@ -38,11 +38,10 @@ value = 5e-04, k = 5)
   Returns the dataset with no missing values.
 }
 \examples{
-\dontrun{
   ## Example of impute missing values
-  dataset = missingvalues_imputation(dataset, method = "value", 
+  data(propolis)
+  dataset = missingvalues_imputation(propolis, method = "value", 
 	    value = 0.0005)
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

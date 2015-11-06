@@ -36,11 +36,10 @@ write.file = F, file.out = "ks.csv")
 
 
 \examples{
-\dontrun{
   ## Example of ks-Tests on dataset
-  ksests.result = ksTest_dataset(metabolomics.dataset, "class", 
-		  write.file = T, file.out = "kstests.csv")
-}
+  data(cachexia)
+  kstests.result = ksTest_dataset(cachexia, "Muscle.loss", 
+		  write.file = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

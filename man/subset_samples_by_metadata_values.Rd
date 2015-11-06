@@ -29,11 +29,10 @@ values)
 }
 
 \examples{
-\dontrun{
   ## Example of subsetting samples by metadata's values
-  subset = subset_samples_by_metadata_values(dataset, "metadatavar1", 
-	   c("value1","value2"))
-}
+  data(cassavaPPD)
+  subset = subset_samples_by_metadata_values(cassavaPPD, "varieties", 
+	   c("BRA","IAC"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

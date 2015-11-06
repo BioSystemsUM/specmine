@@ -26,10 +26,11 @@ plot_kstest(dataset, ks.results, ks.threshold = 0.01)
 
 
 \examples{
-  \dontrun{
     ## Example of plotting the Kolmogorov-Smirnov tests results
-    plot_kstest(dataset, ks.results, 0.05)
-  }
+    data(cachexia)
+    ks.results = ksTest_dataset(cachexia, "Muscle.loss", 
+	write.file = FALSE)
+    plot_kstest(cachexia, ks.results, 0.05)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

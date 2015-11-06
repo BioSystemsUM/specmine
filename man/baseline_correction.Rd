@@ -39,10 +39,9 @@ baseline_correction(dataset, method = "modpolyfit", ...)
 }
 
 \examples{
-\dontrun{
   ## Example of baseline correction
-  dataset.corrected = baseline_correction(dataset, method = "modpolyfit")
-}
+  data(cassavaPPD)
+  dataset.corrected = baseline_correction(cassavaPPD, method = "modpolyfit")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

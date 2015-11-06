@@ -23,10 +23,9 @@ snv_dataset(dataset)
 
 
 \examples{
-  \dontrun{
   ## Example of SNV on a dataset
-  dataset = snv_dataset(dataset)
-}
+  data(cassavaPPD)
+  dataset = snv_dataset(cassavaPPD)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -28,10 +28,9 @@ remove_x_values_by_interval(dataset, min.value, max.value)
 }
 
 \examples{
-\dontrun{
   ## Example of removing x-values by interval
-  dataset = remove_x_values_by_interval(dataset, 200, 300)
-}
+  data(cassavaPPD)
+  cassavaPPD = remove_x_values_by_interval(cassavaPPD, 200, 300)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

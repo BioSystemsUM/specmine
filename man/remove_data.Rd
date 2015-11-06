@@ -41,11 +41,10 @@ by.index = F, rebuild.factors = T)
 
 
 \examples{
-\dontrun{
   ## Example of removing data
-  dataset = remove_data(dataset, c("var1","var2"), type = "data", 
-	    by.index = F)
-}
+  data(cachexia)
+  dataset = remove_data(cachexia, c("Creatine","Serine"), type = "data", 
+	    by.index = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

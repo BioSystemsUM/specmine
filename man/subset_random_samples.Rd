@@ -25,10 +25,9 @@ subset_random_samples(dataset, nsamples)
 }
 
 \examples{
-\dontrun{
   ## Example of subsetting random samples
-  subset = subset_random_samples(dataset, 10)
-}
+  data(cachexia)
+  subset = subset_random_samples(cachexia, 15)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

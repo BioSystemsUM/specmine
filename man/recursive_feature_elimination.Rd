@@ -42,12 +42,12 @@ A caret's rfe object with the result of recursive feature selection.
 }
 
 \examples{
-\dontrun{
   ## Example of recursive feature elimination
-  rfe.result = recursive_feature_elimination(metabolomics.dataset$data, 
-	       "class", functions = rfFuncs, method = "repeatedcv", 
-	       repeats = 10, number = 5, subsets = 2^(1:6))
-}
+  data(cachexia)
+  library(caret)
+  rfe.result = recursive_feature_elimination(cachexia$data, 
+	       cachexia$metadata$Muscle.loss, functions = caret::rfFuncs, 
+	       method = "cv", number = 3, subsets = 2^(1:6))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

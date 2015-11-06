@@ -32,12 +32,11 @@ clustMethod = "complete", hc.type = "samples")
 }
 
 \examples{
-\dontrun{
   ## Example of hierarchical clustering
-  hc.result = hierarchical_clustering(metabolomics.dataset, 
+  data(cachexia)
+  hc.result = hierarchical_clustering(cachexia, 
 	      distance = "euclidean", clustMethod = "complete", 
 	      hc.type = "samples")
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

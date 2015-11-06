@@ -23,10 +23,9 @@ check_dataset(dataset)
 
 
 \examples{
-\dontrun{
   ## Example checking a dataset
-  check_dataset(dataset)
-}
+  data(cachexia)
+  check_dataset(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

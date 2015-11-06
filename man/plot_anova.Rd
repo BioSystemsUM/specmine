@@ -30,10 +30,10 @@ reverse.x = F)
 
 
 \examples{
-  \dontrun{
     ## Example of plotting the ANOVA results
-    plot_anova(dataset, anova.results, 0.05)
-  }
+    data(cassavaPPD)
+    anova.results = aov_all_vars(cassavaPPD, "varieties", doTukey = TRUE)
+    plot_anova(cassavaPPD, anova.results, 0.05e-8)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

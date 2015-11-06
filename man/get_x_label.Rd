@@ -22,10 +22,9 @@ get_x_label(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the x-axis label
-  x.label = get_x_label(dataset)
-}
+  data(cassavaPPD)
+  x.label = get_x_label(cassavaPPD)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

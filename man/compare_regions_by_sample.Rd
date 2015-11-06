@@ -35,11 +35,12 @@ samples = NULL, ...)
 }
 
 \examples{
-   \dontrun{
      ## Example of comparing regions by sample
-     comp.regions.result = compare_regions_by_sample(dataset1, dataset2, 
+     data(cachexia)
+     subset1 = subset_x_values(cachexia, 1:31, by.index = TRUE)
+     subset2 = subset_x_values(cachexia, 32:63, by.index = TRUE)
+     comp.regions.result = compare_regions_by_sample(subset1, subset2, 
 			   mean)
-   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

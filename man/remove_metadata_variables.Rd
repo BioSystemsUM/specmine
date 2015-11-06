@@ -26,11 +26,9 @@ remove_metadata_variables(dataset, variables.to.remove)
 
 
 \examples{
-\dontrun{
   ## Example of removing metadata's variables
-  dataset = remove_metadata_variables(dataset, c("metadatavar1",
-	    "metadatavar2"))
-}
+  data(cassavaPPD)
+  dataset = remove_metadata_variables(cassavaPPD, c("varieties"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

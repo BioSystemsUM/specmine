@@ -328,10 +328,12 @@ metadata_as_variables = function(dataset, metadata.vars, by.index = F){
 	}
 	metadata.variables = dataset$metadata[,metadata.indexes]
 	var.names = colnames(dataset$metadata)[metadata.indexes]
+	var.names2 = colnames(dataset$metadata)
 	metadata.variables = t(as.matrix(metadata.variables))
 	rownames(metadata.variables) = var.names
 	dataset$data = rbind(dataset$data, metadata.variables)
-	dataset$metadata = dataset$metadata[,-metadata.indexes]
+	dataset$metadata = data.frame(dataset$metadata[,-metadata.indexes])
+	colnames(dataset$metadata) = setdiff(var.names2, var.names)
 	if (ncol(dataset$metadata) == 0) dataset$metadata = NULL
 	dataset
 }

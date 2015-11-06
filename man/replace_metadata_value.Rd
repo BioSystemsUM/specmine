@@ -31,11 +31,10 @@ replace_metadata_value(dataset, variable, sample, new.value)
 }
 
 \examples{
-\dontrun{
   ## Example of replacing metadata's variable value of a sample
-  dataset = replace_metadata_value(dataset, "metadata.var1", "sample4", 
-	    "new.value")
-}
+  data(cachexia)
+  dataset = replace_metadata_value(cachexia, "Muscle.loss", "PIF_178", 
+	    "control")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

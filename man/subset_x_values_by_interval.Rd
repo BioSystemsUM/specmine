@@ -28,10 +28,9 @@ subset_x_values_by_interval(dataset, min.value, max.value)
 }
 
 \examples{
-\dontrun{
   ## Example of subsetting x-values by an interval
-  subset = subset_x_values_by_interval(dataset, 200, 800)
-}
+  data(cassavaPPD)
+  subset = subset_x_values_by_interval(cassavaPPD, 200, 800)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

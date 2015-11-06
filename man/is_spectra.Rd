@@ -22,10 +22,9 @@ is_spectra(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of checking if the dataset is from spectral data
-  is_spectra(dataset)
-}
+  data(cassavaPPD)
+  is_spectra(cassavaPPD)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

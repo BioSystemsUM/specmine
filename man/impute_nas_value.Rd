@@ -25,10 +25,9 @@ impute_nas_value(dataset, value)
 }
 
 \examples{
-\dontrun{
   ## Example of NA imputation with value replacing
-  dataset = impute_nas_value(dataset, 0.0005)
-}
+  data(propolis)
+  propolis = impute_nas_value(propolis, 0.0005)
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

@@ -29,10 +29,12 @@ write.file = F, file.out = "multi-anova-varexp.csv")
 }
 
 \examples{
-\dontrun{
   ## Example of multifactor ANOVA variability explained table
-  m.aov.varepx = multifactor_aov_varexp_table(multifactor.aov.results)
-}
+  data(propolis)
+  propolis = missingvalues_imputation(propolis, "value", value = 0.00005)
+  m.aov.results = multifactor_aov_all_vars(propolis, 
+		  c("seasons","agroregions"), "seasons*agroregions")
+  m.aov.varepx = multifactor_aov_varexp_table(m.aov.results)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -22,10 +22,9 @@ log_transform(datamat)
 }
 
 \examples{
-\dontrun{
   ## Example of logarithmic transformation
-  datamat.log = log_transform(datamatrix)
-}
+  data(cassavaPPD)
+  datamat.log = log_transform(cassavaPPD$data)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

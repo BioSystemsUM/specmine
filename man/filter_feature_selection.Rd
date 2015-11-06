@@ -35,12 +35,12 @@ A caret's sbf object with the result of selection by filter.
 }
 
 \examples{
-\dontrun{
   ## Example of selection by filter
-  rfe.result = filter_feature_selection(metabolomics.dataset$data, 
-	       "class", functions = rfSBF, method = "repeatedcv", 
-	       repeats = 10)
-}
+  data(cachexia)
+  library(caret)
+  rfe.result = filter_feature_selection(cachexia$data, 
+	       cachexia$metadata$Muscle.loss, functions = caret::rfSBF, 
+	       method = "cv")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

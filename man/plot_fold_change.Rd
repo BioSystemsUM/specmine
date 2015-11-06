@@ -34,10 +34,11 @@ var = F, xlab = "")
 }
 
 \examples{
-  \dontrun{
     ## Example of plotting the fold change results
-    plot_fold_change(dataset, fc.results, 2)
-  }
+    data(cachexia)
+    fc.results = fold_change(cachexia, "Muscle.loss", 
+			"control")
+    plot_fold_change(cachexia, fc.results, 2)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

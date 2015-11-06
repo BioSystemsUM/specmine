@@ -41,11 +41,10 @@ write.file = F, file.out = "robpca", ...)
 }
 
 \examples{
-\dontrun{
   ## Example of performing a robust PCA analysis
-  pca.results = pca_robust(dataset, center = "mean", scale = "mad", 
+  data(cachexia)
+  pca.results = pca_robust(cachexia, center = "mean", scale = "mad", 
 		k = 10)
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

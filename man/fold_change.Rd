@@ -40,12 +40,10 @@ file.out = "fold_change.csv")
 
 
 \examples{
-\dontrun{
   ## Example of fold change
-  fold.change.results = fold_change(metabolomics.dataset, "metadata", 
-			"initial.value", write.file = T, 
-			file.out = "foldchange.csv")
-}
+  data(cachexia)
+  fold.change.results = fold_change(cachexia, "Muscle.loss", 
+			"control", write.file = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

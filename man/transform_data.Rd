@@ -29,10 +29,11 @@ transform_data(dataset, method = "log")
 }
 
 \examples{
-\dontrun{
+
   ## Example of logarithmic transformation
-  dataset.log = transform_data(dataset, "log")
-}
+  data(cachexia)
+  dataset.log = transform_data(cachexia, "log")
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

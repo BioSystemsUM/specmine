@@ -31,10 +31,10 @@ labels = NULL, ...)
 }
 
 \examples{
-\dontrun{
   ## Example of a dendrogram
-  dendrogram_plot(metabolomics.experiment, hc.result)
-}
+  data(cachexia)
+  hc.result = hierarchical_clustering(cachexia)
+  dendrogram_plot(cachexia, hc.result)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

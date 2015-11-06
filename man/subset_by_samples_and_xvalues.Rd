@@ -39,11 +39,10 @@ by.index = F, variable.bounds = NULL, rebuild.factors = T)
 
 
 \examples{
-\dontrun{
   ## Example of subsetting samples and x-values
-  subset = subset_by_samples_and_xvalues(dataset, c("sample1","sample2"), 
-	   variables = c("var1","var2"))
-}
+  data(cachexia)
+  subset = subset_by_samples_and_xvalues(cachexia, c("PIF_178","NETL_022_V1"), 
+	   variables = c("Creatine","Serine"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

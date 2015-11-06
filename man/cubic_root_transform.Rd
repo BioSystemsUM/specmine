@@ -22,10 +22,9 @@ cubic_root_transform(datamat)
 }
 
 \examples{
-\dontrun{
   ## Example of cubic root transformation
-  datamat.cubic = cubic_root_transform(datamatrix)
-}
+  data(cachexia)
+  datamat.cubic = cubic_root_transform(cachexia$data)
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

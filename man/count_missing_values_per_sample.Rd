@@ -24,10 +24,10 @@ count_missing_values_per_sample(dataset, remove.zero = T)
   Returns a vector with the number of missing values on each sample.
 }
 \examples{
-\dontrun{
   ## Example of counting the missing values on each sample
-  count_missing_values_per_sample(dataset)
-}
+  data(cachexia)
+  cachexia$data[10,10] = NA
+  count_missing_values_per_sample(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

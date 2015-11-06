@@ -21,10 +21,9 @@ get_metadata(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the metadata
-  metadata = get_metadata(dataset)
-}
+  data(cachexia)
+  cachexia.mt = get_metadata(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

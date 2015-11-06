@@ -22,10 +22,9 @@ impute_nas_median(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of NA imputation with median
-  dataset = impute_nas_median(dataset)
-}
+  data(propolis)
+  propolis = impute_nas_median(propolis)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

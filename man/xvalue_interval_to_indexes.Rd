@@ -28,10 +28,9 @@ Returns a numeric vector with the indexes of the x-values interval
 }
 
 \examples{
-\dontrun{
   ## Example of getting the indexes of an interval of x-values
-  indexes.interval = xvalue_interval_to_indexes(dataset, 2.0, 5.5)
-}
+  data(propolis)
+  indexes.interval = xvalue_interval_to_indexes(propolis, 2.0, 5.5)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

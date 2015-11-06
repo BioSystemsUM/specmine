@@ -38,11 +38,10 @@ alternative = "two.sided", by.var = T)
 }
 
 \examples{
-\dontrun{
   ## Example of correlations test of variables
-  corr.result = correlation_test(var1, var2, method = "pearson", 
-		by.var = T)
-}
+  data(cachexia)
+  corr.result = correlation_test(cachexia, "Serine", "Creatine", method = "pearson", 
+		by.var = TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

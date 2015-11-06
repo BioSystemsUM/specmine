@@ -47,11 +47,11 @@ pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
 }
 
 \examples{
-\dontrun{
   ## Example of a 2D PCA scores plot
-  pca_scoresplot2D(dataset, pca.result, "metadata.var1", pcas = c(1,2), 
-  ellipses = T)
-}
+  data(cachexia)
+  pca.result = pca_analysis_dataset(cachexia)
+  pca_scoresplot2D(cachexia, pca.result, "Muscle.loss", pcas = c(1,2), 
+    		   ellipses = TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

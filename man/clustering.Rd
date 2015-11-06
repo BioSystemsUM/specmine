@@ -42,13 +42,12 @@ type = "samples", num.clusters = 5, clustMethod = "complete")
 }
 
 \examples{
-\dontrun{
   ## Example of kmeans and hierarchical clustering
-  hc.result = clustering(metabolomics.dataset, method = "hc", 
+  data(cachexia)
+  hc.result = clustering(cachexia, method = "hc", 
 	      distance = "euclidean")
-  kmeans.result = clustering(metabolomics.dataset, method = "kmeans", 
+  kmeans.result = clustering(cachexia, method = "kmeans", 
 		  num.clusters = 4)
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

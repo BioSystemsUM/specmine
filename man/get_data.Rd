@@ -22,10 +22,9 @@ get_data(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the data matrix
-  data.matrix = get_data(dataset)
-}
+  data(cachexia)
+  cachexia.dm = get_data(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

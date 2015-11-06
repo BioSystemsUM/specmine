@@ -25,10 +25,9 @@ list representing the dataset from a metabolomics experiment.
 }
 
 \examples{
-\dontrun{
-  ## Example of getting the indexes of the x-values
-  indexes = x_values_to_indexes(dataset, c(1.3, 3.5, 6))
-}
+  ## Example of getting the indexes of the x-values 
+  data(propolis)
+  indexes = x_values_to_indexes(propolis, c(1.3, 3.51, 6.03))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

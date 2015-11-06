@@ -51,11 +51,10 @@ vec.par = NULL, cex.axis = 0.8, ylabs = NULL, ...)
 
 
 \examples{
-\dontrun{
   ## Example of showing the boxplot factors of a few variables
-  boxplot_vars_factor(dataset, "metavar1", variables = c("var1","var2",
-  "var3"))
-}
+  data(cachexia)
+  boxplot_vars_factor(cachexia, "Muscle.loss", variables = c("Creatine","Serine",
+  "Lactate"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -22,10 +22,9 @@ impute_nas_mean(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of NA imputation with mean
-  dataset = impute_nas_mean(dataset)
-}
+  data(propolis)
+  propolis = impute_nas_mean(propolis)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

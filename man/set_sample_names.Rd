@@ -25,10 +25,10 @@ set_sample_names(dataset, new.sample.names)
 }
 
 \examples{
-\dontrun{
   ## Example of setting a new value label to the dataset
-  dataset = set_sample_names(dataset, new.samples.names)
-}
+  data(cachexia)
+  new.samples.names = as.character(1:77)
+  cachexia = set_sample_names(cachexia, new.samples.names)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -26,10 +26,11 @@ plot_kruskaltest(dataset, kr.results, kr.threshold = 0.01)
 
 
 \examples{
-  \dontrun{
     ## Example of plotting the Kolmogorov-Smirnov tests results
-    plot_kruskaltest(dataset, kr.results, 0.05)
-  }
+    data(cachexia)
+    kr.results = kruskalTest_dataset(cachexia, "Muscle.loss", 
+	write.file = FALSE)
+    plot_kruskaltest(cachexia, kr.results, 0.05)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

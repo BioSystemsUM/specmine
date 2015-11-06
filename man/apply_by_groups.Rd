@@ -35,10 +35,9 @@ variables = NULL, variable.bounds = NULL)
 }
 
 \examples{
-   \dontrun{
      ## Example of applying a function to groups
-     apply.groups.result = apply_by_groups(dataset, "metadatavar1", mean)
-   }
+     data(cachexia)
+     apply.groups.result = apply_by_groups(cachexia, "Muscle.loss", mean)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

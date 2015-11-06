@@ -28,10 +28,9 @@ subset_samples(dataset, samples, rebuild.factors = T)
 }
 
 \examples{
-\dontrun{
   ## Example of subsetting samples
-  subset = subset_samples(dataset, c("sample1","sample2"))
-}
+  data(cachexia)
+  subset = subset_samples(cachexia, c("PIF_178","PIF_132"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

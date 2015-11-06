@@ -37,10 +37,9 @@ normalize_samples(datamat, method, ref = NULL, constant = 1000)
 }
 
 \examples{
-\dontrun{
   ## Example of normalization by median
-  datamat.norm = normalize_samples(datamatrix, "median")
-}
+  data(cassavaPPD)
+  datamat.norm = normalize_samples(cassavaPPD$data, "median")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

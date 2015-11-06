@@ -64,11 +64,10 @@ Returns a list with the results from training
 }
 
 \examples{
-\dontrun{
   ## Example of training models
-  result = train_models_performance(dataset, c("pls","rf"), 
-	   "metadata_var", "cv")
-}
+  data(cachexia)
+  result = train_models_performance(cachexia, "pls", 
+	   "Muscle.loss", "cv")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

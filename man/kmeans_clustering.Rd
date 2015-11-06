@@ -28,11 +28,10 @@ kmeans_clustering(dataset, num.clusters, type = "samples")
 }
 
 \examples{
-\dontrun{
   ## Example of kmeans clustering
-  kmeans.result = kmeans_clustering(metabolomics.dataset, 
+  data(cachexia)
+  kmeans.result = kmeans_clustering(cachexia, 
 		  num.clusters = 4, type = "samples")
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -28,10 +28,9 @@ impute_nas_knn(dataset, k = 10, ...)
 }
 
 \examples{
-\dontrun{
   ## Example of NA imputation with knn
-  dataset = impute_nas_knn(dataset, k=10)
-}
+  data(propolis)
+  dataset = impute_nas_knn(propolis, k=10)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

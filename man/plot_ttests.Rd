@@ -26,10 +26,10 @@ plot_ttests(dataset, tt.results, tt.threshold = 0.01)
 
 
 \examples{
-  \dontrun{
     ## Example of plotting the t-tests results
-    plot_ttests(dataset, ttests.results, 0.05)
-  }
+    data(cachexia)
+    ttests.results = tTests_dataset(cachexia, "Muscle.loss")
+    plot_ttests(cachexia, ttests.results, 0.05)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

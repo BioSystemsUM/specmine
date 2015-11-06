@@ -45,16 +45,16 @@ subsets = 2^(2:4))
 }
 
 \examples{
-\dontrun{
   ## Example of feature selection using rfe and sbf
-  rfe.result = feature_selection(metabolomics.dataset, "class", 
-	       method="rfe", functions = rfFuncs, 
-	       validation = "repeatedcv", repeats = 10, number = 5, 
-	       subsets = 2^(1:6))
-  sbf.result = feature_selection(metabolomics.dataset, "class", 
-	       method="filter", functions = rfSBF, 
-	       validation = "repeatedcv", repeats = 5)
-}
+  data(cachexia)
+  library(caret)
+  rfe.result = feature_selection(cachexia, "Muscle.loss", 
+               method="rfe", functions = caret::rfFuncs, 
+               validation = "cv", number = 3, 
+               subsets = 2^(1:6))
+  sbf.result = feature_selection(cachexia, "Muscle.loss", 
+	       method="filter", functions = caret::rfSBF, 
+	       validation = "cv")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

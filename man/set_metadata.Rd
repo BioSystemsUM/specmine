@@ -25,10 +25,12 @@ set_metadata(dataset, new.metadata)
 }
 
 \examples{
-\dontrun{
   ## Example of setting a new metadata to the dataset
-  dataset = set_metadata(dataset, new.metadata)
-}
+  data(cachexia)
+  new.metadata = c(rep("meta1", 39), rep("meta2", 38)) 
+  new.metadata = data.frame(var_meta = new.metadata)
+  rownames(new.metadata) = get_sample_names(cachexia)
+  cachexia = set_metadata(cachexia, new.metadata)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

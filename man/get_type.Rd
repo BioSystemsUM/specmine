@@ -22,10 +22,9 @@ get_type(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the type of the data
-  type = get_type(dataset)
-}
+  data(cachexia)
+  type = get_type(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

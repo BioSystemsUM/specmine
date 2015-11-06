@@ -35,11 +35,10 @@ by.index = F)
 }
 
 \examples{
-\dontrun{
   ## Example of replacing a data value from the dataset
-  dataset = replace_data_value(dataset, "var1", "sample4", 10.3, 
-	    by.index = F)
-}
+  data(cachexia)
+  dataset = replace_data_value(cachexia, "Creatine", "PIF_178", 10.3, 
+	    by.index = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

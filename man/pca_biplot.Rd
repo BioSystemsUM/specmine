@@ -40,10 +40,10 @@ x.colors = 1, inset = c(0, 0), legend.place = "topright", ...)
 }
 
 \examples{
-\dontrun{
   ## Example of a PCA biplot
-  pca_biplot(dataset, pca.result, cex = 0.8)
-}
+  data(cachexia)
+  pca.result = pca_analysis_dataset(cachexia)
+  pca_biplot(cachexia, pca.result, cex = 0.8)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

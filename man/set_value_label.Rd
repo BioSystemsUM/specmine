@@ -25,10 +25,9 @@ set_value_label(dataset, new.val.label)
 }
 
 \examples{
-\dontrun{
   ## Example of setting a new value label to the dataset
-  dataset = set_value_label(dataset, "new value label")
-}
+  data(cachexia)
+  cachexia = set_value_label(cachexia, "new value label")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

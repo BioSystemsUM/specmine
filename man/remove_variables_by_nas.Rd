@@ -28,10 +28,9 @@ remove_variables_by_nas(dataset, max.nas = 0, by.percent = F)
 }
 
 \examples{
-\dontrun{
   ## Example of removing variables by NAs
-  dataset = remove_variables_by_nas(dataset, 40, by.percent = T)
-}
+  data(propolis)
+  propolis = remove_variables_by_nas(propolis, 40, by.percent = TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

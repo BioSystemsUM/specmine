@@ -41,10 +41,9 @@ cex.axis = 0.8, ...)
 }
 
 \examples{
-\dontrun{
   ## Example of showing the boxplot of a few variables
-  boxplot_variables(dataset, variables = c("var1","var2","var3"))
-}
+  data(cachexia)
+  boxplot_variables(cachexia, variables = c("Creatine","Serine","Lactate"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

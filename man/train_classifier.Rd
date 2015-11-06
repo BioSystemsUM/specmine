@@ -55,10 +55,9 @@ summary.function = defaultSummary, class.in.metadata = T)
 }
 
 \examples{
-\dontrun{
   ## Example of training a classifier
-  result = train_classifier(dataset, "metadata_var", "pls", "cv")
-}
+  data(cachexia)
+  result = train_classifier(cachexia, "Muscle.loss", "pls", "cv")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

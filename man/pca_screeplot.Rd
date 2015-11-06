@@ -45,10 +45,10 @@ ylab = "Percentage", xlab = "Principal components", ...)
 }
 
 \examples{
-\dontrun{
   ## Example of a scree plot
+  data(cachexia)
+  pca.result = pca_analysis_dataset(cachexia)
   pca_screeplot(pca.result)
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

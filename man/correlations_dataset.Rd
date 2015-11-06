@@ -29,11 +29,10 @@ correlations_dataset(dataset, method = "pearson", by.var = T)
 
 
 \examples{
-\dontrun{
   ## Example of correlations of variables
-  corr.result = correlations_dataset(metabolomics.dataset, 
-		method = "pearson", by.var = T)
-}
+  data(cachexia)
+  corr.result = correlations_dataset(cachexia, 
+		method = "pearson", by.var = TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

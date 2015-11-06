@@ -22,10 +22,9 @@ values_per_sample(samples.df)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the number of values for each sample
-  num.values.samples = values_per_sample(samples.df)
-}
+  data(propolis)
+  num.values.samples = values_per_sample(propolis$data)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -25,10 +25,10 @@ remove_samples_by_na_metadata(dataset, metadata.var)
 }
 
 \examples{
-\dontrun{
   ## Example of removing samples that have NAs on metadata's variable
-  dataset = remove_samples_by_na_metadata(dataset, "metadatavar1")
-}
+  data(cachexia)
+  cachexia$metadata$Muscle.loss[10] = NA
+  cachexia = remove_samples_by_na_metadata(cachexia, "Muscle.loss")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

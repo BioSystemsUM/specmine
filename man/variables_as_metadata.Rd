@@ -28,10 +28,9 @@
 }
 
 \examples{
-\dontrun{
   ## Example of using a variable as metadata variable
-  dataset = variables_as_metadata(dataset, "Var 1", by.index = F)
-}
+  data(cachexia)
+  dataset = variables_as_metadata(cachexia, "Creatine", by.index = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

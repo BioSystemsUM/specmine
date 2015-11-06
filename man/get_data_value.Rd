@@ -31,11 +31,10 @@ get_data_value(dataset, x.axis.val, sample, by.index = F)
 }
 
 \examples{
-\dontrun{
   ## Example of getting a data value from the dataset
-  data.value = get_data_value(dataset, "xaxis.var1", "sample2", 
-	       by.index = F)
-}
+  data(cachexia)
+  data.value = get_data_value(cachexia, "Creatine", "PIF_178", 
+	       by.index = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

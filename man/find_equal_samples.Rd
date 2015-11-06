@@ -22,10 +22,9 @@ find_equal_samples(sample.list)
 }
 
 \examples{
-\dontrun{
     ## Example of finding equal samples
-    equal.samples = find_equal_samples(sample.list)
-}
+    data(propolisSampleList)
+    equal.samples = find_equal_samples(propolisSampleList)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

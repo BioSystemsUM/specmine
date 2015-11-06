@@ -42,11 +42,10 @@ by.percent = T, by.threshold = F, red.value = 0)
   Returns the dataset with the data filtered.
 }
 \examples{
-\dontrun{
   ## Example of flat pattern filter
-  dataset.filtered = flat_pattern_filter(dataset, "iqr", by.percent = T, 
+  data(cassavaPPD)
+  dataset.filtered = flat_pattern_filter(cassavaPPD, "iqr", by.percent = TRUE, 
 		     red.value = 20)
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

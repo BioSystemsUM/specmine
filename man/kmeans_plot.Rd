@@ -22,10 +22,10 @@ kmeans_plot(dataset, kmeans.result)
 
 
 \examples{
-\dontrun{
   ## Example of kmeans plot
-  kmeans_plot(metabolomics.dataset, kmeans.result)
-}
+  data(cassavaPPD)
+  kmeans.result = kmeans_clustering(cassavaPPD, 3)
+  kmeans_plot(cassavaPPD, kmeans.result)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

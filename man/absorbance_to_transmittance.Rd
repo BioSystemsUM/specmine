@@ -22,10 +22,10 @@ absorbance_to_transmittance(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of converting transmittance values to absorbance values
-  dataset = absorbance_to_transmittance(dataset)
-}
+  data(cassavaPPD)
+  cassavaPPD = transmittance_to_absorbance(cassavaPPD)
+  cassavaPPD = absorbance_to_transmittance(cassavaPPD)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

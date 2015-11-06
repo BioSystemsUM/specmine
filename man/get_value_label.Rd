@@ -23,10 +23,9 @@ get_value_label(dataset)
 
 
 \examples{
-\dontrun{
   ## Example of getting the value label
-  value.label = get_value_label(dataset)
-}
+  data(cassavaPPD)
+  value.label = get_value_label(cassavaPPD)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

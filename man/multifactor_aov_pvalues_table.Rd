@@ -29,10 +29,12 @@ write.file = F, file.out = "multi-anova-pvalues.csv")
 }
 
 \examples{
-\dontrun{
   ## Example of multifactor ANOVA p-values table
-  m.aov.pvalues = multifactor_aov_pvalues_table(multifactor.aov.results)
-}
+  data(propolis)
+  propolis = missingvalues_imputation(propolis, "value", value = 0.00005)
+  m.aov.results = multifactor_aov_all_vars(propolis, 
+		  c("seasons","agroregions"), "seasons*agroregions")
+  m.aov.pvalues = multifactor_aov_pvalues_table(m.aov.results)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

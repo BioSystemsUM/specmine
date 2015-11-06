@@ -34,11 +34,15 @@ multiplot(plots, plotlist = NULL, file, cols = 1, layout = NULL)
 }
 
 \examples{
-   \dontrun{
      ## Example of multiplot
-     plts = list(plot1,plot2,plot3,plot4)
+     data(cachexia)
+     pca.result = pca_analysis_dataset(cachexia)
+     plot1 = pca_scoresplot2D(cachexia, pca.result, "Muscle.loss", 
+	ellipses = TRUE)
+     plot2 = pca_scoresplot2D(cachexia, pca.result, "Muscle.loss", 
+	ellipses = FALSE, labels = TRUE)
+     plts = list(plot1,plot2)
      multiplot(plts, cols = 2)
-   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -37,11 +37,11 @@ lab.cex = 1, leg.pos = "topright",...)
 }
 
 \examples{
-\dontrun{
   ## Example of colored dendrogram
-  dendrogram_plot_col(metabolomics.dataset, hc.result, "class", 
+  data(cachexia)
+  hc.result = hierarchical_clustering(cachexia)
+  dendrogram_plot_col(cachexia, hc.result, "Muscle.loss", 
   title = "Example")
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

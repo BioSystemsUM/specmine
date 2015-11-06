@@ -22,10 +22,9 @@ num_samples(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the number of samples
-  number.of.samples = num_samples(dataset)
-}
+  data(cachexia)
+  number.of.samples = num_samples(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

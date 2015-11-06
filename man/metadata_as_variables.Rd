@@ -28,10 +28,9 @@
 }
 
 \examples{
-\dontrun{
   ## Example of using a metadata variable as data variable
-  dataset = metadata_as_variables(dataset, "MetaVar 1", by.index = F)
-}
+  data(propolis)
+  propolis = metadata_as_variables(propolis, "seasons", by.index = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -22,10 +22,11 @@ background_correction(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of background correction
-  dataset.corrected = background_correction(dataset)
-}
+  library(hyperSpec)
+  data(flu)
+  flu.converted = convert_from_hyperspec(flu)
+  flu.corrected = background_correction(flu.converted)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

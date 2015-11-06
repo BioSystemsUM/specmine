@@ -29,10 +29,9 @@ variable.bounds = NULL)
 }
 
 \examples{
-   \dontrun{
      ## Example of getting stats of variables
-     variable.stats.result = stats_by_variable(dataset)
-   }
+     data(cachexia)
+     variable.stats.result = stats_by_variable(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

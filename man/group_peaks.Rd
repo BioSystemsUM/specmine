@@ -48,12 +48,11 @@ label.values = NULL, step = 0.03)
 }
 
 \examples{
-\dontrun{
    ## Example of grouping peaks 
-   peaks.ds = group_peaks(sample.list, "nmr-peaks", method = "own", 
-	   	metadata = metadata, description = "short description", 
+   data(propolisSampleList)
+   peaks.ds = group_peaks(propolisSampleList, "nmr-peaks", method = "own", 
+	   	metadata = NULL, description = "short description", 
 		label.x = "ppm", label.values = "intensity", step = 0.03)
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

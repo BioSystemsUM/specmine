@@ -26,10 +26,10 @@ heatmap_correlations(correlations, col = NULL, ...)
 
 
 \examples{
-\dontrun{
   ## Example of correlations heatmap
+  data(cachexia)
+  correlations = correlations_dataset(cachexia)
   heatmap_correlations(correlations)
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

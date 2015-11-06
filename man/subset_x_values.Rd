@@ -28,10 +28,9 @@ subset_x_values(dataset, variables, by.index = FALSE)
 }
 
 \examples{
-\dontrun{
   ## Example of subsetting x-values
-  subset = subset_x_values(dataset, c(1,2,10,20), by.index = T)
-}
+  data(cachexia)
+  subset = subset_x_values(cachexia, c(1,2,10,20), by.index = TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

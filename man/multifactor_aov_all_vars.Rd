@@ -28,11 +28,11 @@ multifactor_aov_all_vars(dataset, metadata.vars, combination)
 
 
 \examples{
-\dontrun{
   ## Example of multifactor ANOVA on all variables 
-  m.aov.results = multifactor_aov_all_vars(metabolomics.dataset, 
-		  c("metadata1","metadata2"), "metadata1*metadata2")
-}
+  data(propolis)
+  propolis = missingvalues_imputation(propolis, "value", value = 0.00005)
+  m.aov.results = multifactor_aov_all_vars(propolis, 
+		  c("seasons","agroregions"), "seasons*agroregions")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

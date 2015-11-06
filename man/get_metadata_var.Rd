@@ -25,10 +25,9 @@ get_metadata_var(dataset, var)
 }
 
 \examples{
-\dontrun{
   ## Example of getting a metadata variable
-  metadata.variable = get_metadata_var(dataset, "var1")
-}
+  data(cachexia)
+  metadata.variable = get_metadata_var(cachexia, "Muscle.loss")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

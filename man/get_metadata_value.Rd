@@ -28,10 +28,9 @@ Return the corresponding metadata value of the sample.
 }
 
 \examples{
-\dontrun{
   ## Example of getting a metadata value
-  metadata.value = get_metadata_value(dataset, "var1", "sample2")
-}
+  data(cachexia)
+  metadata.value = get_metadata_value(cachexia, "Muscle.loss", "PIF_178")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

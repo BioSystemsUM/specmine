@@ -38,10 +38,10 @@ prop = T, cumul = T, min.cum = NULL)
 }
 
 \examples{
-\dontrun{
   ## Example of performing a classical PCA analysis
+  data(cachexia)
+  pca.result = pca_analysis_dataset(cachexia)
   pca_importance(pca.result, pcs = 1:5)
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -29,11 +29,10 @@ by.index = FALSE)
 }
 
 \examples{
-\dontrun{
   ## Example of removing data variables
-  dataset = remove_data_variables(dataset, c("var1","var2"), 
-	    by.index = F)
-}
+  data(cachexia)
+  dataset = remove_data_variables(cachexia, c("Creatine","Serine"), 
+	    by.index = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

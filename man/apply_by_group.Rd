@@ -31,11 +31,10 @@ apply_by_group(dataset, fn.to.apply, metadata.var, var.value)
 }
 
 \examples{
-   \dontrun{
      ## Example of applying a function to a group
-     apply.group.result = apply_by_group(dataset, mean, "metadatavar1", 
-			  "valuevar1")
-   }
+     data(cachexia)
+     apply.group.result = apply_by_group(cachexia, mean, "Muscle.loss", 
+			  "control")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

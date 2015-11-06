@@ -22,10 +22,9 @@ Returns the dataset with no missing values.
 }
 
 \examples{
-\dontrun{
   ## Example of NA imputation with linear approximation
-  dataset = impute_nas_linapprox(dataset)
-}
+  data(propolis)
+  dataset = impute_nas_linapprox(propolis)
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

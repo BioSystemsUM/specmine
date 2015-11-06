@@ -38,10 +38,9 @@ write.file = F, file.out = "pca", ...)
 }
 
 \examples{
-\dontrun{
   ## Example of performing a classical PCA analysis
-  pca.results = pca_analysis_dataset(dataset)
-}
+  data(cachexia)
+  pca.results = pca_analysis_dataset(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -25,10 +25,9 @@ subset_metadata(dataset, variables)
 }
 
 \examples{
-\dontrun{
   ## Example of subsetting samples
-  subset = subset_metadata(dataset, c("metadatavar1","metadatavar2"))
-}
+  data(propolis)
+  subset = subset_metadata(propolis, c("seasons"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

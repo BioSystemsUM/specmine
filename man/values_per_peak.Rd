@@ -22,10 +22,9 @@ values_per_peak(samples.df)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the number of values for each peak
-  num.peaks = values_per_peak(samples.df)
-}
+  data(propolis)
+  num.peaks = values_per_peak(propolis$data)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

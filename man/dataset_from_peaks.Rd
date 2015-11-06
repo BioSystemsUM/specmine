@@ -32,11 +32,10 @@ description = "", type = "nmr-peaks")
 }
 
 \examples{
-\dontrun{
     ## Example of converting a peak list to a dataset
-    dataset = dataset_from_peaks(sample.list, metadata, 
+    data(propolisSampleList)
+    dataset = dataset_from_peaks(propolisSampleList, metadata = NULL, 
 	      description = "some text", type = "nmr-peaks")  
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

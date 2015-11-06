@@ -25,10 +25,9 @@ convert_to_factor(dataset, metadata.var)
 }
 
 \examples{
-\dontrun{
   ## Example of converting a metadata's variable to factor
-  dataset = convert_to_factor(dataset, "metadata.var2")
-}
+  data(cassavaPPD)
+  dataset = convert_to_factor(cassavaPPD, "ppds")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

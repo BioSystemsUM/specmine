@@ -44,10 +44,9 @@ colour = "darkblue", title = "", xlabel = NULL, ylabel = NULL)
 }
 
 \examples{
-\dontrun{
   ## Example of plotting a variable's distribution with 2 factors
-  plotvar_twofactor(dataset, "var1", "metavar1", "metavar2")
-}
+  data(cassavaPPD)
+  plotvar_twofactor(cassavaPPD, "399.3", "varieties", "ppds")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

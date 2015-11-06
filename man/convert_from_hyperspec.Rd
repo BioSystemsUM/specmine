@@ -29,11 +29,11 @@ description = "")
 }
 
 \examples{
-\dontrun{
   ## Example of converting a dataset from hyperspec 
-  dataset = convert_from_hyperspec(hyperspec.dataset, type = "nmr-peaks", 
+  library(hyperSpec)
+  data(flu)
+  dataset = convert_from_hyperspec(flu, type = "undefined", 
 	    description = "some description") 
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

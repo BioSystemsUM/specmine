@@ -22,9 +22,6 @@ Return a single dataset with all the datasets merged.
 }
 
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
 \dontrun{
   ## Example of low level fusion
   datasets = list(dataset1, dataset2)

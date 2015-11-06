@@ -430,7 +430,6 @@ correlations_dataset = function(dataset, method = "pearson", by.var = T) {
 }
 
 heatmap_correlations = function(correlations, col = NULL, ...) {
-  require()
   if (is.null(col)) colors = rev(colorRampPalette(RColorBrewer::brewer.pal(10, "RdBu"))(256))
   else colors = col
   heatmap(correlations, col = colors, ...)

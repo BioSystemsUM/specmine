@@ -32,11 +32,10 @@ alternative = "two.sided")
 }
 
 \examples{
-\dontrun{
   ## Example of correlations test of variables
-  corr.result = correlations_test(metabolomics.dataset, 
-		method = "pearson", by.var = T)
-}
+  data(cachexia)
+  corr.result = correlations_test(cachexia, 
+		method = "pearson", by.var = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

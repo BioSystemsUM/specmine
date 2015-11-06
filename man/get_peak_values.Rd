@@ -25,10 +25,9 @@ get_peak_values(samples.df, peak.val)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the peak values
-  peak.values = get_peak_values(samples.df, 2.10)
-}
+  data(propolis)
+  peak.values = get_peak_values(propolis$data, 2.11)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

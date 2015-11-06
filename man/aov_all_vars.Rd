@@ -35,10 +35,9 @@ Data frame with the results of ANOVA, with p-value, logarithm of p-value, false 
 }
 
 \examples{
-\dontrun{
   ## Example of ANOVA with TukeyHSD
-  result = aov_all_vars(metabolomics.dataset, "class", doTukey = TRUE)
-}
+  data(cassavaPPD)
+  result = aov_all_vars(cassavaPPD, "varieties", doTukey = TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

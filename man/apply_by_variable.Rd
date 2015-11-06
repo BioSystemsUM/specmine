@@ -40,10 +40,9 @@ variable.bounds = NULL, samples = NULL, ...)
 
 
 \examples{
-   \dontrun{
      ## Example of applying a function to variables
-     apply.variables.result = apply_by_variable(dataset, mean)
-   }
+     data(cachexia)
+     apply.variables.result = apply_by_variable(cachexia, mean)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

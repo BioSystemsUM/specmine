@@ -41,11 +41,11 @@ size = 1, ...)
 }
 
 \examples{
-\dontrun{
   ## Example of a 3D PCA k-means plot
-  pca_kmeans_plot3D(dataset, pca.result, num.clusters = 3, 
-  pcas = c(1,2,3))
-}
+  data(cachexia)
+  pca.result = pca_analysis_dataset(cachexia)
+  pca_kmeans_plot3D(cachexia, pca.result, num.clusters = 3, 
+    		    pcas = c(1,2,3))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

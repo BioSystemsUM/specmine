@@ -55,11 +55,10 @@ defaultSummary)
 }
 
 \examples{
-\dontrun{
   ## Example of training and predicting
-  result = train_and_predict(dataset, new.samples, "metadata_var", 
-	   "pls", "cv")
-}
+  data(cachexia)
+  result = train_and_predict(cachexia, new.samples = cachexia$data,
+	 "Muscle.loss", "pls", "cv")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

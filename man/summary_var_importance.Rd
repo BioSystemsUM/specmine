@@ -25,10 +25,11 @@ summary_var_importance(performances, number.rows)
 }
 
 \examples{
-\dontrun{
   ## Example of getting a summary of variables importance
+  data(cachexia)
+  training.result = train_models_performance(cachexia, "pls", 
+	"Muscle.loss", "cv")
   result = summary_var_importance(training.result, 10)
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

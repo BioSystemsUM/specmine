@@ -35,11 +35,12 @@ fc.threshold = 2, tt.threshold = 0.01)
 }
 
 \examples{
-  \dontrun{
     ## Example of a volcano plot
-    volcano_plot_fc_tt(dataset, foldchange.results, ttests.results, 
+    data(cachexia)
+    foldchange.results = fold_change(cachexia, "Muscle.loss", "control")
+    ttests.results = tTests_dataset(cachexia, "Muscle.loss")
+    volcano_plot_fc_tt(cachexia, foldchange.results, ttests.results, 
 		       fc.threshold = 2, tt.threshold = 0.01)
-  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

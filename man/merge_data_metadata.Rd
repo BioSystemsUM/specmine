@@ -35,10 +35,9 @@ metadata.vars = NULL, x.values = NULL, by.index = F)
 }
 
 \examples{
-\dontrun{
   ## Example of merging data and metadata
-  dt.merged = merge_data_metadata(dataset)
-}
+  data(cachexia)
+  dt.merged = merge_data_metadata(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

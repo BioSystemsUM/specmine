@@ -42,11 +42,10 @@ window = 11, deriv = 0)
 }
 
 \examples{
-\dontrun{
   ## Example of smoothing the spectra from dataset
-  dataset.smoothed = smoothing_interpolation(dataset, method = "bin", 
+  data(cassavaPPD)
+  dataset.smoothed = smoothing_interpolation(cassavaPPD, method = "bin", 
 		     reducing.factor = 2)
-}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

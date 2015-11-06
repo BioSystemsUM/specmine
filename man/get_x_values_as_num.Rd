@@ -22,10 +22,9 @@ get_x_values_as_num(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the x-axis values as numbers
-  xvalues.numeric = get_x_values_as_num(dataset)
-}
+  data(cassavaPPD)
+  xvalues.numeric = get_x_values_as_num(cassavaPPD)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

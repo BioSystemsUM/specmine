@@ -22,10 +22,9 @@ get_sample_names(dataset)
 }
 
 \examples{
-\dontrun{
   ## Example of getting the sample names
-  sample.names = get_sample_names(dataset)
-}
+  data(cachexia)
+  sample.names = get_sample_names(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

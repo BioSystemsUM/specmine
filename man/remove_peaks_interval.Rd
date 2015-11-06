@@ -28,10 +28,9 @@ remove_peaks_interval(sample.df, peak.val.min, peak.val.max)
 }
 
 \examples{
-\dontrun{
   ## Example of removing a interval of peaks
-  samples.df = remove_peaks_interval(sample.df, 2, 8.05)
-}
+  data(propolisSampleList)
+  samples.df = remove_peaks_interval(propolisSampleList[[1]], 2, 8.05)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
