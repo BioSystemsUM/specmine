@@ -30,9 +30,12 @@ reverse.x = F)
 
 
 \examples{
-    ## Example of plotting the ANOVA results
+    ## Example of plotting the ANOVA results - first filter the 
+    ## dataset to reduce computation time
     data(cassavaPPD)
-    anova.results = aov_all_vars(cassavaPPD, "varieties", doTukey = TRUE)
+    cassavaPPD = flat_pattern_filter(cassavaPPD, "iqr", by.percent = TRUE,
+	red.value = 50) 
+    anova.results = aov_all_vars(cassavaPPD, "varieties", doTukey = FALSE)
     plot_anova(cassavaPPD, anova.results, 0.05e-8)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
