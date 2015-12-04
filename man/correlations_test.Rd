@@ -32,10 +32,12 @@ alternative = "two.sided")
 }
 
 \examples{
-  ## Example of correlations test of variables
+\dontrun{
+  ## Example of correlations test of variables (computationally heavy)
   data(cachexia)
   corr.result = correlations_test(cachexia, 
 		method = "pearson", by.var = FALSE)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

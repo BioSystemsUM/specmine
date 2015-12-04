@@ -93,26 +93,29 @@ kmeans_plot = function(dataset, kmeans.result){
   ggdendro::ggdendrogram(hc.result, ...)
 }
 
-"dendrogram_plot_col" = function(dataset, hc.result, classes.col, title = "", lab.cex = 1.0, leg.pos = "topright", ...) 
+"dendrogram_plot_col" = function(dataset, hc.result, classes.col, colors = NULL, title = "", lab.cex = 1.0, leg.pos = "topright", ...) 
 {
-  classes = dataset$metadata[,classes.col]
-  cluster = as.dendrogram(hc.result)
-  cluster = dendrapply(cluster, color_leaf, dataset, classes, lab.cex)
-  plot(cluster, main = title, horiz = FALSE, ...)
-  leg.txt = levels(classes)
-  leg.col = 1:length(levels(classes))
-  leg.txt = c("Key", leg.txt)
-  leg.col = c("black", leg.col)
-  if (leg.pos != "none")
-    legend(leg.pos, leg.txt, text.col = leg.col, bty = "n")
+    classes = dataset$metadata[,classes.col]
+    cluster = as.dendrogram(hc.result)
+    cluster = dendrapply(cluster, color_leaf, dataset, classes, lab.cex, colors)
+    plot(cluster, main = title, horiz = FALSE, ...)
+    leg.txt = levels(classes)
+    if (is.null(colors)) leg.col = 1:length(levels(classes))
+    else leg.col = colors
+    leg.txt = c("Key", leg.txt)
+    leg.col = c("black", leg.col)
+    if (leg.pos != "none")
+        legend(leg.pos, leg.txt, text.col = leg.col, bty = "n")
 }
 
-"color_leaf" = function (n, dataset, classes, lab.cex = 1.0) {
+"color_leaf" = function (n, dataset, classes, lab.cex = 1.0, colors) {
     if (is.leaf(n)) {
-      a <- attributes(n)
-      i <- match(a$label, get_sample_names(dataset))
-      attr(n, "nodePar") <- c(a$nodePar, list(lab.col = as.integer(classes[i]), 
-                                              lab.cex = lab.cex, pch = NA))
+        a <- attributes(n)
+        i <- match(a$label, get_sample_names(dataset))
+        if (is.null(colors)) colors = as.integer(classes[i])
+        else colors = colors[as.integer(classes[i])]
+        attr(n, "nodePar") <- c(a$nodePar, list(lab.col = colors, 
+                                                lab.cex = lab.cex, pch = NA))
     }
     n
 }

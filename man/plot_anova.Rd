@@ -34,7 +34,7 @@ reverse.x = F)
     ## dataset to reduce computation time
     data(cassavaPPD)
     cassavaPPD = flat_pattern_filter(cassavaPPD, "iqr", by.percent = TRUE,
-	red.value = 50) 
+	red.value = 75) 
     anova.results = aov_all_vars(cassavaPPD, "varieties", doTukey = FALSE)
     plot_anova(cassavaPPD, anova.results, 0.05e-8)
 }
