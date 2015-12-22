@@ -1,4 +1,4 @@
-\name{dendrogram_plot_col}
+d\name{dendrogram_plot_col}
 \alias{dendrogram_plot_col}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
@@ -8,7 +8,7 @@
   Plot dendrogram of hierarchical clustering results with different colors
 }
 \usage{
-dendrogram_plot_col(dataset, hc.result, classes.col, title = "", 
+dendrogram_plot_col(dataset, hc.result, classes.col, colors = NULL, title = "", 
 lab.cex = 1, leg.pos = "topright",...)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -21,6 +21,9 @@ lab.cex = 1, leg.pos = "topright",...)
 }
   \item{classes.col}{
     string or index indicating what metadata to use to name the leafs.
+}
+  \item{colors}{
+    vector with the corresponding colors of the metadata classes.
 }
   \item{title}{
     title of dendrogram.    
