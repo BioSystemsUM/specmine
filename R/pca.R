@@ -328,7 +328,7 @@ pca_pairs_plot = function(dataset, pca.result, column.class = NULL, pcas = c(1,2
   }
   pairs.df = data.frame(scores[,pcas])
   pairs.df$group = group.values
-  GGally::ggpairs(pairs.df, colour = 'group', ...)
+  GGally::ggpairs(pairs.df, mapping = ggplot2::aes(color=group), ...)
 }
 
 #kmeans clustering with 3 PCs
@@ -399,7 +399,7 @@ pca_pairs_kmeans_plot = function(dataset, pca.result, num.clusters = 3, kmeans.r
   }
   pairs.df = data.frame(scores[,pcas])
   pairs.df$group = factor(kmeans.result$cluster)
-  GGally::ggpairs(pairs.df, colour = 'group')
+  GGally::ggpairs(pairs.df, mapping = ggplot2::aes(color=group))
 }
 
 #draw ellipses
