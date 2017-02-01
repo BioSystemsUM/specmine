@@ -1,4 +1,4 @@
-d\name{dendrogram_plot_col}
+\name{dendrogram_plot_col}
 \alias{dendrogram_plot_col}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
