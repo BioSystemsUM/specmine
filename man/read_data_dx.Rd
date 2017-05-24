@@ -8,7 +8,7 @@
   Reads the data from the (J)DX files.
 }
 \usage{
-read_data_dx(foldername, debug = F)
+read_data_dx(foldername, debug = 0)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -16,7 +16,7 @@ read_data_dx(foldername, debug = F)
    string with the path of the data folder.
 }
   \item{debug}{
-   debug option for ChemoSpec's readJDX function.
+   debug option for readJDX's readJDX function.
 }
 }
 

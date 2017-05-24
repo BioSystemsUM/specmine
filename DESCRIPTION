@@ -8,7 +8,7 @@ Author: Christopher Costa <chrisbcl@hotmail.com>,
 	Miguel Rocha <mrocha@di.uminho.pt>
 Maintainer: Christopher Costa <chrisbcl@hotmail.com>
 Depends: R (>= 3.1.0)
-Imports: compare, hyperSpec, ChemoSpec, baseline, rgl, Metrics, 
+Imports: compare, hyperSpec, ChemoSpec, readJDX, baseline, rgl, Metrics, 
 	GGally, ggplot2, ellipse, ggdendro, caret, pls, 
 	pcaPP, RColorBrewer, grid, methods,
 	qdap, MASS, scatterplot3d, xcms, MAIT, genefilter, impute

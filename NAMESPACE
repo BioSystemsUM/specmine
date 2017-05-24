@@ -183,4 +183,5 @@ importFrom("stats", "IQR", "TukeyHSD", "aggregate", "aov", "approx","as.dendrogr
              "p.adjust", "prcomp", "predict", "quantile", "reformulate", "sd", "spline")
 importFrom("utils", "head", "modifyList", "read.csv", "read.table",
              "str", "tail", "write.csv")
+importFrom("readJDX", "readJDX")
 importClassesFrom(hyperSpec, hyperSpec)
