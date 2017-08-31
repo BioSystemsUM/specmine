@@ -11,10 +11,11 @@ Depends: R (>= 3.1.0)
 Imports: compare, hyperSpec, ChemoSpec, readJDX, baseline, rgl, Metrics, 
 	GGally, ggplot2, ellipse, ggdendro, caret, pls, 
 	pcaPP, RColorBrewer, grid, methods,
-	qdap, MASS, scatterplot3d, xcms, MAIT, genefilter, impute
+	qdap, MASS, scatterplot3d, xcms, MAIT, genefilter, impute, igraph
 Description: Provides a set of methods for metabolomics 
 	data analysis, including data loading in different formats, 
 	pre-processing, metabolite identification, univariate and multivariate 
 	data analysis, machine learning and feature selection. Case studies 
 	can be found on the website: http://darwin.di.uminho.pt/metabolomics .
 License: GPL (>= 2)
+RoxygenNote: 6.0.1
