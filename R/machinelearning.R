@@ -157,15 +157,23 @@ train_models_performance = function(dataset, models, column.class, validation, n
   best.tunes = list()
   final.models= list()
 	for (i in 1:length(models)){
+	  
+	  if(!is.null(tunegrid)){
+	    tune.grid=tunegrid[[models[i]]]
+	  }
+	  else {
+	    tune.grid=NULL
+	  }
+	  
 		train.result = train_classifier(dataset, column.class, models[i], validation, num.folds, 
-                                    num.repeats, tunelength, tunegrid, metric, summary.function, class.in.metadata = class.in.metadata)
+                                    num.repeats, tunelength, tune.grid, metric, summary.function, class.in.metadata = class.in.metadata)
 		if (compute.varimp) {
       vips = var_importance(train.result)
 		  rownames(vips) = substring(rownames(vips), 2, nchar(rownames(vips)))
 		  vips$Mean = apply(vips, 1, mean) 
 		}
 		bestTune = train.result$bestTune
-		result.df = rbind(result.df, train.result$result[rownames(bestTune),-1])
+		result.df = rbind(result.df, train.result$result[rownames(bestTune),c("Accuracy", "Kappa",  "AccuracySD",  "KappaSD")])
 		if (compute.varimp) {
       vars.imp[[i]] = vips[order(vips$Mean, decreasing=T),]
 		  vips = NULL
