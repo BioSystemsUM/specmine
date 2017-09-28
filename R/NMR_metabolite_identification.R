@@ -129,14 +129,19 @@ find_corr <- function(dataset_orig, CMETH='pearson') {
   cor_mat[ lower.tri(cor_mat, diag=TRUE) ]<- 0
   
   CVAL_MIN<-0.9
-  CVAL_MAX<-0.999
-  CVAL_STEP<-0.001
+  CVAL_MAX<-0.9999
+  CVAL_STEP<-0.0001
   CVAL_OPT_MIN<-0
   CVAL_OPT_MAX<-0
   CVAL_OPT<-0
   NBCLUSTERS_MAX<-0
   CVAL_CRIT<-0
-  MAXSIZE<-40
+  
+  nPeaks=c()
+  for(spectra in dim(data(nmr_1d_spectra, package="specmine"))){
+    nPeaks=c(nPeaks, dim(spectra[1]))
+  }
+  MAXSIZE<-max(nPeaks)
   
   cat("CVAL","nb_clusters","nb_clusters_2","size_max","Criterion","nb_buckets",sep=";"); cat ("\n")
   for (CVAL in seq(CVAL_MIN, CVAL_MAX, by=CVAL_STEP)) {
@@ -316,6 +321,7 @@ jaccard_index=function(peaksCluster, peaksReference, PPMTOL){
 #' @param clust.method Correlation method to use in the formation of clusters. Defaults to "pearson".
 #' @param clust.treshold Minimum correlation between variables to form clusters. If not given, the function calculates the optimum value (value that leads to the greater number of clusters).
 #' @param clust.peaks.min Minimum number of variables in each cluster. Only the clusters with at least clust.peaks.min variables will be considered.
+#' @param clust.nTop Number of top metabolites with greater score to show for each cluster.
 #' @param freq Frequency of reference spectra. See documentation on \code{\link{choose_nmr_references}} function for further details.
 #' @param nucl Atomic nuclei of reference spectra, either "1H" or "13C".
 #' @param solv Solvent. See documentation on \code{\link{choose_nmr_references}} function for further details.
@@ -343,6 +349,7 @@ jaccard_index=function(peaksCluster, peaksReference, PPMTOL){
 #' @export
 nmr_identification <- function(dataset, ppm.tol=0.03,
                                clust.method='pearson', clust.treshold=NULL, clust.peaks.min=2,
+                               clust.nTop=5,
                                freq=500, nucl="1H", solv=NULL, pH=NULL, temp=NULL){
   
   #Choose reference metabolites:
@@ -385,7 +392,7 @@ nmr_identification <- function(dataset, ppm.tol=0.03,
     }
     #Store only the top 5 matches of the cluster and the cluster peaks
     names(score_clust)=ref_names
-    score_clust=sort(score_clust, decreasing=T)[1:5]
+    score_clust=sort(score_clust, decreasing=T)[1:clust.nTop]
     for (i in 1:length(score_clust)){
       if (score_clust[i]==0){
         take=i:length(score_clust)

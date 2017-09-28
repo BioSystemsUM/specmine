@@ -5,8 +5,8 @@
 \title{FUNCTION TO DO THE NMR IDENTIFICATION}
 \usage{
 nmr_identification(dataset, ppm.tol = 0.03, clust.method = "pearson",
-  clust.treshold = NULL, clust.peaks.min = 2, freq = 500, nucl = "1H",
-  solv = NULL, pH = NULL, temp = NULL)
+  clust.treshold = NULL, clust.peaks.min = 2, clust.nTop = 5,
+  freq = 500, nucl = "1H", solv = NULL, pH = NULL, temp = NULL)
 }
 \arguments{
 \item{dataset}{List representing the dataset from an nmr peaks metabolomics experiment.}
@@ -18,6 +18,8 @@ nmr_identification(dataset, ppm.tol = 0.03, clust.method = "pearson",
 \item{clust.treshold}{Minimum correlation between variables to form clusters. If not given, the function calculates the optimum value (value that leads to the greater number of clusters).}
 
 \item{clust.peaks.min}{Minimum number of variables in each cluster. Only the clusters with at least clust.peaks.min variables will be considered.}
+
+\item{clust.nTop}{Number of top metabolites with greater score to show for each cluster.}
 
 \item{freq}{Frequency of reference spectra. See documentation on \code{\link{choose_nmr_references}} function for further details.}
 
