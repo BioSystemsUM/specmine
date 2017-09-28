@@ -138,8 +138,8 @@ find_corr <- function(dataset_orig, CMETH='pearson') {
   CVAL_CRIT<-0
   
   nPeaks=c()
-  for(spectra in dim(data(nmr_1d_spectra, package="specmine"))){
-    nPeaks=c(nPeaks, dim(spectra[1]))
+  for(spectra in data(nmr_1d_spectra, package="specmine")){
+    nPeaks=c(nPeaks, dim(spectra)[1])
   }
   MAXSIZE<-max(nPeaks)
   
