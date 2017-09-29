@@ -111,9 +111,10 @@ choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, tem
 #' 
 #' @param dataset_orig List representing the dataset from an nmr peaks metabolomics experiment.
 #' @param CMETH Correlation method used to cluster the variables. Defaults to "pearson".
+#' @param maxPeaks Maximum number of peaks that a cluster can have, while searching for the best correlation value.
 #' 
 #' @return Value of the optimal correlation.
-find_corr <- function(dataset_orig, CMETH='pearson') {
+find_corr <- function(dataset_orig, CMETH='pearson', maxPeaks=40) {
   
   #CODE ADAPTED FROM THE CODE USED IN THE ARTICLE "An efficient spectra processing method for
   #metabolite identification from 1H-NMR metabolomics data", by Daniel Jacob, Catherine Deborde,
@@ -137,12 +138,7 @@ find_corr <- function(dataset_orig, CMETH='pearson') {
   NBCLUSTERS_MAX<-0
   CVAL_CRIT<-0
   
-  nPeaks=c()
-  data(nmr_1d_spectra, package="specmine")
-  for(spectra in nmr_1d_spectra){
-    nPeaks=c(nPeaks, dim(spectra)[1])
-  }
-  MAXSIZE<-max(nPeaks)
+  MAXSIZE<-maxPeaks
   
   cat("CVAL","nb_clusters","nb_clusters_2","size_max","Criterion","nb_buckets",sep=";"); cat ("\n")
   for (CVAL in seq(CVAL_MIN, CVAL_MAX, by=CVAL_STEP)) {
@@ -323,6 +319,7 @@ jaccard_index=function(peaksCluster, peaksReference, PPMTOL){
 #' @param clust.treshold Minimum correlation between variables to form clusters. If not given, the function calculates the optimum value (value that leads to the greater number of clusters).
 #' @param clust.peaks.min Minimum number of variables in each cluster. Only the clusters with at least clust.peaks.min variables will be considered.
 #' @param clust.nTop Number of top metabolites with greater score to show for each cluster.
+#' @param clust.maxPeaks Maximum number of peaks that a cluster can have, while searching for the best correlation value. Defaults to 40, the original value where the code was adapated from. Can also be NULL and this value will be the number of peaks of the larger cluster.
 #' @param freq Frequency of reference spectra. See documentation on \code{\link{choose_nmr_references}} function for further details.
 #' @param nucl Atomic nuclei of reference spectra, either "1H" or "13C".
 #' @param solv Solvent. See documentation on \code{\link{choose_nmr_references}} function for further details.
@@ -350,7 +347,7 @@ jaccard_index=function(peaksCluster, peaksReference, PPMTOL){
 #' @export
 nmr_identification <- function(dataset, ppm.tol=0.03,
                                clust.method='pearson', clust.treshold=NULL, clust.peaks.min=2,
-                               clust.nTop=5,
+                               clust.maxPeaks=40, clust.nTop=5,
                                freq=500, nucl="1H", solv=NULL, pH=NULL, temp=NULL){
   
   #Choose reference metabolites:
@@ -370,7 +367,15 @@ nmr_identification <- function(dataset, ppm.tol=0.03,
   #Find best correlation value for the clusters correlation treshold, if a value is not given:
   if (is.null(clust.treshold)){
     cat("Getting best correlation value...\n")
-    clust.treshold=find_corr(dataset, CMETH=clust.method)
+    if (is.null(clust.maxPeaks)){
+      nPeaks=c()
+      for(spectra in references){
+        nPeaks=c(nPeaks, dim(spectra)[1])
+      }
+      nPeaks=max(nPeaks)
+    }
+    else nPeaks=clust.maxPeaks
+    clust.treshold=find_corr(dataset, CMETH=clust.method, maxPeaks=nPeaks)
   }
   #Get clusters:
   cat("Getting the clusters of the peaks...\n")
@@ -391,7 +396,7 @@ nmr_identification <- function(dataset, ppm.tol=0.03,
       score_clust=c(score_clust, res_ref$score)
       full_res[[ref_names[ref_id]]]=res_ref
     }
-    #Store only the top 5 matches of the cluster and the cluster peaks
+    #Store only the top clust.nTop matches of the cluster and the cluster peaks
     names(score_clust)=ref_names
     score_clust=sort(score_clust, decreasing=T)[1:clust.nTop]
     for (i in 1:length(score_clust)){
