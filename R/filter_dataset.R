@@ -147,7 +147,7 @@
 
 "remove_samples_by_nas" = function(dataset, max.nas = 0, by.percent = F)
 {
-  if (by.percent== T) max.nas = 100 * max.nas / num_x_values(dataset)
+  if (by.percent== T) max.nas = max.nas * num_x_values(dataset) / 100 #100 * max.nas / num_x_values(dataset)
   res = apply(dataset$data, 2, function(x) sum(is.na(x)))
   to.remove = which(res > max.nas)
   remove_samples(dataset, to.remove)
@@ -161,7 +161,7 @@
 
 "remove_variables_by_nas" = function(dataset, max.nas = 0, by.percent = F)
 {
-  if (by.percent== T) max.nas = 100 * max.nas / num_samples(dataset)
+  if (by.percent== T) max.nas = max.nas * num_samples(dataset) / 100 #100 * max.nas / num_samples(dataset)
   res = apply(dataset$data, 1, function(x) { sum(is.na(x)) } )
   to.remove = which(res > max.nas)
   remove_data_variables(dataset, to.remove, by.index = T)
