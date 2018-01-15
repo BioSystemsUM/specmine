@@ -216,7 +216,7 @@ create_pathway_with_reactions=function(path, path.name, identified_cpds,
   #Get possible maps to which the present map conects to, and add it to nodes and reactions:
   map_names=c()
   maps=c()
-  maps_con=readRDS(map_con)
+  data(maps_con, package="specmine")
   path_p=substr(path.name, nchar(path.name)-5+1, nchar(path.name))
   maps_con=maps_con[grep(paste(".*", path_p, ".*", sep=""), maps_con$in_map),]
   for (node in path@nodes){
