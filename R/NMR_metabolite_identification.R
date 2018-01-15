@@ -61,7 +61,6 @@ choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, tem
       print("No temperature in library with that value.")
     }
   }
-  
   return(nmr_1d_spectra[!is.na(names(nmr_1d_spectra))])
 }
 
@@ -285,7 +284,6 @@ nmr_identification <- function(dataset, ppm.tol=0.03,
   cat("Getting reference metabolites...\n")
   references=choose_nmr_references(frequency=freq, nucleus=nucl, solvent=solv, ph=pH,
                                    temperature=temp)
-  
   #Get names of the reference metabolites:
   hmdbs_to_spec=get_hmdbs_with_specs_id(names(references))
   
