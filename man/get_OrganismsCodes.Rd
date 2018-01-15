@@ -7,7 +7,6 @@ Get code, t number, full name and phylogeny of all organisms in KEGG.
 \usage{
 get_OrganismsCodes()
 }
-}
 \value{
 Data frame with t number, organism code, full name and phylogeny for each kegg organism.
 }
