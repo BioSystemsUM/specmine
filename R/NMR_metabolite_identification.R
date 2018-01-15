@@ -313,16 +313,20 @@ nmr_identification <- function(dataset, ppm.tol=0.03,
   for (clust_id in 1:length(clusters)){
     full_res=list()
     score_clust=c()
+    n_score_clust=c()
     for (ref_id in 1:length(references)){
       res_ref=jaccard_index(clusters[[clust_id]], references[[ref_id]], PPMTOL=ppm.tol)
       
-      score_clust=c(score_clust, res_ref$score)
       spec_id=names(references)[ref_id]
       hmdb_id=as.character(hmdbs_to_spec$hmdbs[hmdbs_to_spec$spec==spec_id])
-      for(h in hmdb_id) full_res[h]=res_ref
+      for(h in hmdb_id){
+        full_res[h]=res_ref
+        score_clust=c(score_clust, res_ref$score)
+        n_score_clust=c(n_score_clust, h)
+      }
     }
     #Store only the top clust.nTop matches of the cluster and the cluster peaks
-    names(score_clust)=hmdbs_to_spec$hmdbs
+    names(score_clust)=n_score_clust
     score_clust=sort(score_clust, decreasing=T)[1:clust.nTop]
     for (i in 1:length(score_clust)){
       if (score_clust[i]==0){
