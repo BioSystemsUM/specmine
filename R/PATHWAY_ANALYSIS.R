@@ -47,7 +47,8 @@ convert_hmdb_to_kegg=function(hmdb_codes){
   i=0
   for (hmdb in hmdbs){
     i=i+1
-    if (hmdb%in%conversion_table$HMDB){
+    cpd=conversion_table$KEGG[conversion_table$HMDB==hmdb]
+    if (is.na(cpd)){
       cpd=paste("cpd:", conversion_table$KEGG[conversion_table$HMDB==hmdb], sep="")
       keggs=c(keggs, cpd)
       names_cpds=c(names_cpds, conversion_table$NAME[conversion_table$HMDB==hmdb])
