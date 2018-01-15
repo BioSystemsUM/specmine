@@ -2,11 +2,16 @@
 % Please edit documentation in R/NMR_metabolite_identification.R
 \name{nmr_identification}
 \alias{nmr_identification}
-\title{FUNCTION TO DO THE NMR IDENTIFICATION}
+\title{Function to do NMR metabolite identification}
+\description{
+This function performs metabolite identification on a dataset of nmr peaks, finding the top
+5 reference metabolites that matched with each cluster of variables formed.
+}
 \usage{
-nmr_identification(dataset, ppm.tol = 0.03, clust.method = "pearson",
-  clust.treshold = NULL, clust.peaks.min = 2, clust.nTop = 5,
-  freq = 500, nucl = "1H", solv = NULL, pH = NULL, temp = NULL)
+nmr_identification(dataset, ppm.tol=0.03,
+                   clust.method='pearson', clust.treshold=NULL, clust.peaks.min=2,
+                   clust.maxPeaks=40, clust.nTop=5,
+                   freq=500, nucl="1H", solv=NULL, pH=NULL, temp=NULL)
 }
 \arguments{
 \item{dataset}{List representing the dataset from an nmr peaks metabolomics experiment.}
@@ -20,6 +25,8 @@ nmr_identification(dataset, ppm.tol = 0.03, clust.method = "pearson",
 \item{clust.peaks.min}{Minimum number of variables in each cluster. Only the clusters with at least clust.peaks.min variables will be considered.}
 
 \item{clust.nTop}{Number of top metabolites with greater score to show for each cluster.}
+
+\item{clust.maxPeaks}{Maximum number of peaks that a cluster can have, while searching for the best correlation value. Defaults to 40, the original value where the code was adapated from. Can also be NULL and this value will be the number of peaks of the larger cluster.}
 
 \item{freq}{Frequency of reference spectra. See documentation on \code{\link{choose_nmr_references}} function for further details.}
 
@@ -45,10 +52,6 @@ For each reference metabolite matched:
    \item{matched_peaks_clust}{Matched peaks of the cluster.}
    \item{reference_peaks}{All the reference spectra peaks.}
 }
-}
-\description{
-This function performs metabolite identification on a dataset of nmr peaks, finding the top
-5 reference metabolites that matched with each cluster of variables formed.
 }
 \examples{
 

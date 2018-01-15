@@ -3,59 +3,24 @@
 ########################################################
 
 
-#' CHOOSE THE METABOLITES TO BE THE REFERENCE
-#' 
-#' This function returns the reference spectra, according to the characteristics chosen
-#' (frequency, nucleus, solvent, pH and temperature). Only the frequency and nucleus arguments
-#' are obligatory.
-#' 
-#' @param frequency Frequency of the reference spectra, in Hz. Must either be 15, 22, 25, 50, 90, 100, 300, 400, 500 or 600.
-#' @param nucleus Atomic nuclei. Possible values: "1H", "13C"
-#' @param solvent If given, the solvent of the sample. Possbile values: "100\%_DMSO"; "5\%_DMSO"; "acetone+DMSO+tetramethylurea"; "acetone+DMSO+tetramethylurea"; "C"; "CCl4"; "CD3OD"; "CDCl3"; "cyclohexane"; "D2O"; "DMSO-d6"; "DMSO-d6+HCl"; "neat"; "TMS"; "Water".
-#' @param ph If given, a number corresponding to the sample's pH or a vector of length two indicating a pH interval.
-#' @param temperature If given, the temperature of the sample, in Celsius. Must either be 25 or 50.
-#' 
-#' @return Returns a list with the reference spectra that have the chosen characteristics. Each spectra is a list with two elements: a list of the chemical shifts and and a list of the respective intensities.
-#' 
-#' @examples 
-#' ##Gives all the reference spectra with a frequency of 500 Hz and the nucleus 1H:
-#' ref=choose_nmr_references(500, "1H")
-#' 
-#' @export
+#' Choose the metabolites' spectra to be the reference.
 choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, temperature=NULL){
   
   data(nmr_1d_spectra, package="specmine")
   data(nmr_1d_spectra_options, package="specmine")
   
-  #FREQUENCY
-  #15 (15.08; 15.09); 22 (22.5; 22.53); 25 (25.16); 50 (50.18; 50.32); 90;
-  #100 (100.40; 100.41; 100.54; 100.7; 100.72); 300; 400; 500; 600
-  if(frequency==15){
-    nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$frequency<16]]
-  }
-  else if(frequency==22){
-    nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$frequency<23&nmr_1d_spectra_options$frequency>=22]]
-  }
-  else if(frequency==25){
-    nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$frequency<26&nmr_1d_spectra_options$frequency>=25]]
-  }
-  else if(frequency==50){
-    nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$frequency<51&nmr_1d_spectra_options$frequency>=50]]
-  }
-  else if(frequency==100){
-    nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$frequency<101&nmr_1d_spectra_options$frequency>=100]]
-  }
-  else if(frequency%in%c(90, 300, 400, 500, 600)){
-    nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$frequency==frequency]]
+  #FREQUENCY: 300; 400; 500; 600
+  if(frequency%in%c(400, 500, 600)){
+    nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$frequency==frequency]]
   }
   else{
-    print("No frequency in library with that value. Must be 15, 22, 25, 50, 90, 100, 300, 400, 500 or 600")
+    print("No frequency in library with that value. Must be 400, 500 or 600")
   }
 
   #NUCLEUS
   #1H or 13C
   if(nucleus%in%c("1H", "13C")){
-    nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$nucleus==nucleus]]
+    nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$nucleus==nucleus]]
   }
   else{
     print("No nucleus in library with that name. Must be '1H' or '13C'")
@@ -66,7 +31,7 @@ choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, tem
   #CCl4; CD3OD; CDCl3; cyclohexane; D2O; DMSO-d6; DMSO-d6+HCl; neat; TMS; Water
   if (!is.null(solvent)){
     if(solvent%in%levels(nmr_1d_spectra_options$solvent)){
-      nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$solvent==solvent]]
+      nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$solvent==solvent]]
     }
     else{
       print("No solvent in library with that name.")
@@ -79,10 +44,10 @@ choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, tem
   if(!is.null(ph)){
     if(length(ph)==2){
       nmr_1d_spectra_options=nmr_1d_spectra_options[!is.na(nmr_1d_spectra_options$ph),]
-      nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$ph<=ph[2]&nmr_1d_spectra_options$ph>=ph[1]]]
+      nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$ph<=ph[2]&nmr_1d_spectra_options$ph>=ph[1]]]
     }
     else if (length(ph)==1){
-      nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$ph==ph]]
+      nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$ph==ph]]
     }
   }
   
@@ -90,7 +55,7 @@ choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, tem
   #25, 50, NA
   if (!is.null(temperature)){
     if(temperature%in%c(25,50)){
-      nmr_1d_spectra=nmr_1d_spectra[rownames(nmr_1d_spectra_options)[nmr_1d_spectra_options$temperature==temperature]]
+      nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$temperature==temperature]]
     }
     else{
       print("No temperature in library with that value.")
@@ -102,18 +67,28 @@ choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, tem
 
 
 
+#' GIVE THE METABOLITES NAMES TO WHICH THE SPECTRA IDS BELONG
+get_hmdbs_with_specs_id=function(spec_ids){
+  data(conversion_table, package="specmine")
+  hmdbs_with_spec_refs=conversion_table[!is.na(conversion_table$SPECTRA_NMR_ONED_OWN), c("HMDB", "SPECTRA_NMR_ONED_OWN")]
+  hmdbs=c()
+  spec=c()
+  for(spec_id in spec_ids){
+    for(i_spec in 1:length(hmdbs_with_spec_refs$SPECTRA_NMR_ONED_OWN)){
+      if(length(grep(paste(".*", spec_id, ".*", sep=""), hmdbs_with_spec_refs$SPECTRA_NMR_ONED_OWN[i_spec]))>0){
+        hmdbs=c(hmdbs, as.character(hmdbs_with_spec_refs$HMDB[i_spec]))
+        spec=c(spec, spec_id)
+      }
+    }
+  }
+  res=data.frame(hmdbs, spec)
+  return(res)
+}
+
+
 
 
 #' FIND THE BEST CORRELATION VALUE FOR THE CLUSTERING OF PEAKS
-#' 
-#' Takes a dataset and calculates the optimum correlation value, which leads to the maximum
-#' number of clusters of the variables.
-#' 
-#' @param dataset_orig List representing the dataset from an nmr peaks metabolomics experiment.
-#' @param CMETH Correlation method used to cluster the variables. Defaults to "pearson".
-#' @param maxPeaks Maximum number of peaks that a cluster can have, while searching for the best correlation value.
-#' 
-#' @return Value of the optimal correlation.
 find_corr <- function(dataset_orig, CMETH='pearson', maxPeaks=40) {
   
   #CODE ADAPTED FROM THE CODE USED IN THE ARTICLE "An efficient spectra processing method for
@@ -193,17 +168,6 @@ find_corr <- function(dataset_orig, CMETH='pearson', maxPeaks=40) {
 
 
 #' CLUSTER OF VARIABLES (PEAKS)
-#' 
-#' Takes a dataset and performs clustering of variables, according to a correlation. The variables
-#' will be separated into different clusters, according to a minimum correlation between variables.
-#' Each cluster will correspond to a metabolite.
-#' 
-#' @param dataset_orig List representing the dataset from an nmr peaks metabolomics experiment.
-#' @param CMETH Correlation method used to cluster the variables. Defaults to "pearson".
-#' @param CVAL Minimum correlation between variables, so they can belong to the same cluster.
-#' @param MVER Minimum number of variables in each cluster. Only the clusters with at least MVER variables will be returned.
-#' 
-#' @return List with the formed clusters
 nmr_clustering <- function(dataset_orig, CMETH='pearson', CVAL=0.95, MVER=2)
 {
   #CODE ADAPTED FROM THE CODE USED IN THE ARTICLE "An efficient spectra processing method for
@@ -312,39 +276,6 @@ jaccard_index=function(peaksCluster, peaksReference, PPMTOL){
 #' 
 #' This function performs metabolite identification on a dataset of nmr peaks, finding the top
 #' 5 reference metabolites that matched with each cluster of variables formed.
-#' 
-#' @param dataset List representing the dataset from an nmr peaks metabolomics experiment.
-#' @param ppm.tol ppm tolerance when matching reference peaks to the dataset peaks.
-#' @param clust.method Correlation method to use in the formation of clusters. Defaults to "pearson".
-#' @param clust.treshold Minimum correlation between variables to form clusters. If not given, the function calculates the optimum value (value that leads to the greater number of clusters).
-#' @param clust.peaks.min Minimum number of variables in each cluster. Only the clusters with at least clust.peaks.min variables will be considered.
-#' @param clust.nTop Number of top metabolites with greater score to show for each cluster.
-#' @param clust.maxPeaks Maximum number of peaks that a cluster can have, while searching for the best correlation value. Defaults to 40, the original value where the code was adapated from. Can also be NULL and this value will be the number of peaks of the larger cluster.
-#' @param freq Frequency of reference spectra. See documentation on \code{\link{choose_nmr_references}} function for further details.
-#' @param nucl Atomic nuclei of reference spectra, either "1H" or "13C".
-#' @param solv Solvent. See documentation on \code{\link{choose_nmr_references}} function for further details.
-#' @param pH pH. See documentation on \code{\link{choose_nmr_references}} function for further details.
-#' @param temp Temperature. See documentation on \code{\link{choose_nmr_references}} function for further details.
-#' 
-#' @return
-#' List with of the results for each cluster. For each cluster:
-#' \describe{
-#'    \item{cluster.peaks}{The peaks of the cluster.}
-#'    \item{summary}{Scores of each top 5 reference metabolite matched with the cluster.}
-#'    \item{metabolites.matched}{List with full results for each top 5 reference metabolite matched.}
-#' }
-#' For each reference metabolite matched:
-#' \describe{
-#'    \item{score}{Jaccard index score.}
-#'    \item{matched_peaks_ref}{Matched peaks of the reference spectra.}
-#'    \item{matched_peaks_clust}{Matched peaks of the cluster.}
-#'    \item{reference_peaks}{All the reference spectra peaks.}
-#' }
-#' 
-#' @examples
-#' 
-#' 
-#' @export
 nmr_identification <- function(dataset, ppm.tol=0.03,
                                clust.method='pearson', clust.treshold=NULL, clust.peaks.min=2,
                                clust.maxPeaks=40, clust.nTop=5,
@@ -356,13 +287,7 @@ nmr_identification <- function(dataset, ppm.tol=0.03,
                                    temperature=temp)
   
   #Get names of the reference metabolites:
-  #split_ref=strsplit(names(references), split="_")
-  #ref_names=c()
-  #for (names in split_ref){
-  #  ref_names=c(ref_names, names[1])
-  #}
-  data(nmr_1d_spectra_options, package="specmine")
-  ref_names=as.character(nmr_1d_spectra_options[names(references), "met_id"])
+  hmdbs_to_spec=get_hmdbs_with_specs_id(names(references))
   
   #Find best correlation value for the clusters correlation treshold, if a value is not given:
   if (is.null(clust.treshold)){
@@ -394,10 +319,12 @@ nmr_identification <- function(dataset, ppm.tol=0.03,
       res_ref=jaccard_index(clusters[[clust_id]], references[[ref_id]], PPMTOL=ppm.tol)
       
       score_clust=c(score_clust, res_ref$score)
-      full_res[[ref_names[ref_id]]]=res_ref
+      spec_id=names(references)[ref_id]
+      hmdb_id=as.character(hmdbs_to_spec$hmdbs[hmdbs_to_spec$spec==spec_id])
+      for(h in hmdb_id) full_res[h]=res_ref
     }
     #Store only the top clust.nTop matches of the cluster and the cluster peaks
-    names(score_clust)=ref_names
+    names(score_clust)=hmdbs_to_spec$hmdbs
     score_clust=sort(score_clust, decreasing=T)[1:clust.nTop]
     for (i in 1:length(score_clust)){
       if (score_clust[i]==0){

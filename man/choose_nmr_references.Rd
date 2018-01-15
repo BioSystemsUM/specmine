@@ -2,13 +2,14 @@
 % Please edit documentation in R/NMR_metabolite_identification.R
 \name{choose_nmr_references}
 \alias{choose_nmr_references}
-\title{CHOOSE THE METABOLITES TO BE THE REFERENCE}
+\title{Choose the metabolites' spectra to be the reference.}
+\description{This function returns the reference spectra, according to the characteristics chosen (frequency, nucleus, solvent, pH and temperature). Only the frequency and nucleus arguments are obligatory.}
 \usage{
 choose_nmr_references(frequency, nucleus, solvent = NULL, ph = NULL,
   temperature = NULL)
 }
 \arguments{
-\item{frequency}{Frequency of the reference spectra, in Hz. Must either be 15, 22, 25, 50, 90, 100, 300, 400, 500 or 600.}
+\item{frequency}{Frequency of the reference spectra, in Hz. Must either 400, 500 or 600.}
 
 \item{nucleus}{Atomic nuclei. Possible values: "1H", "13C"}
 
@@ -21,13 +22,7 @@ choose_nmr_references(frequency, nucleus, solvent = NULL, ph = NULL,
 \value{
 Returns a list with the reference spectra that have the chosen characteristics. Each spectra is a list with two elements: a list of the chemical shifts and and a list of the respective intensities.
 }
-\description{
-This function returns the reference spectra, according to the characteristics chosen
-(frequency, nucleus, solvent, pH and temperature). Only the frequency and nucleus arguments
-are obligatory.
-}
 \examples{
 ##Gives all the reference spectra with a frequency of 500 Hz and the nucleus 1H:
 ref=choose_nmr_references(500, "1H")
-
 }

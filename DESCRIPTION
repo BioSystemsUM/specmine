@@ -11,7 +11,8 @@ Depends: R (>= 3.1.0)
 Imports: compare, hyperSpec, ChemoSpec, readJDX, baseline, rgl, Metrics, 
 	GGally, ggplot2, ellipse, ggdendro, caret, pls, 
 	pcaPP, RColorBrewer, grid, methods,
-	qdap, MASS, scatterplot3d, xcms, MAIT, genefilter, impute, igraph
+	qdap, MASS, scatterplot3d, xcms, MAIT, genefilter, impute, igraph,
+	rcytoscapejs, KEGGgraph, KEGGREST
 Description: Provides a set of methods for metabolomics 
 	data analysis, including data loading in different formats, 
 	pre-processing, metabolite identification, univariate and multivariate 
