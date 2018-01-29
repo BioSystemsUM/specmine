@@ -87,7 +87,7 @@ impute_nas_linapprox = function(dataset){
 #taken from metaboanalyst - uses impute package from bioconductor
 
 "impute_nas_knn" = function(dataset, k = 10, ...){
-  dataset$data = impute::impute.knn(dataset$data, ...)
+  dataset$data = impute::impute.knn(dataset$data, ...)$data
   dataset
 }
 
