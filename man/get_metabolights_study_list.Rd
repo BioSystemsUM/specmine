@@ -7,10 +7,6 @@ List of metabolights studies available to download.
 \usage{
 get_metabolights_study_list()
 }
-}
-\details{
-%%  ~~ If necessary, more details than the description above ~~
-}
 \value{
 Character vector with the IDs of the metabolights studies available to download.
 }
