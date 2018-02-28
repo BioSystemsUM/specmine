@@ -11,7 +11,7 @@ choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, tem
   data(nmr_1d_spectra, package="specmine")
   data(nmr_1d_spectra_options, package="specmine")
   
-  #FREQUENCY: 300; 400; 500; 600
+  #FREQUENCY: 400; 500; 600
   if(frequency%in%c(400, 500, 600)){
     nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$frequency==frequency]]
   }
@@ -324,7 +324,7 @@ nmr_identification <- function(dataset, ppm.tol=0.03,
       spec_id=names(references)[ref_id]
       hmdb_id=as.character(hmdbs_to_spec$hmdbs[hmdbs_to_spec$spec==spec_id])
       for(h in hmdb_id){
-        full_res[h]=res_ref
+        full_res[[h]]=res_ref
         score_clust=c(score_clust, res_ref$score)
         n_score_clust=c(n_score_clust, h)
       }

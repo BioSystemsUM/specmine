@@ -88,7 +88,7 @@ get_metabPaths_org=function(org_code){
   
   pathways_all=KEGGREST::keggList("pathway")
   paths_names=pathways_all[match(paste("path:map", paths_n, sep=""), names(pathways_all))]
-  paths_n=paste("mus", paths_n, sep="")
+  paths_n=paste(org_code, paths_n, sep="")
   names(paths_n)=paths_names
   
   return(paths_n)

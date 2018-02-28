@@ -1,6 +1,6 @@
 "linregression_onevar" = function(dataset, x.val, metadata.vars, combination) {
   values = get_data_values(dataset, x.val)
-  sub.df = dataset$metadata[,metadata.vars]
+  sub.df = dataset$metadata[,metadata.vars,frop=F]
   sub.df = cbind(values,sub.df)
   terms = names(sub.df)[2:ncol(sub.df)]
   terms = cbind(terms, combination)
@@ -26,7 +26,7 @@ linreg_coef_table = function(linreg.results, write.file = F, file.out = "linreg-
     m[i,] = linreg.results[[i]]$coefficients[,1]
   }
   coef.table = as.data.frame(m)
-  colnames(coef.table) = trim(rownames(linreg.results[[1]]$coefficients))
+  colnames(coef.table) = gdata::trim(rownames(linreg.results[[1]]$coefficients))
   if (write.file) write.csv(coef.table, file = file.out)
   coef.table  
 }
@@ -39,7 +39,7 @@ linreg_pvalue_table = function(linreg.results, write.file = F, file.out = "linre
     m[i,] = linreg.results[[i]]$coefficients[,4]
   }
   pv.table = as.data.frame(m)
-  colnames(pv.table) = trim(rownames(linreg.results[[1]]$coefficients))
+  colnames(pv.table) = gdata::trim(rownames(linreg.results[[1]]$coefficients))
   if (write.file) write.csv(pv.table, file = file.out)
   pv.table  
 }
