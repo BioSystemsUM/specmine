@@ -2,7 +2,7 @@
 \alias{get_MetabPaths_org}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Get the metabolic pathways present in given organism.}
-\title{
+\description{
 Get vector with paths numbers that occur in the given organism, named with the full paths names.
 }
 \usage{
