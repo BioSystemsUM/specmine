@@ -2,7 +2,7 @@
 \alias{create_pathway_with_reactions}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Creates the pathway, with reactions included in the nodes
+Creates the pathway, with reactions included in the nodes.
 }
 \usage{
 create_pathway_with_reactions(path, path.name, identified_cpds,
@@ -16,5 +16,4 @@ create_pathway_with_reactions(path, path.name, identified_cpds,
   \item{path.name}{Name of the pathway.}
   \item{identified_cpds}{Vector of kegg codes to color differently in the map.}
   \item{nodeNames}{How the nodes should be named. If "kegg", nodes are named with kegg codes. If "names", nodes are named with the common names.}
-  
 }

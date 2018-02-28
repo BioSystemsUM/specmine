@@ -1,6 +1,7 @@
 \name{get_MetabPaths_org}
 \alias{get_MetabPaths_org}
 %- Also NEED an '\alias' for EACH other topic documented here.
+\title{Get the metabolic pathways present in given organism.}
 \title{
 Get vector with paths numbers that occur in the given organism, named with the full paths names.
 }
@@ -12,7 +13,4 @@ get_MetabPaths_org(org_code)
   \item{org_code}{
 Organism code. The correct code for an organism can be consulted using function \code{\link{get_OrganismsCodes}}.
 }
-}
-\examples{
-get_MetabPaths_org("hsa")
 }

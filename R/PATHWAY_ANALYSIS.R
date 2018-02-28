@@ -7,36 +7,42 @@ get_cpd_names=function(kegg_codes){
   
   data(conversion_table, package="specmine")
   
-  n=rep(NA, length(kegg_codes))
+  n=c()
+  n_kegg=c()
+  cpds_to_get=c()
+  #Get names from the ones that are present in the conversion table:
   for (i in 1:length(kegg_codes)){
     kegg=kegg_codes[i]
-    n_kegg=strsplit(kegg, ":")[[1]][2]
-    if (n_kegg%in%conversion_table$KEGG){
-      n[i]=conversion_table$NAME[conversion_table$KEGG==n_kegg]
+    tab_kegg=strsplit(kegg, ":")[[1]][2]
+    if (tab_kegg%in%conversion_table$KEGG){
+      ns=na.omit(conversion_table$NAME[conversion_table$KEGG==tab_kegg])
+      n=c(n,ns)
+      n_kegg=c(n_kegg, rep(kegg, length(ns)))
+    }
+    else{
+      cpds_to_get=c(cpds_to_get, kegg)
     }
   }
-  get_from_kegg=which(is.na(n))
-  cpds_to_get=kegg_codes[get_from_kegg]
-  all_cpds=c(KEGGREST::keggList("compound"), KEGGREST::keggList("glycan"))
-  cpds_names_kegg=all_cpds[cpds_to_get]
-  all_n_kegg=strsplit(cpds_names_kegg, "; ")
-  for (i in 1:length(all_n_kegg)){
-    kegg_name=all_n_kegg[[i]][1]
-    idx=get_from_kegg[i]
-    n[idx] =kegg_name
+  
+  #If not present in conversion table, get from kegg itself:
+  if(!is.null(cpds_to_get)){
+    all_cpds=c(KEGGREST::keggList("compound"), KEGGREST::keggList("glycan"))
+    cpds_names_kegg=all_cpds[cpds_to_get]
+    all_n_kegg=strsplit(cpds_names_kegg, "; ")
+    for (i in 1:length(all_n_kegg)){
+      kegg_name=all_n_kegg[[i]][1]
+      kegg_code=names(all_n_kegg)[i]
+      n=c(n, kegg_name)
+      n_kegg=c(n_kegg, kegg_code)
+    }
   }
-  names(kegg_codes)=n
-  return(kegg_codes)
+  
+  names(n_kegg)=n
+  return(n_kegg)
   
 }
 
 #' Get kegg codes from hmdb codes:
-#' 
-#' @param hmdb_codes Vector with the HMDB codes (each hmdb code must have 7 digits, e.g., HMDB000001)
-#' 
-#' @return Named vector with kegg codes and respective names
-#' 
-#' @export
 convert_hmdb_to_kegg=function(hmdb_codes){
   
   data(conversion_table, package="specmine")

@@ -9,7 +9,7 @@ choose_nmr_references(frequency, nucleus, solvent = NULL, ph = NULL,
   temperature = NULL)
 }
 \arguments{
-\item{frequency}{Frequency of the reference spectra, in Hz. Must either 400, 500 or 600.}
+\item{frequency}{Frequency of the reference spectra, in Hz. Must either be 400, 500 or 600.}
 
 \item{nucleus}{Atomic nuclei. Possible values: "1H", "13C"}
 

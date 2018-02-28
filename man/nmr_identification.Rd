@@ -54,6 +54,9 @@ For each reference metabolite matched:
 }
 }
 \examples{
-
-
+data("propolis")
+propolis_mv=missingvalues_imputation(propolis)
+id_res=nmr_identification(propolis_mv, ppm.tol=0.03,
+                   clust.method='pearson', clust.maxPeaks=NULL, clust.nTop=10,
+                   freq=500, nucl="1H")
 }
