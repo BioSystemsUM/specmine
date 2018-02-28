@@ -15,8 +15,8 @@ get_metabolights_study=function(mtblsID, directory){
     reticulate::py_config()
   }
   
-  isatools_modified_py_file=system.file("inst/isatools_funcs_modified.py", package="specmine")
-  get_data_metadata_py_file=system.file("inst/get_data_metadata.py", package="specmine")
+  isatools_modified_py_file=system.file("isatools_funcs_modified.py", package="specmine")
+  get_data_metadata_py_file=system.file("get_data_metadata.py", package="specmine")
   
   reticulate::py_run_file(isatools_modified_py_file)
   reticulate::py_run_file(get_data_metadata_py_file)
@@ -41,7 +41,7 @@ get_metabolights_study_list=function(){
     reticulate::py_config()
   }
   
-  get_data_metadata_py_file=system.file("inst/get_data_metadata.py", package="specmine")
+  get_data_metadata_py_file=system.file("get_data_metadata.py", package="specmine")
   reticulate::source_python(get_data_metadata_py_file)
   
   metabolights_studies_list()
