@@ -8,6 +8,7 @@ Author: Christopher Costa <chrisbcl@hotmail.com>,
 	Miguel Rocha <mrocha@di.uminho.pt>
 Maintainer: Christopher Costa <chrisbcl@hotmail.com>
 Depends: R (>= 3.1.0)
+systemRequirements: Python (>=3.5.2) and the following python modules: isatools, os, ftplib, glob, logging, pandas, tempfile, shutil, re.
 Imports: compare, hyperSpec, ChemoSpec, readJDX, baseline, rgl, Metrics, 
 	GGally, ggplot2, ellipse, ggdendro, caret, pls, 
 	pcaPP, RColorBrewer, grid, methods,
