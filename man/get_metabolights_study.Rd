@@ -21,6 +21,9 @@ It also downloads a file (\code{samples_files}) with the names of the samples to
 Also, some data formats of some metabolights studies are not yet readable by specmine.
 }
 
+\section{Warning}{
+You must not call this function unless you have Python (>=3.5.2) installed in your machine and the modules isatools, os, ftplib, glob, logging, pandas, tempfile, shutil, re.
+}
 
 \examples{
 ##get_metabolights_study("MTBLS131", "~/Documents")
