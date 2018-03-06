@@ -184,7 +184,7 @@ plot_anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x 
   }
   
   vars = rownames(anova.orig)
-  if(dataset$type%in%c("lcms-spectra", "gcms-spectra")){
+  if(dataset$type%in%c("lcms-spectra", "gcms-spectra", "lcms-peaks", "gcms-peaks")){
     vars=gsub("/.*", "", (vars))
   }
   
