@@ -403,7 +403,7 @@ pca_kmeans_plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
   if (labels){
     pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes_string(x='x',y='y',label='label'),hjust=-0.1, vjust=0, size = 3)
   }
-  if (ellipses){
+  if (!bw & ellipses){
     df.ellipses = calculate_ellipses(pca.points)
     pca.plot = pca.plot + ggplot2::geom_path(data=df.ellipses, ggplot2::aes_string(x='x', y='y',colour='group'), size=1, linetype=2) 
   }
