@@ -85,21 +85,23 @@ pca_scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
 {
   has.legend = FALSE
   if (class(pca.result) == "prcomp"){
-	scores = pca.result$x
+    scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
-	scores = pca.result$scores
+    scores = pca.result$scores
   }
   pca.points = data.frame(scores[,pcas])
   names(pca.points) = c("x","y")
   if (is.null(column.class)){
-	group.values = factor(rep(4, ncol(dataset$data)))
+    group.values = factor(rep(4, ncol(dataset$data)))
   } else {
-	group.values = dataset$metadata[,column.class]
-	has.legend = TRUE
+    group.values = dataset$metadata[,column.class]
+    has.legend = TRUE
   }
+  pca.points$group = group.values
+  pca.points$label = colnames(dataset$data)
   if (bw) shape.values = 1:length(levels(group.values))
   if (bw)
-    pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y', shape="group"))
+    pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y', shape='group'))
   else
     pca.plot = ggplot2::ggplot(data = pca.points, ggplot2::aes_string(x='x', y='y',colour='group')) 
   pca.plot = pca.plot + ggplot2::geom_point(size=3, alpha=1) 
@@ -115,10 +117,10 @@ pca_scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
     else pca.plot = pca.plot + ggplot2::theme(legend.position = leg.pos)
   }
   if (!is.null(xlim)){
-	  pca.plot = pca.plot + ggplot2::xlim(xlim[1],xlim[2])
+    pca.plot = pca.plot + ggplot2::xlim(xlim[1],xlim[2])
   }
   if (!is.null(ylim)){
-	  pca.plot = pca.plot + ggplot2::ylim(ylim[1],ylim[2])
+    pca.plot = pca.plot + ggplot2::ylim(ylim[1],ylim[2])
   }
   if (labels){
     pca.plot = pca.plot + ggplot2::geom_text(data = pca.points, ggplot2::aes_string(x = 'x',y = 'y',label='label'),hjust=-0.1, vjust=0)

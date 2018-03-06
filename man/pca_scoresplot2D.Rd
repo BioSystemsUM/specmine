@@ -9,7 +9,7 @@
 }
 \usage{
 pca_scoresplot2D(dataset, pca.result, column.class, 
-pcas = c(1, 2), labels = FALSE, ellipses = FALSE, 
+pcas = c(1, 2), labels = FALSE, ellipses = FALSE, bw=FALSE,
 pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -30,7 +30,10 @@ pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
     boolean value indicating if the sample's labels will be displayed.
 }
   \item{ellipses}{
-    boolean value that indicates if an ellipse will be drawn on each group of the metadata's variable.
+    boolean value that indicates if an ellipse will be drawn on each group of the metadata's variable. Ellipses will not be drawn if bw=TRUE.
+}
+  \item{bw}{
+    if TRUE, it will be displayed a black and white plot. It defaults to FALSE.
 }
   \item{pallette}{
     parameter of scale_colour_brewer from ggplot2.
