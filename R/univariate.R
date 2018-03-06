@@ -173,26 +173,36 @@ trim <- function( x ) {
 }
 
 plot_anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x = F) {
-  orig.ord = intersect (get_x_values_as_text(dataset), rownames(anova.results))
+  orig.ord = intersect (specmine::get_x_values_as_text(dataset), rownames(anova.results))
   anova.orig = anova.results[orig.ord,]
   anova.lower = which(anova.orig$pvalues < anova.threshold)
-
+  
   cols = vector("character", nrow(anova.orig))
-  for(i in 1:nrow(anova.orig))
-    if (i %in% anova.lower) cols[i] = "blue"
+  for(i in 1:nrow(anova.orig)){
+    if (i %in% anova.lower) cols[i]="blue"
     else cols[i] = "gray"
+  }
   
   vars = rownames(anova.orig)
-  if (reverse.x){
-	xlim = c(max(as.numeric(vars)), min(as.numeric(vars)))
-  } else {
-	xlim = range(as.numeric(vars))
+  if(dataset$type%in%c("lcms-spectra", "gcms-spectra")){
+    vars=gsub("/.*", "", (vars))
   }
-
-  plot(vars,anova.orig$"logs", xlab = get_x_label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xlim = xlim)
-  #axis(1, at = 1:length(vars),labels = vars, xlim = xlim)
+  
+  if(dataset$type=="concentrations"){
+    plot(anova.orig$"logs", xlab = "", ylab = "-log10(p)", col = cols, pch = 19, xaxt="n")
+    axis(1, at=1:length(vars), labels=vars, las=2, cex.axis = 0.6)
+  }
+  else{
+    if (reverse.x){
+      xlim = c(max(as.numeric(vars)), min(as.numeric(vars)))
+    } else {
+      xlim = range(as.numeric(vars))
+    }
+    plot(vars,anova.orig$"logs", xlab = specmine::get_x_label(dataset), ylab = "-log10(p)", col = cols, pch = 19, xlim = xlim)
+  }
   abline(h = -log10(anova.threshold), col = "lightblue")
 }
+
 
 ##################### FOLD CHANGE ############################
 fold_change_var = function(dataset, metadata.var, variables, threshold.min.fc = NULL, 
