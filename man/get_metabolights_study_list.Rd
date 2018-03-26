@@ -4,6 +4,9 @@
 \title{
 List of metabolights studies available to download.
 }
+\description{
+Returns a vector with the IDs of all metabolights studies available to download. Not all data in metabolights is in a format readable by specmine.
+}
 \usage{
 get_metabolights_study_list()
 }

@@ -4,6 +4,9 @@
 \title{
 Convert KEGGPathway object to graph object.
 }
+\description{
+Converts KEGGPathway object into a graph object.
+}
 \usage{
 convert_keggpathway_2_reactiongraph(pathObj)
 }

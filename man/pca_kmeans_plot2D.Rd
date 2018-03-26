@@ -9,8 +9,8 @@
 }
 \usage{
 pca_kmeans_plot2D(dataset, pca.result, num.clusters = 3, 
-pcas = c(1, 2), kmeans.result = NULL, labels = FALSE, 
-ellipses = FALSE, bw=FALSE, leg.pos = "right", xlim = NULL, ylim = NULL)
+pcas = c(1, 2), kmeans.result = NULL, labels = FALSE, bw=F,
+ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

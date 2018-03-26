@@ -4,6 +4,9 @@
 \title{
  Returns an object of KEGGPathway of the pathway especified in pathcode.
 }
+\description{
+Returns an object of KEGGPathway of the pathway specified in pathcode (e.g. "hsa00010").
+}
 \usage{
 get_MetabolitePath(pathcode)
 }

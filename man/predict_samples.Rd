@@ -26,10 +26,10 @@ predict_samples(train.result, new.samples)
 
 \examples{
   ## Example of predicting samples
-  data(cachexia)
-  training.result = train_models_performance(cachexia, "pls", 
-	"Muscle.loss", "cv")
-  result = predict_samples(training.result$final.models$pls, cachexia$data)
+  #data(cachexia)
+  #training.result = train_models_performance(cachexia, "pls", 
+  #	"Muscle.loss", "cv")
+  #result = predict_samples(training.result$final.models$pls, cachexia$data)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

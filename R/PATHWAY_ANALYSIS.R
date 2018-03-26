@@ -5,6 +5,7 @@
 #' Get the names of the compounds that correspond to the kegg codes given:
 get_cpd_names=function(kegg_codes){
   
+  conversion_table=NULL
   data(conversion_table, package="specmine")
   
   n=c()
@@ -45,7 +46,8 @@ get_cpd_names=function(kegg_codes){
 #' Get kegg codes from hmdb codes:
 convert_hmdb_to_kegg=function(hmdb_codes){
   
-  data(conversion_table, package="specmine")
+  env=new.env()
+  data(conversion_table, package="specmine", envir=env)
   
   hmdbs=toupper(hmdb_codes)
   names_cpds=c()
@@ -53,11 +55,11 @@ convert_hmdb_to_kegg=function(hmdb_codes){
   i=0
   for (hmdb in hmdbs){
     i=i+1
-    cpd=conversion_table$KEGG[conversion_table$HMDB==hmdb]
+    cpd=env$conversion_table$KEGG[env$conversion_table$HMDB==hmdb]
     if (!is.na(cpd)){
-      cpd=paste("cpd:", conversion_table$KEGG[conversion_table$HMDB==hmdb], sep="")
+      cpd=paste("cpd:", env$conversion_table$KEGG[env$conversion_table$HMDB==hmdb], sep="")
       keggs=c(keggs, cpd)
-      names_cpds=c(names_cpds, conversion_table$NAME[conversion_table$HMDB==hmdb])
+      names_cpds=c(names_cpds, env$conversion_table$NAME[env$conversion_table$HMDB==hmdb])
     }
     else{cat("The following hmdb code is not available at kegg: ", hmdb, "\n")} 
   }
@@ -223,9 +225,10 @@ create_pathway_with_reactions=function(path, path.name, identified_cpds,
   #Get possible maps to which the present map conects to, and add it to nodes and reactions:
   map_names=c()
   maps=c()
-  data(maps_con, package="specmine")
+  env=new.env()
+  data(maps_con, package="specmine", envir=env)
   path_p=substr(path.name, nchar(path.name)-5+1, nchar(path.name))
-  maps_con=maps_con[grep(paste(".*", path_p, ".*", sep=""), maps_con$in_map),]
+  maps_con=env$maps_con[grep(paste(".*", path_p, ".*", sep=""), env$maps_con$in_map),]
   for (node in path@nodes){
     if(KEGGgraph::getType(node)=="map" & !(KEGGgraph::getName(node)[1]%in%maps) & length(grep("^TITLE:", node@graphics@name))==0){
       map_name=KEGGgraph::getName(node)

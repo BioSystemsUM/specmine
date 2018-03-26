@@ -254,9 +254,10 @@ read_varian_spectrum_raw=function(directory, zero_filling=T, apodization=T){
   }
   
   varian_raw_py=system.file("read_varian_spec_raw.py", package="specmine")
-  reticulate::source_python(varian_raw_py)
+  env=new.env()
+  reticulate::source_python(varian_raw_py,  envir = env)
   
-  spec=read_varian_spec_raw(directory, fid_file, procpar_file, zero_filling=zero_filling, apodization=apodization)
+  spec=env$read_varian_spec_raw(directory, fid_file, procpar_file, zero_filling=zero_filling, apodization=apodization)
   names(spec)=c("ppm", "intensity")
   return(spec)
 }

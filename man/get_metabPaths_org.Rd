@@ -1,12 +1,12 @@
-\name{get_MetabPaths_org}
-\alias{get_MetabPaths_org}
+\name{get_metabPaths_org}
+\alias{get_metabPaths_org}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Get the metabolic pathways present in given organism.}
 \description{
 Get vector with paths numbers that occur in the given organism, named with the full paths names.
 }
 \usage{
-get_MetabPaths_org(org_code)
+get_metabPaths_org(org_code)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

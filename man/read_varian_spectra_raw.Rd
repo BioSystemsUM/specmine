@@ -44,3 +44,6 @@ read_varian_spectra_raw(varian_spectra_directory,
 \value{
 Returns a list representing a dataset for specmine.
 }
+\section{Warning}{
+You must not call this function unless you have Python (>=3.5.2) installed in your machine and the module nmrglue.
+}

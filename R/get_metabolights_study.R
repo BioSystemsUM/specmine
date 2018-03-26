@@ -20,10 +20,11 @@ get_metabolights_study=function(mtblsID, directory){
   
   reticulate::py_run_file(isatools_modified_py_file)
   reticulate::py_run_file(get_data_metadata_py_file)
-  reticulate::source_python(get_data_metadata_py_file)
+  env=new.env()
+  reticulate::source_python(get_data_metadata_py_file,  envir = env)
   
   cat("Downloading files... please wait\n")
-  load_data_metadata_metabolights(mtblsID, directory)
+  env$load_data_metadata_metabolights(mtblsID, directory)
   cat("\nDone.")
   
 }
@@ -42,7 +43,8 @@ get_metabolights_study_list=function(){
   }
   
   get_data_metadata_py_file=system.file("get_data_metadata.py", package="specmine")
-  reticulate::source_python(get_data_metadata_py_file)
+  env=new.env()
+  reticulate::source_python(get_data_metadata_py_file, envir=env)
   
-  metabolights_studies_list()
+  env$metabolights_studies_list()
 }

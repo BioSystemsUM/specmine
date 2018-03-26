@@ -4,6 +4,9 @@
 \title{
 Convert HMDB codes to KEGG codes.
 }
+\description{
+Converts a vector of HMDB codes into a vector of the corresponding KEGG codes.
+}
 \usage{
 convert_hmdb_to_kegg(hmdb_codes)
 }

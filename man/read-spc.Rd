@@ -41,9 +41,6 @@ Use with care, and look into the source code for detailed insight on the
 
 This parameter will likely be subject to change in future - use with care.}
 
-\item{files}{If \code{glob = TRUE}, \code{filename} can contain wildcards.
-Thus all files matching the name pattern in \code{filename} can be
-specified.}
 }
 \value{
 If the file contains multiple spectra with individual wavelength

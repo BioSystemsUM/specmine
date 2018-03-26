@@ -4,8 +4,11 @@
 \title{
 Get the names of the compounds that correspond to the kegg codes given.
 }
+\description{
+Gets the common name of the compounds of the kegg codes given.
+}
 \usage{
-get_cpds_names(kegg_codes)
+get_cpd_names(kegg_codes)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

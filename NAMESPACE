@@ -197,4 +197,6 @@ importFrom("stats", "IQR", "TukeyHSD", "aggregate", "aov", "approx","as.dendrogr
 importFrom("utils", "head", "modifyList", "read.csv", "read.table",
              "str", "tail", "write.csv")
 importFrom("readJDX", "readJDX")
+importFrom("stats", "na.exclude", "na.omit")
+importFrom("utils", "data", "unzip")
 importClassesFrom(hyperSpec, hyperSpec)

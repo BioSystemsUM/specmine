@@ -65,9 +65,9 @@ Returns a list with the results from training
 
 \examples{
   ## Example of training models
-  data(cachexia)
-  result = train_models_performance(cachexia, "pls", 
-	   "Muscle.loss", "cv")
+  #data(cachexia)
+  #result = train_models_performance(cachexia, "pls", 
+  #	   "Muscle.loss", "cv")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

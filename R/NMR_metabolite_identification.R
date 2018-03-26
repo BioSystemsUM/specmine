@@ -4,12 +4,15 @@
 
 
 #' Choose the metabolites' spectra to be the reference.
-choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, temperature=NULL, org=NULL){
+choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, temperature=NULL){ #, org=NULL){
   ##org: organism code (or phylogeny --- later)
   
   
-  data(nmr_1d_spectra, package="specmine")
-  data(nmr_1d_spectra_options, package="specmine")
+  env=new.env()
+  data(nmr_1d_spectra, package="specmine", envir=env)
+  nmr_1d_spectra=env$nmr_1d_spectra
+  data(nmr_1d_spectra_options, package="specmine", envir=env)
+  nmr_1d_spectra_options=env$nmr_1d_spectra_options
   
   #FREQUENCY: 400; 500; 600
   if(frequency%in%c(400, 500, 600)){
@@ -70,8 +73,9 @@ choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, tem
 
 #' GIVE THE METABOLITES HMDBS and names TO WHICH THE SPECTRA IDS BELONG
 get_hmdbs_with_specs_id=function(spec_ids){
-  data(conversion_table, package="specmine")
-  hmdbs_with_spec_refs=conversion_table[!is.na(conversion_table$SPECTRA_NMR_ONED_OWN), c("HMDB", "NAME", "SPECTRA_NMR_ONED_OWN")]
+  env=new.env()
+  data(conversion_table, package="specmine", envir=env)
+  hmdbs_with_spec_refs=env$conversion_table[!is.na(env$conversion_table$SPECTRA_NMR_ONED_OWN), c("HMDB", "NAME", "SPECTRA_NMR_ONED_OWN")]
   hmdbs=c()
   spec=c()
   names=c()

@@ -1,3 +1,5 @@
+globalVariables("group")
+
 names = c("genefilter", "xcms", "impute", "MAIT")
 
 for (n in 1:length(names)){
