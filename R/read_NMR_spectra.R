@@ -335,3 +335,52 @@ read_varian_spectra_raw=function(varian_spectra_directory,
 
 
 
+
+
+##########################
+#####DETECT NMR PEAKS#####
+##########################
+
+detect_nmr_peaks=function(spectrum.list, baseline_treshold=50000){
+  
+  res=list()
+  
+  x=t(as.matrix(spectrum.list$intensity))
+  peaks_detected_idx=speaq::detectSpecPeaks(x, verbose=F, baselineThresh=baseline_treshold)
+  
+  res$ppm=as.numeric(spectrum.list$ppm[peaks_detected_idx[[1]]])
+  res$intensity=as.numeric(spectrum.list$intensity[peaks_detected_idx[[1]]])
+  rownames(res)=NULL
+  
+  return(res)
+}
+
+
+
+detect_nmr_peaks_from_dataset=function(dataset, baseline_tresh=50000,
+                                       ap.method="own", ap.samp.classes=1, ap.step=0.03){
+  
+  detected_peaks_list=list()
+  for (spectrum in colnames(dataset$data)){
+    
+    spec=list()
+    spec[["ppm"]]=rownames(dataset$data)
+    spec[["intensity"]]=dataset$data[,spectrum]
+    
+    detected_peaks=detect_nmr_peaks(spec, baseline_treshold=baseline_tresh)
+    
+    cat("Spectrum ", spectrum, " has ", length(detected_peaks$ppm), " peaks.")
+    cat("\n")
+    
+    detected_peaks_list[[spectrum]]=as.data.frame(detected_peaks)
+    detected_peaks_list[[spectrum]]$ppm=round(detected_peaks_list[[spectrum]]$ppm, 2)
+    
+  }
+  
+  final_dataset=specmine::group_peaks(detected_peaks_list, type="nmr-peaks", metadata=dataset$metadata,
+                                      method=ap.method, samp.classes=ap.samp.classes, step=ap.step,
+                                      label.x=dataset$labels$x, label.values=dataset$labels$val, description=dataset$description)
+  
+  return(final_dataset)
+  
+}

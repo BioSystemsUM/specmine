@@ -201,8 +201,8 @@ nmr_clustering <- function(dataset_orig, CMETH='pearson', CVAL=0.95, MVER=2)
   #Separates graph in the different sub graphs (a sub graph is not connected with anny other
   #subgraph - no correlation) and counts the number of peaks in each subgraph
   cliques <- sapply(igraph::decompose.graph(graph), igraph::vcount)
-  ordcli <- order(cliques,decreasing = T) #Dá os indices dos grafos, ordenados pelo grafo com
-                                        #maior nº de vertices para o menor
+  ordcli <- order(cliques,decreasing = T) #Gives the graphs' indexes, ordered by the graph from
+                                        #bigger number of vertices to the lowest
   M <- NULL
   g<-0
   

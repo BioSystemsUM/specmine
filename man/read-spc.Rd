@@ -3,9 +3,7 @@
 \name{read_spc_nosubhdr}
 \alias{read_spc_nosubhdr}
 \title{Import for Thermo Galactic's spc file format
-These functions allow to import .spc files.
-A detailed description of the .spc file format is available at
-\url{https://ftirsearch.com/features/converters/SPCFileFormat.htm}.}
+These functions allow to import .spc files.}
 \usage{
 read_spc_nosubhdr(filename, keys.hdr2data = c("fexper", "fres", "fsource"),
   keys.hdr2log = c("fdate", "fpeakpt"), keys.log2data = FALSE,
@@ -54,8 +52,6 @@ If the file contains multiple spectra with individual wavelength
 \description{
 Import for Thermo Galactic's spc file format
 These functions allow to import .spc files.
-A detailed description of the .spc file format is available at
-\url{https://ftirsearch.com/features/converters/SPCFileFormat.htm}.
 }
 \note{
 Only a restricted set of test files was available for development.
@@ -82,11 +78,6 @@ spc <- read.spc ("BARBITUATES.SPC")
 plot (spc [[1]], lines.args = list (type = "h"))
 }
 
-}
-\references{
-Source development kit and file format specification of .spc
-  files:
-  \url{https://ftirsearch.com/features/converters/SPCFileFormat.htm}.
 }
 \seealso{
 \code{\link[hyperSpec]{textio}}

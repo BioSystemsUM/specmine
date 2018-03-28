@@ -25,7 +25,7 @@ If full result is not wanted, only the pathways will be given.
 }
 \examples{
 #Get human metabolic paths that have one or more of the three following compounds
-keggs=get_cpd_names(c("cpd:C00033", "cpd:C00147", "gl:G13099"))
-paths_org_cpds=get_paths_with_cpds_org("hsa", keggs)
-paths_org_cpds
+#keggs=get_cpd_names(c("cpd:C00033", "cpd:C00147", "gl:G13099"))
+#paths_org_cpds=get_paths_with_cpds_org("hsa", keggs)
+#paths_org_cpds
 }

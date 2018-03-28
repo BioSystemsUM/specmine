@@ -5,8 +5,8 @@
 #' Get the names of the compounds that correspond to the kegg codes given:
 get_cpd_names=function(kegg_codes){
   
-  conversion_table=NULL
-  data(conversion_table, package="specmine")
+  env=new.env()
+  data(conversion_table, package="specmine", envir=env)
   
   n=c()
   n_kegg=c()
@@ -15,8 +15,8 @@ get_cpd_names=function(kegg_codes){
   for (i in 1:length(kegg_codes)){
     kegg=kegg_codes[i]
     tab_kegg=strsplit(kegg, ":")[[1]][2]
-    if (tab_kegg%in%conversion_table$KEGG){
-      ns=na.omit(conversion_table$NAME[conversion_table$KEGG==tab_kegg])
+    if (tab_kegg%in%env$conversion_table$KEGG){
+      ns=na.omit(env$conversion_table$NAME[env$conversion_table$KEGG==tab_kegg])
       n=c(n,ns)
       n_kegg=c(n_kegg, rep(kegg, length(ns)))
     }
