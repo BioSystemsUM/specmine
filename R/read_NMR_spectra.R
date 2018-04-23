@@ -297,6 +297,7 @@ read_varian_spectra_raw=function(varian_spectra_directory,
     samples_names=c()
     for(dir in directories_to_read){
       n=tail(strsplit(dir, "/")[[1]], n=1)
+      n=strsplit(n, ".fid")[[1]]
       samples_names=c(samples_names, n)
     }
   }

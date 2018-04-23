@@ -9,7 +9,7 @@
 }
 \usage{
 dendrogram_plot_col(dataset, hc.result, classes.col, colors = NULL, title = "", 
-lab.cex = 1, leg.pos = "topright",...)
+lab.cex = 1, leg.pos = "topright", label_samples=NULL,...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -20,7 +20,7 @@ lab.cex = 1, leg.pos = "topright",...)
     object of class hclust with the clustering results.
 }
   \item{classes.col}{
-    string or index indicating what metadata to use to name the leafs.
+    string or index indicating what metadata to use to color the leafs.
 }
   \item{colors}{
     vector with the corresponding colors of the metadata classes.
@@ -33,6 +33,9 @@ lab.cex = 1, leg.pos = "topright",...)
 }
   \item{leg.pos}{
     position of the legend.
+}
+  \item{label_samples}{
+    string or index indicating what metadata to use to name the leafs. If not provided the name of the leafs will remain the samples names.
 }
   \item{\dots}{
     other parameters for plotting.

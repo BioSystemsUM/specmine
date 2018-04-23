@@ -1,6 +1,6 @@
 "linregression_onevar" = function(dataset, x.val, metadata.vars, combination) {
   values = get_data_values(dataset, x.val)
-  sub.df = dataset$metadata[,metadata.vars,frop=F]
+  sub.df = dataset$metadata[,metadata.vars]
   sub.df = cbind(values,sub.df)
   terms = names(sub.df)[2:ncol(sub.df)]
   terms = cbind(terms, combination)

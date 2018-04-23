@@ -118,6 +118,7 @@ get_paths_with_cpds_org=function(organism_code, compounds, full.result=T){
   names_paths=c()
   compounds_in_paths=c()
   compounds_in_paths_names=c()
+  ratio=c()
   for (i in 1:length(org_paths)){
     path=org_paths[i]
     path_name=names(org_paths)[i]
@@ -128,14 +129,16 @@ get_paths_with_cpds_org=function(organism_code, compounds, full.result=T){
     if (length(cpds_idx)>0){
       paths_with_cpds=c(paths_with_cpds, path)
       names_paths=c(names_paths, path_name)
+      ratio=c(ratio, length(cpds_idx)/length(nods))
       if (full.result){
         compounds_in_paths=c(compounds_in_paths, paste(compounds[unique(cpds_idx)], collapse="; "))
         compounds_in_paths_names=c(compounds_in_paths_names, paste(names(compounds)[unique(cpds_idx)], collapse="; "))
       }
     }
   }
-  if(full.result) return(data.frame(pathways=paths_with_cpds, compounds=compounds_in_paths, compounds_names=compounds_in_paths_names, row.names=names_paths, stringsAsFactors=F))
-  return(data.frame(pathways=paths_with_cpds, row.names=names_paths, stringsAsFactors=F))
+  order_idx=order(ratio)
+  if(full.result) return(data.frame(pathways=paths_with_cpds, ratio=ratio, compounds=compounds_in_paths, compounds_names=compounds_in_paths_names, row.names=names_paths, stringsAsFactors=F)[order_idx,])
+  return(data.frame(pathways=paths_with_cpds, ratio=ratio, row.names=names_paths, stringsAsFactors=F)[order_idx,])
   
 }
 

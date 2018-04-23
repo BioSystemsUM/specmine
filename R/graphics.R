@@ -193,6 +193,50 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 }
 
 
+
+
+##################################
+#####PLOT OF MS AND NMR PEAKS#####
+##################################
+
+plot_peaks=function(dataset, column.class, samples = NULL, 
+                    variable.bounds = NULL, xlab = NULL, ylab = NULL, lwd=1,
+                    legend.place = "topright", cex = 0.8, reverse.x = F, p.size=0.5, ...){
+  
+  if (is.null(xlab)) xlab = get_x_label(dataset)
+  if (is.null(ylab)) ylab = get_value_label(dataset)
+  
+  if (is.null(variable.bounds)){
+    variables = rownames(dataset$data)
+    vars = variables
+  } 
+  else {
+    x.vars = get_x_values_as_num(dataset)
+    variables = rownames(dataset$data)[x.vars > variable.bounds[1] & x.vars < variable.bounds[2]] 
+    vars = variables
+  }
+  
+  if (reverse.x) xlim = c( max(as.numeric(vars)), min(as.numeric(vars)) )
+  else xlim = range(as.numeric(vars))
+  
+  if (is.null(samples)){
+    samples = colnames(dataset$data)
+    metadata = dataset$metadata[,column.class]
+  } 
+  else {
+    metadata = factor(dataset$metadata[samples, column.class])
+  }
+  
+  matplot(vars, dataset$data[variables,samples], col=as.integer(metadata),
+          xlab=xlab, ylab=ylab, xlim=xlim, type="p", pch=16, cex=p.size, ...)
+  
+  if (legend.place != "none")
+    legend(legend.place, levels(metadata), cex=cex, fill = sort(as.integer(factor(levels(metadata))))) 
+}
+
+
+
+
 ##########################################################################################################
 ## Multiplot from ggplot2 - function taken from http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_%28ggplot2%29/
 
