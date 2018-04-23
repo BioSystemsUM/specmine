@@ -14,5 +14,5 @@ get_OrganismsCodes()
 Data frame with t number, organism code, full name and phylogeny for each kegg organism.
 }
 \examples{
-get_OrganismsCodes()
+##get_OrganismsCodes()
 }

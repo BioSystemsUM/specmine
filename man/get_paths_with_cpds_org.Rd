@@ -19,7 +19,7 @@ get_paths_with_cpds_org(organism_code, compounds, full.result=T)
 \value{
 Data frame.
 
-If full result is chosen, the data frame contains information on the pathways of the organism that contains one or more of the given compounds and, for each pathway, the kegg codes (and their names) of the compounds given that are present in that path.
+If full result is chosen, the data frame contains information on the pathways of the organism that contains one or more of the given compounds and, for each pathway, the kegg codes (and their names) of the compounds given that are present in that path. The ratio between the number of compounds given compounds present in each pathway and the total number of compounds in each pathway is also given, full result or not.
 
 If full result is not wanted, only the pathways will be given.
 }

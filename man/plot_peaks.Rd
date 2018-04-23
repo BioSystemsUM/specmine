@@ -8,9 +8,9 @@ Plot the peaks of a MS or NMR dataset.
 Function returns a plot where each point represents the intensity of a peak in a sample. Peaks are coloured according to a metadata class. 
 }
 \usage{
-plot_peaks(dataset, column.class, samples = NULL, 
-                        variable.bounds = NULL, xlab = NULL, ylab = NULL, lwd=1,
-                        legend.place = "topright", cex = 0.8, reverse.x = F, p.size=0.5, ...)
+plot_peaks(dataset, column.class, samples = NULL, variable.bounds = NULL,
+xlab = NULL, ylab = NULL, legend.place = "topright", cex = 0.8,
+reverse.x = F, p.size=0.5, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

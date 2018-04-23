@@ -200,7 +200,7 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 ##################################
 
 plot_peaks=function(dataset, column.class, samples = NULL, 
-                    variable.bounds = NULL, xlab = NULL, ylab = NULL, lwd=1,
+                    variable.bounds = NULL, xlab = NULL, ylab = NULL,
                     legend.place = "topright", cex = 0.8, reverse.x = F, p.size=0.5, ...){
   
   if (is.null(xlab)) xlab = get_x_label(dataset)
