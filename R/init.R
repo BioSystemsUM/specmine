@@ -10,7 +10,10 @@ for (n in 1:length(names)){
 }
 
 if (!"rcytoscapejs" %in% rownames(installed.packages())){
-	if (!"devtools" %in% rownames(installed.packages())) {install.packages("devtools", repos="https://cloud.r-project.org")}
+	if (!"devtools" %in% rownames(installed.packages())) {
+	  if(!"memoise" %in% rownames(installed.packages())){install.packages("memoise", repos="https://cloud.r-project.org")}
+	  install.packages("devtools", repos="https://cloud.r-project.org")
+	}
 	devtools::install_github('cytoscape/r-cytoscape.js')
 }
 
