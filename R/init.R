@@ -14,7 +14,7 @@ if (!"rcytoscapejs" %in% rownames(installed.packages())){
 	  if(!"memoise" %in% rownames(installed.packages())){install.packages("memoise", repos="https://cloud.r-project.org")}
 	  install.packages("devtools", repos="https://cloud.r-project.org")
 	}
-	devtools::install_github('cytoscape/r-cytoscape.js')
+	devtools::install_github('cytoscape/r-cytoscape.js@v0.0.7')
 }
 
 #if (!("mzmatch.R" %in% rownames(installed.packages()))){
