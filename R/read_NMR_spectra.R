@@ -146,7 +146,7 @@ read_Bruker_files=function(bruker_directory, metadata_file=NULL,
                            description="", label.x="ppm", label.values="intensity"){
   
   #Get data paths of the files to read:
-  files_study=list.files(bruker_directory, include.dirs=T, full.names=T)
+  files_study=list.files(bruker_directory, include.dirs=T, full.names=T, recursive=T)
   if (zipped){
     folders_zip_data=grep("[.]zip$", files_study, value=T)
     if(length(folders_zip_data)==0) stop("No zip files in directory ", bruker_directory)
