@@ -10,10 +10,10 @@
   
   data.dx = read_data_dx(folder.data)
   
-  freqs = data.dx[[1]][[2]][,1] # get frequencies from first spectrum
+  freqs = data.dx[[1]][[4]][,1] # get frequencies from first spectrum
   datamat = matrix(data = NA, nrow = length(freqs), ncol = length(data.dx))
 
-  for (i in 1:length(data.dx)) datamat[,i] = data.dx[[i]][[2]][,2]
+  for (i in 1:length(data.dx)) datamat[,i] = data.dx[[i]][[4]][,2]
   
   rownames(datamat) = as.character(freqs)
   colnames(datamat) = names(data.dx)
