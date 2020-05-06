@@ -2,10 +2,11 @@ globalVariables("group")
 
 names = c("genefilter", "xcms", "impute", "MAIT")
 
+if (!"BiocManager"%in% rownames(installed.packages())) install.packages("BiocManager")
+
 for (n in 1:length(names)){
 	if (!(names[n] %in% rownames(installed.packages()))){
-		source("http://bioconductor.org/biocLite.R")
-		biocLite(names[n])
+		BiocManager::install(names[n])
 	}
 }
 
