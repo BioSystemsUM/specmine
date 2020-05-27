@@ -20,7 +20,7 @@ pathway_analysis(compounds, pathway,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{compounds}{Vector of compounds of interest.}
+  \item{compounds}{Vector of compounds of interest, in kegg codes.}
   \item{pathway}{KEGG code (e.g., "hsa00010") of the path wanted.}
   \item{nodeNames}{How the nodes should be named. If "kegg", nodes are named with kegg codes. If "names", nodes are named with the common names.}
   \item{nodeTooltip}{If a tooltip should appear when hovering a node.}
@@ -39,5 +39,6 @@ Shows the pathway created.
 ##       "HMDB0001257", "HMDB0000254", "HMDB0000254", "HMDB0000258", "HMDB0002085", "HMDB0000975",
 ##       "HMDB0000300")
 ##compounds=convert_hmdb_to_kegg(cpds)
+##You can also convert CHEBI and SPCMNM (specmine code for metabolites) codes to KEGG
 ##pathway_analysis(compounds, "mus00750", nodeNames="names", map.layout="preset")
 }

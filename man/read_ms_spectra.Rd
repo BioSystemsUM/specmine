@@ -62,9 +62,9 @@ header.row.meta = TRUE, sep.meta = ",")
 
 \examples{
 \dontrun{
-  ## Example of reading a dataset from MS files
-  dataset = read_ms_spectra("data", type = "nmr-spectra", "metadata.csv", 
-	    description = "description of the dataset")
+  ### Example of reading a dataset from MS files
+  ##dataset = read_ms_spectra("data", type = "nmr-spectra", "metadata.csv", 
+	 ##   description = "description of the dataset")
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

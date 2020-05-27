@@ -28,10 +28,10 @@ pcas = c(1, 2, 3))
 }
 
 \examples{
-  ## Example of a 3D PCA biplot
-  data(cachexia)
-  pca.result = pca_analysis_dataset(cachexia)
-  pca_biplot3D(cachexia, pca.result, "Muscle.loss", pcas = c(1,2,3))
+  ### Example of a 3D PCA biplot
+  #data(cachexia)
+  #pca.result = pca_analysis_dataset(cachexia)
+  #pca_biplot3D(cachexia, pca.result, "Muscle.loss", pcas = c(1,2,3))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

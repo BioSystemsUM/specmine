@@ -38,11 +38,11 @@ legend.place = "topright", ...)
 
 \examples{
 \dontrun{
-  ## Example of a 3d pca plot
-  data(cachexia)
-  train.result = train_models_performance(cachexia, "pls", 
-	"Muscle.loss", "cv")
-  pca_plot_3d(cachexia, train.result$final.models$pls, "Muscle.loss")
+  ### Example of a 3d pca plot
+  ##data(cachexia)
+  ##train.result = train_models_performance(cachexia, "pls", 
+	##"Muscle.loss", "cv")
+  ##pca_plot_3d(cachexia, train.result$final.models$pls, "Muscle.loss")
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

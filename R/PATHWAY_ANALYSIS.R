@@ -4,9 +4,10 @@
 
 #' Get the names of the compounds that correspond to the kegg codes given:
 get_cpd_names=function(kegg_codes){
-  
-  env=new.env()
-  data(conversion_table, package="specmine", envir=env)
+  if(!requireNamespace("KEGGREST", quietly = TRUE)){
+    stop("Package KEGGREST needed for this function to work. Please install it: BiocManager::install('KEGGREST').",
+         call. = FALSE)
+  }
   
   n=c()
   n_kegg=c()
@@ -15,13 +16,15 @@ get_cpd_names=function(kegg_codes){
   for (i in 1:length(kegg_codes)){
     kegg=kegg_codes[i]
     tab_kegg=strsplit(kegg, ":")[[1]][2]
-    if (tab_kegg%in%env$conversion_table$KEGG){
-      ns=na.omit(env$conversion_table$NAME[env$conversion_table$KEGG==tab_kegg])
-      n=c(n,ns)
-      n_kegg=c(n_kegg, rep(kegg, length(ns)))
-    }
-    else{
-      cpds_to_get=c(cpds_to_get, kegg)
+    for(i in 1:length(codes$KEGG)){
+      kegg_ref=codes$KEGG[i]
+      if (tab_kegg %in% unlist(strsplit(kegg_ref, "; ")[[1]])){
+        n=c(n,codes$NAME[i])
+        n_kegg=c(n_kegg, kegg)
+      }
+      else{
+        cpds_to_get=c(cpds_to_get, kegg)
+      }
     }
   }
   
@@ -40,28 +43,68 @@ get_cpd_names=function(kegg_codes){
   
   names(n_kegg)=n
   return(n_kegg)
-  
 }
 
 #' Get kegg codes from hmdb codes:
 convert_hmdb_to_kegg=function(hmdb_codes){
   
-  env=new.env()
-  data(conversion_table, package="specmine", envir=env)
-  
   hmdbs=toupper(hmdb_codes)
   names_cpds=c()
   keggs=c()
-  i=0
   for (hmdb in hmdbs){
-    i=i+1
-    cpd=env$conversion_table$KEGG[env$conversion_table$HMDB==hmdb]
-    if (!is.na(cpd)){
-      cpd=paste("cpd:", env$conversion_table$KEGG[env$conversion_table$HMDB==hmdb], sep="")
-      keggs=c(keggs, cpd)
-      names_cpds=c(names_cpds, env$conversion_table$NAME[env$conversion_table$HMDB==hmdb])
+    for(i in 1:length(codes$HMDB)){
+      hmdb_ref=codes$HMDB[i]
+      if (hmdb %in% unlist(strsplit(hmdb_ref, "; ")[[1]])){
+        keggs_for_hmdb = strsplit(codes$KEGG[i], "; ")[[1]]
+        if(length(keggs_for_hmdb)!=0){
+          cpd=paste("cpd:", keggs_for_hmdb, sep="")
+          keggs=c(keggs, cpd)
+          names_cpds=c(names_cpds, rep(codes$NAME[codes$HMDB==hmdb], length(cpd)))
+        }
+      }
     }
-    else{cat("The following hmdb code is not available at kegg: ", hmdb, "\n")} 
+  }
+  names(keggs)=names_cpds
+  return(keggs)
+}
+
+#' Get kegg codes from chebi codes:
+convert_chebi_to_kegg=function(chebi_codes){
+  
+  chebis=toupper(chebi_codes)
+  names_cpds=c()
+  keggs=c()
+  for (chebi in chebis){
+    for(i in 1:length(codes$HMDB)){
+      chebi_ref=codes$CHEBI[i]
+      if (chebi %in% unlist(strsplit(chebi_ref, "; ")[[1]])){
+        keggs_for_chebi = strsplit(codes$KEGG[i], "; ")[[1]]
+        if(length(keggs_for_chebi)!=0){
+          cpd=paste("cpd:", keggs_for_chebi, sep="")
+          keggs=c(keggs, cpd)
+          names_cpds=c(names_cpds, rep(codes$NAME[codes$CHEBI==chebi], length(cpd)))
+        }
+      }
+    }
+  }
+  names(keggs)=names_cpds
+  return(keggs)
+}
+
+#' Get kegg codes from spcmnm codes:
+convert_multiple_spcmnm_to_kegg=function(spcmnm_codes){
+  
+  spcmnms=toupper(spcmnm_codes)
+  names_cpds=c()
+  keggs=c()
+  for (spcmnm in spcmnms){
+    if(!spcmnm%in%codes$SPCMNM) stop("The following SPCMNM code is not available: ", spcmnm, "\n")
+    keggs_for_spcmnm=unlist(strsplit(codes$KEGG[codes$SPCMNM==spcmnm], "; ")[[1]])
+    if(length(keggs_for_spcmnm)!=0){
+      cpd=paste("cpd:", keggs_for_spcmnm, sep="")
+      keggs=c(keggs, cpd)
+      names_cpds=c(names_cpds, rep(codes$NAME[codes$SPCMNM==spcmnm], length(cpd)))
+    }
   }
   names(keggs)=names_cpds
   return(keggs)
@@ -74,6 +117,10 @@ convert_hmdb_to_kegg=function(hmdb_codes){
 
 #' Get code, t number, full name and phylogeny of all organisms in KEGG:
 get_OrganismsCodes=function(){
+  if(!requireNamespace("KEGGREST", quietly = TRUE)){
+    stop("Package KEGGREST needed for this function to work. Please install it: BiocManager::install('KEGGREST').",
+         call. = FALSE)
+  }
   organisms=KEGGREST::keggList("organism")
   organisms.Inf=data.frame(Tnumber=organisms[,1], organismCode=organisms[,2],
                            speciesNames=organisms[,3], phylogeny=organisms[,4], stringsAsFactors=F)
@@ -82,6 +129,10 @@ get_OrganismsCodes=function(){
 
 #' Get vector with paths numbers that occur in the given organism, named with the full path name:
 get_metabPaths_org=function(org_code){
+  if(!requireNamespace("KEGGREST", quietly = TRUE)){
+    stop("Package KEGGREST needed for this function to work. Please install it: BiocManager::install('KEGGREST').",
+         call. = FALSE)
+  }
   
   if (!org_code%in%get_OrganismsCodes()[["organismCode"]]) stop("Invalid organism code.")
   
@@ -111,6 +162,10 @@ get_metabPaths_org=function(org_code){
 
 #' Get only the paths of the organism that contain given compounds:
 get_paths_with_cpds_org=function(organism_code, compounds, full.result=T){
+  if(!requireNamespace("KEGGgraph", quietly = TRUE)){
+    stop("Package KEGGgraph needed for this function to work. Please install it: BiocManager::install('KEGGgraph').",
+         call. = FALSE)
+  }
   
   org_paths=get_metabPaths_org(organism_code)
   
@@ -228,10 +283,8 @@ create_pathway_with_reactions=function(path, path.name, identified_cpds,
   #Get possible maps to which the present map conects to, and add it to nodes and reactions:
   map_names=c()
   maps=c()
-  env=new.env()
-  data(maps_con, package="specmine", envir=env)
   path_p=substr(path.name, nchar(path.name)-5+1, nchar(path.name))
-  maps_con=env$maps_con[grep(paste(".*", path_p, ".*", sep=""), env$maps_con$in_map),]
+  maps_con=maps_con[grep(paste(".*", path_p, ".*", sep=""), maps_con$in_map),]
   for (node in path@nodes){
     if(KEGGgraph::getType(node)=="map" & !(KEGGgraph::getName(node)[1]%in%maps) & length(grep("^TITLE:", node@graphics@name))==0){
       map_name=KEGGgraph::getName(node)
@@ -373,6 +426,29 @@ pathway_analysis=function(compounds, pathway, #cpd.type="kegg",
                           map.zoom=F, map.layout="preset", map.width=NULL, map.height=NULL){
   #Path code: "hsa00010", for example
   #For now, "compounds" has to be in kegg codes (cpd.type="kegg").
+  if (!requireNamespace("KEGGgraph", quietly = TRUE)) {
+    if(!requireNamespace("KEGGREST", quietly = TRUE)){
+      if(!requireNamespace("rcytoscapejs", quietly = TRUE)){
+        stop("Packages KEGGgraph, KEGGREST and rcytoscapejs are needed for this function to work. Please install them: BiocManager::install(c('KEGGgraph','KEGGREST')). For rcytoscape, use: devtools::install_github('cytoscape/r-cytoscape.js@v0.0.7')",
+             call. = FALSE)
+      }
+      stop("Packages KEGGgraph and KEGGREST are needed for this function to work. Please install them: BiocManager::install(c('KEGGgraph','KEGGREST')).",
+           call. = FALSE)
+    }
+    else if(!requireNamespace("rcytoscapejs", quietly = TRUE)){
+      stop("Packages KEGGgraph and rcytoscapejs are needed for this function to work. Please install them: BiocManager::install(c('KEGGgraph')). For rcytoscape, use: devtools::install_github('cytoscape/r-cytoscape.js@v0.0.7')",
+           call. = FALSE)
+    }
+    stop("Package KEGGgraph needed for this function to work. Please install it: BiocManager::install('KEGGgraph').", call. = FALSE)
+  }
+  else if(!requireNamespace("KEGGREST", quietly = TRUE)){
+    if(!requireNamespace("rcytoscapejs", quietly = TRUE)){
+      stop("Packages KEGGREST and rcytoscapejs are needed for this function to work. Please install them: BiocManager::install(c('KEGGREST')). For rcytoscape, use: devtools::install_github('cytoscape/r-cytoscape.js@v0.0.7')",
+           call. = FALSE)
+    }
+    stop("Package KEGGREST needed for this function to work. Please install it: BiocManager::install('KEGGREST').",
+         call. = FALSE)
+  }
   
   #Get pathway maps and graphs
   cat("Getting pathway map\n")

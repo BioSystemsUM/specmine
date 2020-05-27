@@ -237,6 +237,10 @@ is_windows <- function() {
 }
 
 read_varian_spectrum_raw=function(directory, zero_filling=T, apodization=T){
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package reticulate needed for this function to work. Please install it: install.packages('reticulate')",
+         call. = FALSE)
+  }
   
   files=list.files(directory, recursive=T, full.names = T)
   fid_file=grep(".*fid$", files, value=T)
@@ -269,6 +273,10 @@ read_varian_spectra_raw=function(varian_spectra_directory,
                                  metadata_file=NULL, m.header_col=T, m.header_row=T, m.sep=",",
                                  samples.names=NULL, zero_filling=T, apodization=T, zipped=T,
                                  description="", label.x="ppm", label.values="intensity"){
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    stop("Package reticulate needed for this function to work. Please install it: install.packages('reticulate')",
+         call. = FALSE)
+  }
   
   spectra.list=list()
   

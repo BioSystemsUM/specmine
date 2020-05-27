@@ -80,6 +80,10 @@ kmeans_plot = function(dataset, kmeans.result){
 
 #dendrogram
 "dendrogram_plot" = function(dataset, hc.result, column.metadata = 1, labels = NULL, ...){
+  if (!requireNamespace("ggdendro", quietly = TRUE)) {
+    stop("Package ggdendro needed for this function to work. Please install it: install.packages('ggdendro')",
+         call. = FALSE)
+  }
   if (!is.null(labels)){
     labels.hc = labels
   } else {

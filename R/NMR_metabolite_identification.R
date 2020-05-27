@@ -1,357 +1,518 @@
-########################################################
-#####NMR METABOLITE IDENTIFICATION (FROM NMR PEAKS)#####
-########################################################
-
-
-#' Choose the metabolites' spectra to be the reference.
-choose_nmr_references <- function(frequency, nucleus, solvent=NULL, ph=NULL, temperature=NULL){ #, org=NULL){
-  ##org: organism code (or phylogeny --- later)
+nmr_identification = function(dataset, ppm.tol, frequency_scores, solvent_scores, organism_scores,
+                              method='Match_uniq', per.sample=F, tresh_zero=0, alpha=10e-4){
   
+  if(!method%in%c('Match_uniq', 'Hyper', 'Hyper_uniq')) stop('Invalid method. Valid methods: Match_uniq, Hyper or Hyper_uniq')
   
-  env=new.env()
-  data(nmr_1d_spectra, package="specmine", envir=env)
-  nmr_1d_spectra=env$nmr_1d_spectra
-  data(nmr_1d_spectra_options, package="specmine", envir=env)
-  nmr_1d_spectra_options=env$nmr_1d_spectra_options
-  
-  #FREQUENCY: 400; 500; 600
-  if(frequency%in%c(400, 500, 600)){
-    nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$frequency==frequency]]
-  }
-  else{
-    print("No frequency in library with that value. Must be 400, 500 or 600")
-  }
-
-  #NUCLEUS
-  #1H or 13C
-  if(nucleus%in%c("1H", "13C")){
-    nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$nucleus==nucleus]]
-  }
-  else{
-    print("No nucleus in library with that name. Must be '1H' or '13C'")
+  if(is.null(frequency_scores)|is.null(solvent_scores)|is.null(organism_scores)){
+    stop('Arguments missing: frequency_scores, solvent_score or organism_scores. Please check help page of the function to know how to set them')
   }
   
-  #SOLVENT
-  #100%_DMSO; 5%_DMSO; acetone+DMSO+tetramethylurea; acetone+DMSO+tetramethylurea; C;
-  #CCl4; CD3OD; CDCl3; cyclohexane; D2O; DMSO-d6; DMSO-d6+HCl; neat; TMS; Water
-  if (!is.null(solvent)){
-    if(solvent%in%levels(nmr_1d_spectra_options$solvent)){
-      nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$solvent==solvent]]
-    }
-    else{
-      print("No solvent in library with that name.")
-    }
-  }
+  res=list()
   
-  #PH
-  #NA, 1.00, 1.20, 1.34, 3.00, 3.50, 4.00, 5.00, 5.50, 6.00, 6.48, 6.50, 6.90, 6.98, 6.99, 7.00
-  #7.01, 7.02, 7.03, 7.10, 7.20, 7.78, 8.00, 8.50, 9.00, 10.00, 10.30, 12.00
-  if(!is.null(ph)){
-    if(length(ph)==2){
-      nmr_1d_spectra_options=nmr_1d_spectra_options[!is.na(nmr_1d_spectra_options$ph),]
-      nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$ph<=ph[2]&nmr_1d_spectra_options$ph>=ph[1]]]
-    }
-    else if (length(ph)==1){
-      nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$ph==ph]]
-    }
+  #UNIQUENESS SCORES:
+  if(method%in%c('Match_uniq','Hyper_uniq')){
+    cat("Calculating uniqueness scores...")
+    uniq_scores=uniqueness_scores(0)
+    cat("Done\n")
   }
+  else uniq_scores = NULL
+  #Total number of peaks in library:
+  if(method%in%c('Hyper','Hyper_uniq')) n_peaks_total = length(unique(unlist(spectra_list)))
+  else n_peaks_total = NULL
   
-  #TEMPERATURE
-  #25, 50, NA
-  if (!is.null(temperature)){
-    if(temperature%in%c(25,50)){
-      nmr_1d_spectra=nmr_1d_spectra[nmr_1d_spectra_options$spec_id[nmr_1d_spectra_options$temperature==temperature]]
-    }
-    else{
-      print("No temperature in library with that value.")
-    }
+  ###GETTING COMPOUNDS FOR ORGANISM SCORES
+  cat("Getting compounds for organism scores...\n")
+  all_orgs=get_OrganismsCodes()
+  cpds_groups=list()
+  for(group in names(organism_scores)){
+    if (!group%in%c("other", "not_in_kegg")) cat("-- Getting compounds from ", group, "\n")
+    if(is_organism(group)) cpds_groups[[group]]=compounds_in_organism(group)
+    else if (is_group(group, all_orgs)) cpds_groups[[group]]=compounds_in_group(group, all_orgs)
   }
-  return(nmr_1d_spectra[!is.na(names(nmr_1d_spectra))])
-}
-
-
-
-#' GIVE THE METABOLITES HMDBS and names TO WHICH THE SPECTRA IDS BELONG
-get_hmdbs_with_specs_id=function(spec_ids){
-  env=new.env()
-  data(conversion_table, package="specmine", envir=env)
-  hmdbs_with_spec_refs=env$conversion_table[!is.na(env$conversion_table$SPECTRA_NMR_ONED_OWN), c("HMDB", "NAME", "SPECTRA_NMR_ONED_OWN")]
-  hmdbs=c()
-  spec=c()
-  names=c()
-  for(spec_id in spec_ids){
-    for(i_spec in 1:length(hmdbs_with_spec_refs$SPECTRA_NMR_ONED_OWN)){
-      if(length(grep(paste(".*", spec_id, ".*", sep=""), hmdbs_with_spec_refs$SPECTRA_NMR_ONED_OWN[i_spec]))>0){
-        hmdbs=c(hmdbs, as.character(hmdbs_with_spec_refs$HMDB[i_spec]))
-        names=c(names, as.character(hmdbs_with_spec_refs$NAME[i_spec]))
-        spec=c(spec, spec_id)
-      }
-    }
+  cat('Done\n')
+  
+  #PERFORM IDENTIFICATION:
+  if(!per.sample){
+    samples_peaks = as.numeric(rownames(dataset$data))
+    return(identification_nmr_peaks(samples_peaks, method, ppm.tol, frequency_scores, solvent_scores,
+                                    organism_scores, cpds_groups,
+                                    uniq_scores, n_peaks_total, alpha))
   }
-  res=data.frame(hmdbs, names, spec)
+  res = list()
+  for(samp in colnames(dataset$data)){
+    cat('-SAMPLE', samp, '\n')
+    sample_peaks=as.numeric(names(dataset$data[dataset$data[,samp]>tresh_zero,1]))
+    res[[samp]] = identification_nmr_peaks(sample_peaks, method, ppm.tol, frequency_scores, solvent_scores,
+                                           organism_scores, cpds_groups,
+                                           uniq_scores,n_peaks_total, alpha)
+  }
   return(res)
 }
 
 
 
-
-#' FIND THE BEST CORRELATION VALUE FOR THE CLUSTERING OF PEAKS
-find_corr <- function(dataset_orig, CMETH='pearson', maxPeaks=40) {
+identification_nmr_peaks = function(sample_peaks, method, ppm.tol, frequency_scores, solvent_scores,
+                                    organism_scores, cpds_groups,
+                                    uniq_scores=NULL, n_peaks_total=NULL, alpha=10e-4){
   
-  #CODE ADAPTED FROM THE CODE USED IN THE ARTICLE "An efficient spectra processing method for
-  #metabolite identification from 1H-NMR metabolomics data", by Daniel Jacob, Catherine Deborde,
-  #Annick Moing. 
+  cat("Matching samples to reference peaks...")
+  if(method=="Hyper") res = Hyper_method(sample_peaks, ppm.tol, n_peaks_total, alpha)
+  else if(method=="Hyper_uniq") res = Hyper_uniq_method(sample_peaks, ppm.tol, uniq_scores, n_peaks_total, alpha)
+  else res = Match_uniq_method(sample_peaks, ppm.tol, uniq_scores)
+  cat("Done...\n")
   
-  #Dataset normalization:
-  dataset_norm=normalize(dataset_orig, "median")
-  matrix=t(dataset_norm$data)
-  colnames(matrix)=paste("V",colnames(matrix), sep="")
-  
-  #Correlation matrix between variables:
-  cor_mat <- cor(matrix,method=CMETH)
-  cor_mat[ lower.tri(cor_mat, diag=TRUE) ]<- 0
-  
-  CVAL_MIN<-0.9
-  CVAL_MAX<-0.9999
-  CVAL_STEP<-0.0001
-  CVAL_OPT_MIN<-0
-  CVAL_OPT_MAX<-0
-  CVAL_OPT<-0
-  NBCLUSTERS_MAX<-0
-  CVAL_CRIT<-0
-  
-  MAXSIZE<-maxPeaks
-  
-  cat("CVAL","nb_clusters","nb_clusters_2","size_max","Criterion","nb_buckets",sep=";"); cat ("\n")
-  for (CVAL in seq(CVAL_MIN, CVAL_MAX, by=CVAL_STEP)) {
-    cor_mati <- cor_mat
-    cor_mati[ cor_mati < CVAL] <- 0
-    graph <- igraph::graph.adjacency(cor_mati>CVAL, weighted=TRUE, mode="upper")
-    igraph::E(graph)$weight<-t(cor_mati)[t(cor_mati)>CVAL]
-    igraph::V(graph)$label<- igraph::V(graph)$name
-    cliques <- sapply(igraph::decompose.graph(graph), igraph::vcount)
-    ordcli <- order(cliques,decreasing = T)
-    nb_clusters<-0
-    nb_clusters_2<-0
-    nb_buckets<-0
-    for (i in 1:length(ordcli)) {
-      if (cliques[ordcli[i]]>=2) {
-        nb_clusters <- nb_clusters + 1
-        nb_buckets <- nb_buckets + cliques[ordcli[i]]
-      }
-      if (cliques[ordcli[i]]==2)
-        nb_clusters_2 <- nb_clusters_2 + 1
-    }
-    size_max <- cliques[ordcli[1]]
-    CRIT<-size_max/nb_clusters
-    cat(CVAL,nb_clusters,nb_clusters_2,size_max,-20*log10(CRIT),nb_buckets,sep=";"); cat ("\n")
-    if (size_max>MAXSIZE) next
-    if (size_max<=MAXSIZE && CVAL_OPT_MIN==0) {
-      CVAL_OPT_MIN<-CVAL
-      CVAL_CRIT<-CRIT
-      CVAL_OPT_MAX<-CVAL
-      CVAL_OPT<-CVAL
-      NBCLUSTERS_MAX<-size_max
-      next
-    }
-    if (CRIT<CVAL_CRIT) {
-      CVAL_CRIT<-CRIT
-      CVAL_OPT_MAX<-CVAL
-      if (size_max>NBCLUSTERS_MAX) {
-        NBCLUSTERS_MAX<-size_max
-        CVAL_OPT<-CVAL
-      }
-      next
-    }  
+  cat("Calculating Final scores...")
+  score=c()
+  score_frequency=c()
+  score_solvents=c()
+  score_organisms=c()
+  for(i in 1:dim(res$results_table)[1]){
+    reference_id=res$results_table$SPCMNS[i]
+    
+    score_fr=score_freq(reference_id, frequency_scores)
+    score_solv=score_solvent(reference_id, solvent_scores)
+    score_org=score_organism(res$results_table$SPCMNM[i], cpds_groups, organism_scores)
+    score_final=(res$results_table$match_score[i]+score_fr+score_solv+score_org)/4
+    
+    score=c(score, score_final)
+    score_frequency=c(score_frequency, score_fr)
+    score_solvents=c(score_solvents, score_solv)
+    score_organisms=c(score_organisms, score_org)
   }
-  cat("# -----------------\n")
-  cat("# Optimum Corr Min=",CVAL_OPT_MIN,", Max=",CVAL_OPT_MAX,", Mean=",CVAL_OPT,"\n",sep="")
   
-  return(CVAL_OPT)
+  if(method=='Hyper'){
+    res$results_table = cbind(res$results_table[,c('SPCMNM','Name','SPCMNS')],
+                              score,
+                              res$results_table[,c('match_score')],
+                              score_frequency, score_solvents, score_organisms,
+                              res$results_table[,c('n.peaks.matched','detailed_results_id')])
+    colnames(res$results_table)[5] = 'match_score'
+  }
+  else if(method=='Hyper_uniq'){
+    res$results_table = cbind(res$results_table[,c('SPCMNM','Name','SPCMNS')],
+                              score,
+                              res$results_table[,c('match_score', 'hypergeometric_score', 'uniqueness_score')],
+                              score_frequency, score_solvents, score_organisms,
+                              res$results_table[,c('n.peaks.matched','detailed_results_id')])
+  }
+  else{
+    res$results_table = cbind(res$results_table[,c('SPCMNM','Name','SPCMNS')],
+                              score,
+                              res$results_table[,c('match_score', 'ratio', 'uniqueness_score')],
+                              score_frequency, score_solvents, score_organisms,
+                              res$results_table[,c('n.peaks.matched','detailed_results_id')])
+  }
+  colnames(res$results_table)[4] = 'Final_Score'
+  res$results_table=res$results_table[order(res$results_table$Final_Score, decreasing=T),]
+  cat("Done.\n")
+  return(res)
+}
+
+
+Hyper_method = function(peaks, ppm.tol, n_peaks_total, alpha=10e-4){
+  res = list()
+  Name=c()
+  spcmnm=c()
+  ratio=c()
+  uniqueness=c()
+  match_score=c()
+  p.fdr=c()
+  n.peaks.matched=c()
+  
+  spcmns=c()
+  j=0
+  for (reference_id in names(spectra_list)){
+    reference=spectra_list[[reference_id]]
+    
+    res.ref=match_Hyper(peaks, unique(reference$chemical.shift), n_peaks_total, ppm.tol)
+    
+    if(res.ref$matched_peaks!=0){
+      spcmnm_ids=get_spcmnm_from_spcmns(reference_id)
+      for (i in 1:length(spcmnm_ids)){
+        spcmns=c(spcmns, reference_id)
+        j=j+1
+        id=paste(reference_id, j, sep="_")
+        res$more_results[[id]]=res.ref[c("matched_peaks_ref", "matched_peaks_samp", "reference_peaks")]
+        spcmnm=c(spcmnm, spcmnm_ids[i])
+        Name=c(Name, codes[codes$SPCMNM==spcmnm_ids[i], "NAME"])
+        match_score=c(match_score, res.ref$score)
+        n.peaks.matched=c(n.peaks.matched, res.ref$matched_peaks)
+      }
+    }
+  }
+  
+  p.fdr=p.adjust(match_score, "fdr")
+  hypergeometric_score = rep(0, length(p.fdr))
+  hypergeometric_score[p.fdr>alpha] = 0
+  hypergeometric_score[p.fdr<alpha] = (1-(p.fdr[p.fdr<alpha]/alpha))
+  
+  res$results_table=data.frame(SPCMNM=spcmnm, Name, SPCMNS=spcmns, match_score=hypergeometric_score, n.peaks.matched, detailed_results_id=names(res$more_results), stringsAsFactors=F)
+  maintain_non_zeros = res$results_table$match_score!=0
+  maintain_non_zeros_detailed = res$results_table$detailed_results_id[maintain_non_zeros]
+  res$results_table = res$results_table[maintain_non_zeros,]
+  res$more_results = res$more_results[maintain_non_zeros_detailed]
+  
+  
+  return(res)
 }
 
 
 
-
-
-#' CLUSTER OF VARIABLES (PEAKS)
-nmr_clustering <- function(dataset_orig, CMETH='pearson', CVAL=0.95, MVER=2)
-{
-  #CODE ADAPTED FROM THE CODE USED IN THE ARTICLE "An efficient spectra processing method for
-  #metabolite identification from 1H-NMR metabolomics data", by Daniel Jacob, Catherine Deborde,
-  #Annick Moing. 
+Hyper_uniq_method = function(peaks, ppm.tol, uniq_scores, n_peaks_total, alpha=10e-4){
+  res = list()
+  Name=c()
+  spcmnm=c()
+  ratio=c()
+  uniqueness=c()
+  match_score=c()
+  p.fdr=c()
+  n.peaks.matched=c()
   
-  final.results=list()
-  
-  dataset_norm=normalize(dataset_orig, "median")
-  matrix=t(dataset_norm$data)
-  colnames(matrix)=paste("V",colnames(matrix), sep="")
-  
-  #Correlation matrix between variables:
-  cor_mat <- cor(matrix,method=CMETH)
-  cor_mat[lower.tri(cor_mat, diag=TRUE)]<- 0
-  cor_mat[cor_mat < CVAL] <- 0
-  
-  #vertices: peaks, edges: links two edges with a correlation value bigger than CVAL
-  graph <- igraph::graph.adjacency(cor_mat>CVAL, weighted=TRUE, mode="upper")
-  #weight of edges will be the correlation between them
-  igraph::E(graph)$weight<-t(cor_mat)[t(cor_mat)>CVAL]
-  #Label will be the names of the vertices
-  igraph::V(graph)$label<- igraph::V(graph)$name
-  #Separates graph in the different sub graphs (a sub graph is not connected with anny other
-  #subgraph - no correlation) and counts the number of peaks in each subgraph
-  cliques <- sapply(igraph::decompose.graph(graph), igraph::vcount)
-  ordcli <- order(cliques,decreasing = T) #Gives the graphs' indexes, ordered by the graph from
-                                        #bigger number of vertices to the lowest
-  M <- NULL
-  g<-0
-  
-  data_orig=t(dataset_orig$data)
-  colnames(data_orig)=paste("V",colnames(data_orig), sep="")
-  for (i in 1:length(ordcli)) {
-    ind<-ordcli[i]
-    if (cliques[ind]>=MVER) {
-      g <- g + 1
-      subg <- igraph::decompose.graph(graph)[[ind]]
-      M <- data_orig[,colnames(data_orig) %in% igraph::V(subg)$name]
-      clust <- cbind(as.vector(as.numeric(lapply(igraph::V(subg)$name, function(x) substr(x,2,nchar(x))))),
-                     as.vector(apply(t(M),1,mean)))
-      final.results[[paste("Cluster", g)]]=clust
+  spcmns=c()
+  j=0
+  for (reference_id in names(spectra_list)){
+    reference=spectra_list[[reference_id]]
+    
+    res.ref=match_Hyper(peaks, unique(reference$chemical.shift), n_peaks_total, ppm.tol)
+    
+    if(res.ref$matched_peaks!=0){
+      spcmnm_ids=get_spcmnm_from_spcmns(reference_id)
+      for (i in 1:length(spcmnm_ids)){
+        spcmns=c(spcmns, reference_id)
+        j=j+1
+        id=paste(reference_id, j, sep="_")
+        res$more_results[[id]]=res.ref[c("matched_peaks_ref", "matched_peaks_samp", "reference_peaks")]
+        spcmnm=c(spcmnm, spcmnm_ids[i])
+        Name=c(Name, codes[codes$SPCMNM==spcmnm_ids[i], "NAME"])
+        match_score=c(match_score, res.ref$score)
+        n.peaks.matched=c(n.peaks.matched, res.ref$matched_peaks)
+      }
     }
   }
   
-  return(final.results)
+  p.fdr=p.adjust(match_score, "fdr")
+  hypergeometric_score = rep(0, length(p.fdr))
+  hypergeometric_score[p.fdr>alpha] = 0
+  hypergeometric_score[p.fdr<alpha] = (1-(p.fdr[p.fdr<alpha]/alpha))
+  
+  spcmns_uniq_scores = c(NA, length(hypergeometric_score))
+  Hyper_uniq_score = rep(0, length(hypergeometric_score))
+  for(i in 1:length(hypergeometric_score)){
+    if(hypergeometric_score[i]!=0){
+      Hyper_uniq_score[i] = (hypergeometric_score[i] + uniq_scores[spcmns[i]]) / 2
+      spcmns_uniq_scores[i] = uniq_scores[spcmns[i]]
+    }
+  }
+  
+  res$results_table=data.frame(SPCMNM=spcmnm, Name, SPCMNS=spcmns, match_score=Hyper_uniq_score, hypergeometric_score, uniqueness_score=spcmns_uniq_scores, n.peaks.matched, detailed_results_id=names(res$more_results), stringsAsFactors=F)
+  maintain_non_zeros = res$results_table$match_score!=0
+  maintain_non_zeros_detailed = res$results_table$detailed_results_id[maintain_non_zeros]
+  res$results_table = res$results_table[maintain_non_zeros,]
+  res$more_results = res$more_results[maintain_non_zeros_detailed]
+  
+  return(res)
 }
 
 
 
+Match_uniq_method = function(peaks, ppm.tol, uniq_scores){
+  res = list()
+  Name=c()
+  spcmnm=c()
+  ratio=c()
+  uniqueness=c()
+  match_score=c()
+  p.fdr=c()
+  n.peaks.matched=c()
+  
+  spcmns=c()
+  j=0
+  for (reference_id in names(spectra_list)){
+    reference=spectra_list[[reference_id]]
+    
+    res.ref=match_Match_uniq(peaks, unique(reference$chemical.shift), uniq_scores[[reference_id]], ppm.tol)
+    
+    if(res.ref$matched_peaks!=0){
+      spcmnm_ids=get_spcmnm_from_spcmns(reference_id)
+      for (i in 1:length(spcmnm_ids)){
+        spcmns=c(spcmns, reference_id)
+        j=j+1
+        id=paste(reference_id, j, sep="_")
+        res$more_results[[id]]=res.ref[c("matched_peaks_ref", "matched_peaks_samp", "reference_peaks")]
+        spcmnm=c(spcmnm, spcmnm_ids[i])
+        Name=c(Name, codes[codes$SPCMNM==spcmnm_ids[i], "NAME"])
+        ratio=c(ratio, res.ref$ratio)
+        uniqueness=c(uniqueness, res.ref$uniqueness)
+        match_score=c(match_score, res.ref$score)
+        n.peaks.matched=c(n.peaks.matched, res.ref$matched_peaks)
+      }
+    }
+  }
+  
+  res$results_table=data.frame(SPCMNM=spcmnm, Name, SPCMNS=spcmns, match_score, ratio, uniqueness_score=uniqueness, n.peaks.matched, detailed_results_id=names(res$more_results), stringsAsFactors=F)
+  
+  return(res)
+}
 
 
-#' JACCARD INDEX
-#' 
-#' Calculates the jaccard index, i.e., the similarity between cluster and reference metabolite.
-#' 
-jaccard_index=function(peaksCluster, peaksReference, PPMTOL){
+
+match_Hyper = function(sample_peaks, refMetab_peaks, n_peaks_total, PPMTOL=0.03){
+  l.samp=length(sample_peaks)
+  l.ref=length(refMetab_peaks)
   
   res=list()
   
   #Save the peaks from the cluster and references that matched:
-  matched_peaks_clust=c()
+  matched_peaks_samp=c()
   matched_peaks_ref=c()
   
+  #Sort sample and reference peaks:
+  sample_peaks=sort(sample_peaks)
+  refMetab_peaks=sort(refMetab_peaks)
+  
+  #Variables to calculate hypergeometric test:
   matched_peaks=0
+  n_ref_peaks=l.ref
+  n_notRef_peaks=n_peaks_total-n_ref_peaks
+  n_samp_peaks=l.samp
   
-  #Cluster and reference peaks:
-  clust_cs=sort(peaksCluster[,1])
-  ref_cs=sort(peaksReference$chemical.shift)
-  
-  #For each cluster peak, compare it to the reference peaks:
-  last_pR=1
-  for(pC in 1:length(clust_cs)){
-    if (last_pR>length(ref_cs)) break
-    for(pR in last_pR:length(ref_cs)){
-      inf_limit=ref_cs[pR]-PPMTOL
-      if( round(clust_cs[pC],3) < round(inf_limit,3)) break
-      sup_limit=ref_cs[pR]+PPMTOL
-      if( round(clust_cs[pC],3) <= round(sup_limit,3)){
-        matched_peaks = matched_peaks + 1
-        last_pR=pR+1
-        
-        matched_peaks_clust=c(matched_peaks_clust, round(clust_cs[pC],3))
-        matched_peaks_ref=c(matched_peaks_ref, round(ref_cs[pR],3))
-        break
+  if (l.samp<l.ref){
+    #For each sample peak, compare it to the reference peaks:
+    last_pR=1
+    for(pS in 1:length(sample_peaks)){
+      if (last_pR>l.ref) break
+      for(pR in last_pR:l.ref){
+        inf_limit=refMetab_peaks[pR]-PPMTOL
+        if(round(sample_peaks[pS],3) < round(inf_limit,3)) break
+        sup_limit=refMetab_peaks[pR]+PPMTOL
+        if(round(sample_peaks[pS],3) <= round(sup_limit,3)){
+          #if(multiplets){
+          #  n_multiplets = sum(refMetab_peaks == refMetab_peaks[pR])
+          #  matched_peaks = matched_peaks + n_multiplets
+          #}
+          #else{
+          matched_peaks = matched_peaks + 1
+          last_pR=pR+1
+          #}
+          
+          matched_peaks_samp=c(matched_peaks_samp, round(sample_peaks[pS],3))
+          matched_peaks_ref=c(matched_peaks_ref, round(refMetab_peaks[pR],3))
+          break
+        }
       }
     }
   }
-  score = matched_peaks / (length(unique(ref_cs))+length(unique(clust_cs))-matched_peaks)
+  else{
+    #For each reference peak, compare it to the sample peaks:
+    last_pS=1
+    #if(multiplets) refids = which(!duplicated(refMetab_peaks))
+    #else refids = 1:refMetab_peaks
+    for(pR in 1:length(refMetab_peaks)){
+      if (last_pS>l.samp) break
+      for(pS in last_pS:l.samp){
+        inf_limit=sample_peaks[pS]-PPMTOL
+        if(round(refMetab_peaks[pR],3) < round(inf_limit,3)) break
+        sup_limit=sample_peaks[pS]+PPMTOL
+        if(round(refMetab_peaks[pR],3) <= round(sup_limit,3)){
+          #if(multiplets) matched_peaks = matched_peaks + sum(refMetab_peaks == refMetab_peaks[pR])
+          #else
+          matched_peaks = matched_peaks + 1
+          last_pS=pS+1
+          
+          matched_peaks_samp=c(matched_peaks_samp, round(sample_peaks[pS],3))
+          matched_peaks_ref=c(matched_peaks_ref, round(refMetab_peaks[pR],3))
+          break
+        }
+      }
+    }
+  }
+  
+  #Calculate hypergeometric test:
+  ht=dhyper(matched_peaks, n_ref_peaks, n_notRef_peaks, n_samp_peaks)
   
   #Store results:
-  res$score=score
   res$matched_peaks_ref=matched_peaks_ref
-  res$matched_peaks_clust=matched_peaks_clust
-  res$reference_peaks=ref_cs
-  
+  res$matched_peaks_samp=matched_peaks_samp
+  res$reference_peaks=refMetab_peaks
+  res$score=ht
+  res$matched_peaks=matched_peaks
   
   return(res)
 }
 
 
 
-
-
-#' FUNCTION TO DO THE NMR IDENTIFICATION
-#' 
-#' This function performs metabolite identification on a dataset of nmr peaks, finding the top
-#' 5 reference metabolites that matched with each cluster of variables formed.
-nmr_identification <- function(dataset, ppm.tol=0.03,
-                               clust.method='pearson', clust.treshold=NULL, clust.peaks.min=2,
-                               clust.maxPeaks=40, clust.nTop=5,
-                               freq=500, nucl="1H", solv=NULL, pH=NULL, temp=NULL){
+match_Match_uniq = function(sample_peaks, refMetab_peaks, uniq_score, PPMTOL=0.03){
+  l.samp=length(sample_peaks)
+  l.ref=length(refMetab_peaks)
   
-  #Choose reference metabolites:
-  cat("Getting reference metabolites...\n")
-  references=choose_nmr_references(frequency=freq, nucleus=nucl, solvent=solv, ph=pH,
-                                   temperature=temp)
-  #Get names of the reference metabolites:
-  hmdbs_to_spec=get_hmdbs_with_specs_id(names(references))
-  
-  #Find best correlation value for the clusters correlation treshold, if a value is not given:
-  if (is.null(clust.treshold)){
-    cat("Getting best correlation value...\n")
-    if (is.null(clust.maxPeaks)){
-      nPeaks=c()
-      for(spectra in references){
-        nPeaks=c(nPeaks, dim(spectra)[1])
-      }
-      nPeaks=max(nPeaks)
-    }
-    else nPeaks=clust.maxPeaks
-    clust.treshold=find_corr(dataset, CMETH=clust.method, maxPeaks=nPeaks)
-  }
-  #Get clusters:
-  cat("Getting the clusters of the peaks...\n")
-  clusters=nmr_clustering(dataset, CMETH=clust.method, CVAL=clust.treshold,
-                                  MVER=clust.peaks.min)
-  
-  #Results variable:
   res=list()
   
-  #For each cluster, compare with each reference:
-  cat("Matching clusters with reference metabolites...\n")
-  for (clust_id in 1:length(clusters)){
-    full_res=list()
-    score_clust=c()
-    n_score_clust=c()
-    for (ref_id in 1:length(references)){
-      res_ref=jaccard_index(clusters[[clust_id]], references[[ref_id]], PPMTOL=ppm.tol)
-      
-      spec_id=names(references)[ref_id]
-      hmdb_id=as.character(hmdbs_to_spec$hmdbs[hmdbs_to_spec$spec==spec_id])
-      for(h in hmdb_id){
-        full_res[[h]]=res_ref
-        score_clust=c(score_clust, res_ref$score)
-        n_score_clust=c(n_score_clust, h)
+  #Save the peaks from the cluster and references that matched:
+  matched_peaks_samp=c()
+  matched_peaks_ref=c()
+  
+  #Sort sample and reference peaks:
+  sample_peaks=sort(sample_peaks)
+  refMetab_peaks=sort(refMetab_peaks)
+  
+  matched_peaks=0
+  n_ref_peaks=l.ref
+  n_samp_peaks=l.samp
+  if (l.samp<l.ref){
+    #For each sample peak, compare it to the reference peaks:
+    last_pR=1
+    for(pS in 1:length(sample_peaks)){
+      if (last_pR>l.ref) break
+      for(pR in last_pR:l.ref){
+        inf_limit=refMetab_peaks[pR]-PPMTOL
+        if(round(sample_peaks[pS],3) < round(inf_limit,3)) break
+        sup_limit=refMetab_peaks[pR]+PPMTOL
+        if(round(sample_peaks[pS],3) <= round(sup_limit,3)){
+          #if(multiplets){
+          #  n_multiplets = sum(refMetab_peaks == refMetab_peaks[pR])
+          #  matched_peaks = matched_peaks + n_multiplets
+          #}
+          #else{
+          matched_peaks = matched_peaks + 1
+          last_pR=pR+1
+          #}
+          
+          matched_peaks_samp=c(matched_peaks_samp, round(sample_peaks[pS],3))
+          matched_peaks_ref=c(matched_peaks_ref, round(refMetab_peaks[pR],3))
+          break
+        }
       }
     }
-    #Store only the top clust.nTop matches of the cluster and the cluster peaks
-    names(score_clust)=n_score_clust
-    score_clust=sort(score_clust, decreasing=T)[1:clust.nTop]
-    for (i in 1:length(score_clust)){
-      if (score_clust[i]==0){
-        take=i:length(score_clust)
-        score_clust=score_clust[-take]
-        break
-      }
-    }
-    full_res=full_res[names(score_clust)]
-    
-    res[[paste("Cluster", clust_id, sep="")]]$cluster.peaks=clusters[[clust_id]]
-    res[[paste("Cluster", clust_id, sep="")]]$metabolites.matched=full_res
-    res[[paste("Cluster", clust_id, sep="")]]$summary=score_clust
   }
-  cat("Done.\n")
+  else{
+    #For each reference peak, compare it to the sample peaks:
+    last_pS=1
+    #if(multiplets) refids = which(!duplicated(refMetab_peaks))
+    #else refids = 1:refMetab_peaks
+    for(pR in 1:length(refMetab_peaks)){
+      if (last_pS>l.samp) break
+      for(pS in last_pS:l.samp){
+        inf_limit=sample_peaks[pS]-PPMTOL
+        if(round(refMetab_peaks[pR],3) < round(inf_limit,3)) break
+        sup_limit=sample_peaks[pS]+PPMTOL
+        if(round(refMetab_peaks[pR],3) <= round(sup_limit,3)){
+          #if(multiplets) matched_peaks = matched_peaks + sum(refMetab_peaks == refMetab_peaks[pR])
+          #else
+          matched_peaks = matched_peaks + 1
+          last_pS=pS+1
+          
+          matched_peaks_samp=c(matched_peaks_samp, round(sample_peaks[pS],3))
+          matched_peaks_ref=c(matched_peaks_ref, round(refMetab_peaks[pR],3))
+          break
+        }
+      }
+    }
+  }
+  
+  #Calculate Match_uniq score:
+  if(matched_peaks==0) score = 0
+  else score = ((matched_peaks/n_ref_peaks) + uniq_score) / 2
+  
+  #Store results:
+  res$matched_peaks_ref=matched_peaks_ref
+  res$matched_peaks_samp=matched_peaks_samp
+  res$reference_peaks=refMetab_peaks
+  res$score=score
+  res$ratio=matched_peaks/n_ref_peaks
+  if(matched_peaks!=0) res$uniqueness=uniq_score
+  else res$uniqueness=NA
+  res$matched_peaks=matched_peaks
   
   return(res)
 }
 
 
+uniqueness_scores = function(ppm_tolerance){
+  
+  all_peaks = c()
+  for(spec in names(spectra_list)) all_peaks = c(all_peaks, unique(round(spectra_list[[spec]]$chemical.shift, digits=3)))
+  peaks_table = table(all_peaks)
+  
+  uniq_values_peaks = c()
+  for(peak in unique(all_peaks)){
+    overlap = sum(peaks_table[as.character(all_peaks[all_peaks>=peak-ppm_tolerance & all_peaks<=peak+ppm_tolerance])])
+    uniq_values_peaks = c(uniq_values_peaks, 1/overlap)
+  }
+  names(uniq_values_peaks) = as.character(unique(all_peaks))
+  
+  res = c()
+  for(spec in names(spectra_list)){
+    peaks = as.character(unique(round(spectra_list[[spec]]$chemical.shift, digits=3)))
+    uniq_score_spec = mean(uniq_values_peaks[peaks])
+    res = c(res, uniq_score_spec)
+  }
+  names(res) = names(spectra_list)
+  
+  return(res)
+}
+
+
+
+
+###DATA CONVERSION
+##SPCMNS-->SPCMNM
+get_spcmnm_from_spcmns=function(spcmns){
+  metabolites=unlist(strsplit(spectra_options[spectra_options$SPCMNS==spcmns, "SPCMNM"], "; "))
+  return(metabolites)
+}
+
+##SPCMNM-->KEGG
+convert_spcmnm_to_kegg=function(spcmnm){
+  keggs=unlist(strsplit(codes$KEGG[codes$SPCMNM==spcmnm], "; ")[[1]])
+  return(keggs)
+}
+
+##CHEBI-->SPCMNM
+convert_chebi_to_spcmnm=function(chebi){
+  spcmnms=c()
+  for(i in 1:length(codes$CHEBI)){
+    chebi_ref=codes$CHEBI[i]
+    if (chebi %in% unlist(strsplit(chebi_ref, "; ")[[1]])) spcmnms=c(spcmnms, codes$SPCMNM[i])
+  }
+  return(spcmnms)
+}
+
+
+
+###SCORES
+##Frequency
+score_freq=function(spcmns, scores=list('400'=0.5, '500'=1, '600'=0.5, '700'=0.5)){
+  score=scores[[as.character(spectra_options[spectra_options$SPCMNS==spcmns, "FREQUENCY"])]]
+  return(score)
+}
+
+##Solvent
+score_solvent=function(spcmns, scores=list(CD3OD=1, D2O=0.8, Water=0.8, CDCl3=0.6, 'Acetone-d6'=0.6, 'Acetone'=0.6,
+                                           "DMSO-d6"=0.4, "100%_DMSO"=0.4, "5%_DMSO"=0.4, C=0.2, C6D6=0.2,
+                                           CD3CN=0.2, C2D2Cl4=0.2, CD2Cl2=0.2, CDC3OD=0.2, Ethanol=1)){
+  score=scores[[spectra_options[spectra_options$SPCMNS==spcmns, "SOLVENT"]]]
+  return(score)
+}
+
+##organism
+score_organism=function(spcmnm, cpds_groups, scores=list('hsa'=1, 'Mammals'=0.8, 'Vertebrates'=0.7, 'Animals'=0.6, 'Eukaryotes'=0.3, 'other'=0.1, 'not_in_kegg'=0.6)){
+  #To specify organism: Kegg code
+  #Availale groups: "Eukaryotes", "Animals", "Vertebrates", "Mammals", "Birds", "Reptiles", "Amphibians", "Fishes", "Arthropods", "Insects",
+  #"Nematodes", "Mollusks", "Cnidarians", "Plants", "Eudicots", "Monocots", "Green algae", "Red algae", "Fungi", "Protist", "Prokaryotes",
+  #"Bacteria", "Archaea"
+  
+  cpds=convert_spcmnm_to_kegg(spcmnm)
+  
+  if(is.null(cpds)) return(scores[['not_in_kegg']])
+  else{
+    possible_scores=c(scores[['other']])
+    for(cpd in cpds){
+      for(group in names(scores)){
+        if(!group%in%c('other', 'not_in_kegg')) if(cpd%in%cpds_groups[[group]]) possible_scores=c(possible_scores, scores[[group]])
+      }
+    }
+    score=max(possible_scores)
+  }
+  return(score)
+}

@@ -241,8 +241,6 @@ plot_peaks=function(dataset, column.class, samples = NULL,
 ## Multiplot from ggplot2 - function taken from http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_%28ggplot2%29/
 
 multiplot <- function(plots, plotlist=NULL, file, cols=1, layout=NULL) {
-
-
   # Make a list from the ... arguments and plotlist
   plots <- c(plots, plotlist)
 

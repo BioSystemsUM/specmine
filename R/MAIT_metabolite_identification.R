@@ -1,5 +1,16 @@
 MAIT_identify_metabolites = function(dataset, metadata.variable, xSet = NULL, data.folder = NULL, features = NULL, 
 									 mass.tolerance = 0.5){
+  if (!requireNamespace("MAIT", quietly = TRUE)) {
+    if(!requireNamespace("xcms", quietly = TRUE)){
+      stop("Packages MAIT and xcms are needed for this function to work. Please install them: BiocManager::install(c('MAIT','xcms')).",
+           call. = FALSE)
+    }
+    else stop("Package MAIT needed for this function to work. Please install it: BiocManager::install('MAIT').", call. = FALSE)
+  }
+  else if(!requireNamespace("xcms", quietly = TRUE)){
+    stop("Package xcms needed for this function to work. Please install it: BiocManager::install('xcms').",
+         call. = FALSE)
+  }
 
 	metadata.var = dataset$metadata[,metadata.variable]
 	mait.object = sampleProcessing_modified(dataDir = data.folder, metadata = metadata.var, xSet = xSet, project = "MAIT")
@@ -30,6 +41,18 @@ sampleProcessing_modified = function (dataDir = NULL, metadata = NULL, xSet = NU
         20), project = NULL, ppm = 10, family = c("gaussian", 
         "symmetric"), span = 0.2, fwhm = 30) 
 {
+    if (!requireNamespace("MAIT", quietly = TRUE)) {
+      if(!requireNamespace("xcms", quietly = TRUE)){
+        stop("Packages MAIT and xcms are needed for this function to work. Please install them: BiocManager::install(c('MAIT','xcms')).",
+             call. = FALSE)
+      }
+      else stop("Package MAIT needed for this function to work. Please install it: BiocManager::install('MAIT').", call. = FALSE)
+    }
+    else if(!requireNamespace("xcms", quietly = TRUE)){
+      stop("Package xcms needed for this function to work. Please install it: BiocManager::install('xcms').",
+           call. = FALSE)
+    }
+  
     if (is.null(dataDir)) {
         stop("No input directory was given")
     }

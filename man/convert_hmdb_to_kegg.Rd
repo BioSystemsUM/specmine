@@ -5,7 +5,7 @@
 Convert HMDB codes to KEGG codes.
 }
 \description{
-Converts a vector of HMDB codes into a vector of the corresponding KEGG codes.
+Converts a vector of HMDB codes into a vector of the corresponding KEGG codes. This is performed by using our internal library used in NMR identification, it will not have all chebi codes.
 }
 \usage{
 convert_hmdb_to_kegg(hmdb_codes)

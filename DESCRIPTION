@@ -1,29 +1,23 @@
 Package: specmine
 Type: Package
 Title: Metabolomics and Spectral Data Analysis and Mining
-Version: 2.0.4
-Date: 2019-05-16
+Version: 3.0.0
+Date: 2020-05-27
 Author: Christopher Costa <chrisbcl@hotmail.com>,
 	Marcelo Maraschin <mtocsy@gmail.com>,
 	Miguel Rocha <mrocha@di.uminho.pt>,
 	Sara Cardoso <saracardoso501@gmail.com>,
 	Telma Afonso <telma.afonso94@gmail.com>
 Maintainer: Miguel Rocha <mrocha@di.uminho.pt>
-Depends: R (>= 3.4.0)
-SystemRequirements: Python (>=3.5.2) and the following python modules: isatools, os, ftplib, glob, logging, pandas, tempfile, shutil, re, nmrglue.
-Imports: compare, hyperSpec, readJDX, baseline, rgl, Metrics, 
-	GGally, ggplot2, ellipse, ggdendro, caret, pls, 
-	pcaPP, RColorBrewer, grid, methods,
-	qdap, MASS, scatterplot3d, genefilter, impute, igraph,
-	KEGGgraph, KEGGREST, reticulate, gdata, speaq
-Suggests: rcytoscapejs, xcms, MAIT
+Depends: R (>= 4.0.0)
+SystemRequirements: Python (>=3.5.2) and the following python module: nmrglue.
+Imports: hyperSpec, caret, ggplot2, impute, ellipse, GGally, pcaPP, compare, baseline, MASS, pls, readJDX,
+         speaq, gdata, genefilter, RColorBrewer, grDevices, graphics, methods, stats, utils, Metrics
+Suggests: ggdendro, reticulate, qdap, scatterplot3d, MAIT, xcms, KEGGgraph, KEGGREST, rcytoscapejs, rgl, grid, curl, RCurl
+LazyData: true
 Description: Provides a set of methods for metabolomics 
 	data analysis, including data loading in different formats, 
 	pre-processing, metabolite identification, univariate and multivariate 
 	data analysis, machine learning, feature selection and pathway analysis. Case studies 
 	can be found on the website: <http://darwin.di.uminho.pt/metabolomicspackage/index.html>.
-	rcytoscapejs is not present in a mainstream repository, but it can be obtained by 
-	typing 'devtools::install_github('cytoscape/r-cytoscape.js@v0.0.7')' on the R command line. It
-	will be downloaded when installed, if not present.
 License: GPL (>= 2)
-RoxygenNote: 6.0.1

@@ -217,6 +217,17 @@ summary_var_importance = function(performances, number.rows){
 # PCA PLOTS
 
 "pca_plot_3d" = function(dataset, model, var.class, pcas = 1:3, colors = NULL, legend.place = "topright", ...) {
+  if (!requireNamespace("qdap", quietly = TRUE)) {
+    if(!requireNamespace("scatterplot3d", quietly = TRUE)){
+      stop("Packages qdap and scatterplot3d are needed for this function to work. Please install them: install.packages(c('qdap','scatterplot3d')).",
+           call. = FALSE)
+    }
+    else stop("Package qdap needed for this function to work. Please install it: install.packages('qdap').", call. = FALSE)
+  }
+  else if(!requireNamespace("scatterplot3d", quietly = TRUE)){
+    stop("Package scatterplot3d needed for this function to work. Please install it: install.packages('scatterplot3d').",
+         call. = FALSE)
+  }
 
   if (length(pcas) != 3) stop("Wrong dimension in parameter pcas")
   if (ncol(model$scores) < 3) stop("Less than 3 components")

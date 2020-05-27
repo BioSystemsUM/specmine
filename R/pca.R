@@ -135,6 +135,11 @@ pca_scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
 #3d scores plot
 pca_scoresplot3D_rgl = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3), size = 1, 
                             labels = FALSE) {
+  if (!requireNamespace("rgl", quietly = TRUE)) {
+    stop("Package rgl needed for this function to work. Please install it: install.packages('rgl')",
+         call. = FALSE)
+  }
+  
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
@@ -149,6 +154,11 @@ pca_scoresplot3D_rgl = function(dataset, pca.result, column.class = NULL, pcas =
 
 pca_scoresplot3D = function(dataset, pca.result, column.class = NULL, pcas=c(1,2,3))
 {
+  if(!requireNamespace("scatterplot3d", quietly = TRUE)){
+    stop("Package scatterplot3d needed for this function to work. Please install it: install.packages('scatterplot3d').",
+         call. = FALSE)
+  }
+  
   has.legend = FALSE
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
@@ -307,6 +317,11 @@ biplot_default_modified = function (x, y, var.axes = TRUE, col, x.colors, colors
 }
 
 pca_biplot3D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2,3)){
+  if (!requireNamespace("rgl", quietly = TRUE)) {
+    stop("Package rgl needed for this function to work. Please install it: install.packages('rgl')",
+         call. = FALSE)
+  }
+  
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
 	rotation = pca.result$rotation
@@ -346,6 +361,11 @@ pca_pairs_plot = function(dataset, pca.result, column.class = NULL, pcas = c(1,2
 #kmeans clustering with 3 PCs
 pca_kmeans_plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2,3), 
                              kmeans.result = NULL, labels = FALSE, size = 1,...) {
+  if (!requireNamespace("rgl", quietly = TRUE)) {
+    stop("Package rgl needed for this function to work. Please install it: install.packages('rgl')",
+         call. = FALSE)
+  }
+  
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){
