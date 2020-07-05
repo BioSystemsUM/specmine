@@ -32,9 +32,10 @@ method = "modpolyfit", ...)
 }
 
 \examples{
+\dontrun{
   ## Example of data correction using background correction
-  data(cassavaPPD)
-  dataset.corrected = data_correction(cassavaPPD, type = "background")
+  dataset.corrected = data_correction(dataset, type = "background")
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

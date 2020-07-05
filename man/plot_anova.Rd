@@ -32,11 +32,11 @@ reverse.x = F)
 \examples{
     ## Example of plotting the ANOVA results - first filter the 
     ## dataset to reduce computation time
-    data(cassavaPPD)
-    cassavaPPD = flat_pattern_filter(cassavaPPD, "iqr", by.percent = TRUE,
+    propolis_proc = missingvalues_imputation(propolis)
+    propolis_proc = flat_pattern_filter(propolis_proc, "iqr", by.percent = TRUE,
 	red.value = 75) 
-    anova.results = aov_all_vars(cassavaPPD, "varieties", doTukey = FALSE)
-    plot_anova(cassavaPPD, anova.results, 0.05e-8)
+    anova.results = aov_all_vars(propolis_proc, "seasons", doTukey = FALSE)
+    plot_anova(propolis_proc, anova.results)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

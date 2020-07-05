@@ -23,11 +23,9 @@ kmeans_plot(dataset, kmeans.result)
 
 \examples{
   ## Example of kmeans plot - dataset filtered for performance purposes
-  data(cassavaPPD)
-  cassavaPPD = flat_pattern_filter(cassavaPPD, "iqr", by.percent = TRUE,
-	red.value = 70)   
-  kmeans.result = kmeans_clustering(cassavaPPD, 3)
-  kmeans_plot(cassavaPPD, kmeans.result)
+  kmeans.result = kmeans_clustering(cachexia, 
+		  num.clusters = 4, type = "samples")
+  kmeans_plot(cachexia, kmeans.result)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

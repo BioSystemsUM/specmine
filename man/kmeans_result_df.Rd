@@ -23,8 +23,8 @@ Data frame with the clusters and the samples' names that belong to each one.
 
 \examples{
   ## Example of showing kmeans cluster's members
-  data(cassavaPPD)
-  kmeans.result = kmeans_clustering(cassavaPPD, 3)
+  kmeans.result = kmeans_clustering(cachexia, 
+		  num.clusters = 4, type = "samples")
   kmeans_result_df(kmeans.result)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

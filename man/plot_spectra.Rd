@@ -51,14 +51,6 @@ legend.place = "topright", cex = 0.8, reverse.x = F, ...)
     additional parameters to matplot.
 }
 }
-
-\examples{
-  ## Example of plotting spectra (simple)
-  data(cassavaPPD)
-  plot_spectra(cassavaPPD, "varieties", func = NULL, 
-   samples = c("BRA_1", "IAC5_4"), variable.bounds = c(1000,2000), 
-   legend.place = "topright")
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ spectra }

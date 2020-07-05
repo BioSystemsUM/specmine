@@ -25,9 +25,10 @@ transmittance_to_absorbance(dataset, percent = T)
 }
 
 \examples{
+\dontrun{
   ## Example of converting transmittance values to absorbance values
-  data(cassavaPPD)
-  dataset = transmittance_to_absorbance(cassavaPPD, percent = TRUE)
+  dataset = transmittance_to_absorbance(dataset, percent = TRUE)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

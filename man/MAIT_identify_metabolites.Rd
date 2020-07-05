@@ -44,14 +44,12 @@ mass.tolerance = 0.5)
 \examples{
 \dontrun{
   ### Example of MAIT metabolite identification
-  ##data(spinalCord)
-  ##library(MAIT)
-  ##mait.metabolites = MAIT_identify_metabolites(spinalCord, "type", 
-	##		features = "all", data.folder = "data",
-	##		xSet = spinalCord$xSet)
-  ##mait.metab.table = mait.metabolites@FeatureInfo@metaboliteTable
-  ##mait.metab.table[which(mait.metab.table$Name != "Unknown"), 
-  ##c(1,3,6)]
+  mait.metabolites = MAIT_identify_metabolites(ms_dataset, "type", 
+			features = "all", data.folder = "data",
+			xSet = ms_dataset$xSet)
+  mait.metab.table = mait.metabolites@FeatureInfo@metaboliteTable
+  mait.metab.table[which(mait.metab.table$Name != "Unknown"), 
+  c(1,3,6)]
 }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

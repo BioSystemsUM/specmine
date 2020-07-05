@@ -34,12 +34,8 @@ meta.to.remove = c())
 
 \examples{
   ## Example of aggregating samples
-  data(cassavaPPD)
-  index.vector = c(1,1,2,2,2,2,2,1,1,3,3,3,3,3,1,4,4,4,4,4,5,5,6,6,6,6,6,5,5,
-		  7,7,7,7,7,8,8,8,8,8,9,9,10,10,10,10,10,9,9,11,11,11,11,11,
-		  9,12,12,12,12,12,13,13,14,14,14,14,14,13,13,15,15,15,15,15,
-		  13,16,16,16,16,16)
-  dataset = aggregate_samples(cassavaPPD, index.vector, "mean") 
+  propolis_proc = missingvalues_imputation(propolis)
+  dataset = aggregate_samples(propolis_proc, as.integer(propolis$metadata$seasons), "mean") 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

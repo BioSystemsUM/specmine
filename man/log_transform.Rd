@@ -23,8 +23,8 @@ log_transform(datamat)
 
 \examples{
   ## Example of logarithmic transformation
-  data(cassavaPPD)
-  datamat.log = log_transform(cassavaPPD$data)
+  propolis_proc = missingvalues_imputation(propolis)
+  datamat.log = log_transform(propolis_proc$data)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

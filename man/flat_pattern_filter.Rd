@@ -43,8 +43,7 @@ by.percent = T, by.threshold = F, red.value = 0)
 }
 \examples{
   ## Example of flat pattern filter
-  data(cassavaPPD)
-  dataset.filtered = flat_pattern_filter(cassavaPPD, "iqr", by.percent = TRUE, 
+  dataset.filtered = flat_pattern_filter(propolis, "iqr", by.percent = TRUE, 
 		     red.value = 20)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

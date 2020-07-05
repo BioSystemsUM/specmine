@@ -30,9 +30,8 @@ values)
 
 \examples{
   ## Example of subsetting samples by metadata's values
-  data(cassavaPPD)
-  subset = subset_samples_by_metadata_values(cassavaPPD, "varieties", 
-	   c("BRA","IAC"))
+  subset_samples_by_metadata_values(propolis, "seasons", 
+                                  c("sm","au"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

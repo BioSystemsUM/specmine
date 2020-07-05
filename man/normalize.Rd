@@ -36,9 +36,10 @@ normalize(dataset, method, ref = NULL, constant = 1000)
   Returns the dataset with the data normalized.
 }
 \examples{
+\dontrun{
   ## Example of normalization by median
-  data(cassavaPPD)
-  cassava.norm = normalize(cassavaPPD, "median")
+  cassava.norm = normalize(dataset, "median")
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

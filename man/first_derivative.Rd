@@ -22,9 +22,10 @@ first_derivative(dataset)
 }
 
 \examples{
+\dontrun{
   ## Example of calculate the first derivative
-  data(cassavaPPD)
-  cassava.derivative = first_derivative(cassavaPPD)
+  dataset.derivative = first_derivative(dataset)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

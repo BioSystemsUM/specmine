@@ -45,8 +45,8 @@ colour = "darkblue", title = "", xlabel = NULL, ylabel = NULL)
 
 \examples{
   ## Example of plotting a variable's distribution with 2 factors
-  data(cassavaPPD)
-  plotvar_twofactor(cassavaPPD, "399.3", "varieties", "ppds")
+  propolis_proc = missingvalues_imputation(propolis)
+  plotvar_twofactor(propolis_proc, "0.46", "seasons", "agroregions")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

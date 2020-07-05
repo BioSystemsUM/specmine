@@ -23,8 +23,7 @@ num_x_values(dataset)
 
 \examples{
   ## Example of getting the number of x-axis values
-  data(cassavaPPD)
-  number.x.values = num_x_values(cassavaPPD)
+  number.x.values = num_x_values(propolis)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

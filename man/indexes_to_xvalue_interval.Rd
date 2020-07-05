@@ -26,8 +26,7 @@ Returns a numeric vector with the interval of x-values from the indexes vector
 
 \examples{
   ## Example of getting the interval of x-values from indexes
-  data(cassavaPPD)
-  xvalue.interval = indexes_to_xvalue_interval(cassavaPPD, c(10,50))
+  xvalue.interval = indexes_to_xvalue_interval(propolis, c(10,50))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

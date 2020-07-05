@@ -22,9 +22,10 @@ offset_correction(dataset)
 }
 
 \examples{
+\dontrun{
   ## Example of offset correction
-  data(cassavaPPD)
-  cassava.corrected = offset_correction(cassavaPPD)
+  cassava.corrected = offset_correction(dataset)
+  }
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

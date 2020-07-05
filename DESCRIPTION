@@ -2,7 +2,7 @@ Package: specmine
 Type: Package
 Title: Metabolomics and Spectral Data Analysis and Mining
 Version: 3.0.0
-Date: 2020-05-27
+Date: 2020-07-6
 Author: Christopher Costa <chrisbcl@hotmail.com>,
 	Marcelo Maraschin <mtocsy@gmail.com>,
 	Miguel Rocha <mrocha@di.uminho.pt>,
@@ -20,4 +20,6 @@ Description: Provides a set of methods for metabolomics
 	pre-processing, metabolite identification, univariate and multivariate 
 	data analysis, machine learning, feature selection and pathway analysis. Case studies 
 	can be found on the website: <http://darwin.di.uminho.pt/metabolomicspackage/index.html>.
+	This package suggests rcytoscapejs, a package not in mainstream repositories. If you need to install it,
+	use: devtools::install_github('cytoscape/r-cytoscape.js@v0.0.7').
 License: GPL (>= 2)

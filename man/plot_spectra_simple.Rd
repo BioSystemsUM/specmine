@@ -45,13 +45,6 @@ lty = 1, lwd = 1, col = 1, reverse.x = F, ...)
     additional parameters to pass to matplot.
 }
 }
-
-\examples{
-  ## Example of plotting spectra (simple)
-  data(cassavaPPD)
-  plot_spectra_simple(cassavaPPD, samples = c("IAC5_4", "BRA_1"), 
-  variable.bounds = c(1000,2000))
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ plot }

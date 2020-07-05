@@ -1,2 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+cassavaPPD.Rd
+cassavaPPD.rda
+spinalCord.rda
+spinalCord.Rd
+system_data/

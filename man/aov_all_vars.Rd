@@ -36,10 +36,10 @@ Data frame with the results of ANOVA, with p-value, logarithm of p-value, false 
 
 \examples{
   ## Example of ANOVA with TukeyHSD
-  data(cassavaPPD)
-  cassavaPPD = flat_pattern_filter(cassavaPPD, "iqr", by.percent = TRUE,
+  propolis_proc = missingvalues_imputation(propolis)
+  propolis_proc = flat_pattern_filter(propolis_proc, "iqr", by.percent = TRUE,
 	red.value = 75) 
-  result = aov_all_vars(cassavaPPD, "varieties", doTukey = FALSE)
+  result = aov_all_vars(propolis_proc, "seasons", doTukey = FALSE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

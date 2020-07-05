@@ -22,9 +22,10 @@ mean_centering(dataset)
 }
 
 \examples{
+\dontrun{
   ## Example of mean centering
-  data(cassavaPPD)
-  cassavaPPD = mean_centering(cassavaPPD)
+  cassavaPPD = mean_centering(dataset)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

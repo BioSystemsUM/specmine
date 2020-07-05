@@ -25,7 +25,7 @@ get_value_label(dataset)
 \examples{
   ## Example of getting the value label
   data(cassavaPPD)
-  value.label = get_value_label(cassavaPPD)
+  value.label = get_value_label(propolis)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

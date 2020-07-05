@@ -23,9 +23,10 @@ convert_to_hyperspec(dataset)
 
 
 \examples{
+\dontrun{
   ## Example of converting a dataset to an hyperspec object
-  data(cassavaPPD)
-  hyperspec.cassava = convert_to_hyperspec(cassavaPPD) 
+  dataset = convert_to_hyperspec(dataset)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

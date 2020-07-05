@@ -31,9 +31,10 @@ scaling(dataset, method = "auto")
 }
 
 \examples{
+\dontrun{
   ## Example of auto scaling
-  data(cassavaPPD)
-  cassava.scal = scaling(cassavaPPD, "auto")
+  dataset.scal = scaling(dataset, "auto")
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

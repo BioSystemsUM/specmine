@@ -23,8 +23,7 @@ is_spectra(dataset)
 
 \examples{
   ## Example of checking if the dataset is from spectral data
-  data(cassavaPPD)
-  is_spectra(cassavaPPD)
+  is_spectra(propolis)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
