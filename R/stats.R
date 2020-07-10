@@ -28,14 +28,14 @@
     samples = colnames(dataset$data)
   }
   
-  apply(dataset$data[variables,samples,drop=F], 1, fn.to.apply, ...)
+  apply(dataset$data[variables,samples,drop=FALSE], 1, fn.to.apply, ...)
 }
 
 "apply_by_sample" = function(dataset, fn.to.apply, samples = NULL, ...) {
   if (is.null(samples)) {
     samples = colnames(dataset$data)
   }
-  apply(dataset$data[,samples,drop=F], 2, fn.to.apply, ...)
+  apply(dataset$data[,samples,drop=FALSE], 2, fn.to.apply, ...)
 }
 
 "stats_by_variable" = function(dataset, variables = NULL, variable.bounds = NULL) {

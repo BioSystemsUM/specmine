@@ -2,7 +2,7 @@
 # read LC/GC-MS spectra(.netCDF, .mzXML, mzData)
 # use functions in XCMS package
 read_ms_spec<-function(folder.name, metadata = NULL, profmethod='bin', fwhm=30, bw=30){
-  files <- list.files(folder.name, recursive=T, full.names=TRUE);
+  files <- list.files(folder.name, recursive=TRUE, full.names=TRUE);
   if (is.null(metadata)) {
 	xset <- xcms::xcmsSet(files, profmethod = "bin", fwhm=fwhm)
   } else {

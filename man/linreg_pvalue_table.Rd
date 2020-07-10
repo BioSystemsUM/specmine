@@ -8,7 +8,7 @@
  Gets the p-values table from the linear regression analysis.
 }
 \usage{
-linreg_pvalue_table(linreg.results, write.file = F, 
+linreg_pvalue_table(linreg.results, write.file = FALSE, 
 file.out = "linreg-pvalues.csv")
 }
 %- maybe also 'usage' for other objects documented here.
@@ -28,12 +28,6 @@ file.out = "linreg-pvalues.csv")
  Returns a data.frame with the p-values.
 }
 
-\examples{
-\dontrun{
-  ## Example of linear regression p-values table
-  linreg.pvalue.tab = linreg_pvalue_table(linreg.results)
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ pvalue }

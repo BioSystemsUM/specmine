@@ -36,12 +36,6 @@ normalize_samples(datamat, method, ref = NULL, constant = 1000)
   Returns the data matrix normalized.
 }
 
-\examples{
-\dontrun{
-  ## Example of normalization by median
-  datamat.norm = normalize_samples(dataset$data, "median")
-  }
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ normalization }

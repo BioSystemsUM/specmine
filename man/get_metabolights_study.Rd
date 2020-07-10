@@ -12,7 +12,7 @@ get_metabolights_study(studyID, directory)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{studyID}{ID of the metabolights study to download.}
+  \item{studyID}{ID of the metabolights study to download. For example, 'MTBLS100'}
   \item{directory}{Directory where to download the data.}
 }
 \note{
@@ -30,7 +30,4 @@ The metadata file(s) are csv file(s) with the metadata information on each sampl
 }
 \references{
 MetaboLights database: https://www.ebi.ac.uk/metabolights/
-}
-\examples{
-##get_metabolights_study("MTBLS131", "~/Documents")
 }

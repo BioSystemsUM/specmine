@@ -35,7 +35,7 @@
 {
   freqs = as.numeric(rownames(samples.df))
   st_intervals = create_intervals(freqs, step)
-  initialized = F
+  initialized = FALSE
   for (cent in st_intervals)
   {
     rows = samples.df[freqs >= cent & freqs < cent + step,]
@@ -46,14 +46,14 @@
       }
       else { 
         res = rows
-        initialized = T
+        initialized = TRUE
       }
     }
     else if (nrow(rows) > 1)
     {
       newpeak = c()
       for(i in 1:ncol(samples.df)) {
-        if (sum(!is.na(rows[,i])) > 0) newpeak[i] = sum(rows[,i], na.rm=T)
+        if (sum(!is.na(rows[,i])) > 0) newpeak[i] = sum(rows[,i], na.rm=TRUE)
         else newpeak[i] = NA
       }
       if (initialized) {
@@ -62,7 +62,7 @@
       else {
         res = data.frame(t(newpeak))
         colnames(res) = colnames(samples.df)
-        initialized = T
+        initialized = TRUE
       }
       fs = c()
       for(k in 1:nrow(rows))
@@ -118,7 +118,7 @@ group_peaks_metaboanalyst<-function(peaklist, samp.classes, samp.names,  mzwid =
 
     peakmatrix = create_metaboanalyst_mat(peaklist)
     porder <- order(peakmatrix[,"ppm"])
-    peakmat <- peakmatrix[porder,,drop=F]
+    peakmat <- peakmatrix[porder,,drop=FALSE]
     rownames(peakmat) <- NULL
     retrange <- range(peakmat[,"rt"])
 

@@ -8,8 +8,8 @@
   Gets the importance from the PCs.
 }
 \usage{
-pca_importance(pca.res, pcs = 1:length(pca.res$sdev), sd = T, 
-prop = T, cumul = T, min.cum = NULL)
+pca_importance(pca.res, pcs = 1:length(pca.res$sdev), sd = TRUE, 
+prop = TRUE, cumul = TRUE, min.cum = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

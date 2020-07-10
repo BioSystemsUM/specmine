@@ -8,7 +8,7 @@
  Remove samples from the dataset.
 }
 \usage{
-remove_samples(dataset, samples.to.remove, rebuild.factors = T)
+remove_samples(dataset, samples.to.remove, rebuild.factors = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

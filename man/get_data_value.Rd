@@ -8,7 +8,7 @@
   Get a data value given the x-axis labels and the sample
 }
 \usage{
-get_data_value(dataset, x.axis.val, sample, by.index = F)
+get_data_value(dataset, x.axis.val, sample, by.index = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

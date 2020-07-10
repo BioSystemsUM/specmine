@@ -1,7 +1,7 @@
 #SNV
 snv_dataset = function(dataset){
 	datamat = dataset$data
-	datamat.snv = scale(datamat, center = T, scale = T)
+	datamat.snv = scale(datamat, center = TRUE, scale = TRUE)
 	dataset$data = datamat.snv
 	rownames(dataset$data) = rownames(datamat)
 	colnames(dataset$data) = colnames(datamat)
@@ -13,7 +13,7 @@ snv_dataset = function(dataset){
 #mean centering
 mean_centering = function(dataset){
 	datamat = dataset$data
-	datamat.mean.cent = scale(datamat, center = T, scale = F)
+	datamat.mean.cent = scale(datamat, center = TRUE, scale = FALSE)
 	#datamat.mean.cent = t(apply(datamat.mean.cent, 1, function(x) x - mean(x)))
 	dataset$data = datamat.mean.cent
 	rownames(dataset$data) = rownames(datamat)
@@ -53,7 +53,7 @@ mean_centering = function(dataset){
 			  res = apply(datamat, 2, normalization_ref_sample, ref.sample)
       }
       else {
-        ref.mean = apply(datamat[,ref,drop=F], 1, mean)
+        ref.mean = apply(datamat[,ref,drop=FALSE], 1, mean)
         res = apply(datamat, 2, normalization_ref_sample, ref.mean)
       }
 		}
@@ -79,11 +79,11 @@ mean_centering = function(dataset){
 }
 
 "normalization_sum" = function(x, constant = 1000) {
-	constant*x/sum(x, na.rm=T);
+	constant*x/sum(x, na.rm=TRUE);
 }
 
 "normalization_median" = function(x) {
-	x/median(x, na.rm=T);
+	x/median(x, na.rm=TRUE);
 }
 
 "normalization_ref_sample" = function(x, ref.sample) {
@@ -160,11 +160,11 @@ mean_centering = function(dataset){
 
 # auto scaling: subtract by mean and divide by sd 
 "auto_scale" = function(x){
-  (x - mean(x))/sd(x, na.rm=T)
+  (x - mean(x))/sd(x, na.rm=TRUE)
 }
 
 "pareto_scale"<-function(x){
-  (x - mean(x))/sqrt(sd(x, na.rm=T))
+  (x - mean(x))/sqrt(sd(x, na.rm=TRUE))
 }
 
 "range_scale"<-function(x){

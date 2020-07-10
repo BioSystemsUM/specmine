@@ -8,7 +8,7 @@
  Performs correlations test to the whole dataset.
 }
 \usage{
-correlations_test(dataset, method = "pearson", by.var = T, 
+correlations_test(dataset, method = "pearson", by.var = TRUE, 
 alternative = "two.sided")
 }
 %- maybe also 'usage' for other objects documented here.
@@ -32,8 +32,8 @@ alternative = "two.sided")
 }
 
 \examples{
-\dontrun{
-  ## Example of correlations test of variables (computationally heavy)
+\donttest{
+  ## Example of correlations test of variables
   data(cachexia)
   corr.result = correlations_test(cachexia, 
 		method = "pearson", by.var = FALSE)

@@ -11,7 +11,7 @@
 train_models_performance(dataset, models, column.class, 
 validation, num.folds = 10, num.repeats = 10, tunelength = 10, 
 tunegrid = NULL, metric = NULL, summary.function = "default", 
-class.in.metadata = T, compute.varimp = T)
+class.in.metadata = TRUE, compute.varimp = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -64,10 +64,12 @@ Returns a list with the results from training
 }
 
 \examples{
+\donttest{
   ## Example of training models
-  #data(cachexia)
-  #result = train_models_performance(cachexia, "pls", 
-  #	   "Muscle.loss", "cv")
+  data(cachexia)
+  result = train_models_performance(cachexia, "pls", 
+  	   "Muscle.loss", "cv")
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

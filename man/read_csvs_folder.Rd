@@ -24,12 +24,6 @@ read_csvs_folder(foldername, ...)
   Returns a list of data frames.
 }
 
-\examples{
-\dontrun{
-    ## Example of reading multiple csvs
-    sample.list = read_csvs_folder("foldername")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ read }

@@ -11,9 +11,9 @@
 }
 \usage{
 read_varian_spectra_raw(varian_spectra_directory,
-                       metadata_file=NULL, m.header_col=T, m.header_row=T, m.sep=",",
-                       samples.names=NULL, zero_filling=T, apodization=T, zipped=T,
-                       description="", label.x="ppm", label.values="intensity")
+metadata_file=NULL, m.header_col=TRUE, m.header_row=TRUE, m.sep=",",
+samples.names=NULL, zero_filling=TRUE, apodization=TRUE, zipped=TRUE,
+description="", label.x="ppm", label.values="intensity")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

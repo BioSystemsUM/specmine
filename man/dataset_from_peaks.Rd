@@ -32,9 +32,8 @@ description = "", type = "nmr-peaks")
 }
 
 \examples{
-\dontrun{
+\donttest{
     ## Example of converting a peak list to a dataset (computationally heavy)
-    data(propolisSampleList)
     dataset = dataset_from_peaks(propolisSampleList, metadata = NULL, 
 	      description = "some text", type = "nmr-peaks")  
 }

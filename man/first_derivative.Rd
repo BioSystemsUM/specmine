@@ -21,12 +21,6 @@ first_derivative(dataset)
   Return the dataset with the first derivative of the data calculated.
 }
 
-\examples{
-\dontrun{
-  ## Example of calculate the first derivative
-  dataset.derivative = first_derivative(dataset)
-  }
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ derivative }

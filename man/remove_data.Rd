@@ -9,7 +9,7 @@
 }
 \usage{
 remove_data(dataset, data.to.remove, type = "sample", 
-by.index = F, rebuild.factors = T)
+by.index = FALSE, rebuild.factors = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

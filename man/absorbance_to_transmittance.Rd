@@ -21,14 +21,6 @@ absorbance_to_transmittance(dataset)
    Returns the dataset with the data points converted to transmittance values.
 }
 
-\examples{
-\dontrun{
-  ## Example of converting transmittance values to absorbance values
-  dataset = transmittance_to_absorbance(dataset)
-  dataset = absorbance_to_transmittance(dataset)
-}
-  
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ absorbance }

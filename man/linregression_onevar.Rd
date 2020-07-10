@@ -19,10 +19,10 @@ linregression_onevar(dataset, x.val, metadata.vars, combination)
     the x-value to be tested.
 }
   \item{metadata.vars}{
-    metadata variables to use in linear regression.
+    metadata variables to use in linear regression. For example, c('variable1','variable2').
 }
   \item{combination}{
-    a formula specifying the model.
+    a formula specifying the model. For example, 'variable1+variable2'.
 }
 }
 
@@ -30,14 +30,6 @@ linregression_onevar(dataset, x.val, metadata.vars, combination)
  Returns a summary of the result from the lm function from stats package.	
 }
 
-
-\examples{
- \dontrun{
-  ## Example of linear regression on all variables 
-  linreg.results = linregression_onevar(metabolomics.dataset, "200", 
-		   c("metadata1","metadata2"), "metadata1+metadata2")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ linear }

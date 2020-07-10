@@ -29,7 +29,7 @@
 
 ####################### Kruskal-Wallis #######################
 
-kruskalTest_dataset = function(dataset, metadata.var, threshold = NULL, write.file = F, file.out = "kruskal.csv"){
+kruskalTest_dataset = function(dataset, metadata.var, threshold = NULL, write.file = FALSE, file.out = "kruskal.csv"){
 	classes = dataset$metadata[,metadata.var]
 	kruskal.results = c()
 	
@@ -49,7 +49,7 @@ kruskalTest_dataset = function(dataset, metadata.var, threshold = NULL, write.fi
 	}
 	
 	kr.order = order(kr.table[,1])
-	kr.table = kr.table[kr.order,,drop=F]
+	kr.table = kr.table[kr.order,,drop=FALSE]
 	if (write.file) write.csv(kr.table, file=file.out)
 	kr.table
 }
@@ -69,7 +69,7 @@ plot_kruskaltest = function(dataset, kr.results, kr.threshold = 0.01) {
   abline(h = -log10(kr.threshold), col = "lightblue")
 }
 
-"aov_one_var" = function(dataset, x.val, groups, doTukey= T)
+"aov_one_var" = function(dataset, x.val, groups, doTukey= TRUE)
 {
   values = get_data_values(dataset, x.val)
   resaov = aov(values ~ groups)
@@ -85,8 +85,8 @@ plot_kruskaltest = function(dataset, kr.results, kr.threshold = 0.01) {
   res
 }
 
-"aov_all_vars" = function(dataset, column.class, doTukey= T, 
-                          write.file = F, file.out = "anova-res.csv" )
+"aov_all_vars" = function(dataset, column.class, doTukey= TRUE, 
+                          write.file = FALSE, file.out = "anova-res.csv" )
 {
   groups = dataset$metadata[,column.class]
   pvalues = c()
@@ -141,7 +141,7 @@ plot_kruskaltest = function(dataset, kr.results, kr.threshold = 0.01) {
   m
 }
 
-multifactor_aov_pvalues_table = function(multifactor.aov.results, write.file = F, file.out = "multi-anova-pvalues.csv"){
+multifactor_aov_pvalues_table = function(multifactor.aov.results, write.file = FALSE, file.out = "multi-anova-pvalues.csv"){
 	num_vars = length(multifactor.aov.results[[1]]$'Pr(>F)') - 1
 	m = matrix(NA, length(multifactor.aov.results), num_vars)
 	rownames(m) = names(multifactor.aov.results)
@@ -154,7 +154,7 @@ multifactor_aov_pvalues_table = function(multifactor.aov.results, write.file = F
 	aov.table	
 }
 
-multifactor_aov_varexp_table = function(multifactor.aov.results, write.file = F, file.out = "multi-anova-varexp.csv"){
+multifactor_aov_varexp_table = function(multifactor.aov.results, write.file = FALSE, file.out = "multi-anova-varexp.csv"){
   num_vars = length(multifactor.aov.results[[1]]$'Sum Sq') # - 1
   m = matrix(NA, length(multifactor.aov.results), num_vars)
   rownames(m) = names(multifactor.aov.results)
@@ -172,7 +172,7 @@ trim <- function( x ) {
   gsub("(^[[:space:]]+|[[:space:]]+$)", "", x)
 }
 
-plot_anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x = F) {
+plot_anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x = FALSE) {
   orig.ord = intersect (specmine::get_x_values_as_text(dataset), rownames(anova.results))
   anova.orig = anova.results[orig.ord,]
   anova.lower = which(anova.orig$pvalues < anova.threshold)
@@ -206,7 +206,7 @@ plot_anova = function(dataset, anova.results, anova.threshold = 0.01, reverse.x 
 
 ##################### FOLD CHANGE ############################
 fold_change_var = function(dataset, metadata.var, variables, threshold.min.fc = NULL, 
-								write.file = F, file.out = "fold_change_reverse.csv"){
+								write.file = FALSE, file.out = "fold_change_reverse.csv"){
 	
 	samp.classes = dataset$metadata[,metadata.var]
 	datamat = t(dataset$data)
@@ -228,14 +228,14 @@ fold_change_var = function(dataset, metadata.var, variables, threshold.min.fc = 
 	  if (!is.null(threshold.min.fc)) {
 	      fc.res = fc.res[fc.res$FoldChange > threshold.min.fc | fc.res$FoldChange < 1/threshold.min.fc,]
 	  }
-	  fold.order = order(abs(fc.res[,2]), decreasing = T)
-	  fc.res = fc.res[fold.order,,drop=F]
+	  fold.order = order(abs(fc.res[,2]), decreasing = TRUE)
+	  fc.res = fc.res[fold.order,,drop=FALSE]
 	if (write.file) write.csv(fc.res, file = file.out)
 	fc.res 
 }
 
 fold_change = function(dataset, metadata.var, ref.value, threshold.min.fc = NULL,
-                       write.file = F, file.out = "fold_change.csv" ) {
+                       write.file = FALSE, file.out = "fold_change.csv" ) {
   datamat = dataset$data
   samp.classes = dataset$metadata[,metadata.var]
 	mean1 = rowMeans(datamat[,which(samp.classes == ref.value)])
@@ -248,14 +248,14 @@ fold_change = function(dataset, metadata.var, ref.value, threshold.min.fc = NULL
   if (!is.null(threshold.min.fc)) {
     fc.res = fc.res[fc.res$FoldChange > threshold.min.fc | fc.res$FoldChange < 1/threshold.min.fc,]
   }
-  fold.order = order(abs(fc.res[,2]), decreasing = T)
-  fc.res = fc.res[fold.order,,drop=F]
+  fold.order = order(abs(fc.res[,2]), decreasing = TRUE)
+  fc.res = fc.res[fold.order,,drop=FALSE]
   if (write.file) write.csv(fc.res, file = file.out)
 	fc.res 
 }
 
-plot_fold_change = function(dataset, fc.results, fc.threshold, plot.log = T, var = F, xlab = "") {
-  if (var == F){
+plot_fold_change = function(dataset, fc.results, fc.threshold, plot.log = TRUE, var = FALSE, xlab = "") {
+  if (var == FALSE){
 	orig.ord = intersect (get_x_values_as_text(dataset), rownames(fc.results))
 	fc.orig = fc.results[orig.ord,]
 	xlabel = get_x_label(dataset)
@@ -293,7 +293,7 @@ plot_fold_change = function(dataset, fc.results, fc.threshold, plot.log = T, var
 
 ####################### Kolmogorov-Smirnov #######################
 
-ksTest_dataset = function(dataset, metadata.var, threshold = NULL, write.file = F, file.out = "ks.csv"){
+ksTest_dataset = function(dataset, metadata.var, threshold = NULL, write.file = FALSE, file.out = "ks.csv"){
 	classes = dataset$metadata[,metadata.var]
 	class.levels = levels(classes)
 	sub.ds1 = subset_samples_by_metadata_values(dataset, metadata.var, class.levels[1])
@@ -315,7 +315,7 @@ ksTest_dataset = function(dataset, metadata.var, threshold = NULL, write.file = 
 	}
 	
 	ks.order = order(ks.table[,1])
-	ks.table = ks.table[ks.order,,drop=F]
+	ks.table = ks.table[ks.order,,drop=FALSE]
 	if (write.file) write.csv(ks.table, file=file.out)
 	ks.table
 }
@@ -347,11 +347,11 @@ tTests_pvalue = function(datamat, samp.classes) {
 	}
 	res = data.frame(p.value)
   rownames(res) = names(p.value)
-  res[order(p.value),,drop=F]
+  res[order(p.value),,drop=FALSE]
 }
 
 tTests_dataset = function(dataset, metadata.var, threshold = NULL,
-                          write.file= F, file.out = "ttests.csv") {
+                          write.file= FALSE, file.out = "ttests.csv") {
 	datamat = dataset$data
   samp.classes = dataset$metadata[,metadata.var]
   res.p.values = tTests_pvalue (datamat, samp.classes)
@@ -363,7 +363,7 @@ tTests_dataset = function(dataset, metadata.var, threshold = NULL,
     ttests.table = ttests.table[ttests.table$p.value <= threshold,]
 	}
 	ttests.order = order(ttests.table[,1])
-	ttests.table = ttests.table[ttests.order,,drop=F]
+	ttests.table = ttests.table[ttests.order,,drop=FALSE]
 	if (write.file) write.csv(ttests.table, file=file.out)
 	ttests.table
 }
@@ -430,7 +430,7 @@ volcano_plot_fc_tt = function(dataset, fc.results, tt.results,
 		
 # method: pearson, kendall or spearman
 # by.var - if T, correlations of variables (rows); if F, correlations of samples (columns)
-correlations_dataset = function(dataset, method = "pearson", by.var = T) {
+correlations_dataset = function(dataset, method = "pearson", by.var = TRUE) {
   
   if (by.var) data.to.cor = t(dataset$data)
   else data.to.cor = dataset$data
@@ -446,7 +446,7 @@ heatmap_correlations = function(correlations, col = NULL, ...) {
 }
 
 
-correlation_test = function(dataset, x,y, method = "pearson", alternative = "two.sided", by.var = T){
+correlation_test = function(dataset, x,y, method = "pearson", alternative = "two.sided", by.var = TRUE){
 	if (by.var) {
         data.to.cor = data.frame(t(dataset$data))
         names(data.to.cor) = rownames(dataset$data)
@@ -461,7 +461,7 @@ correlation_test = function(dataset, x,y, method = "pearson", alternative = "two
 }  
 
 
-correlations_test = function(dataset, method = "pearson", by.var = T, alternative = "two.sided") {
+correlations_test = function(dataset, method = "pearson", by.var = TRUE, alternative = "two.sided") {
 	if (by.var) data.to.cor = t(dataset$data)
     else data.to.cor = dataset$data
 	data.names = colnames(data.to.cor)

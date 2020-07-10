@@ -9,7 +9,7 @@
 }
 \usage{
 multifactor_aov_varexp_table(multifactor.aov.results, 
-write.file = F, file.out = "multi-anova-varexp.csv")
+write.file = FALSE, file.out = "multi-anova-varexp.csv")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

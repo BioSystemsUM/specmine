@@ -9,7 +9,7 @@
 }
 \usage{
 pca_robust(dataset, center = "median", scale = "mad", k = 10, 
-write.file = F, file.out = "robpca", ...)
+write.file = FALSE, file.out = "robpca", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

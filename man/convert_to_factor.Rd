@@ -24,13 +24,6 @@ convert_to_factor(dataset, metadata.var)
   Returns the dataset with the metadata's variable converted to factor.
 }
 
-\examples{
-\dontrun{
-  ## Example of converting a metadata's variable to factor
-  dataset = convert_to_factor(dataset, "name_of_numeric_meta_variable")
-}
-  
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ metadata }

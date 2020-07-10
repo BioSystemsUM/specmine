@@ -8,7 +8,7 @@
   Read the metadata from a file.
 }
 \usage{
-read_metadata(filename, header.col = T, header.row = T, 
+read_metadata(filename, header.col = TRUE, header.row = TRUE, 
 sep = ",")
 }
 %- maybe also 'usage' for other objects documented here.
@@ -31,12 +31,6 @@ sep = ",")
   Returns a data frame with the metadata.
 }
 
-\examples{
-\dontrun{
-  ## Example of reading metadata from a file
-  metadata = read_metadata("metadata.csv")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ metadata }

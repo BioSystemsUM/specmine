@@ -42,7 +42,7 @@ A caret's rfe object with the result of recursive feature selection.
 }
 
 \examples{
-\dontrun{
+\donttest{
   ## Example of recursive feature elimination
   data(cachexia)
   library(caret)

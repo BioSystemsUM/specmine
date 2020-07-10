@@ -27,12 +27,6 @@ remove_x_values_by_interval(dataset, min.value, max.value)
  Returns the dataset with the specified interval of x-values removed.
 }
 
-\examples{
-\dontrun{
-  ## Example of removing x-values by interval
-  dataset = remove_x_values_by_interval(dataset, 200, 300)
-  }
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ remove }

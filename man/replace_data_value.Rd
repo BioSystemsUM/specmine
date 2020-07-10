@@ -9,7 +9,7 @@
 }
 \usage{
 replace_data_value(dataset, x.axis.val, sample, new.value, 
-by.index = F)
+by.index = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

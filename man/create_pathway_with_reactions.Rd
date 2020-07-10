@@ -9,8 +9,8 @@ Creates a cytoscape pathway, where the reactions between compounds are also incl
 }
 \usage{
 create_pathway_with_reactions(path, path.name, identified_cpds,
-                             nodeNames="kegg", nodeTooltip=F,
-                             map.zoom=F, map.layout="preset",
+                             nodeNames="kegg", nodeTooltip=FALSE,
+                             map.zoom=FALSE, map.layout="preset",
                              map.width=NULL, map.height=NULL)
 }
 %- maybe also 'usage' for other objects documented here.

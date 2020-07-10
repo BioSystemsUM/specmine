@@ -1,5 +1,5 @@
 #convert transmittance to absorbance
-transmittance_to_absorbance = function(dataset, percent = T){
+transmittance_to_absorbance = function(dataset, percent = TRUE){
   datamat = dataset$data
   if (!percent){
     absorbance.datamat = 2-log10(datamat*100)

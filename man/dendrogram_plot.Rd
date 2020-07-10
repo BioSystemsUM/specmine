@@ -31,10 +31,11 @@ labels = NULL, ...)
 }
 
 \examples{
+\donttest{
   ### Example of a dendrogram
-  ##data(cachexia)
-  ##hc.result = hierarchical_clustering(cachexia)
-  ##dendrogram_plot(cachexia, hc.result)
+  hc.result = hierarchical_clustering(cachexia)
+  dendrogram_plot(cachexia, hc.result)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

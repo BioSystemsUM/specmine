@@ -10,7 +10,7 @@ Plot spectra from dataset.
 \usage{
 plot_spectra(dataset, column.class, func = NULL, samples = NULL, 
 variable.bounds = NULL, xlab = NULL, ylab = NULL, lty = 1, 
-legend.place = "topright", cex = 0.8, reverse.x = F, ...)
+legend.place = "topright", cex = 0.8, reverse.x = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

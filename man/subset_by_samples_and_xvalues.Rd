@@ -9,7 +9,7 @@
 }
 \usage{
 subset_by_samples_and_xvalues(dataset, samples, variables = NULL, 
-by.index = F, variable.bounds = NULL, rebuild.factors = T)
+by.index = FALSE, variable.bounds = NULL, rebuild.factors = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

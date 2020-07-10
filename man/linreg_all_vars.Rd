@@ -16,10 +16,10 @@ linreg_all_vars(dataset, metadata.vars, combination)
     list representing the dataset from a metabolomics experiment.
 }
   \item{metadata.vars}{
-    metadata variables to use in linear regression.
+    metadata variables to use in linear regression. For example, c('variable1','variable2').
 }
   \item{combination}{
-    a formula specifying the model.
+    a formula specifying the model. For example, 'variable1+variable2'.
 }
 }
 
@@ -27,13 +27,6 @@ linreg_all_vars(dataset, metadata.vars, combination)
  Returns a list where each element is the linear regression result of a variable on the dataset.
 }
 
-\examples{
-\dontrun{
-  ## Example of linear regression on all variables 
-  linreg.results = linreg_all_vars(metabolomics.dataset, c("metadata1",
-		   "metadata2"), "metadata1+metadata2")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ linear }

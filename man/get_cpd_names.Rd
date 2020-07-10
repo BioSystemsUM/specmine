@@ -20,5 +20,7 @@ get_cpd_names(kegg_codes)
 Named vector with the names of the compounds. The names of the vector are the compounds' names and the vector elements the kegg codes.
 }
 \examples{
-#get_cpd_names(c("cpd:C00001", "cpd:C00008", "gl:G13099"))
+\donttest{
+get_cpd_names(c("cpd:C00001", "cpd:C00008", "gl:G13099"))
+}
 }

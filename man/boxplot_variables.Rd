@@ -9,7 +9,7 @@
 }
 \usage{
 boxplot_variables(dataset, variables = NULL, samples = NULL, 
-horizontal = T, col = "lightblue", nchar.label = 10, 
+horizontal = TRUE, col = "lightblue", nchar.label = 10, 
 cex.axis = 0.8, ...)
 }
 %- maybe also 'usage' for other objects documented here.

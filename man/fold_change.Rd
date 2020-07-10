@@ -9,7 +9,7 @@
 }
 \usage{
 fold_change(dataset, metadata.var, ref.value, 
-threshold.min.fc = NULL, write.file = F, 
+threshold.min.fc = NULL, write.file = FALSE, 
 file.out = "fold_change.csv")
 }
 %- maybe also 'usage' for other objects documented here.

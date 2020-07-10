@@ -18,7 +18,7 @@
   m
 }
 
-linreg_coef_table = function(linreg.results, write.file = F, file.out = "linreg-coefs.csv"){
+linreg_coef_table = function(linreg.results, write.file = FALSE, file.out = "linreg-coefs.csv"){
   num_vars = dim(linreg.results[[1]]$coefficients)[1]
   m = matrix(NA, length(linreg.results), num_vars)
   rownames(m) = names(linreg.results)
@@ -31,7 +31,7 @@ linreg_coef_table = function(linreg.results, write.file = F, file.out = "linreg-
   coef.table  
 }
 
-linreg_pvalue_table = function(linreg.results, write.file = F, file.out = "linreg-pvalues.csv"){
+linreg_pvalue_table = function(linreg.results, write.file = FALSE, file.out = "linreg-pvalues.csv"){
   num_vars = dim(linreg.results[[1]]$coefficients)[1]
   m = matrix(NA, length(linreg.results), num_vars)
   rownames(m) = names(linreg.results)
@@ -44,7 +44,7 @@ linreg_pvalue_table = function(linreg.results, write.file = F, file.out = "linre
   pv.table  
 }
 
-linreg_rsquared = function(linreg.results, write.file = F, file.out = "linreg-rsquared.csv"){
+linreg_rsquared = function(linreg.results, write.file = FALSE, file.out = "linreg-rsquared.csv"){
   m = matrix(NA, length(linreg.results), 2)
   rownames(m) = names(linreg.results)
   for (i in 1:length(linreg.results)){

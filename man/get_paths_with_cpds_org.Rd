@@ -8,7 +8,7 @@ Get only the paths of the organism that contain one or more of the given compoun
 Gives only the metabolic paths of the mentioned organism that contain one or more of the given compounds.
 }
 \usage{
-get_paths_with_cpds_org(organism_code, compounds, full.result=T)
+get_paths_with_cpds_org(organism_code, compounds, full.result=TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,8 +24,10 @@ If full result is chosen, the data frame contains information on the pathways of
 If full result is not wanted, only the pathways will be given.
 }
 \examples{
+\donttest{
 #Get human metabolic paths that have one or more of the three following compounds
-#keggs=get_cpd_names(c("cpd:C00033", "cpd:C00147", "gl:G13099"))
-#paths_org_cpds=get_paths_with_cpds_org("hsa", keggs)
-#paths_org_cpds
+keggs=get_cpd_names(c("cpd:C00033", "cpd:C00147", "gl:G13099"))
+paths_org_cpds=get_paths_with_cpds_org("hsa", keggs)
+paths_org_cpds
+}
 }

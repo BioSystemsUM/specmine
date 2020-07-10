@@ -8,8 +8,8 @@
    Function for plotting the results from fold change.
 }
 \usage{
-plot_fold_change(dataset, fc.results, fc.threshold, plot.log = T, 
-var = F, xlab = "")
+plot_fold_change(dataset, fc.results, fc.threshold, plot.log = TRUE, 
+var = FALSE, xlab = "")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

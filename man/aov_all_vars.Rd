@@ -8,7 +8,7 @@
   Perform analysis of variance of all variables in the dataset.
 }
 \usage{
-aov_all_vars(dataset, column.class, doTukey = T, write.file = F, 
+aov_all_vars(dataset, column.class, doTukey = TRUE, write.file = FALSE, 
 file.out = "anova-res.csv")
 }
 %- maybe also 'usage' for other objects documented here.

@@ -9,7 +9,7 @@
 }
 \usage{
 pca_kmeans_plot2D(dataset, pca.result, num.clusters = 3, 
-pcas = c(1, 2), kmeans.result = NULL, labels = FALSE, bw=F,
+pcas = c(1, 2), kmeans.result = NULL, labels = FALSE, bw=FALSE,
 ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -50,9 +50,8 @@ ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL)
 }
 
 \examples{
-\dontrun{
+\donttest{
   ## Example of a 2D PCA k-means plot
-  data(cachexia)
   pca.result = pca_analysis_dataset(cachexia)
   pca_kmeans_plot2D(cachexia, pca.result, num.clusters = 3, pcas = c(1,2))
 }

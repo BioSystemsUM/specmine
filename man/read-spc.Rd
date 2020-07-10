@@ -61,24 +61,7 @@ If you have .spc files that cannot be read with these function, don't
   hesitate to contact the package maintainer with your code patch or asking
   advice.
 }
-\examples{
 
-## get the sample .spc files from ftirsearch.com (see above)
-\dontrun{
-# single spectrum
-spc <- read.spc ("BENZENE.SPC")
-plot (spc)
-
-# multi-spectra .spc file with common wavelength axis
-spc <- read.spc ('IG_MULTI.SPC')
-spc
-
-# multi-spectra .spc file with individual wavelength axes
-spc <- read.spc ("BARBITUATES.SPC")
-plot (spc [[1]], lines.args = list (type = "h"))
-}
-
-}
 \seealso{
 \code{\link[hyperSpec]{textio}}
 }

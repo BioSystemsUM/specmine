@@ -8,8 +8,8 @@
   Performs a classical PCA analysis over the dataset.
 }
 \usage{
-pca_analysis_dataset(dataset, scale = T, center = T, 
-write.file = F, file.out = "pca", ...)
+pca_analysis_dataset(dataset, scale = TRUE, center = TRUE, 
+write.file = FALSE, file.out = "pca", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

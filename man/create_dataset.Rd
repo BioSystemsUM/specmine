@@ -67,15 +67,6 @@ label.x = NULL, label.values = NULL, xSet = NULL)
 %% ...
 }
 
-\examples{
-\dontrun{
-  ## Example of creating a dataset
-  dataset = create_dataset(datamatrix, type = "nmr-spectra", 
-	metadata = dataset.metadata, description = "shortdescription", 
-	sample.names = NULL, x.axis.values = NULL, label.x = "ppm", 
-	label.values = "intensity")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ dataset }

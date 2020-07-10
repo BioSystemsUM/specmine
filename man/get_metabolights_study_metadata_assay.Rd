@@ -26,6 +26,8 @@ MetaboLights database: https://www.ebi.ac.uk/metabolights/
 }
 
 \examples{
-## get_metabolights_study_files_assay('MTBLS346', 1, '~/Downloads')
-## get_metabolights_study_metadata_assay('MTBLS346', 1, '~/Downloads')
+\donttest{
+ get_metabolights_study_files_assay('MTBLS346', 1, tempdir())
+ get_metabolights_study_metadata_assay('MTBLS346', 1, tempdir())
+}
 }

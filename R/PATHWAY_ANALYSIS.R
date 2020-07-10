@@ -123,7 +123,7 @@ get_OrganismsCodes=function(){
   }
   organisms=KEGGREST::keggList("organism")
   organisms.Inf=data.frame(Tnumber=organisms[,1], organismCode=organisms[,2],
-                           speciesNames=organisms[,3], phylogeny=organisms[,4], stringsAsFactors=F)
+                           speciesNames=organisms[,3], phylogeny=organisms[,4], stringsAsFactors=FALSE)
   return(organisms.Inf)
 }
 
@@ -161,7 +161,7 @@ get_metabPaths_org=function(org_code){
 #######################################
 
 #' Get only the paths of the organism that contain given compounds:
-get_paths_with_cpds_org=function(organism_code, compounds, full.result=T){
+get_paths_with_cpds_org=function(organism_code, compounds, full.result=TRUE){
   if(!requireNamespace("KEGGgraph", quietly = TRUE)){
     stop("Package KEGGgraph needed for this function to work. Please install it: BiocManager::install('KEGGgraph').",
          call. = FALSE)
@@ -177,7 +177,7 @@ get_paths_with_cpds_org=function(organism_code, compounds, full.result=T){
   for (i in 1:length(org_paths)){
     path=org_paths[i]
     path_name=names(org_paths)[i]
-    #cat("Analysing pathway", path, "\n")
+    #message("Analysing pathway", path, "\n")
     path_r=get_MetabolitePath(path)
     nods=KEGGgraph::nodes(convert_keggpathway_2_reactiongraph(path_r))
     cpds_idx=as.vector(na.exclude(match(nods, compounds)))
@@ -192,8 +192,8 @@ get_paths_with_cpds_org=function(organism_code, compounds, full.result=T){
     }
   }
   order_idx=order(ratio)
-  if(full.result) return(data.frame(pathways=paths_with_cpds, ratio=ratio, compounds=compounds_in_paths, compounds_names=compounds_in_paths_names, row.names=names_paths, stringsAsFactors=F)[order_idx,])
-  return(data.frame(pathways=paths_with_cpds, ratio=ratio, row.names=names_paths, stringsAsFactors=F)[order_idx,])
+  if(full.result) return(data.frame(pathways=paths_with_cpds, ratio=ratio, compounds=compounds_in_paths, compounds_names=compounds_in_paths_names, row.names=names_paths, stringsAsFactors=FALSE)[order_idx,])
+  return(data.frame(pathways=paths_with_cpds, ratio=ratio, row.names=names_paths, stringsAsFactors=FALSE)[order_idx,])
   
 }
 
@@ -218,8 +218,8 @@ convert_keggpathway_2_reactiongraph=function(pathObj){
 
 #' Creates the pathway, with reactions included in the nodes
 create_pathway_with_reactions=function(path, path.name, identified_cpds,
-                                       nodeNames="kegg", nodeTooltip=F,
-                                       map.zoom=F, map.layout="preset",
+                                       nodeNames="kegg", nodeTooltip=FALSE,
+                                       map.zoom=FALSE, map.layout="preset",
                                        map.width=NULL, map.height=NULL){
   
   #Vectors to construct edges:
@@ -346,13 +346,13 @@ create_pathway_with_reactions=function(path, path.name, identified_cpds,
   }
   else if(nodeNames=="names"){
     name=nodes
-    cpds=grep("^cpd:", name, value=T)
-    cpds=c(cpds, grep("^gl:", name, value=T))
-    not_cpds=grep("^cpd:", name, value=T, invert=T)
+    cpds=grep("^cpd:", name, value=TRUE)
+    cpds=c(cpds, grep("^gl:", name, value=TRUE))
+    not_cpds=grep("^cpd:", name, value=TRUE, invert=TRUE)
     named_cpds=get_cpd_names(cpds)
     for (cpd in named_cpds) name[name==cpd]=names(named_cpds)[named_cpds==cpd]
     for (code in not_cpds){
-      if(length(grep("^path:", code, value=T))) name[name==code]=map_names[code]
+      if(length(grep("^path:", code, value=TRUE))) name[name==code]=map_names[code]
       name[name==code]=strsplit(code, ":")[[1]][2]
     }
   }
@@ -393,13 +393,13 @@ create_pathway_with_reactions=function(path, path.name, identified_cpds,
     }
     
     #Create node and edge data:
-    nodeData=data.frame(id=nodes, name=name, shape, height=height, width=width, color, nodeLabelColor=rep("#000000", length(nodes)), x=x.data, y=y.data, stringsAsFactors=F)
-    edgeData=data.frame(source, target, color=colorLine, label=rep("", length(source)), labelColor=rep("#888888", length(source)), stringsAsFactors=F)#, edgeSourceShape, edgeTargetShape)
+    nodeData=data.frame(id=nodes, name=name, shape, height=height, width=width, color, nodeLabelColor=rep("#000000", length(nodes)), x=x.data, y=y.data, stringsAsFactors=FALSE)
+    edgeData=data.frame(source, target, color=colorLine, label=rep("", length(source)), labelColor=rep("#888888", length(source)), stringsAsFactors=FALSE)#, edgeSourceShape, edgeTargetShape)
   }
   else{
     #Create node and edge data:
-    nodeData=data.frame(id=nodes, name=name, shape, height=height, width=width, color, nodeLabelColor=rep("#000000", length(nodes)), stringsAsFactors=F)
-    edgeData=data.frame(source, target, color=colorLine, label=rep("", length(source)), labelColor=rep("#888888", length(source)), stringsAsFactors=F)#, edgeSourceShape, edgeTargetShape)
+    nodeData=data.frame(id=nodes, name=name, shape, height=height, width=width, color, nodeLabelColor=rep("#000000", length(nodes)), stringsAsFactors=FALSE)
+    edgeData=data.frame(source, target, color=colorLine, label=rep("", length(source)), labelColor=rep("#888888", length(source)), stringsAsFactors=FALSE)#, edgeSourceShape, edgeTargetShape)
   }
   
   #Change color nodes of the given compounds:
@@ -422,8 +422,8 @@ create_pathway_with_reactions=function(path, path.name, identified_cpds,
 
 #' Creates the pathway wanted. If any of the given compounds is present in the pathway, it is coloured differently. 
 pathway_analysis=function(compounds, pathway, #cpd.type="kegg",
-                          nodeNames="kegg", nodeTooltip=F,
-                          map.zoom=F, map.layout="preset", map.width=NULL, map.height=NULL){
+                          nodeNames="kegg", nodeTooltip=FALSE,
+                          map.zoom=FALSE, map.layout="preset", map.width=NULL, map.height=NULL){
   #Path code: "hsa00010", for example
   #For now, "compounds" has to be in kegg codes (cpd.type="kegg").
   if (!requireNamespace("KEGGgraph", quietly = TRUE)) {
@@ -451,12 +451,12 @@ pathway_analysis=function(compounds, pathway, #cpd.type="kegg",
   }
   
   #Get pathway maps and graphs
-  cat("Getting pathway map\n")
+  message("Getting pathway map\n")
   pathMap=get_MetabolitePath(pathway)
   reactionObj=convert_keggpathway_2_reactiongraph(pathMap)
   
   #Create the pathway map:
-  cat("Creating pathway\n")
+  message("Creating pathway\n")
   create_pathway_with_reactions(pathMap, pathway, compounds,
                                 nodeNames, nodeTooltip,
                                 map.zoom, map.layout, map.width, map.height)

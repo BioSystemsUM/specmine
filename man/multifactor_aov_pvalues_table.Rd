@@ -9,7 +9,7 @@
 }
 \usage{
 multifactor_aov_pvalues_table(multifactor.aov.results, 
-write.file = F, file.out = "multi-anova-pvalues.csv")
+write.file = FALSE, file.out = "multi-anova-pvalues.csv")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -9,7 +9,7 @@
 }
 \usage{
 ksTest_dataset(dataset, metadata.var, threshold = NULL, 
-write.file = F, file.out = "ks.csv")
+write.file = FALSE, file.out = "ks.csv")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

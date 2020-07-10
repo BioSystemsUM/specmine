@@ -9,7 +9,7 @@
 }
 \usage{
 flat_pattern_filter(dataset, filter.function = "iqr", 
-by.percent = T, by.threshold = F, red.value = 0)
+by.percent = TRUE, by.threshold = FALSE, red.value = 0)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -28,10 +28,10 @@ by.percent = T, by.threshold = F, red.value = 0)
     }
 }
   \item{by.percent}{
-    boolean value, if T the number of variables to filter will be a percentage of the number of variables in the dataset; percentage is given by the "red.value" parameter
+    boolean value, if TRUE the number of variables to filter will be a percentage of the number of variables in the dataset; percentage is given by the "red.value" parameter
 }
   \item{by.threshold}{
-    boolean value, if T, defines filtering will select variables where values of filtering function are below a given threshold. Threshold is defined by red.value that defines the minimum value of the function needed to keep the variable.
+    boolean value, if TRUE, defines filtering will select variables where values of filtering function are below a given threshold. Threshold is defined by red.value that defines the minimum value of the function needed to keep the variable.
 }
   \item{red.value}{
     it can be the percentage or the threshold number. If red.value = "auto", will calculate number of variables to remove automatically

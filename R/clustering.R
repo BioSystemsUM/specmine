@@ -67,11 +67,12 @@ kmeans_result_df = function(kmeans.result){
 #kmeans plot
 kmeans_plot = function(dataset, kmeans.result){
   num.clusters = max(kmeans.result$cluster)
-  par(mfrow=c(num.clusters, 1), mar = c(2,2,2,2))
+  opar=par(mfrow=c(num.clusters, 1), mar = c(2,2,2,2))
+  on.exit(par(opar))
   for (i in 1:num.clusters){
     matplot(as.matrix(dataset$data[,kmeans.result$cluster == i]), type="l", col="grey", 
-            main = paste("Cluster ", i, ", n = ", kmeans.result$size[i], sep =""), axes = F)
-    lines(apply(as.matrix(dataset$data[,kmeans.result$cluster == i,drop=F]), 1, median), type="l", col="blue",lwd=1)
+            main = paste("Cluster ", i, ", n = ", kmeans.result$size[i], sep =""), axes = FALSE)
+    lines(apply(as.matrix(dataset$data[,kmeans.result$cluster == i,drop=FALSE]), 1, median), type="l", col="blue",lwd=1)
     axis(2)
     axis(1, 1:nrow(dataset$data), rownames(dataset$data))
   }

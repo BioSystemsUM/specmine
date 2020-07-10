@@ -21,9 +21,9 @@
 
 
 # reads a CSV file creating a data matrix 
-# format: "row" -> samples are in rows (if header.row is T, sample names are in the first column;
+# format: "row" -> samples are in rows (if header.row is TRUE, sample names are in the first column;
 #               if header.col is T, value labels are in the first row)
-#   	    "column" -> samples in columns (if header.col is T, sample names are in the first row;
+#   	    "column" -> samples in columns (if header.col is TRUE, sample names are in the first row;
 #               if header.row is T, value labels are in the first column)
 # returns dataset with the default structure
 
@@ -45,7 +45,7 @@
   data
 }
 
-"read_metadata" = function(filename, header.col = T, header.row = T, sep = ",")
+"read_metadata" = function(filename, header.col = TRUE, header.row = TRUE, sep = ",")
 {
   if (header.row) rownames = 1
   else rownames = NULL

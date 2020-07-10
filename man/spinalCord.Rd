@@ -19,8 +19,10 @@ by untargeted LC-MS analysis of tissue metabolomes from
 wild-type and enzyme-inactivated organisms
 }
 \examples{
-    ###data(spinalCord)
-    ###sum_dataset(spinalCord)
+\donttest{
+    data(spinalCord)
+    sum_dataset(spinalCord)
+    }
 }
 \references{
 A. Saghatelian, S.A. Trauger, E.J. Want, E.G. Hawkins, G. Siuzdak,

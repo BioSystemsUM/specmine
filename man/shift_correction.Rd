@@ -38,15 +38,6 @@ interp.function = "linear", ref.limits = NULL)
 Returns the dataset with the spectras shifted.
 }
 
-\examples{
-\dontrun{
-  ## Example of shift correction with linear interpolation and 
-  ## shifts calculated based on a reference band of the spectra
-  dataset.corrected = shift_correction(dataset, method = "interpolation", 
-		      shift.val = "auto", interp.function = "linear", 
-		      ref.limits = c(800,850))
-		      }
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ shift }

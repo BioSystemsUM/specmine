@@ -33,12 +33,7 @@ header.row = TRUE, sep = ",")
 \value{
   Returns a numeric matrix with the data.
 }
-\examples{
-\dontrun{
-  ## Example of reading a dataset from a CSV file
-  data.matrix = read_data_csv("data.csv", format = "row")
-}
-}
+
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ matrix }

@@ -21,12 +21,6 @@ get_samples_names_dx(foldername)
   Returns a vector with the sample's names.
 }
 
-\examples{
-\dontrun{
-  ## Example of getting DX sample's names
-  dx.sample.names = get_samples_names_dx("data")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ dx }

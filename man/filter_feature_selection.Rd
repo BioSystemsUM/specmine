@@ -35,9 +35,8 @@ A caret's sbf object with the result of selection by filter.
 }
 
 \examples{
-\dontrun{
+\donttest{
   ## Example of selection by filter
-  data(cachexia)
   library(caret)
   rfe.result = filter_feature_selection(cachexia$data, 
 	       cachexia$metadata$Muscle.loss, functions = caret::rfSBF, 

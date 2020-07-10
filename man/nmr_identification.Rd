@@ -6,7 +6,7 @@ This function performs metabolite identification on a dataset of nmr peaks.
 }
 \usage{
 nmr_identification(dataset, ppm.tol, frequency_scores, solvent_scores, organism_scores,
-                   method='Match_uniq', per.sample=F, tresh_zero=0, alpha=10e-4)
+                   method='Match_uniq', per.sample=FALSE, tresh_zero=0, alpha=10e-4)
 }
 \arguments{
 \item{dataset}{List representing the dataset from an nmr peaks metabolomics experiment.}
@@ -15,7 +15,7 @@ nmr_identification(dataset, ppm.tol, frequency_scores, solvent_scores, organism_
 
 \item{per.sample}{Logical indicating wether identification should be done for each sample (for each sample, only the peaks present in that sample will be used in the identification) or for all samples together (all peaks will be used together in the identification).}
 
-\item{tresh_zero}{Intensity value above which peaks are considered present. Only necessary if per.sample=T}
+\item{tresh_zero}{Intensity value above which peaks are considered present. Only necessary if per.sample=TRUE}
 
 \item{method}{Identification method to use. There are three: 'Match_uniq' (default), 'Hyper' or 'Hyper_uniq'. For more information, see details below.}
 
@@ -28,7 +28,7 @@ nmr_identification(dataset, ppm.tol, frequency_scores, solvent_scores, organism_
 \item{organism_scores}{This gives the opportunity to score each reference according to the presence or not of the respective metabolite in the organism(s) or group(s) of organisms under study, so that metabolites not present in an organism/group of interest will have a lower score and thus be less likely to be identified. The presence of a metabolite in an organism/group is evaluated using the information in the KEGG database. Thus, all organism/group codes should be present in KEGG. Argument should be in the form of a list, like: list('hsa'=1, 'other'=0, 'not_in_kegg'=0). For more information, see details below.}
 }
 \value{
-If per.sample=F, it gives a list with two items: results_table and more_results. If per.sample=T, it gives a list with as many items as the number of samples. Each sample contains a list with the two items results_table and more_results.
+If per.sample=FALSE, it gives a list with two items: results_table and more_results. If per.sample=TRUE, it gives a list with as many items as the number of samples. Each sample contains a list with the two items results_table and more_results.
 
 results_table is a data.frame with the information on the metabolites matched. Each row corresponds to a spectrum from the library that matched the dataset:
 \describe{
@@ -66,11 +66,14 @@ There are three methods implemented to perform metabolite identification. The de
 After scoring a match between a reference and a sample, the reference is further scored regarding the conditions under which it was acquired. To do so, each frequency and solvent represented in the library must be given a score by the user. The user also has the possibility to score each reference according to the presence or not of the respective metabolite in the organism(s) or group(s) of organisms under study, so that metabolites not present in an organism/group of interest will have a lower score and thus be less likely to be identified. The presence of a metabolite in an organism/group is evaluated using the information in the KEGG database.
 }
 \examples{
-###propolis_mv=missingvalues_imputation(propolis)
-###freq_scores = list('400'=0, '500'=0, '600'=1, '700'=0)
-###solv_scores = list(CD3OD=0, D2O=.8, Water=.8, CDCl3=0, 'Acetone-d6'=0, 'Acetone'=0,"DMSO-d6"=0,
-###                   "100%_DMSO"=0, "5%_DMSO"=0, C=0, C6D6=0, CD3CN=0, C2D2Cl4=0, CD2Cl2=0,
-###                   CDC3OD=1, Ethanol=0)
-###org_scores = list('Eudicots'=1, 'Monocots'=1, 'ame'=.9, 'other'=0, 'not_in_kegg'=0)
-###id_res=nmr_identification(propolis_mv, ppm.tol=0.03, freq_scores, solv_scores, org_scores)
+\donttest{
+ propolis_mv=missingvalues_imputation(propolis)
+ freq_scores = list('400'=0, '500'=0, '600'=1, '700'=0)
+ solv_scores = list(CD3OD=0, D2O=.8, Water=.8, CDCl3=0, 'Acetone-d6'=0, 'Acetone'=0,"DMSO-d6"=0,
+                    '100\%_DMSO'=0,
+                    '5\%_DMSO'=0, C=0, C6D6=0, CD3CN=0, C2D2Cl4=0, CD2Cl2=0,
+                    CDC3OD=1, Ethanol=0)
+ org_scores = list('Eudicots'=1, 'Monocots'=1, 'ame'=.9, 'other'=0, 'not_in_kegg'=0)
+ id_res=nmr_identification(propolis_mv, ppm.tol=0.03, freq_scores, solv_scores, org_scores)
+}
 }

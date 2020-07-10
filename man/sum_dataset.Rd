@@ -8,7 +8,7 @@ Dataset summary
   Returns a summary with its main features.
 }
 \usage{
-sum_dataset(dataset, stats = T)
+sum_dataset(dataset, stats = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

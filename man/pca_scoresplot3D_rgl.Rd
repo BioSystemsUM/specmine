@@ -35,11 +35,12 @@ pcas = c(1, 2, 3), size = 1, labels = FALSE)
 
 
 \examples{
+\donttest{
   ### Example of a 3D PCA scores plot
-  #data(cachexia)
-  #pca.result = pca_analysis_dataset(cachexia)
-  #pca_scoresplot3D_rgl(cachexia, pca.result, "Muscle.loss", 
-  #  		       pcas = c(1,2,3), labels = TRUE)
+  pca.result = pca_analysis_dataset(cachexia)
+  pca_scoresplot3D_rgl(cachexia, pca.result, "Muscle.loss", 
+    		       pcas = c(1,2,3), labels = TRUE)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

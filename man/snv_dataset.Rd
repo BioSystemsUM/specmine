@@ -21,13 +21,6 @@ snv_dataset(dataset)
   Returns the dataset with the data normalized by SNV.
 }
 
-
-\examples{
-\dontrun{
-  ## Example of SNV on a dataset
-  dataset = snv_dataset(dataset)
-  }
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ snv }

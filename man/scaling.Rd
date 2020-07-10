@@ -30,12 +30,6 @@ scaling(dataset, method = "auto")
  Returns the dataset scaled.
 }
 
-\examples{
-\dontrun{
-  ## Example of auto scaling
-  dataset.scal = scaling(dataset, "auto")
-  }
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ scaling }

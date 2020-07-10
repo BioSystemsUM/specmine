@@ -10,13 +10,13 @@
 # threshold is defined by red.value that defines the minimum value of the function 
 # needed to keep the variable
 
-"flat_pattern_filter" = function(dataset, filter.function = "iqr", by.percent = T, 
-                                 by.threshold = F, red.value = 0){
+"flat_pattern_filter" = function(dataset, filter.function = "iqr", by.percent = TRUE, 
+                                 by.threshold = FALSE, red.value = 0){
 	
   if (by.percent & by.threshold) 
-    warning("Both by.percent and by.threshold are T; filtering by percentage")
+    warning("Both by.percent and by.threshold are TRUE; filtering by percentage")
   if (!by.percent & !by.threshold) 
-    stop ("Either by.percent or by.threshold need to be T")
+    stop ("Either by.percent or by.threshold need to be TRUE")
     
   # apply filter function to all variables
   filter.values = apply_filter_function(dataset$data, filter.function)
@@ -37,29 +37,29 @@
 # method: iqr, rsd, rnsd, sd, mad, mean, median
 "apply_filter_function" = function(datamat, filter.fn = "iqr"){
 	if (filter.fn == "iqr"){
-		filter.values = apply(datamat, 1, IQR, na.rm=T);
+		filter.values = apply(datamat, 1, IQR, na.rm=TRUE);
 	}
   else if (filter.fn == "rsd"){
-		sds = apply(datamat, 1, sd, na.rm=T)
-		mns = apply(datamat, 1, mean, na.rm=T)
+		sds = apply(datamat, 1, sd, na.rm=TRUE)
+		mns = apply(datamat, 1, mean, na.rm=TRUE)
 		filter.values = abs(sds/mns)
 	}
   else if (filter.fn == "rnsd"){
-		mads = apply(datamat, 1, mad, na.rm=T)
-		meds = apply(datamat, 1, median, na.rm=T)
+		mads = apply(datamat, 1, mad, na.rm=TRUE)
+		meds = apply(datamat, 1, median, na.rm=TRUE)
 		filter.values = abs(mads/meds)
 	}
   else if (filter.fn == "sd"){
-		filter.values = apply(datamat, 1, sd, na.rm=T)
+		filter.values = apply(datamat, 1, sd, na.rm=TRUE)
 	}
   else if (filter.fn == "mad"){
-		filter.values = apply(datamat, 1, mad, na.rm=T)
+		filter.values = apply(datamat, 1, mad, na.rm=TRUE)
 	}
   else if (filter.fn == "mean"){
-		filter.values = apply(datamat, 1, mean, na.rm=T)
+		filter.values = apply(datamat, 1, mean, na.rm=TRUE)
 	}
   else if (filter.fn == "median"){
-		filter.values = apply(datamat, 1, median, na.rm=T)
+		filter.values = apply(datamat, 1, median, na.rm=TRUE)
 	}
 	filter.values
 }

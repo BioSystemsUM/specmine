@@ -10,7 +10,7 @@
 \usage{
 plot_spectra_simple(dataset, samples = NULL, 
 variable.bounds = NULL, xlab = NULL, ylab = NULL, 
-lty = 1, lwd = 1, col = 1, reverse.x = F, ...)
+lty = 1, lwd = 1, col = 1, reverse.x = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

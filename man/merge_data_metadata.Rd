@@ -9,7 +9,7 @@
 }
 \usage{
 merge_data_metadata(dataset, samples = NULL, 
-metadata.vars = NULL, x.values = NULL, by.index = F)
+metadata.vars = NULL, x.values = NULL, by.index = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

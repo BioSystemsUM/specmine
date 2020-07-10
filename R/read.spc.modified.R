@@ -572,7 +572,7 @@ raw.split.nul <- function (raw, trunc = c (TRUE, TRUE), firstonly = FALSE) {
 ##' @examples
 ##' 
 ##' ## get the sample .spc files from ftirsearch.com (see above)
-##' \dontrun{
+##' \donttest{
 ##' # single spectrum
 ##' spc <- read.spc ("BENZENE.SPC")
 ##' plot (spc)

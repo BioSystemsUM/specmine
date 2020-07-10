@@ -21,5 +21,7 @@ MetaboLights database: https://www.ebi.ac.uk/metabolights/
 }
 
 \examples{
-## get_metabolights_study_samples_files('MTBLS346',1,'~/Downloads')
+\donttest{
+ get_metabolights_study_samples_files('MTBLS346',1, tempdir())
+ }
 }

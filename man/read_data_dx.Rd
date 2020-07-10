@@ -24,12 +24,6 @@ read_data_dx(foldername, debug = 0)
   Returns a list with the samples and the respective data points.
 }
 
-\examples{
-\dontrun{
-  ## Example of reading a dataset from (J)DX file
-s  sample.list = read_data_dx("data")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ jdx }

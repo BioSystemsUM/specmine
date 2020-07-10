@@ -8,7 +8,7 @@
  Remove variables from the dataset by the number of NAs
 }
 \usage{
-remove_variables_by_nas(dataset, max.nas = 0, by.percent = F)
+remove_variables_by_nas(dataset, max.nas = 0, by.percent = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

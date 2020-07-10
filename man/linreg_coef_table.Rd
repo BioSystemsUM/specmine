@@ -8,7 +8,7 @@ Linear regression coefficient table
  Gets a data.frame with the coefficient values.
 }
 \usage{
-linreg_coef_table(linreg.results, write.file = F, 
+linreg_coef_table(linreg.results, write.file = FALSE, 
 file.out = "linreg-coefs.csv")
 }
 %- maybe also 'usage' for other objects documented here.
@@ -28,12 +28,6 @@ file.out = "linreg-coefs.csv")
  Returns a data.frame with the coefficient values.
 }
 
-\examples{
-\dontrun{
-  ## Example of linear regression coefficient table
-  linreg.coef.tab = linreg_coef_table(linreg.results)
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ coefficient }

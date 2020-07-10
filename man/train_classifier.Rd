@@ -11,7 +11,7 @@
 train_classifier(dataset, column.class, model, validation, 
 num.folds = 10, num.repeats = 10, tunelength = 10, 
 tunegrid = NULL, metric = NULL, 
-summary.function = defaultSummary, class.in.metadata = T)
+summary.function = defaultSummary, class.in.metadata = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -4,8 +4,8 @@
 
 # perform pca analysis - classical
 
-pca_analysis_dataset = function(dataset, scale = T, center = T, 
-                                write.file = F, file.out = "pca", ...) {
+pca_analysis_dataset = function(dataset, scale = TRUE, center = TRUE, 
+                                write.file = FALSE, file.out = "pca", ...) {
   
 	pca.result = prcomp(t(dataset$data), center = center, scale. = scale, ...)
   if (write.file) {
@@ -18,7 +18,7 @@ pca_analysis_dataset = function(dataset, scale = T, center = T,
 # returns information about importance of the PC's
 # pcs - PCs to get; sd - get std dev; prop - get proportion of variance; cumul - get cumulative
 # min.cum - allows to define minimum cumulative % of variance
-pca_importance = function(pca.res, pcs = 1:length(pca.res$sdev), sd = T, prop = T, cumul = T, min.cum = NULL)
+pca_importance = function(pca.res, pcs = 1:length(pca.res$sdev), sd = TRUE, prop = TRUE, cumul = TRUE, min.cum = NULL)
 {
   rows = c()
   if (sd) rows = c(1)
@@ -52,9 +52,9 @@ pca_importance = function(pca.res, pcs = 1:length(pca.res$sdev), sd = T, prop = 
 
 # returns objects of class princomp
 pca_robust = function(dataset, center = "median", scale = "mad", k = 10,
-                      write.file = F, file.out = "robpca", ...)
+                      write.file = FALSE, file.out = "robpca", ...)
 {
-  pca.res = pcaPP::PCAgrid(t(dataset$data), k = k, center = center, scale = scale, scores = T, ...)
+  pca.res = pcaPP::PCAgrid(t(dataset$data), k = k, center = center, scale = scale, scores = TRUE, ...)
   if (write.file) {
     write.csv(pca.res$scores, file=paste(file.out,"_scores.csv",sep=""))
     write.csv(pca.res$loadings, file=paste(file.out,"_loadings.csv", sep= ""))
@@ -72,7 +72,8 @@ pca_screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "r
                          ...){
   importance = pca_importance(pca.result)
   if (is.null(num.pcs)) num.pcs = dim(importance)[2]
-  par(mfrow=c(1,1))
+  opar=par(mfrow=c(1,1))
+  on.exit(par(opar))
   matplot(seq(1, num.pcs), data.frame(t(importance[2:3,1:num.pcs]*100)), type="l", lty=1, col=fill.col, 
           xaxt='n', ylab= ylab,xlab=xlab, ...)
   legend(leg.pos, lab.text, cex=cex.leg, fill=fill.col)
@@ -81,7 +82,7 @@ pca_screeplot = function(pca.result, num.pcs = NULL, cex.leg = 0.8, leg.pos = "r
 
 #2d scores plot
 pca_scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1,2), labels = FALSE, 
-                            ellipses = FALSE, bw=F, pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
+                            ellipses = FALSE, bw=FALSE, pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
 {
   has.legend = FALSE
   if (class(pca.result) == "prcomp"){
@@ -110,8 +111,8 @@ pca_scoresplot2D = function(dataset, pca.result, column.class = NULL, pcas = c(1
   else
     pca.plot = pca.plot + ggplot2::scale_colour_brewer(type = "qual", palette=pallette) 
   pca.plot = pca.plot +
-    ggplot2::xlab(paste(paste("PC",pcas[1]," -",sep=""), paste(pca_importance(pca.result, pcas[1], sd=F, prop=T, cumul = F)*100,"%",sep=""))) + 
-    ggplot2::ylab(paste(paste("PC",pcas[2]," -",sep=""), paste(pca_importance(pca.result, pcas[2], sd=F, prop=T, cumul = F)*100,"%",sep="")))
+    ggplot2::xlab(paste(paste("PC",pcas[1]," -",sep=""), paste(pca_importance(pca.result, pcas[1], sd=FALSE, prop=TRUE, cumul = F)*100,"%",sep=""))) + 
+    ggplot2::ylab(paste(paste("PC",pcas[2]," -",sep=""), paste(pca_importance(pca.result, pcas[2], sd=FALSE, prop=TRUE, cumul = F)*100,"%",sep="")))
   if (has.legend) {
     if (bw) pca.plot = pca.plot + ggplot2::theme_bw() 
     else pca.plot = pca.plot + ggplot2::theme(legend.position = leg.pos)
@@ -182,12 +183,13 @@ pca_scoresplot3D = function(dataset, pca.result, column.class = NULL, pcas=c(1,2
 
 #biplots
 pca_biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors = 1, inset = c(0, 0), legend.place = "topright", ...) {
-  x.flag = F
+  x.flag = FALSE
   if (x.colors %in% colnames(dataset$metadata)){
 	x.colors.meta = x.colors
 	x.colors = as.integer(dataset$metadata[, x.colors])
-	x.flag = T
-	par(xpd=T, mar=par()$mar+c(0,0,0,6))
+	x.flag = TRUE
+	opar=par(xpd=TRUE, mar=par()$mar+c(0,0,0,6))
+	on.exit(par(opar))
   }
 
   if (class(pca.result) == "prcomp"){
@@ -199,7 +201,8 @@ pca_biplot= function(dataset, pca.result, cex = 0.8, legend.cex = 0.8, x.colors 
   } 
   if (x.flag){
 	legend(legend.place, inset = inset, levels(dataset$metadata[, x.colors.meta]), cex=legend.cex, bty="n", fill = sort(as.integer(factor(levels(dataset$metadata[, x.colors.meta]))))) 
-	par(mar=c(5, 4, 4, 2) + 0.1)
+	opar=par(mar=c(5, 4, 4, 2) + 0.1)
+	on.exit(par(opar))
   }
 }
 
@@ -301,7 +304,8 @@ biplot_default_modified = function (x, y, var.axes = TRUE, col, x.colors, colors
     plot(x, type = "n", xlim = xlim, ylim = ylim, col = col[1L], 
         xlab = xlab, ylab = ylab, sub = sub, main = main, ...)
     text(x, xlabs, cex = cex[1L], col = x.colors, ...)
-    par(new = TRUE)
+    opar=par(new = TRUE)
+    on.exit(par(opar))
     dev.hold()
     on.exit(dev.flush(), add = TRUE)
     plot(y, axes = FALSE, type = "n", xlim = xlim * ratio, ylim = ylim * 
@@ -383,9 +387,9 @@ pca_kmeans_plot3D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2
 
 
 #kmeans clustering with 2 first PCs
-pca_kmeans_plot2D = function(dataset, pca.result, num.clusters = 3, pcas = c(1,2), 
-                             kmeans.result = NULL, labels = FALSE,
-			     bw=F, ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL){
+pca_kmeans_plot2D = function(dataset, pca.result, num.clusters = 3,
+                             pcas = c(1,2), kmeans.result = NULL, labels = FALSE, bw=FALSE,
+                             ellipses = FALSE, leg.pos = "right", xlim = NULL, ylim = NULL){
   if (class(pca.result) == "prcomp"){
 	scores = pca.result$x
   } else if (class(pca.result) == "princomp"){

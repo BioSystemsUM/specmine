@@ -24,12 +24,6 @@ merge_datasets(dataset1, dataset2)
   Returns one dataset with the data from the two datasets merged.
 }
 
-\examples{
-\dontrun{
-  ## Example of merging two datasets
-  dataset = merge_datasets(dataset1, dataset2)
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ dataset }

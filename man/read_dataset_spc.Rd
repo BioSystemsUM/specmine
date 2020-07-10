@@ -9,7 +9,7 @@
 }
 \usage{
 read_dataset_spc(folder.data, filename.meta = NULL, 
-type = "undefined", description = "", nosubhdr = F, 
+type = "undefined", description = "", nosubhdr = FALSE, 
 label.x = NULL, label.values = NULL, header.col.meta = TRUE, 
 header.row.meta = TRUE, sep.meta = ",")
 }
@@ -51,14 +51,6 @@ header.row.meta = TRUE, sep.meta = ",")
   Returns the dataset from the SPC files.
 }
 
-\examples{
-\dontrun{
-  ## Example of reading a dataset from SPC files
-  dataset = read_dataset_spc("data", "metadata.csv", type = "ir-spectra", 
-	    description = "description of the dataset", label.x = "wavelength", 
-	    label.values = "transmittance")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ dataset }

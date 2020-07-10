@@ -9,7 +9,7 @@
 }
 \usage{
 plot_anova(dataset, anova.results, anova.threshold = 0.01, 
-reverse.x = F)
+reverse.x = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

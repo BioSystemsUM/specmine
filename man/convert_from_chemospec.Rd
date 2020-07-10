@@ -28,13 +28,6 @@ description = "")
    Returns a list representing the dataset converted.
 }
 
-\examples{
-\dontrun{
-  ## Example of converting a dataset from ChemoSpec 
-  dataset = convert_from_chemospec(chemospec.dataset, type = "nmr-peaks", 
-   	    description = "some description") 
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ chemospec }

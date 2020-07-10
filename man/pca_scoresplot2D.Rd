@@ -9,7 +9,7 @@
 }
 \usage{
 pca_scoresplot2D(dataset, pca.result, column.class, 
-pcas = c(1, 2), labels = FALSE, ellipses = FALSE, bw=F,
+pcas = c(1, 2), labels = FALSE, ellipses = FALSE, bw=FALSE,
 pallette = 2, leg.pos = "right", xlim = NULL, ylim = NULL)
 }
 %- maybe also 'usage' for other objects documented here.

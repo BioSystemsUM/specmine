@@ -36,7 +36,7 @@
 # returns list of data frames
 "read_csvs_folder" = function(foldername, ...)
 {
-  files<-dir(foldername, pattern=".[Cc][Ss][Vv]$", recursive=T, full.names=TRUE)
+  files<-dir(foldername, pattern=".[Cc][Ss][Vv]$", recursive=TRUE, full.names=TRUE)
   sampleList = read_multiple_csvs(files, ext= "", ...);
   sampleList
 }
@@ -67,7 +67,7 @@
     for(j in (i+1):length(sample.list)) 
     {
       res = compare::compare(sample.list[[i]], sample.list[[j]])
-      if(res$result == T) 
+      if(res$result == TRUE) 
       {
         eq1 = c(eq1, names(sample.list)[i])
         eq2 = c(eq2, names(sample.list)[j])

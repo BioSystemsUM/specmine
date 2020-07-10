@@ -1,7 +1,7 @@
 
 ### BOXPLOT of each variable ####
 
-"boxplot_variables" = function(dataset, variables = NULL, samples = NULL, horizontal = T, 
+"boxplot_variables" = function(dataset, variables = NULL, samples = NULL, horizontal = TRUE, 
                                col = "lightblue", nchar.label = 10, cex.axis = 0.8, ...) {
   
   if (is.null(variables)) { # assume all
@@ -23,13 +23,13 @@
   }
   else {
       boxplot(dataset$data[variables,samples], xlab = names.short,  
-            horizontal = F, las = 2, 
+            horizontal = FALSE, las = 2, 
             col = col, cex.axis = cex.axis, ...)
   }
 }
 
 boxplot_vars_factor = function(dataset, meta.var, variables = NULL, samples = NULL, 
-                               horizontal = F, nchar.label = 10, col = NULL,
+                               horizontal = FALSE, nchar.label = 10, col = NULL,
                                vec.par = NULL, cex.axis = 0.8, ylabs = NULL, ...)
 {
   if (is.null(variables)) { # assume all
@@ -48,7 +48,8 @@ boxplot_vars_factor = function(dataset, meta.var, variables = NULL, samples = NU
   if (is.null(vec.par))
     vec.par = c(length(variables), 1)
   
-  par(mfrow = vec.par)
+  opar=par(mfrow = vec.par)
+  on.exit(par(opar))
   for (i in 1:length(variables)) {
     if (is.null(col)) coli = i+1
     else coli = col
@@ -61,7 +62,8 @@ boxplot_vars_factor = function(dataset, meta.var, variables = NULL, samples = NU
             horizontal = horizontal, las = 2, main = names.short[i], 
             col = coli, cex.axis = cex.axis, ylab = ylab, ...)
   }
-  par(mfrow = c(1,1))
+  opar=par(mfrow = c(1,1))
+  on.exit(par(opar))
 }
 
 plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "darkblue", title = "", 
@@ -97,7 +99,7 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 # lty, lwd, col - parameters to pass to matplot
 # ... - extra parameters passed to matplot function
 "plot_spectra_simple" = function(dataset, samples = NULL, variable.bounds = NULL, xlab = NULL,
-                               ylab = NULL, lty = 1, lwd = 1, col = 1, reverse.x = F, ...) {
+                               ylab = NULL, lty = 1, lwd = 1, col = 1, reverse.x = FALSE, ...) {
   
   if (is.null(xlab)) xlab = get_x_label(dataset)
   if (is.null(ylab)) ylab = get_value_label(dataset)
@@ -130,7 +132,7 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
     samples = colnames(dataset$data)
   } 
 
-  matplot(vars, dataset$data[variables,samples,drop=F], type="l", lty=lty, col = col,
+  matplot(vars, dataset$data[variables,samples,drop=FALSE], type="l", lty=lty, col = col,
             xlab = xlab, ylab = ylab, xlim = xlim, ...)
 }
 
@@ -141,7 +143,7 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 # 
 "plot_spectra" = function(dataset, column.class, func = NULL, samples = NULL, 
                         variable.bounds = NULL, xlab = NULL, ylab = NULL, lty = 1,
-                        legend.place = "topright", cex = 0.8, reverse.x = F, ...) {
+                        legend.place = "topright", cex = 0.8, reverse.x = FALSE, ...) {
   
   if (is.null(xlab)) xlab = get_x_label(dataset)
   if (is.null(ylab)) ylab = get_value_label(dataset)
@@ -201,7 +203,7 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 
 plot_peaks=function(dataset, column.class, samples = NULL, 
                     variable.bounds = NULL, xlab = NULL, ylab = NULL,
-                    legend.place = "topright", cex = 0.8, reverse.x = F, p.size=0.5, ...){
+                    legend.place = "topright", cex = 0.8, reverse.x = FALSE, p.size=0.5, ...){
   
   if (is.null(xlab)) xlab = get_x_label(dataset)
   if (is.null(ylab)) ylab = get_value_label(dataset)

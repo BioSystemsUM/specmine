@@ -21,13 +21,6 @@ convert_to_hyperspec(dataset)
    Returns an hyperspec object representing the dataset converted.
 }
 
-
-\examples{
-\dontrun{
-  ## Example of converting a dataset to an hyperspec object
-  dataset = convert_to_hyperspec(dataset)
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ hyperspec }

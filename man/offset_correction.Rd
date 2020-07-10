@@ -21,12 +21,6 @@ offset_correction(dataset)
   Returns the dataset 
 }
 
-\examples{
-\dontrun{
-  ## Example of offset correction
-  cassava.corrected = offset_correction(dataset)
-  }
-}
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

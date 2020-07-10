@@ -30,12 +30,6 @@ scaling_samples(datamat, method = "auto")
  Returns the data matrix scaled.
 }
 
-\examples{
-\dontrun{
-  ## Example of auto scaling
-  dataset.scal = scaling_samples(dataset$data, "auto")
-  }
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ scaling }

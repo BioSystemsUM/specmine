@@ -8,7 +8,7 @@
  Gets the linear regression r-squared values.
 }
 \usage{
-linreg_rsquared(linreg.results, write.file = F, 
+linreg_rsquared(linreg.results, write.file = FALSE, 
 file.out = "linreg-rsquared.csv")
 }
 %- maybe also 'usage' for other objects documented here.
@@ -28,13 +28,6 @@ file.out = "linreg-rsquared.csv")
  Returns a data.frame with the r-squared values.
 }
 
-\examples{
-\dontrun{
-  ## Example of linear regression rsquared values and the adjusted 
-  ## rsquared values
-  linreg.rsquared.tab = linreg_rsquared(linreg.results)
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ rsquared }

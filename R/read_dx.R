@@ -31,7 +31,7 @@
   snames <- gsub("\\.[^.]*$", "", basename(filenames));
   for (i in 1:length(filenames)) {
     print(paste("Reading sample ", filenames[i]))
-    sampleList[[i]] = readJDX::readJDX(filenames[i], debug = debug, SOFC = F) #If TRUE it fails for files that don't have 'firstY' metadata
+    sampleList[[i]] = readJDX::readJDX(filenames[i], debug = debug, SOFC = FALSE) #If TRUE it fails for files that don't have 'firstY' metadata
   }
   sampleNames = snames
   names(sampleList) = sampleNames

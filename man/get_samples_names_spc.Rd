@@ -21,12 +21,6 @@ get_samples_names_spc(foldername)
   Returns a vector with the sample's names.
 }
 
-\examples{
-\dontrun{
-  ## Example of getting SPC sample's names
-  spc.sample.names = get_samples_names_spc("data")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ spc }

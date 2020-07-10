@@ -9,7 +9,7 @@
 }
 \usage{
 correlation_test(dataset, x, y, method = "pearson", 
-alternative = "two.sided", by.var = T)
+alternative = "two.sided", by.var = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

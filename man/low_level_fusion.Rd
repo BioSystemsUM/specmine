@@ -21,13 +21,6 @@ low_level_fusion(datasets)
 Return a single dataset with all the datasets merged.
 }
 
-\examples{
-\dontrun{
-  ## Example of low level fusion
-  datasets = list(dataset1, dataset2)
-  dataset.fusion = low_level_fusion(datasets)
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ fusion }

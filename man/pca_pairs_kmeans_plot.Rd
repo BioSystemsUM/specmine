@@ -31,9 +31,8 @@ kmeans.result = NULL, pcas = c(1, 2, 3, 4, 5))
 }
 
 \examples{
-\dontrun{
-  ## Example of a PCA k-means pairs plot (computationally heavy)
-  data(cachexia)
+\donttest{
+  ## Example of a PCA k-means pairs plot
   pca.result = pca_analysis_dataset(cachexia)
   kmeans.res = kmeans_clustering(cachexia, 3)
   pca_pairs_kmeans_plot(cachexia, pca.result, num.clusters = 3, 

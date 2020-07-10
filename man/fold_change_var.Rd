@@ -9,7 +9,7 @@
 }
 \usage{
 fold_change_var(dataset, metadata.var, variables, 
-threshold.min.fc = NULL, write.file = F, 
+threshold.min.fc = NULL, write.file = FALSE, 
 file.out = "fold_change_reverse.csv")
 }
 %- maybe also 'usage' for other objects documented here.

@@ -8,7 +8,7 @@
   Gets a subset of specific samples from the dataset.
 }
 \usage{
-subset_samples(dataset, samples, rebuild.factors = T)
+subset_samples(dataset, samples, rebuild.factors = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

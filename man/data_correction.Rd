@@ -31,12 +31,6 @@ method = "modpolyfit", ...)
   Returns the dataset with the spectra corrected.
 }
 
-\examples{
-\dontrun{
-  ## Example of data correction using background correction
-  dataset.corrected = data_correction(dataset, type = "background")
-  }
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ correction }

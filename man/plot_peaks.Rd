@@ -10,7 +10,7 @@ Function returns a plot where each point represents the intensity of a peak in a
 \usage{
 plot_peaks(dataset, column.class, samples = NULL, variable.bounds = NULL,
 xlab = NULL, ylab = NULL, legend.place = "topright", cex = 0.8,
-reverse.x = F, p.size=0.5, ...)
+reverse.x = FALSE, p.size=0.5, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

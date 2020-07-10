@@ -6,7 +6,7 @@ metabolights_studies_list=function(){
   }
   
   ftp_base="ftp://ftp.ebi.ac.uk/pub/databases/metabolights/studies/public/"
-  listStudies_character=RCurl::getURL(ftp_base, dirlistonly=T)
+  listStudies_character=RCurl::getURL(ftp_base, dirlistonly=TRUE)
   listStudies_vector=strsplit(listStudies_character, "\n")[[1]]
   return(listStudies_vector)
 }
@@ -22,8 +22,8 @@ get_files_list_per_assay=function(studyID){#, directory){
   #curl::curl_download(paste(ftp_base, "i_Investigation.txt", sep=""), paste(directory, "i_Investigation.txt", sep="/"))
   #i_file=readLines(paste(directory, "i_Investigation.txt", sep="/"))
   
-  assays_names_line=grep("^Study Assay File Name", i_file, value=T)
-  assays_names=grep("^a_", strsplit(assays_names_line, "\"")[[1]], value=T)
+  assays_names_line=grep("^Study Assay File Name", i_file, value=TRUE)
+  assays_names=grep("^a_", strsplit(assays_names_line, "\"")[[1]], value=TRUE)
   
   assay_files=paste(ftp_base, assays_names, sep="")
   #for (i in 1:length(assays_names)) curl::curl_download(paste(ftp_base, assays_names[i], sep=""), paste(directory, assays_names[i], sep="/"), quiet=F)
@@ -31,7 +31,7 @@ get_files_list_per_assay=function(studyID){#, directory){
   
   
   for (i in 1:length(assay_files)){
-    assay=read.table(assay_files[i], header=T)
+    assay=read.table(assay_files[i], header=TRUE)
     if("Free.Induction.Decay.Data.File"%in%colnames(assay)) files_column="Free.Induction.Decay.Data.File"
     else files_column="Raw.Spectral.Data.File"
     
@@ -77,7 +77,7 @@ get_metabolights_study_files_assay=function(studyID, assay, directory){
     dir.create(paste(directory, assay, "data", sep="/"))
   }
   
-  for (i in 1:length(files_to_download)) curl::curl_download(files_to_download_paths[i], files_dest[i], quiet=F)
+  for (i in 1:length(files_to_download)) curl::curl_download(files_to_download_paths[i], files_dest[i], quiet=FALSE)
 }
 
 
@@ -91,8 +91,8 @@ get_metabolights_study_metadata_assay=function(studyID, assay, directory){
   #curl::curl_download(paste(ftp_base, "i_Investigation.txt", sep=""), paste(directory, "i_Investigation.txt", sep="/"))
   #i_file=readLines(paste(directory, "i_Investigation.txt", sep="/"))
   
-  factors_names=strsplit(grep("^Study Factor Name", i_file, value=T), "\"")[[1]]
-  factors_names_vec=grep("\t", factors_names, value=T, invert=T)
+  factors_names=strsplit(grep("^Study Factor Name", i_file, value=TRUE), "\"")[[1]]
+  factors_names_vec=grep("\t", factors_names, value=TRUE, invert=TRUE)
   
   factors=c()
   for (factor in factors_names_vec){
@@ -104,10 +104,10 @@ get_metabolights_study_metadata_assay=function(studyID, assay, directory){
   samples_in_assay=as.character(files_per_assay[[assay]][,1])
   
   #Get file with the metadata information:
-  sample_file_o=strsplit(grep("^Study File Name", i_file, value=T), "\"")[[1]][2]
+  sample_file_o=strsplit(grep("^Study File Name", i_file, value=TRUE), "\"")[[1]][2]
   sample_file=paste(ftp_base, sample_file_o, sep="")
   
-  sample_metadata=read.table(sample_file, header=T)
+  sample_metadata=read.table(sample_file, header=TRUE)
   #curl::curl_download(sample_file, paste(directory, sample_file_o, sep="/"))
   #sample_metadata=read.table(paste(directory, sample_file_o, sep="/"), header=T)
   
@@ -129,22 +129,22 @@ get_metabolights_study=function(studyID, directory){
          call. = FALSE)
   }
   
-  cat("Getting assays...\n")
+  message("Getting assays...\n")
   assays_in_study=get_files_list_per_assay(studyID)#, directory)
   cat("Done.\n")
   
   for (assay in 1:length(assays_in_study)){
-    cat("Assay ", assay)
-    cat("\nGetting files from assay ", assay, "...")
+    message("Assay ", assay)
+    message("\nGetting files from assay ", assay, "...")
     get_metabolights_study_files_assay(studyID, assay, directory)
-    cat("\nDone.")
-    cat("\nGetting metadata from assay ", assay, "...")
+    message("\nDone.")
+    message("\nGetting metadata from assay ", assay, "...")
     get_metabolights_study_metadata_assay(studyID, assay, directory)
-    cat("\nDone")
-    cat("\nGetting samples_files file from assay ", assay, "...")
+    message("\nDone")
+    message("\nGetting samples_files file from assay ", assay, "...")
     samples_files=assays_in_study[[assay]]
     colnames(samples_files)=NULL
-    write.csv(samples_files, paste(directory, "samples_files.csv", sep="/"), row.names=F)
-    cat("\nDone")
+    write.csv(samples_files, paste(directory, "samples_files.csv", sep="/"), row.names=FALSE)
+    message("\nDone")
   }
 }

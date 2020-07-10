@@ -8,7 +8,7 @@
   Calculate the correlations of all variables or samples in the dataset.
 }
 \usage{
-correlations_dataset(dataset, method = "pearson", by.var = T)
+correlations_dataset(dataset, method = "pearson", by.var = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

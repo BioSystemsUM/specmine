@@ -8,7 +8,7 @@
   Use one or more metadata variables as variables.
 }
 \usage{
-  metadata_as_variables(dataset, metadata.vars, by.index = F)
+  metadata_as_variables(dataset, metadata.vars, by.index = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -21,12 +21,6 @@ mean_centering(dataset)
  Returns the dataset with mean centering applied.
 }
 
-\examples{
-\dontrun{
-  ## Example of mean centering
-  cassavaPPD = mean_centering(dataset)
-  }
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ mean }

@@ -9,8 +9,8 @@
 	}
 	subsets = list()
 	for (i in 1:length(datasets)){
-		if (!is.null(datasets[[i]]$metadata)) r.factors = T
-		else r.factors = F
+		if (!is.null(datasets[[i]]$metadata)) r.factors = TRUE
+		else r.factors = FALSE
 		subsets[[i]] = subset_samples(datasets[[i]], samples = sample.names, rebuild.factors = r.factors)
 	}
 	

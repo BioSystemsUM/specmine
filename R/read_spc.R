@@ -1,4 +1,4 @@
-"read_dataset_spc" = function(folder.data, filename.meta= NULL, type = "undefined", description = "", nosubhdr = F,
+"read_dataset_spc" = function(folder.data, filename.meta= NULL, type = "undefined", description = "", nosubhdr = FALSE,
                               label.x = NULL, label.values = NULL,  
                               header.col.meta = TRUE, header.row.meta = TRUE, sep.meta = ","){
 								
@@ -24,7 +24,7 @@
 	dataset
 }
 
-"read_data_spc" = function(foldername, nosubhdr = F)
+"read_data_spc" = function(foldername, nosubhdr = FALSE)
 {
   filenames = dir(foldername, pattern=".[Ss][Pp][Cc]$", full.names=TRUE)
   sampleList = list()
@@ -33,9 +33,9 @@
   for (i in 1:length(filenames)) {
     print(paste("Reading sample ", filenames[i]))
     if (!nosubhdr){
-		sampleList[[i]] = hyperSpec::read.spc(filenames[i], no.object = T)
+		sampleList[[i]] = hyperSpec::read.spc(filenames[i], no.object = TRUE)
 	} else {
-		sampleList[[i]] = read_spc_nosubhdr(filenames[i], no.object = T)
+		sampleList[[i]] = read_spc_nosubhdr(filenames[i], no.object = TRUE)
 	}
   }
   sampleNames = snames

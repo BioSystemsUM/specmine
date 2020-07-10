@@ -4,12 +4,12 @@
 
 # returns dataset with selected set of samples
 # samples - vector with indexes or names of the samples to select
-"subset_samples" = function(dataset, samples, rebuild.factors = T) {
+"subset_samples" = function(dataset, samples, rebuild.factors = TRUE) {
   
-  dataset$metadata = dataset$metadata[samples,,drop= F]
+  dataset$metadata = dataset$metadata[samples,,drop= FALSE]
   if (rebuild.factors) dataset$metadata = rebuild_factors_df(dataset$metadata)
   
-  dataset$data = dataset$data[,samples, drop=F]
+  dataset$data = dataset$data[,samples, drop=FALSE]
   dataset
 }
 
@@ -34,7 +34,7 @@
     indexes = which(rownames(dataset$data) %in% variables)
   }
   else indexes = variables
-  dataset$data = dataset$data[indexes,,drop=F]
+  dataset$data = dataset$data[indexes,,drop=FALSE]
   dataset
 }
 
@@ -42,11 +42,11 @@
 {
   x.values = get_x_values_as_num(dataset)
   indexes = which(x.values >= min.value & x.values <= max.value)
-  subset_x_values(dataset, indexes, by.index = T)
+  subset_x_values(dataset, indexes, by.index = TRUE)
 }
 
-"subset_by_samples_and_xvalues" = function(dataset, samples, variables = NULL, by.index = F, 
-                                           variable.bounds = NULL, rebuild.factors = T)
+"subset_by_samples_and_xvalues" = function(dataset, samples, variables = NULL, by.index = FALSE, 
+                                           variable.bounds = NULL, rebuild.factors = TRUE)
 {
   if (!by.index) {
     if (is.null(variables)) {
@@ -64,16 +64,16 @@
   }
   else x.indexes = variables
   
-  dataset$metadata = dataset$metadata[samples,,drop= F]
+  dataset$metadata = dataset$metadata[samples,,drop= FALSE]
   if (rebuild.factors) dataset$metadata = rebuild_factors_df(dataset$metadata)
   
-  dataset$data = dataset$data[x.indexes,samples, drop=F]
+  dataset$data = dataset$data[x.indexes,samples, drop=FALSE]
   dataset
 }
 
 "subset_metadata" = function(dataset, variables)
 {
-  dataset$metadata = dataset$metadata[,variables, drop = F]
+  dataset$metadata = dataset$metadata[,variables, drop = FALSE]
   dataset
 }
 
@@ -89,7 +89,7 @@
 # disapear are removed (this does not maintain order of the levels)
 # xaxis.num - indicates if data.to.remove for data variables is given as numeric vector (if T) or text
 
-"remove_data" = function(dataset, data.to.remove, type = "sample", by.index = F, rebuild.factors = T) {
+"remove_data" = function(dataset, data.to.remove, type = "sample", by.index = FALSE, rebuild.factors = TRUE) {
   if (type == "sample")
     dataset = remove_samples(dataset, data.to.remove, rebuild.factors)
   else if(type == "data")
@@ -100,7 +100,7 @@
   dataset
 }   
 
-"remove_samples" = function(dataset, samples.to.remove, rebuild.factors = T) {
+"remove_samples" = function(dataset, samples.to.remove, rebuild.factors = TRUE) {
   if (is.numeric(samples.to.remove))
     res = subset_samples(dataset, -samples.to.remove, rebuild.factors = rebuild.factors)
   else {
@@ -121,14 +121,14 @@
     indexes.to.remove = which(rownames(dataset$data) %in% variables.to.remove)
   }
   else indexes.to.remove = variables.to.remove
-  subset_x_values(dataset, -indexes.to.remove, by.index = T)
+  subset_x_values(dataset, -indexes.to.remove, by.index = TRUE)
 }
 
 "remove_x_values_by_interval" = function(dataset, min.value, max.value)
 {
   x.values = get_x_values_as_num(dataset)
   indexes.to.remove = which(x.values >= min.value & x.values <= max.value)
-  subset_x_values(dataset, -indexes.to.remove, by.index = T)
+  subset_x_values(dataset, -indexes.to.remove, by.index = TRUE)
 }
 
 "remove_metadata_variables" = function(dataset, variables.to.remove)
@@ -138,16 +138,16 @@
   else indexes.to.remove = variables.to.remove
   
   if (!is.null(indexes.to.remove) & length(indexes.to.remove) > 0)
-    dataset$metadata = dataset$metadata[,-indexes.to.remove, drop = F]
+    dataset$metadata = dataset$metadata[,-indexes.to.remove, drop = FALSE]
   else warning("No metadata variables removed since no fields matched the criteria")
   dataset
 }
 
 # functions to remove samples / variables with NAs
 
-"remove_samples_by_nas" = function(dataset, max.nas = 0, by.percent = F)
+"remove_samples_by_nas" = function(dataset, max.nas = 0, by.percent = FALSE)
 {
-  if (by.percent== T) max.nas = max.nas * num_x_values(dataset) / 100 #100 * max.nas / num_x_values(dataset)
+  if (by.percent== TRUE) max.nas = max.nas * num_x_values(dataset) / 100 #100 * max.nas / num_x_values(dataset)
   res = apply(dataset$data, 2, function(x) sum(is.na(x)))
   to.remove = which(res > max.nas)
   remove_samples(dataset, to.remove)
@@ -159,12 +159,12 @@
   remove_samples(dataset, to.remove)
 }
 
-"remove_variables_by_nas" = function(dataset, max.nas = 0, by.percent = F)
+"remove_variables_by_nas" = function(dataset, max.nas = 0, by.percent = FALSE)
 {
-  if (by.percent== T) max.nas = max.nas * num_samples(dataset) / 100 #100 * max.nas / num_samples(dataset)
+  if (by.percent== TRUE) max.nas = max.nas * num_samples(dataset) / 100 #100 * max.nas / num_samples(dataset)
   res = apply(dataset$data, 1, function(x) { sum(is.na(x)) } )
   to.remove = which(res > max.nas)
-  remove_data_variables(dataset, to.remove, by.index = T)
+  remove_data_variables(dataset, to.remove, by.index = TRUE)
 }
 
 # aggregate samples 
@@ -195,7 +195,7 @@
   
   for (g in 1:length(groups)) {
     to.merge = which(indexes == groups[g])
-    newdata[,g] = apply(dataset$data[,to.merge,drop=F], 1, aggreg.fn)
+    newdata[,g] = apply(dataset$data[,to.merge,drop=FALSE], 1, aggreg.fn)
     for (i in 1:length(dataset$metadata)) {
       if (is.numeric(dataset$metadata[[i]])) {
         func= match.fun(aggreg.fn)
@@ -227,10 +227,10 @@
 # x.values - if defined, allows to specify which x.values to keep; if undefined, all will be kept 
 # metadata.vars - if defined, allows to specify which metadata to keep; if undefined, all will be kept
 "merge_data_metadata" = function(dataset, samples = NULL, metadata.vars = NULL, x.values = NULL, 
-                                 by.index = F)
+                                 by.index = FALSE)
 {
   if (!is.null(samples) )
-    dataset = subset_samples(dataset, samples, rebuild.factors = T)
+    dataset = subset_samples(dataset, samples, rebuild.factors = TRUE)
   if (!is.null(x.values) )
     dataset = subset_x_values(dataset, x.values, by.index = by.index)
   if (!is.null(metadata.vars))

@@ -60,13 +60,6 @@ header.row.meta = TRUE, sep.meta = ",")
  Returns a dataset from the MS files.
 }
 
-\examples{
-\dontrun{
-  ### Example of reading a dataset from MS files
-  ##dataset = read_ms_spectra("data", type = "nmr-spectra", "metadata.csv", 
-	 ##   description = "description of the dataset")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ mass }

@@ -8,7 +8,7 @@
   Counts the missing values on each sample of the dataset.
 }
 \usage{
-count_missing_values_per_sample(dataset, remove.zero = T)
+count_missing_values_per_sample(dataset, remove.zero = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

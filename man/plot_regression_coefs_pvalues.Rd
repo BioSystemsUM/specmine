@@ -27,12 +27,6 @@ coef.size = 5, ...)
 }
 }
 
-\examples{
-   \dontrun{
-     ## Example of multiplot
-     plot_regression_coefs_pvalues(linreg.results)
-   }
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ regression }

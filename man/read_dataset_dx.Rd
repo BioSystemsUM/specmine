@@ -49,15 +49,6 @@ header.row.meta = TRUE, sep.meta = ",")
   Returns the dataset from the (J)DX files.
 }
 
-
-\examples{
-\dontrun{
-  ## Example of reading a dataset from (J)DX files
-  dataset = read_dataset_dx("data", "metadata.csv", type = "nmr-spectra", 
-	    description ="description of the dataset", label.x = "ppm", 
-	    label.values = "intensity")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ jdx }

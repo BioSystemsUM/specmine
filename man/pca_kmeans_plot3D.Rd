@@ -41,11 +41,12 @@ size = 1, ...)
 }
 
 \examples{
+\donttest{
   ### Example of a 3D PCA k-means plot
-  #data(cachexia)
-  #pca.result = pca_analysis_dataset(cachexia)
-  #pca_kmeans_plot3D(cachexia, pca.result, num.clusters = 3, 
-  #  		    pcas = c(1,2,3))
+  pca.result = pca_analysis_dataset(cachexia)
+  pca_kmeans_plot3D(cachexia, pca.result, num.clusters = 3, 
+    		    pcas = c(1,2,3))
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

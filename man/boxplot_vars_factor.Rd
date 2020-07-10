@@ -9,7 +9,7 @@
 }
 \usage{
 boxplot_vars_factor(dataset, meta.var, variables = NULL, 
-samples = NULL, horizontal = F, nchar.label = 10, col = NULL, 
+samples = NULL, horizontal = FALSE, nchar.label = 10, col = NULL, 
 vec.par = NULL, cex.axis = 0.8, ylabs = NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.

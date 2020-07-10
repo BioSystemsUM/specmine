@@ -35,12 +35,7 @@ normalize(dataset, method, ref = NULL, constant = 1000)
 \value{
   Returns the dataset with the data normalized.
 }
-\examples{
-\dontrun{
-  ## Example of normalization by median
-  cassava.norm = normalize(dataset, "median")
-  }
-}
+
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ normalization }

@@ -27,13 +27,6 @@ read_multiple_csvs(filenames, ext = ".csv", ...)
   returns a list of dataframes.
 }
 
-\examples{
-\dontrun{
-    ## Example of reading multiple csvs
-    filenames = c("sample1", "sample2", "sample3", "sample4")
-    sample.list = read_multiple_csvs(filenames, ext = ".csv")
-}
-}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ read }

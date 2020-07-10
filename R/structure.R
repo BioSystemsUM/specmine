@@ -101,7 +101,7 @@ list.of.allowed.types = c(list.of.spectral.types, "lcms-spectra", "gcms-spectra"
   # removing duplicate variables
   dup.indexes = which(duplicated(rownames(dataset$data)))
   if (length(dup.indexes) != 0){
-	dataset = remove_data_variables(dataset, dup.indexes, by.index = T)
+	dataset = remove_data_variables(dataset, dup.indexes, by.index = TRUE)
   }
   # make sure sample names are the same in data and metadata
   
@@ -131,7 +131,7 @@ list.of.allowed.types = c(list.of.spectral.types, "lcms-spectra", "gcms-spectra"
 
 # provides a summary of the dataset, printing its main features
 # stats - if TRUE prints some global statistics of the data values
-"sum_dataset" = function(dataset, stats = T)
+"sum_dataset" = function(dataset, stats = TRUE)
 {
   cat("Dataset summary:\n")
   check_dataset(dataset)
@@ -149,12 +149,12 @@ list.of.allowed.types = c(list.of.spectral.types, "lcms-spectra", "gcms-spectra"
   }
   if (stats) {
     cat("Number of missing values in data: ", sum(is.na(dataset$data)), "\n")
-    cat("Mean of data values: ", mean(dataset$data, na.rm= T), "\n")
-    cat("Median of data values: ", median(dataset$data, na.rm = T), "\n")
-    cat("Standard deviation: ", sd(dataset$data, na.rm = T), "\n")
-    cat("Range of values: ", range(dataset$data, na.rm = T), "\n")
+    cat("Mean of data values: ", mean(dataset$data, na.rm= TRUE), "\n")
+    cat("Median of data values: ", median(dataset$data, na.rm = TRUE), "\n")
+    cat("Standard deviation: ", sd(dataset$data, na.rm = TRUE), "\n")
+    cat("Range of values: ", range(dataset$data, na.rm = TRUE), "\n")
     cat("Quantiles:", "\n")
-    print(quantile(dataset$data, na.rm=T))
+    print(quantile(dataset$data, na.rm=TRUE))
   }
 }
 
@@ -237,7 +237,7 @@ list.of.allowed.types = c(list.of.spectral.types, "lcms-spectra", "gcms-spectra"
 }
 
 # returns a data value given the x axis labes (as index or name) and the sample (as index or name)
-"get_data_value" = function(dataset, x.axis.val, sample, by.index = F) {
+"get_data_value" = function(dataset, x.axis.val, sample, by.index = FALSE) {
   if (!by.index) {
     x.axis.val = as.character(x.axis.val)
     x.axis.index = which(rownames(dataset$data) == x.axis.val)
@@ -295,7 +295,7 @@ list.of.allowed.types = c(list.of.spectral.types, "lcms-spectra", "gcms-spectra"
 
 
 # UPDATE functions
-variables_as_metadata = function(dataset, variables, by.index = F){
+variables_as_metadata = function(dataset, variables, by.index = FALSE){
 	if (!by.index) {
 		var.indexes = which(rownames(dataset$data) %in% variables)
 	}
@@ -320,7 +320,7 @@ variables_as_metadata = function(dataset, variables, by.index = F){
 	dataset
 }
 
-metadata_as_variables = function(dataset, metadata.vars, by.index = F){
+metadata_as_variables = function(dataset, metadata.vars, by.index = FALSE){
 	if (!by.index){
 		metadata.indexes = which(colnames(dataset$metadata) %in% metadata.vars)
 	} else {
@@ -394,7 +394,7 @@ metadata_as_variables = function(dataset, metadata.vars, by.index = F){
   dataset
 }
 
-"replace_data_value" = function(dataset, x.axis.val, sample, new.value, by.index = F) {
+"replace_data_value" = function(dataset, x.axis.val, sample, new.value, by.index = FALSE) {
   if (!by.index) {
     x.axis.val = as.character(x.axis.val)
     x.axis.index = which(rownames(dataset$data) == x.axis.val)

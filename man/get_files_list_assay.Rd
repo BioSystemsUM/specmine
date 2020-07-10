@@ -21,5 +21,7 @@ A list with one or more item. Each item corresponds to an assay of the MetaboLig
 MetaboLights database: https://www.ebi.ac.uk/metabolights/
 }
 \examples{
-## get_files_list_per_assay('MTBLS346')
+\donttest{
+get_files_list_per_assay('MTBLS346')
+}
 }

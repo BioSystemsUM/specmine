@@ -45,9 +45,8 @@ subsets = 2^(2:4))
 }
 
 \examples{
-\dontrun{
+\donttest{
   ## Example of feature selection using rfe and sbf
-  data(cachexia)
   library(caret)
   rfe.result = feature_selection(cachexia, "Muscle.loss", 
                method="rfe", functions = caret::rfFuncs, 

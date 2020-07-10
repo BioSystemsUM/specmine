@@ -11,8 +11,8 @@ A CSV file with the names of the samples and to which bruker spectrum directory 
 }
 \usage{
 read_Bruker_files(bruker_directory, metadata_file=NULL,
-                  m.header_col=T, m.header_row=T, m.sep=",",
-                  samples.names=NULL, zipped=T,
+                  m.header_col=TRUE, m.header_row=TRUE, m.sep=",",
+                  samples.names=NULL, zipped=TRUE,
                   description="", label.x="ppm", label.values="intensity")
 }
 %- maybe also 'usage' for other objects documented here.

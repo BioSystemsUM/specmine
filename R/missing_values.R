@@ -5,13 +5,13 @@
   sum(is.na(dataset$data))
 }
 
-"count_missing_values_per_sample" = function(dataset, remove.zero = T) {
+"count_missing_values_per_sample" = function(dataset, remove.zero = TRUE) {
   res = apply(dataset$data, 2, function(x) sum(is.na(x)))
   if (remove.zero) res[res > 0]
   else res
 }
 
-"count_missing_values_per_variable" = function(dataset, remove.zero = T) {
+"count_missing_values_per_variable" = function(dataset, remove.zero = TRUE) {
   "count_na" = function(x) sum(is.na(x))
   res = apply(dataset$data, 1, count_na)
   if (remove.zero) res[res > 0]
@@ -64,7 +64,7 @@ impute_nas_linapprox = function(dataset){
 "impute_nas_mean" = function(dataset){
   temp = apply(dataset$data, 1, function(x){
 					if(sum(is.na(x))>0){
-						x[is.na(x)] = mean(x, na.rm=T);
+						x[is.na(x)] = mean(x, na.rm=TRUE);
 					}
 					x;
 				})
@@ -76,7 +76,7 @@ impute_nas_linapprox = function(dataset){
 "impute_nas_median" = function(dataset) {
   temp = apply(dataset$data, 1, function(x){
 					if(sum(is.na(x))>0){
-						x[is.na(x)] = median(x,na.rm=T);
+						x[is.na(x)] = median(x,na.rm=TRUE);
 					}
 					x;
 				})
