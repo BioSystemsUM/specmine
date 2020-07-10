@@ -1,7 +1,7 @@
 Package: specmine
 Type: Package
 Title: Metabolomics and Spectral Data Analysis and Mining
-Version: 3.0.0
+Version: 3.0.1
 Date: 2020-07-10
 Author: Christopher Costa <chrisbcl@hotmail.com> [aut],
 	Marcelo Maraschin <mtocsy@gmail.com> [aut],
@@ -13,7 +13,7 @@ Author: Christopher Costa <chrisbcl@hotmail.com> [aut],
 Maintainer: Miguel Rocha <mrocha@di.uminho.pt>
 Depends: R (>= 4.0.0)
 SystemRequirements: Python (>=3.5.2) and the following python module: nmrglue.
-Imports: hyperSpec, caret, ggplot2, impute, ellipse, GGally, pcaPP, compare, baseline, MASS, pls, readJDX,
+Imports: hyperSpec, caret, e1071, ggplot2, impute, ellipse, GGally, pcaPP, compare, baseline, MASS, pls, readJDX,
          speaq, gdata, genefilter, RColorBrewer, grDevices, graphics, methods, stats, utils, Metrics
 Suggests: ggdendro, reticulate, qdap, scatterplot3d, MAIT, xcms, KEGGgraph, KEGGREST, rcytoscapejs, rgl, grid, curl, RCurl
 LazyData: true
