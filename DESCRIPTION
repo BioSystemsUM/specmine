@@ -10,7 +10,7 @@ Author: Christopher Costa <chrisbcl@hotmail.com> [aut],
 	Telma Afonso <telma.afonso94@gmail.com> [aut],
 	C. Beleites [cph],
 	Jie Hao [cph]
-Maintainer: Bruno pereira <pereirinha_bp@hotmail.com>
+Maintainer: Miguel Rocha <mrocha@di.uminho.pt>
 Depends: R (>= 4.0.0)
 SystemRequirements: Python (>=3.5.2) and the following python module: nmrglue.
 Imports: hyperSpec, caret, e1071, ggplot2, impute, ellipse, GGally, pcaPP, compare, baseline, MASS, pls, readJDX,
