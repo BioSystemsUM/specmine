@@ -26,7 +26,7 @@ linreg_coef_table = function(linreg.results, write.file = FALSE, file.out = "lin
     m[i,] = linreg.results[[i]]$coefficients[,1]
   }
   coef.table = as.data.frame(m)
-  colnames(coef.table) = gdata::trim(rownames(linreg.results[[1]]$coefficients))
+  colnames(coef.table) = trimws(rownames(linreg.results[[1]]$coefficients))
   if (write.file) write.csv(coef.table, file = file.out)
   coef.table  
 }
@@ -39,7 +39,7 @@ linreg_pvalue_table = function(linreg.results, write.file = FALSE, file.out = "l
     m[i,] = linreg.results[[i]]$coefficients[,4]
   }
   pv.table = as.data.frame(m)
-  colnames(pv.table) = gdata::trim(rownames(linreg.results[[1]]$coefficients))
+  colnames(pv.table) = trimws(rownames(linreg.results[[1]]$coefficients))
   if (write.file) write.csv(pv.table, file = file.out)
   pv.table  
 }
