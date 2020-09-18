@@ -4,7 +4,7 @@
 \title{Human Cachexia data}
 \format{An object of class \code{"list"}}
 \source{
-\href{http://www.metaboanalyst.ca/resources/data/human_cachexia.csv}{MetaboAnalyst}
+\href{https://www.metaboanalyst.ca/resources/data/human_cachexia.csv}{MetaboAnalyst}
 }
 \usage{
 data(cachexia)

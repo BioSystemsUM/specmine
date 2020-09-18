@@ -2,7 +2,7 @@ Package: specmine
 Type: Package
 Title: Metabolomics and Spectral Data Analysis and Mining
 Version: 3.0.2
-Date: 2020-09-17
+Date: 2020-09-18
 Author: Christopher Costa <chrisbcl@hotmail.com> [aut],
 	Marcelo Maraschin <mtocsy@gmail.com> [aut],
 	Miguel Rocha <mrocha@di.uminho.pt> [aut, cre],
