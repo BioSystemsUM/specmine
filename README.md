@@ -3,10 +3,6 @@
 
 # specmine
 
-<<<<<<< HEAD
-=======
-
->>>>>>> d60714de516e57c1b34e862b4e8f2cd4cd2c14a1
 The goal of *specmine* is to provide a set of methods for metabolomics
 data analysis, including data loading in different formats,
 pre-processing, metabolite identification, univariate and multivariate
