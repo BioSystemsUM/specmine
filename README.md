@@ -3,14 +3,6 @@
 
 # specmine
 
-<!-- badges: start -->
-
-[![R build
-status](https://github.com/BioSystemsUM/specmine/workflows/R-CMD-check/badge.svg)](https://github.com/BioSystemsUM/specmine/actions)
-[![R build
-status](https://github.com/BioSystemsUM/specmine/workflows/CRAN/badge.svg)](https://github.com/BioSystemsUM/specmine/actions)
-<!-- badges: end -->
-
 The goal of *specmine* is to provide a set of methods for metabolomics
 data analysis, including data loading in different formats,
 pre-processing, metabolite identification, univariate and multivariate
