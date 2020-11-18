@@ -17,7 +17,7 @@ Case studies can be found on the website:
 <http://bio.di.uminho.pt/metabolomicspackage/index.html>. This package
 suggests ‘rcytoscapejs’, a package not in mainstream repositories. If
 you need to install it, use:
-devtools::install\_github(‘<cytoscape/r-cytoscape.js@v0.0.7>’).
+`devtools::install_github('cytoscape/r-cytoscape.js@v0.0.7')`.
 
 ## Installation
 
