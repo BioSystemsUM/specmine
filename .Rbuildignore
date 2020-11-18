@@ -6,3 +6,5 @@ spinalCord.rda
 spinalCord.Rd
 system_data/
 mzmatch_metabolite_identification.R
+^README\.Rmd$
+^\.github$
