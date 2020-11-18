@@ -7,6 +7,8 @@
 
 [![R build
 status](https://github.com/BioSystemsUM/specmine/workflows/R-CMD-check/badge.svg)](https://github.com/BioSystemsUM/specmine/actions)
+[![R build
+status](https://github.com/BioSystemsUM/specmine/workflows/CRAN/badge.svg)](https://github.com/BioSystemsUM/specmine/actions)
 <!-- badges: end -->
 
 The goal of *specmine* is to provide a set of methods for metabolomics
