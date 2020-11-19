@@ -10,7 +10,7 @@
 \usage{
 smoothing_interpolation(dataset, method = "bin", 
 reducing.factor = 2, x.axis = NULL, p.order = 3, 
-window = 11, deriv = 0)
+window = 11, deriv = 0, na.rm = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -34,6 +34,9 @@ window = 11, deriv = 0)
   }
   \item{deriv}{
   numeric value indicating the differentiation order for savitzky-golay method. 
+  }
+  \item{na.rm}{
+  boolean value indicating if \code{NA}s should be removed. Defaults to TRUE.
   }
 }
 
