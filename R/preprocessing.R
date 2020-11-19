@@ -20,10 +20,10 @@ absorbance_to_transmittance = function(dataset){
   dataset
 }
 
-# Smoothing - hyperSpec (spc.bin and spc.loess)
-smoothing_interpolation = function(dataset, method = "bin", reducing.factor = 2, x.axis = NULL, p.order = 3, window = 11, deriv = 0){
+# Smoothing - specmine (specmine.bin) and hyperspec (spc.loess)
+smoothing_interpolation = function(dataset, method = "bin", reducing.factor = 2, x.axis = NULL, p.order = 3, window = 11, deriv = 0, na.rm = TRUE){
   if (method == "bin") {
-		dataset = smoothing_spcbin_hyperspec(dataset, reducing.factor)
+		dataset = smoothing_spcbin(dataset, reducing.factor, na.rm = na.rm)
 	} 
   else if (method == "loess") {
 		dataset = smoothing_spcloess_hyperspec(dataset, x.axis)
@@ -33,15 +33,101 @@ smoothing_interpolation = function(dataset, method = "bin", reducing.factor = 2,
 	dataset
 }
 
-# spc.bin hyperSpec smoothing interpolation
-smoothing_spcbin_hyperspec = function(dataset, reducing.factor = 2) {
-	hyper.object = convert_to_hyperspec(dataset)
-	smooth.result = hyperSpec::spc.bin(hyper.object, reducing.factor, na.rm = TRUE)
-	res.dataset = convert_from_hyperspec(smooth.result)
-  res.dataset$description = paste(dataset$description, "smoothed with hyperSpec spc.bin", sep="-")
+# Specmine binning smoothing interpolation
+smoothing_spcbin = function(dataset, reducing.factor = 2, na.rm = TRUE) {
+  res.dataset <- specmine.bin(dataset, reducing.factor, na.rm = na.rm)
+  res.dataset$description = paste(dataset$description, "smoothed with specmine bin", sep="-")
   res.dataset$type = res.dataset$type
   res.dataset
 }
+
+# Implementation taken from hyperspec spc.bin function
+specmine.bin <- function(dataset, reducing.factor = 2, na.rm = TRUE) {
+  
+  new_dataset <- dataset
+  
+  n <- ceiling( nrow(new_dataset$data) / reducing.factor)
+  
+  small <- nrow(new_dataset$data) %% reducing.factor
+  
+  if (small != 0){
+    warning(paste(c("Last data point averages only ", small, " points.")))
+  }
+  
+  bin <- rep(seq_len(n), each = reducing.factor, length.out = nrow(new_dataset$data))
+  
+  na <- is.na(new_dataset$data)
+  
+  
+  if ((na.rm > 0) && any(na)) {
+    if (na.rm == 1) {
+      na <- apply(!na, 2, tapply, bin, sum, na.rm = FALSE)
+      new_dataset$data <- t (apply(new_dataset$data, 2, tapply, bin, sum, na.rm = TRUE) / na)
+      
+    } else {
+      tmp <- t (apply (new_dataset$data, 2, tapply, bin, sum, na.rm = FALSE))
+      tmp <- sweep (tmp, 2, rle(bin)$lengths, "/")
+      
+      na <- which(is.na(tmp), arr.ind = TRUE)
+      bin <- split(wavelength.seq(new_dataset, bin))
+      
+      for (i in seq_len(ncol(na))) {
+        tmp [na [i, 2], na [i, 1]] <- mean(new_dataset$data[bin[[na[i,2]]], na[i, 1]], na.rm = TRUE)
+      }
+      
+      new_dataset$data <- tmp
+    }
+  } else {
+    new_dataset$data <- t (apply(new_dataset$data, 2, tapply, bin, sum, na.rm = FALSE))
+    new_dataset$data <- sweep (new_dataset$data, 2, rle(bin)$lengths, "/")
+  }
+  
+  new_dataset$data <- t(new_dataset$data)
+  
+  new_wl <- wavelengths(dataset, bin, na.rm = na.rm)
+  
+  rownames(new_dataset$data) <- new_wl
+  
+  new_dataset$xSet <- NULL
+  
+  warning("xSet is NULL because bthis process reseted wavelength values.")
+  
+  new_dataset
+}
+
+#Function to provide sequence of wavelength values, taken from hyperspec wl.seq implementation
+wavelength.seq <- function(dataset, from = 1, to = nrow(dataset$data), ...){
+  if (nrow(dataset$data) == 0) {
+    integer(0)
+  } else {
+    seq (from = from, to = to, ...)
+  }
+}
+
+#Function to adjust wavelenght values due to binning
+wavelengths <- function(dataset, bin, na.rm = TRUE){
+  wl <- suppressWarnings(as.numeric(rownames(dataset$data)))
+  
+  if (all(is.na(wl))) {
+    splits <- strsplit(rownames(dataset$data), "/")
+    first <- c()
+    second <- c()
+    for (i in 1:length(splits)){
+      first <- c(first, splits[[i]][1])
+      second <- c(second, splits[[i]][2])
+    }
+    new_first <- as.character(as.numeric (tapply(as.numeric(first), bin, mean, na.rm = na.rm > 0)))
+    new_second <- as.character(as.numeric (tapply(as.numeric(second), bin, mean, na.rm = na.rm > 0)))
+    
+    new_wl <- paste(new_first, new_second, sep = "/")
+    
+  } else {
+    new_wl <- as.character(as.numeric (tapply(wl, bin, mean, na.rm = na.rm > 0)))
+  }
+  
+  new_wl
+}
+
 
 # spc.loess hyperSpec smoothing interpolation 
 smoothing_spcloess_hyperspec = function(dataset, x.axis = NULL){
