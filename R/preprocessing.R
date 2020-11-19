@@ -26,7 +26,7 @@ smoothing_interpolation = function(dataset, method = "bin", reducing.factor = 2,
 		dataset = smoothing_spcbin(dataset, reducing.factor, na.rm = na.rm)
 	} 
   else if (method == "loess") {
-		dataset = smoothing_spcloess_hyperspec(dataset, x.axis)
+		dataset = smoothing_spcloess(dataset, x.axis)
 	} else if (method == "savitzky.golay"){
 		dataset = savitzky_golay(dataset, p.order, window, deriv)
 	}
@@ -129,19 +129,60 @@ wavelengths <- function(dataset, bin, na.rm = TRUE){
 }
 
 
-# spc.loess hyperSpec smoothing interpolation 
-smoothing_spcloess_hyperspec = function(dataset, x.axis = NULL){
-  hyper.object = convert_to_hyperspec(dataset)
+# Specmine loess smoothing interpolation 
+smoothing_spcloess <- function(dataset, x.axis = NULL){
+  # In cases where rownames are strings not convertible to numeric
+  wl <- suppressWarnings(as.numeric(rownames(dataset$data)))
+  if (all(is.na(wl))) {
+    new_wl <- seq(from = 1, to = nrow(dataset$data))
+  } else {
+    new_wl <- wl
+  }
 	if (is.null(x.axis)){
-		smooth.result = hyperSpec::spc.loess(hyper.object, hyperSpec::wl(hyper.object), na.rm = TRUE)
+		res.dataset <- specmine.loess(dataset, newx = new_wl, na.rm = TRUE)
 	} else {
-		smooth.result = hyperSpec::spc.loess(hyper.object, x.axis, na.rm = TRUE)
+		res.dataset = specmine.loess(dataset, newx = x.axis, na.rm = TRUE)
 	}
-  res.dataset = convert_from_hyperspec(smooth.result)
-  res.dataset$description = paste(dataset$description, "smoothed with hyperSpec spc.loess", sep="-")
+  res.dataset$description = paste(dataset$description, "smoothed with specmine loess", sep="-")
   res.dataset$type = res.dataset$type
   res.dataset
 }
+
+# Implementation taken from hyperspec spc.loess function
+specmine.loess <- function(dataset, newx, enp.target = nrow(dataset$data) / 4, surface = "direct", ...) {
+  
+  .loess <- function (y, x) {
+    if (all (is.na (y))) {
+      NA
+    } else {
+      loess (y ~ x, enp.target = enp.target, surface = surface, ...)
+    }
+  }
+  
+  .predict <- function (loess, x) {
+    if (!is(loess, "loess") && is.na(loess)) {
+      rep (NA_real_, length(x))
+    } else {
+      predict (loess, x)
+    }
+  }
+  
+  loess <- apply (dataset$data, 2, .loess, new_wl)
+  
+  dataset$data <- t (sapply(loess, .predict, newx))
+  
+  dataset$data <- t(dataset$data)
+  
+  rownames(dataset$data) <- newx
+  
+  if (any (is.na (dataset$data))) {
+    warning ("NAs were generated. Probably newx was outside the spectral range covered by spc.")
+  }
+  
+  dataset
+}
+
+
 
 savitzky_golay = function(dataset, p.order, window, deriv = 0){
     if (window %%2 != 1 || window < 0) 
