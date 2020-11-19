@@ -34,10 +34,10 @@ smoothing_interpolation = function(dataset, method = "bin", reducing.factor = 2,
 }
 
 # Specmine binning smoothing interpolation
-smoothing_spcbin = function(dataset, reducing.factor = 2, na.rm = TRUE) {
+smoothing_spcbin <- function(dataset, reducing.factor = 2, na.rm = TRUE) {
   res.dataset <- specmine.bin(dataset, reducing.factor, na.rm = na.rm)
-  res.dataset$description = paste(dataset$description, "smoothed with specmine bin", sep="-")
-  res.dataset$type = res.dataset$type
+  res.dataset$description <- paste(dataset$description, "smoothed with specmine bin", sep="-")
+  res.dataset$type <- res.dataset$type
   res.dataset
 }
 
