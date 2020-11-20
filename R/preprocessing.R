@@ -37,7 +37,7 @@ smoothing_interpolation = function(dataset, method = "bin", reducing.factor = 2,
 smoothing_spcbin <- function(dataset, reducing.factor = 2, na.rm = TRUE) {
   res.dataset <- specmine.bin(dataset, reducing.factor, na.rm = na.rm)
   res.dataset$description <- paste(dataset$description, "smoothed with specmine bin", sep="-")
-  res.dataset$type <- res.dataset$type
+  res.dataset$type <- dataset$type
   res.dataset
 }
 
@@ -144,7 +144,7 @@ smoothing_spcloess <- function(dataset, x.axis = NULL){
 		res.dataset = specmine.loess(dataset, newx = x.axis, na.rm = TRUE)
 	}
   res.dataset$description = paste(dataset$description, "smoothed with specmine loess", sep="-")
-  res.dataset$type = res.dataset$type
+  res.dataset$type = dataset$type
   res.dataset
 }
 
@@ -230,7 +230,6 @@ background_correction <- function(dataset) {
   background <- apply(dataset$data, 1, quantile, probs = 0.05)
   dataset$data <- sweep(dataset$data, 1, background, "-")
   dataset$description <- paste(dataset$description, "background correction", sep="; ")
-  dataset$type <- dataset$type
   dataset
 }
 
@@ -239,7 +238,6 @@ offset_correction <- function(dataset) {
   offsets <- apply(dataset$data, 2, min)
   dataset$data <- sweep(dataset$data, 2, offsets, "-")
   dataset$description <- paste(dataset$description, "offset correction", sep="; ")
-  dataset$type < dataset$type
   dataset
 }
 
