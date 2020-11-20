@@ -227,22 +227,20 @@ savitzky_golay = function(dataset, p.order, window, deriv = 0){
 }
 
 background_correction <- function(dataset) {
-  background <- apply (dataset$data, 1, quantile, probs = 0.05)
-  dataset$data <- sweep (dataset$data, 1, background, "-")
-  dataset$description = paste(dataset$description, "background correction", sep="; ")
-  dataset$type = dataset$type
+  background <- apply(dataset$data, 1, quantile, probs = 0.05)
+  dataset$data <- sweep(dataset$data, 1, background, "-")
+  dataset$description <- paste(dataset$description, "background correction", sep="; ")
+  dataset$type <- dataset$type
   dataset
 }
 
 
-offset_correction = function(dataset){
-  hyper.object = convert_to_hyperspec(dataset)
-	offsets = hyperSpec::apply(hyper.object, 1, min)
-	correction.result = hyperSpec::sweep(hyper.object, 1, offsets, "-")
-  res.dataset = convert_from_hyperspec(correction.result)
-  res.dataset$description = paste(dataset$description, "offset correction", sep="; ")
-  res.dataset$type = dataset$type
-  res.dataset
+offset_correction <- function(dataset) {
+  offsets <- apply(dataset$data, 2, min)
+  dataset$data <- sweep(dataset$data, 2, offsets, "-")
+  dataset$description <- paste(dataset$description, "offset correction", sep="; ")
+  dataset$type < dataset$type
+  dataset
 }
 
 # ... - extra parameters to baseline function
