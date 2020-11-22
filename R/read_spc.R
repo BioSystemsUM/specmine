@@ -33,9 +33,9 @@
   for (i in 1:length(filenames)) {
     print(paste("Reading sample ", filenames[i]))
     if (!nosubhdr){
-		sampleList[[i]] = hyperSpec::read.spc(filenames[i], no.object = TRUE)
+		sampleList[[i]] = read_spc_nosubhdr(filenames[i], no.object = TRUE, nosubhdr = nosubhdr)
 	} else {
-		sampleList[[i]] = read_spc_nosubhdr(filenames[i], no.object = TRUE)
+		sampleList[[i]] = read_spc_nosubhdr(filenames[i], no.object = TRUE, nosubhdr = nosubhdr)
 	}
   }
   sampleNames = snames

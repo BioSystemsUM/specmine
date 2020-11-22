@@ -8,7 +8,7 @@ These functions allow to import .spc files.}
 read_spc_nosubhdr(filename, keys.hdr2data = c("fexper", "fres", "fsource"),
   keys.hdr2log = c("fdate", "fpeakpt"), keys.log2data = FALSE,
   keys.log2log = TRUE, log.txt = TRUE, log.bin = FALSE,
-  log.disk = FALSE, hdr = list(), no.object = FALSE)
+  log.disk = FALSE, hdr = list(), nosubhdr = TRUE, no.object = FALSE)
 }
 \arguments{
 \item{filename}{The complete file name of the .spc file.}
@@ -33,6 +33,9 @@ into the hyperSpec object's log.}
 
 Use with care, and look into the source code for detailed insight on the
   elements of this list.}
+
+\item{nosubhdr}{Boolean value to decide if the header should be read or not.
+  Default to TRUE.}
 
 \item{no.object}{If \code{TRUE}, a list with wavelengths, spectra, labels,
   log and data are returned instead of a hyperSpec object.
