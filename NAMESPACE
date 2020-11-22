@@ -203,4 +203,4 @@ importFrom("utils", "head", "modifyList", "read.csv", "read.table",
 importFrom("readJDX", "readJDX")
 importFrom("stats", "na.exclude", "na.omit")
 importFrom("utils", "data", "unzip")
-importClassesFrom(hyperSpec, hyperSpec)
+
