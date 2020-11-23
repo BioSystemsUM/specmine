@@ -23,10 +23,9 @@ background_correction(dataset)
 
 \examples{
   ## Example of background correction
-  library(hyperSpec)
-  data(flu)
-  flu.converted = convert_from_hyperspec(flu)
-  flu.corrected = background_correction(flu.converted)
+  library(specmine.datasets)
+  data(cachexia)
+  cachexia.corrected = background_correction(cachexia)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

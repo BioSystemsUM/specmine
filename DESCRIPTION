@@ -15,7 +15,8 @@ Maintainer: Bruno Pereira <pereirinha_bp@hotmail.com>
 Depends: R (>= 4.0.0)
 SystemRequirements: Python (>=3.5.2) and the following python module: nmrglue.
 Imports: caret, e1071, ggplot2, impute, ellipse, GGally, pcaPP, compare, baseline, MASS, pls, readJDX,
-         speaq, genefilter, RColorBrewer, grDevices, graphics, methods, stats, utils, Metrics
+         speaq, genefilter, RColorBrewer, grDevices, graphics, methods, stats, utils, Metrics, imputeTS,
+		 specmine.datasets
 Suggests: ggdendro, reticulate, qdap, scatterplot3d, MAIT, xcms, KEGGgraph, KEGGREST, rcytoscapejs, rgl, grid, curl, RCurl
 LazyData: true
 Description: Provides a set of methods for metabolomics 

@@ -160,11 +160,18 @@ specmine.loess <- function(dataset, newx, enp.target = nrow(dataset$data) / 4, s
   }
   
   .predict <- function (loess, x) {
-    if (!is(loess, "loess") && is.na(loess)) {
+    if (! methods::is(loess, "loess") && is.na(loess)) {
       rep (NA_real_, length(x))
     } else {
       predict (loess, x)
     }
+  }
+  
+  wl <- suppressWarnings(as.numeric(rownames(dataset$data)))
+  if (all(is.na(wl))) {
+    new_wl <- seq(from = 1, to = nrow(dataset$data))
+  } else {
+    new_wl <- wl
   }
   
   loess <- apply (dataset$data, 2, .loess, new_wl)
