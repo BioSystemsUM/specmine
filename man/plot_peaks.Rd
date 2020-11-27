@@ -49,6 +49,7 @@ reverse.x = FALSE, p.size=0.5, ...)
 }
 }
 \examples{
+  library(specmine.datasets)
   data(propolis)
   plot_peaks(propolis, "seasons", variable.bounds = c(0,3), samples=c("XX_au", "XX_sm", "XX_wi"))
 }

@@ -36,6 +36,7 @@ samples = NULL, ...)
 
 \examples{
      ## Example of comparing regions by sample
+	 library(specmine.datasets)
      data(cachexia)
      subset1 = subset_x_values(cachexia, 1:31, by.index = TRUE)
      subset2 = subset_x_values(cachexia, 32:63, by.index = TRUE)

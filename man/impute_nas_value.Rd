@@ -26,6 +26,7 @@ impute_nas_value(dataset, value)
 
 \examples{
   ## Example of NA imputation with value replacing
+  library(specmine.datasets)
   data(propolis)
   propolis = impute_nas_value(propolis, 0.0005)
 }

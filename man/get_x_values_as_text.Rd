@@ -24,6 +24,8 @@ get_x_values_as_text(dataset)
 
 \examples{
   ## Example of getting the x-axis values as text
+  library(specmine.datasets)
+  data(propolis)
   xvalues.text = get_x_values_as_text(propolis)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

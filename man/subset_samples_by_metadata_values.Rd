@@ -30,6 +30,8 @@ values)
 
 \examples{
   ## Example of subsetting samples by metadata's values
+  library(specmine.datasets)
+  data(propolis)
   subset_samples_by_metadata_values(propolis, "seasons", 
                                   c("sm","au"))
 }

@@ -29,6 +29,7 @@ Return the corresponding metadata value of the sample.
 
 \examples{
   ## Example of getting a metadata value
+  library(specmine.datasets)
   data(cachexia)
   metadata.value = get_metadata_value(cachexia, "Muscle.loss", "PIF_178")
 }

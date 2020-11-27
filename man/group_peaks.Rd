@@ -50,6 +50,8 @@ label.values = NULL, step = 0.03)
 \examples{
 \donttest{
    ## Example of grouping peaks (computationally heavy)
+   library(specmine.datasets)
+   data(propolisSampleList)
    peaks.ds = group_peaks(propolisSampleList, "nmr-peaks", method = "own", 
 	   	metadata = NULL, description = "short description", 
 		label.x = "ppm", label.values = "intensity", step = 0.03)

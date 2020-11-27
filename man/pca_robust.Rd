@@ -42,6 +42,7 @@ write.file = FALSE, file.out = "robpca", ...)
 
 \examples{
   ## Example of performing a robust PCA analysis
+  library(specmine.datasets)
   data(cachexia)
   pca.results = pca_robust(cachexia, center = "mean", scale = "mad", 
 		k = 10)

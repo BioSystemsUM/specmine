@@ -35,6 +35,7 @@ var = FALSE, xlab = "")
 
 \examples{
     ## Example of plotting the fold change results
+	library(specmine.datasets)
     data(cachexia)
     fc.results = fold_change(cachexia, "Muscle.loss", 
 			"control")

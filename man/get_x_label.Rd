@@ -23,6 +23,7 @@ get_x_label(dataset)
 
 \examples{
   ## Example of getting the x-axis label
+  library(specmine.datasets)
   data(cassavaPPD)
   x.label = get_x_label(propolis)
 }

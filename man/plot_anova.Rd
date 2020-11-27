@@ -32,6 +32,8 @@ reverse.x = FALSE)
 \examples{
     ## Example of plotting the ANOVA results - first filter the 
     ## dataset to reduce computation time
+	library(specmine.datasets)
+	data(propolis)
     propolis_proc = missingvalues_imputation(propolis)
     propolis_proc = flat_pattern_filter(propolis_proc, "iqr", by.percent = TRUE,
 	red.value = 75) 

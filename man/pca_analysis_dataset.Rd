@@ -39,6 +39,7 @@ write.file = FALSE, file.out = "pca", ...)
 
 \examples{
   ## Example of performing a classical PCA analysis
+  library(specmine.datasets)
   data(cachexia)
   pca.results = pca_analysis_dataset(cachexia)
 }

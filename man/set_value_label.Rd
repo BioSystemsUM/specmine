@@ -26,6 +26,7 @@ set_value_label(dataset, new.val.label)
 
 \examples{
   ## Example of setting a new value label to the dataset
+  library(specmine.datasets)
   data(cachexia)
   cachexia = set_value_label(cachexia, "new value label")
 }

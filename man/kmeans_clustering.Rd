@@ -29,6 +29,8 @@ kmeans_clustering(dataset, num.clusters, type = "samples")
 
 \examples{
   ## Example of kmeans clustering
+  library(specmine.datasets)
+  data(cachexia)
   kmeans.result = kmeans_clustering(cachexia, 
 		  num.clusters = 4, type = "samples")
 }

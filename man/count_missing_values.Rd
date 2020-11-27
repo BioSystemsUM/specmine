@@ -22,6 +22,7 @@ count_missing_values(dataset)
 }
 \examples{
   ## Example of counting the missing values
+  library(specmine.datasets)
   data(cachexia)
   count_missing_values(cachexia)
 }

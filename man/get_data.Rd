@@ -23,6 +23,7 @@ get_data(dataset)
 
 \examples{
   ## Example of getting the data matrix
+  library(specmine.datasets)
   data(cachexia)
   cachexia.dm = get_data(cachexia)
 }

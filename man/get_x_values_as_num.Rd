@@ -23,6 +23,8 @@ get_x_values_as_num(dataset)
 
 \examples{
   ## Example of getting the x-axis values as numbers
+  library(specmine.datasets)
+  data(propolis)
   xvalues.numeric = get_x_values_as_num(propolis)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

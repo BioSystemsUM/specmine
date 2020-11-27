@@ -23,6 +23,7 @@ num_samples(dataset)
 
 \examples{
   ## Example of getting the number of samples
+  library(specmine.datasets)
   data(cachexia)
   number.of.samples = num_samples(cachexia)
 }

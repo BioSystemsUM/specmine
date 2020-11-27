@@ -33,6 +33,7 @@ clustMethod = "complete", hc.type = "samples")
 
 \examples{
   ## Example of hierarchical clustering
+  library(specmine.datasets)
   data(cachexia)
   hc.result = hierarchical_clustering(cachexia, 
 	      distance = "euclidean", clustMethod = "complete", 

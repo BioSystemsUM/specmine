@@ -30,6 +30,7 @@ by.index = FALSE)
 
 \examples{
   ## Example of removing data variables
+  library(specmine.datasets)
   data(cachexia)
   dataset = remove_data_variables(cachexia, c("Creatine","Serine"), 
 	    by.index = FALSE)

@@ -27,6 +27,7 @@ plot_kruskaltest(dataset, kr.results, kr.threshold = 0.01)
 
 \examples{
     ## Example of plotting the Kolmogorov-Smirnov tests results
+	library(specmine.datasets)
     data(cachexia)
     kr.results = kruskalTest_dataset(cachexia, "Muscle.loss", 
 	write.file = FALSE)

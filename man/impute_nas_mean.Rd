@@ -23,6 +23,7 @@ impute_nas_mean(dataset)
 
 \examples{
   ## Example of NA imputation with mean
+  library(specmine.datasets)
   data(propolis)
   propolis = impute_nas_mean(propolis)
 }

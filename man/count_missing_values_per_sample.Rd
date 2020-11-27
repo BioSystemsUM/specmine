@@ -25,6 +25,7 @@ count_missing_values_per_sample(dataset, remove.zero = TRUE)
 }
 \examples{
   ## Example of counting the missing values on each sample
+  library(specmine.datasets)
   data(cachexia)
   cachexia$data[10,10] = NA
   count_missing_values_per_sample(cachexia)

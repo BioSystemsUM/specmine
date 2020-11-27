@@ -39,6 +39,7 @@ value = 5e-04, k = 5)
 }
 \examples{
   ## Example of impute missing values
+  library(specmine.datasets)
   data(propolis)
   dataset = missingvalues_imputation(propolis, method = "value", 
 	    value = 0.0005)

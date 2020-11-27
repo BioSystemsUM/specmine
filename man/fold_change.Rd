@@ -41,6 +41,7 @@ file.out = "fold_change.csv")
 
 \examples{
   ## Example of fold change
+  library(specmine.datasets)
   data(cachexia)
   fold.change.results = fold_change(cachexia, "Muscle.loss", 
 			"control", write.file = FALSE)

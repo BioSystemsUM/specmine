@@ -23,6 +23,7 @@ impute_nas_median(dataset)
 
 \examples{
   ## Example of NA imputation with median
+  library(specmine.datasets)
   data(propolis)
   propolis = impute_nas_median(propolis)
 }

@@ -34,6 +34,8 @@ description = "", type = "nmr-peaks")
 \examples{
 \donttest{
     ## Example of converting a peak list to a dataset (computationally heavy)
+	library(specmine.datasets)
+	data(propolisSampleList)
     dataset = dataset_from_peaks(propolisSampleList, metadata = NULL, 
 	      description = "some text", type = "nmr-peaks")  
 }

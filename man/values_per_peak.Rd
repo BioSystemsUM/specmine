@@ -23,6 +23,7 @@ values_per_peak(samples.df)
 
 \examples{
   ## Example of getting the number of values for each peak
+  library(specmine.datasets)
   data(propolis)
   num.peaks = values_per_peak(propolis$data)
 }

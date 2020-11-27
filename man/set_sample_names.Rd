@@ -26,6 +26,7 @@ set_sample_names(dataset, new.sample.names)
 
 \examples{
   ## Example of setting a new value label to the dataset
+  library(specmine.datasets)
   data(cachexia)
   new.samples.names = as.character(1:77)
   cachexia = set_sample_names(cachexia, new.samples.names)

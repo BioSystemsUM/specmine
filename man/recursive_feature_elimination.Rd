@@ -44,6 +44,7 @@ A caret's rfe object with the result of recursive feature selection.
 \examples{
 \donttest{
   ## Example of recursive feature elimination
+  library(specmine.datasets)
   data(cachexia)
   library(caret)
   rfe.result = recursive_feature_elimination(cachexia$data, 

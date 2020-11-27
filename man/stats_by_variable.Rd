@@ -30,6 +30,7 @@ variable.bounds = NULL)
 
 \examples{
      ## Example of getting stats of variables
+	 library(specmine.datasets)
      data(cachexia)
      variable.stats.result = stats_by_variable(cachexia)
 }

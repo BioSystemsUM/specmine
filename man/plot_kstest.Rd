@@ -27,6 +27,7 @@ plot_kstest(dataset, ks.results, ks.threshold = 0.01)
 
 \examples{
     ## Example of plotting the Kolmogorov-Smirnov tests results
+	library(specmine.datasets)
     data(cachexia)
     ks.results = ksTest_dataset(cachexia, "Muscle.loss", 
 	write.file = FALSE)

@@ -33,6 +33,8 @@ labels = NULL, ...)
 \examples{
 \donttest{
   ### Example of a dendrogram
+  library(specmine.datasets)
+  data(cachexia)
   hc.result = hierarchical_clustering(cachexia)
   dendrogram_plot(cachexia, hc.result)
   }

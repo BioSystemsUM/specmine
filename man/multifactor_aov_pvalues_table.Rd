@@ -30,6 +30,7 @@ write.file = FALSE, file.out = "multi-anova-pvalues.csv")
 
 \examples{
   ## Example of multifactor ANOVA p-values table
+  library(specmine.datasets)
   data(propolis)
   propolis = missingvalues_imputation(propolis, "value", value = 0.00005)
   m.aov.results = multifactor_aov_all_vars(propolis, 

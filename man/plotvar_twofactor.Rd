@@ -45,6 +45,8 @@ colour = "darkblue", title = "", xlabel = NULL, ylabel = NULL)
 
 \examples{
   ## Example of plotting a variable's distribution with 2 factors
+  library(specmine.datasets)
+  data(propolis)
   propolis_proc = missingvalues_imputation(propolis)
   plotvar_twofactor(propolis_proc, "0.46", "seasons", "agroregions")
 }

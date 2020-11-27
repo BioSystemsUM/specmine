@@ -29,6 +29,7 @@ subset_samples(dataset, samples, rebuild.factors = TRUE)
 
 \examples{
   ## Example of subsetting samples
+  library(specmine.datasets)
   data(cachexia)
   subset = subset_samples(cachexia, c("PIF_178","PIF_132"))
 }

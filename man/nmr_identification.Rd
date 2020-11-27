@@ -67,6 +67,8 @@ After scoring a match between a reference and a sample, the reference is further
 }
 \examples{
 \donttest{
+ library(specmine.datasets)
+ data(propolis)
  propolis_mv=missingvalues_imputation(propolis)
  freq_scores = list('400'=0, '500'=0, '600'=1, '700'=0)
  solv_scores = list(CD3OD=0, D2O=.8, Water=.8, CDCl3=0, 'Acetone-d6'=0, 'Acetone'=0,"DMSO-d6"=0,

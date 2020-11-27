@@ -26,6 +26,7 @@ peaks_per_sample(sample.list, sample.index)
 
 \examples{
     ## Example of counting the peaks in a sample
+	library(specmine.datasets)
     data(propolisSampleList)
     num.peaks.sample = peaks_per_sample(propolisSampleList, 4)
 }

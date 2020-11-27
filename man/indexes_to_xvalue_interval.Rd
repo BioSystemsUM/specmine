@@ -26,6 +26,8 @@ Returns a numeric vector with the interval of x-values from the indexes vector
 
 \examples{
   ## Example of getting the interval of x-values from indexes
+  library(specmine.datasets)
+  data(propolis)
   xvalue.interval = indexes_to_xvalue_interval(propolis, c(10,50))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

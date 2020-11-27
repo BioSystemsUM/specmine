@@ -41,6 +41,7 @@ x.colors = 1, inset = c(0, 0), legend.place = "topright", ...)
 
 \examples{
   ## Example of a PCA biplot
+  library(specmine.datasets)
   data(cachexia)
   pca.result = pca_analysis_dataset(cachexia)
   pca_biplot(cachexia, pca.result, cex = 0.8)

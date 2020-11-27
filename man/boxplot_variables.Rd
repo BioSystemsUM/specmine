@@ -42,6 +42,7 @@ cex.axis = 0.8, ...)
 
 \examples{
   ## Example of showing the boxplot of a few variables
+  library(specmine.datasets)
   data(cachexia)
   boxplot_variables(cachexia, variables = c("Creatine","Serine","Lactate"))
 }

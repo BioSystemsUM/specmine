@@ -42,6 +42,7 @@ by.index = FALSE, rebuild.factors = TRUE)
 
 \examples{
   ## Example of removing data
+  library(specmine.datasets)
   data(cachexia)
   dataset = remove_data(cachexia, c("Creatine","Serine"), type = "data", 
 	    by.index = FALSE)

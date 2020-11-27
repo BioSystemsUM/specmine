@@ -32,6 +32,7 @@ replace_metadata_value(dataset, variable, sample, new.value)
 
 \examples{
   ## Example of replacing metadata's variable value of a sample
+  library(specmine.datasets)
   data(cachexia)
   dataset = replace_metadata_value(cachexia, "Muscle.loss", "PIF_178", 
 	    "control")

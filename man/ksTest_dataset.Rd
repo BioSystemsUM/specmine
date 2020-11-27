@@ -37,6 +37,7 @@ write.file = FALSE, file.out = "ks.csv")
 
 \examples{
   ## Example of ks-Tests on dataset
+  library(specmine.datasets)
   data(cachexia)
   kstests.result = ksTest_dataset(cachexia, "Muscle.loss", 
 		  write.file = FALSE)

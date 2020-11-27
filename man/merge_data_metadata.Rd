@@ -36,6 +36,7 @@ metadata.vars = NULL, x.values = NULL, by.index = FALSE)
 
 \examples{
   ## Example of merging data and metadata
+  library(specmine.datasets)
   data(cachexia)
   dt.merged = merge_data_metadata(cachexia)
 }

@@ -40,6 +40,7 @@ file.out = "fold_change_reverse.csv")
 
 \examples{
   ## Example of fold change reverse
+  library(specmine.datasets)
   data(cachexia)
   fold.change.results = fold_change_var(cachexia, "Muscle.loss", 
 			c("Creatine", "Serine"))

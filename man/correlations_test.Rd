@@ -34,6 +34,7 @@ alternative = "two.sided")
 \examples{
 \donttest{
   ## Example of correlations test of variables
+  library(specmine.datasets)
   data(cachexia)
   corr.result = correlations_test(cachexia, 
 		method = "pearson", by.var = FALSE)

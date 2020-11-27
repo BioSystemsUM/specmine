@@ -24,6 +24,7 @@ check_dataset(dataset)
 
 \examples{
   ## Example checking a dataset
+  library(specmine.datasets)
   data(cachexia)
   check_dataset(cachexia)
 }

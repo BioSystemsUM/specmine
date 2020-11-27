@@ -43,6 +43,7 @@ sum_dataset(dataset, stats = TRUE)
 \examples{
 \dontshow{
   ## Example of summarizing a dataset
+  library(specmine.datasets)
   data(cachexia)
   sum_dataset(cachexia, stats = TRUE)
 }

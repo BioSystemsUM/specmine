@@ -29,6 +29,7 @@ multifactor_aov_all_vars(dataset, metadata.vars, combination)
 
 \examples{
   ## Example of multifactor ANOVA on all variables 
+  library(specmine.datasets)
   data(propolis)
   propolis = missingvalues_imputation(propolis, "value", value = 0.00005)
   m.aov.results = multifactor_aov_all_vars(propolis, 

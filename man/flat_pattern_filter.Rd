@@ -43,6 +43,8 @@ by.percent = TRUE, by.threshold = FALSE, red.value = 0)
 }
 \examples{
   ## Example of flat pattern filter
+  library(specmine.datasets)
+  data(propolis)
   dataset.filtered = flat_pattern_filter(propolis, "iqr", by.percent = TRUE, 
 		     red.value = 20)
 }

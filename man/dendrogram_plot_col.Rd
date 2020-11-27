@@ -44,6 +44,7 @@ lab.cex = 1, leg.pos = "topright", label_samples=NULL,...)
 
 \examples{
   ## Example of colored dendrogram
+  library(specmine.datasets)
   data(cachexia)
   hc.result = hierarchical_clustering(cachexia)
   dendrogram_plot_col(cachexia, hc.result, "Muscle.loss", 

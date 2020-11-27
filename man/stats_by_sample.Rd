@@ -26,6 +26,7 @@ stats_by_sample(dataset, samples = NULL)
 
 \examples{
      ## Example of getting stats of samples
+	 library(specmine.datasets)
      data(cachexia)
      samples.stats.result = stats_by_sample(cachexia)
 }

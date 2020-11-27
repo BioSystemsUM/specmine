@@ -32,6 +32,7 @@ apply_by_group(dataset, fn.to.apply, metadata.var, var.value)
 
 \examples{
      ## Example of applying a function to a group
+	 library(specmine.datasets)
      data(cachexia)
      apply.group.result = apply_by_group(cachexia, mean, "Muscle.loss", 
 			  "control")

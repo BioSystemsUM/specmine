@@ -30,6 +30,7 @@ correlations_dataset(dataset, method = "pearson", by.var = TRUE)
 
 \examples{
   ## Example of correlations of variables
+  library(specmine.datasets)
   data(cachexia)
   corr.result = correlations_dataset(cachexia, 
 		method = "pearson", by.var = TRUE)

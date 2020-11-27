@@ -30,6 +30,7 @@ peak.val.max)
 
 \examples{
   ## Example of removing a interval of peaks in a sample list
+  library(specmine.datasets)
   data(propolisSampleList)
   samples.list = remove_peaks_interval_sample_list(propolisSampleList, 2, 8.05)
 }

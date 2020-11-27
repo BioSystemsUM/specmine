@@ -32,6 +32,7 @@ get_data_value(dataset, x.axis.val, sample, by.index = FALSE)
 
 \examples{
   ## Example of getting a data value from the dataset
+  library(specmine.datasets)
   data(cachexia)
   data.value = get_data_value(cachexia, "Creatine", "PIF_178", 
 	       by.index = FALSE)

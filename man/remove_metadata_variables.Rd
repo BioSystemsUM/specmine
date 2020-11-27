@@ -27,6 +27,8 @@ remove_metadata_variables(dataset, variables.to.remove)
 
 \examples{
   ## Example of removing metadata's variables
+  library(specmine.datasets)
+  data(propolis)
   dataset = remove_metadata_variables(propolis, c("seasons"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

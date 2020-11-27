@@ -43,6 +43,7 @@ type = "samples", num.clusters = 5, clustMethod = "complete")
 
 \examples{
   ## Example of kmeans and hierarchical clustering
+  library(specmine.datasets)
   data(cachexia)
   hc.result = clustering(cachexia, method = "hc", 
 	      distance = "euclidean")

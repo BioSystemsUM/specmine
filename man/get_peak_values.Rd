@@ -26,6 +26,7 @@ get_peak_values(samples.df, peak.val)
 
 \examples{
   ## Example of getting the peak values
+  library(specmine.datasets)
   data(propolis)
   peak.values = get_peak_values(propolis$data, 2.11)
 }

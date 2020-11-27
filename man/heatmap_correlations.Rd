@@ -27,6 +27,7 @@ heatmap_correlations(correlations, col = NULL, ...)
 
 \examples{
   ## Example of correlations heatmap
+  library(specmine.datasets)
   data(cachexia)
   correlations = correlations_dataset(cachexia)
   heatmap_correlations(correlations)

@@ -26,6 +26,7 @@ subset_random_samples(dataset, nsamples)
 
 \examples{
   ## Example of subsetting random samples
+  library(specmine.datasets)
   data(cachexia)
   subset = subset_random_samples(cachexia, 15)
 }

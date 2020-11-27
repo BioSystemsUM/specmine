@@ -36,6 +36,7 @@ by.index = FALSE)
 
 \examples{
   ## Example of replacing a data value from the dataset
+  library(specmine.datasets)
   data(cachexia)
   dataset = replace_data_value(cachexia, "Creatine", "PIF_178", 10.3, 
 	    by.index = FALSE)

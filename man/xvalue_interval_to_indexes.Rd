@@ -29,6 +29,7 @@ Returns a numeric vector with the indexes of the x-values interval
 
 \examples{
   ## Example of getting the indexes of an interval of x-values
+  library(specmine.datasets)
   data(propolis)
   indexes.interval = xvalue_interval_to_indexes(propolis, 2.0, 5.5)
 }

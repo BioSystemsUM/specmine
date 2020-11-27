@@ -29,6 +29,7 @@ Returns a matrix with the values of all samples in the specified x axis.
 
 \examples{
   ## Example of getting a metadata value
+  library(specmine.datasets)
   data(cachexia)
   data.values = get_data_values(cachexia, c("Creatine","Serine","Lactate"), 
 		by.index = FALSE)

@@ -29,6 +29,7 @@
 
 \examples{
   ## Example of using a metadata variable as data variable
+  library(specmine.datasets)
   data(propolis)
   propolis = metadata_as_variables(propolis, "seasons", by.index = FALSE)
 }

@@ -27,6 +27,7 @@ plot_ttests(dataset, tt.results, tt.threshold = 0.01)
 
 \examples{
     ## Example of plotting the t-tests results
+	library(specmine.datasets)
     data(cachexia)
     ttests.results = tTests_dataset(cachexia, "Muscle.loss")
     plot_ttests(cachexia, ttests.results, 0.05)

@@ -46,6 +46,7 @@ ylab = "Percentage", xlab = "Principal components", ...)
 
 \examples{
   ## Example of a scree plot
+  library(specmine.datasets)
   data(cachexia)
   pca.result = pca_analysis_dataset(cachexia)
   pca_screeplot(pca.result)

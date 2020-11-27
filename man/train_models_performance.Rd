@@ -66,6 +66,7 @@ Returns a list with the results from training
 \examples{
 \donttest{
   ## Example of training models
+  library(specmine.datasets)
   data(cachexia)
   result = train_models_performance(cachexia, "pls", 
   	   "Muscle.loss", "cv")

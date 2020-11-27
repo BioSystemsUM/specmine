@@ -36,6 +36,7 @@ fc.threshold = 2, tt.threshold = 0.01)
 
 \examples{
     ## Example of a volcano plot
+	library(specmine.datasets)
     data(cachexia)
     foldchange.results = fold_change(cachexia, "Muscle.loss", "control")
     ttests.results = tTests_dataset(cachexia, "Muscle.loss")

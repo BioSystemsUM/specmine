@@ -36,6 +36,8 @@ Data frame with the results of ANOVA, with p-value, logarithm of p-value, false 
 
 \examples{
   ## Example of ANOVA with TukeyHSD
+  library(specmine.datasets)
+  data(propolis)
   propolis_proc = missingvalues_imputation(propolis)
   propolis_proc = flat_pattern_filter(propolis_proc, "iqr", by.percent = TRUE,
 	red.value = 75) 

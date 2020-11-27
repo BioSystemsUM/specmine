@@ -23,6 +23,7 @@ cubic_root_transform(datamat)
 
 \examples{
   ## Example of cubic root transformation
+  library(specmine.datasets)
   data(cachexia)
   datamat.cubic = cubic_root_transform(cachexia$data)
 }

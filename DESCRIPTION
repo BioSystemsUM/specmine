@@ -11,7 +11,7 @@ Author: Christopher Costa <chrisbcl@hotmail.com> [aut],
 	C. Beleites [cph],
 	Jie Hao [cph],
 	Bruno Pereira <pereirinha_bp@hotmail.com> [aut]
-Maintainer: Bruno Pereira <pereirinha_bp@hotmail.com>
+Maintainer: Miguel Rocha <mrocha@di.uminho.com>
 Depends: R (>= 4.0.0)
 SystemRequirements: Python (>=3.5.2) and the following python module: nmrglue.
 Imports: caret, e1071, ggplot2, impute, ellipse, GGally, pcaPP, compare, baseline, MASS, pls, readJDX,
@@ -19,6 +19,8 @@ Imports: caret, e1071, ggplot2, impute, ellipse, GGally, pcaPP, compare, baselin
 		 specmine.datasets
 Suggests: ggdendro, reticulate, qdap, scatterplot3d, MAIT, xcms, KEGGgraph, KEGGREST, rcytoscapejs, rgl, grid, curl, RCurl
 LazyData: true
+URL: https://github.com/BioSystemsUM/specmine
+BugReports: https://github.com/BioSystemsUM/specmine/issues
 Description: Provides a set of methods for metabolomics 
 	data analysis, including data loading in different formats, 
 	pre-processing, metabolite identification, univariate and multivariate 

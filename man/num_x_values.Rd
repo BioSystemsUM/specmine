@@ -23,6 +23,8 @@ num_x_values(dataset)
 
 \examples{
   ## Example of getting the number of x-axis values
+  library(specmine.datasets)
+  data(propolis)
   number.x.values = num_x_values(propolis)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

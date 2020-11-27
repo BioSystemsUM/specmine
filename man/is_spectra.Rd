@@ -23,6 +23,8 @@ is_spectra(dataset)
 
 \examples{
   ## Example of checking if the dataset is from spectral data
+  library(specmine.datasets)
+  data(propolis)
   is_spectra(propolis)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

@@ -48,6 +48,8 @@ subsets = 2^(2:4))
 \donttest{
   ## Example of feature selection using rfe and sbf
   library(caret)
+  library(specmine.datasets)
+  data(cachexia)
   rfe.result = feature_selection(cachexia, "Muscle.loss", 
                method="rfe", functions = caret::rfFuncs, 
                validation = "cv", number = 3, 

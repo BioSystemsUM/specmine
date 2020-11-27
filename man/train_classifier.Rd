@@ -56,6 +56,7 @@ summary.function = defaultSummary, class.in.metadata = TRUE)
 
 \examples{
   ## Example of training a classifier
+  library(specmine.datasets)
   data(cachexia)
   result = train_classifier(cachexia, "Muscle.loss", "pls", "cv")
 }

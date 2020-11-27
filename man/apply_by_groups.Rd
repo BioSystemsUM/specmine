@@ -36,6 +36,7 @@ variables = NULL, variable.bounds = NULL)
 
 \examples{
      ## Example of applying a function to groups
+	 library(specmine.datasets)
      data(cachexia)
      apply.groups.result = apply_by_groups(cachexia, "Muscle.loss", mean)
 }

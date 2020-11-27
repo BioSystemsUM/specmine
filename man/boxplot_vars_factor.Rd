@@ -52,6 +52,7 @@ vec.par = NULL, cex.axis = 0.8, ylabs = NULL, ...)
 
 \examples{
   ## Example of showing the boxplot factors of a few variables
+  library(specmine.datasets)
   data(cachexia)
   boxplot_vars_factor(cachexia, "Muscle.loss", variables = c("Creatine","Serine",
   "Lactate"))

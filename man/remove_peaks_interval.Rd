@@ -29,6 +29,7 @@ remove_peaks_interval(sample.df, peak.val.min, peak.val.max)
 
 \examples{
   ## Example of removing a interval of peaks
+  library(specmine.datasets)
   data(propolisSampleList)
   samples.df = remove_peaks_interval(propolisSampleList[[1]], 2, 8.05)
 }

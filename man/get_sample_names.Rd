@@ -23,6 +23,7 @@ get_sample_names(dataset)
 
 \examples{
   ## Example of getting the sample names
+  library(specmine.datasets)
   data(cachexia)
   sample.names = get_sample_names(cachexia)
 }

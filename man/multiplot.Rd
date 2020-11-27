@@ -35,6 +35,7 @@ multiplot(plots, plotlist = NULL, file, cols = 1, layout = NULL)
 
 \examples{
      ## Example of multiplot
+	 library(specmine.datasets)
      data(cachexia)
      pca.result = pca_analysis_dataset(cachexia)
      plot1 = pca_scoresplot2D(cachexia, pca.result, "Muscle.loss", 

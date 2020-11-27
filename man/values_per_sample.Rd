@@ -23,6 +23,7 @@ values_per_sample(samples.df)
 
 \examples{
   ## Example of getting the number of values for each sample
+  library(specmine.datasets)
   data(propolis)
   num.values.samples = values_per_sample(propolis$data)
 }

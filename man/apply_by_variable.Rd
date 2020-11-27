@@ -41,6 +41,7 @@ variable.bounds = NULL, samples = NULL, ...)
 
 \examples{
      ## Example of applying a function to variables
+	 library(specmine.datasets)
      data(cachexia)
      apply.variables.result = apply_by_variable(cachexia, mean)
 }

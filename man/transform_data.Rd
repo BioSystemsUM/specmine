@@ -31,6 +31,7 @@ transform_data(dataset, method = "log")
 \examples{
 
   ## Example of logarithmic transformation
+  library(specmine.datasets)
   data(cachexia)
   dataset.log = transform_data(cachexia, "log")
 

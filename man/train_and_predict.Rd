@@ -56,6 +56,7 @@ defaultSummary)
 
 \examples{
   ## Example of training and predicting
+  library(specmine.datasets)
   data(cachexia)
   result = train_and_predict(cachexia, new.samples = cachexia$data,
 	 "Muscle.loss", "pls", "cv")

@@ -26,6 +26,7 @@ subset_metadata(dataset, variables)
 
 \examples{
   ## Example of subsetting samples
+  library(specmine.datasets)
   data(propolis)
   subset = subset_metadata(propolis, c("seasons"))
 }

@@ -39,6 +39,7 @@ alternative = "two.sided", by.var = TRUE)
 
 \examples{
   ## Example of correlations test of variables
+  library(specmine.datasets)
   data(cachexia)
   corr.result = correlation_test(cachexia, "Serine", "Creatine", method = "pearson", 
 		by.var = TRUE)

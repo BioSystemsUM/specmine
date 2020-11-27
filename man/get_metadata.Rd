@@ -22,6 +22,7 @@ get_metadata(dataset)
 
 \examples{
   ## Example of getting the metadata
+  library(specmine.datasets)
   data(cachexia)
   cachexia.mt = get_metadata(cachexia)
 }

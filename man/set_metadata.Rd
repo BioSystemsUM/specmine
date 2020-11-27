@@ -26,6 +26,7 @@ set_metadata(dataset, new.metadata)
 
 \examples{
   ## Example of setting a new metadata to the dataset
+  library(specmine.datasets)
   data(cachexia)
   new.metadata = c(rep("meta1", 39), rep("meta2", 38)) 
   new.metadata = data.frame(var_meta = new.metadata)

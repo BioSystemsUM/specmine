@@ -39,6 +39,7 @@ prop = TRUE, cumul = TRUE, min.cum = NULL)
 
 \examples{
   ## Example of performing a classical PCA analysis
+  library(specmine.datasets)
   data(cachexia)
   pca.result = pca_analysis_dataset(cachexia)
   pca_importance(pca.result, pcs = 1:5)

@@ -29,6 +29,7 @@ set_x_values(dataset, new.x.values, new.x.label = NULL)
 
 \examples{
   ## Example of setting new x-values to the dataset
+  library(specmine.datasets)
   data(cachexia)
   new.xvalues = 1:63
   cachexia = set_x_values(cachexia, new.xvalues, new.x.label = NULL)

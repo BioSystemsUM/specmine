@@ -23,6 +23,7 @@ get_type(dataset)
 
 \examples{
   ## Example of getting the type of the data
+  library(specmine.datasets)
   data(cachexia)
   type = get_type(cachexia)
 }

@@ -26,6 +26,7 @@ set_x_label(dataset, new.x.label)
 
 \examples{
   ## Example of setting a new x-label to the dataset
+  library(specmine.datasets)
   data(cachexia)
   cachexia = set_x_label(cachexia, "new x-label")
 }

@@ -23,6 +23,8 @@ kmeans_plot(dataset, kmeans.result)
 
 \examples{
   ## Example of kmeans plot - dataset filtered for performance purposes
+  library(specmine.datasets)
+  data(cachexia)
   kmeans.result = kmeans_clustering(cachexia, 
 		  num.clusters = 4, type = "samples")
   kmeans_plot(cachexia, kmeans.result)

@@ -38,6 +38,8 @@ A caret's sbf object with the result of selection by filter.
 \donttest{
   ## Example of selection by filter
   library(caret)
+  library(specmine.datasets)
+  data(cachexia)
   rfe.result = filter_feature_selection(cachexia$data, 
 	       cachexia$metadata$Muscle.loss, functions = caret::rfSBF, 
 	       method = "cv")

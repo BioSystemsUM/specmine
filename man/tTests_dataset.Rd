@@ -37,6 +37,7 @@ write.file = FALSE, file.out = "ttests.csv")
 
 \examples{
   ## Example of t-Tests on dataset
+  library(specmine.datasets)
   data(cachexia)
   ttests.result = tTests_dataset(cachexia, "Muscle.loss", 
 		  write.file = FALSE)

@@ -30,6 +30,8 @@ pcas = c(1, 2, 3))
 \examples{
 \donttest{
   ### Example of a 3D PCA biplot
+  library(specmine.datasets)
+  data(cachexia)
   pca.result = pca_analysis_dataset(cachexia)
   pca_biplot3D(cachexia, pca.result, "Muscle.loss", pcas = c(1,2,3))
   }

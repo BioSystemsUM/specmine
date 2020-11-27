@@ -25,7 +25,8 @@ list representing the dataset from a metabolomics experiment.
 }
 
 \examples{
-  ## Example of getting the indexes of the x-values 
+  ## Example of getting the indexes of the x-values
+  library(specmine.datasets)
   data(propolis)
   indexes = x_values_to_indexes(propolis, c(1.3, 3.51, 6.03))
 }

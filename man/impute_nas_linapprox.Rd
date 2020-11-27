@@ -23,6 +23,7 @@ Returns the dataset with no missing values.
 
 \examples{
   ## Example of NA imputation with linear approximation
+  library(specmine.datasets)
   data(propolis)
   dataset = impute_nas_linapprox(propolis)
 }

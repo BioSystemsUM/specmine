@@ -34,6 +34,7 @@ apply_by_sample(dataset, fn.to.apply, samples = NULL, ...)
 
 \examples{
      ## Example of applying a function to variables
+	 library(specmine.datasets)
      data(cachexia)
      apply.samples.result = apply_by_sample(cachexia, mean)
 }

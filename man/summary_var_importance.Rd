@@ -27,6 +27,7 @@ summary_var_importance(performances, number.rows)
 \examples{
 \donttest{
   ## Example of getting a summary of variables importance
+  library(specmine.datasets)
   data(cachexia)
   training.result = train_models_performance(cachexia, "pls", 
   	"Muscle.loss", "cv")

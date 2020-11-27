@@ -29,6 +29,7 @@ remove_samples(dataset, samples.to.remove, rebuild.factors = TRUE)
 
 \examples{
   ## Example of removing samples
+  library(specmine.datasets)
   data(cachexia)
   cachexia = remove_samples(cachexia, c("PIF_178","PIF_090"))
 }

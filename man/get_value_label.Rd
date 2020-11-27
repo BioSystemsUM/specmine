@@ -24,6 +24,7 @@ get_value_label(dataset)
 
 \examples{
   ## Example of getting the value label
+  library(specmine.datasets)
   data(cassavaPPD)
   value.label = get_value_label(propolis)
 }

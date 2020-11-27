@@ -43,6 +43,8 @@ size = 1, ...)
 \examples{
 \donttest{
   ### Example of a 3D PCA k-means plot
+  library(specmine.datasets)
+  data(cachexia)
   pca.result = pca_analysis_dataset(cachexia)
   pca_kmeans_plot3D(cachexia, pca.result, num.clusters = 3, 
     		    pcas = c(1,2,3))

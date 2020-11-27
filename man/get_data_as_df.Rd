@@ -23,6 +23,7 @@ get_data_as_df(dataset)
 
 \examples{
   ## Example of getting the data matrix as data frame
+  library(specmine.datasets)
   data(cachexia)
   cachexia.dt = get_data_as_df(cachexia)
 }

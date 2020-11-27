@@ -40,6 +40,7 @@ by.index = FALSE, variable.bounds = NULL, rebuild.factors = TRUE)
 
 \examples{
   ## Example of subsetting samples and x-values
+  library(specmine.datasets)
   data(cachexia)
   subset = subset_by_samples_and_xvalues(cachexia, c("PIF_178","NETL_022_V1"), 
 	   variables = c("Creatine","Serine"))

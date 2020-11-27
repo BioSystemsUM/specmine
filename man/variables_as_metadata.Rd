@@ -29,6 +29,7 @@
 
 \examples{
   ## Example of using a variable as metadata variable
+  library(specmine.datasets)
   data(cachexia)
   dataset = variables_as_metadata(cachexia, "Creatine", by.index = FALSE)
 }

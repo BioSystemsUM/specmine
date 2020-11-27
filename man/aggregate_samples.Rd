@@ -34,6 +34,8 @@ meta.to.remove = c())
 
 \examples{
   ## Example of aggregating samples
+  library(specmine.datasets)
+  data(propolis)
   propolis_proc = missingvalues_imputation(propolis)
   dataset = aggregate_samples(propolis_proc, as.integer(propolis$metadata$seasons), "mean") 
 }

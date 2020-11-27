@@ -29,6 +29,8 @@ subset_x_values_by_interval(dataset, min.value, max.value)
 
 \examples{
   ## Example of subsetting x-values by an interval
+  library(specmine.datasets)
+  data(propolis)
   subset = subset_x_values_by_interval(propolis, 1, 3)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

@@ -29,6 +29,7 @@ remove_samples_by_nas(dataset, max.nas = 0, by.percent = FALSE)
 
 \examples{
   ## Example of removing samples by NAs
+  library(specmine.datasets)
   data(propolis)
   propolis = remove_samples_by_nas(propolis, 40, by.percent = TRUE)
 }

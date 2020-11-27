@@ -26,6 +26,7 @@ get_metadata_var(dataset, var)
 
 \examples{
   ## Example of getting a metadata variable
+  library(specmine.datasets)
   data(cachexia)
   metadata.variable = get_metadata_var(cachexia, "Muscle.loss")
 }

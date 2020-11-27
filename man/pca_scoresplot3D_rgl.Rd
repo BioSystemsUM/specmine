@@ -37,6 +37,8 @@ pcas = c(1, 2, 3), size = 1, labels = FALSE)
 \examples{
 \donttest{
   ### Example of a 3D PCA scores plot
+  library(specmine.datasets)
+  data(cachexia)
   pca.result = pca_analysis_dataset(cachexia)
   pca_scoresplot3D_rgl(cachexia, pca.result, "Muscle.loss", 
     		       pcas = c(1,2,3), labels = TRUE)

@@ -23,6 +23,8 @@ Data frame with the clusters and the samples' names that belong to each one.
 
 \examples{
   ## Example of showing kmeans cluster's members
+  library(specmine.datasets)
+  data(cachexia)
   kmeans.result = kmeans_clustering(cachexia, 
 		  num.clusters = 4, type = "samples")
   kmeans_result_df(kmeans.result)

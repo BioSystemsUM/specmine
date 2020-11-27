@@ -27,6 +27,8 @@ predict_samples(train.result, new.samples)
 \examples{
 \donttest{
   ## Example of predicting samples
+  library(specmine.datasets)
+  data(cachexia)
   training.result = train_models_performance(cachexia, "pls", 
   	"Muscle.loss", "cv")
   result = predict_samples(training.result$final.models$pls, cachexia$data)

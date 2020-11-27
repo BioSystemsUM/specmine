@@ -29,6 +29,7 @@ impute_nas_knn(dataset, k = 10, ...)
 
 \examples{
   ## Example of NA imputation with knn
+  library(specmine.datasets)
   data(propolis)
   dataset = impute_nas_knn(propolis, k=10)
 }

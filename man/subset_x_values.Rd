@@ -29,6 +29,7 @@ subset_x_values(dataset, variables, by.index = FALSE)
 
 \examples{
   ## Example of subsetting x-values
+  library(specmine.datasets)
   data(cachexia)
   subset = subset_x_values(cachexia, c(1,2,10,20), by.index = TRUE)
 }

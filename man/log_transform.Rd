@@ -23,6 +23,8 @@ log_transform(datamat)
 
 \examples{
   ## Example of logarithmic transformation
+  library(specmine.datasets)
+  data(propolis)
   propolis_proc = missingvalues_imputation(propolis)
   datamat.log = log_transform(propolis_proc$data)
 }

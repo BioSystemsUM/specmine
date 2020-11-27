@@ -32,6 +32,7 @@ pcas = c(1, 2, 3, 4, 5), ...)
 
 \examples{
   ## Example of a PCA pairs plot
+  library(specmine.datasets)
   data(cachexia)
   pca.result = pca_analysis_dataset(cachexia)
   pca_pairs_plot(cachexia, pca.result, "Muscle.loss", pcas = c(1,2,3))

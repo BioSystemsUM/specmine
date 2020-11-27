@@ -23,6 +23,7 @@ find_equal_samples(sample.list)
 
 \examples{
     ## Example of finding equal samples
+	library(specmine.datasets)
     data(propolisSampleList)
     equal.samples = find_equal_samples(propolisSampleList)
 }

@@ -26,6 +26,7 @@ remove_samples_by_na_metadata(dataset, metadata.var)
 
 \examples{
   ## Example of removing samples that have NAs on metadata's variable
+  library(specmine.datasets)
   data(cachexia)
   cachexia$metadata$Muscle.loss[10] = NA
   cachexia = remove_samples_by_na_metadata(cachexia, "Muscle.loss")
