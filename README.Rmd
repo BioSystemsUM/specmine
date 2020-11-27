@@ -1,12 +1,32 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+```{r echo=FALSE, results="hide", message=FALSE}
+library("badger")
+```
 
 # specmine
 
 <!-- badges: start -->
-
-[![](https://www.r-pkg.org/badges/version/specmine?color=green)](https://cran.r-project.org/package=specmine)
+```{r, echo = FALSE, results = 'asis'}
+cat(	
+  badge_cran_release("specmine", "green")
+)
+```
 <!-- badges: end -->
+
 
 The goal of *specmine* is to provide a set of methods for metabolomics
 data analysis, including data loading in different formats,
@@ -20,8 +40,7 @@ you need to install it, use:
 
 ## Installation
 
-You can install the released version of *specmine* from
-[CRAN](https://CRAN.R-project.org) with:
+You can install the released version of *specmine* from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("specmine")
