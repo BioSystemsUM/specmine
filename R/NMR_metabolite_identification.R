@@ -1,3 +1,6 @@
+library(specmine.datasets)
+
+
 nmr_identification = function(dataset, ppm.tol, frequency_scores, solvent_scores, organism_scores,
                               method='Match_uniq', per.sample=FALSE, tresh_zero=0, alpha=10e-4){
   
