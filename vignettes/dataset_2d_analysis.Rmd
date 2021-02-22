@@ -1,0 +1,162 @@
+---
+title: "User guide to analyze 2D-NMR metabolomics' experiments using *specmine* package"
+author: "Bruno Pereira, Marcelo Maraschin and Miguel Rocha"
+date: "09/11/2020"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{User guide to analyze 2D-NMR metabolomics' experiments using *specmine* package}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+```{r}
+knitr::opts_chunk$set(
+  eval = FALSE, echo = TRUE
+)
+
+```
+
+
+## Preface
+
+This guide was written for the *specmine*[1] package up until version 3.1.0. This vignette is a demonstration of the functionalities added to this package that allows to read and analyze 2D-NMR datasets from a 2D metabolomics experience.
+
+## Introduction
+
+We introduce an improvement to *specmine* package that allows the reading and analysis of 2D-NMR metabolomics' experiments. This will extend *specmine*' capability analysis for metabolomics, thus increasing its flexibility while maintaining the overall structure of a *specmine* dataset.
+
+When a 1D metabolomics experiment is read by *specmine*' functions it generates an object that represents the structure of a dataset in this package [2]. This object is a list composed by different variables, being the the important ones *data* and *metadata*. Variable *data* is a matrix where the rows are ppm values and the columns are samples. This is possible because in a 1D metabolomics experiment each spectrum is composed by the same ppm values as other spectrum and each ppm has a different intensity value. Variable *metadata* is a data frame where rows are samples and columns are the different metadata variables that separate samples by groups.
+
+In a 2D metabolomics experiment each sample spectrum is a matrix where rows and columns are ppm values for the two different dimensions recorded. Thus, the previous representation of *data* is not possible in a user-friendly environment. In order to present 2D data in a more interpretative way, a new structure of *data* was developed. When a 2D experiment is read by *specmine* it generates an object where variable *data* is a list of matrices, each one representing a sample. Variable *metadata* remains the same because information regarding samples is independent of 2D data. Two more variables where added to the *specmine* representation of a 2D dataset, *F1_ppm* and *F2_ppm*. This allow the user to access the ppm values of indirect and direct dimensions, respectively.
+
+Due to the high volume of data in a 2D dataset, it was developed a peak detection function that enables the reduction of dimensionality. This function is based on the local maximum search present in *rNMR* package [3]. It finds values on each spectrum that are higher than their surrounding ones. The user can also apply a filter to account the surrounding values if they are above or not the defined threshold. This function then returns a 1D *specmine* dataset where variable *data* follows the above-mentioned structure. The difference is that rows are combinations of ppm values from both dimensions in the form *XF1pmm.F2ppm*.
+
+We are going to perform a step-by-step analysis of a 2D-NMR metabolomic experiment using *specmine* on a specific 2D-NMR Bruker dataset. This analysis will include:
+  + Obtaining the 2D data;
+  + Plotting of the 2D dataset;
+  + Peak detection on the 2D dataset;
+  + PCA analysis using the 1D simplified dataset.
+
+For any issue reports or discussions about *specmine* feel free to contact Miguel Rocha (<mrocha@di.uminho.pt>).
+
+
+
+## Data input
+
+We already mentioned that a 2D metabolomic dataset has high volume of data which means that this type of data can't be distributed with the package, due to CRAN's limitation on package size. Therefore, using package *pins*[4] it is possible to storage large files on github by assigning them a release version and using a specific token to access them. The dataset that will be used throughout this guide is composed by 36 samples from tomato fruit extracts, in a fast COSY 2D experiment recorded at 700 MHz. The 36 samples are mainly divided by the metadata variable *Factor.Value.Development.stage*.
+
+```{r}
+  library(pins)
+  
+  # Need to register as a board on R and have a specific token to access a public repository
+  board_register_github(repo = "BrunoMiguelPereira/test_2d", 
+  token = "7ae9e5b34ae6417fc2a6cbb249acb90374430bef")
+  
+  tomato_dataset <- pin_get("tomato-2d", description = "A 2D dataset", 
+  board = "github")
+
+```
+
+
+## Understanding a 2D Dataset
+
+With the 2D dataset now loaded into the environment the user can know perform analysis and access some utilites that the *specmine* representation offers. It can access both dimension ppm values'.
+
+```{r}
+  head(tomato_dataset$F1_ppm)
+  
+  head(tomato_dataset$F2_ppm)
+
+```
+
+In order to provide users a better understanding of a 2D dataset, 3 functions were developed following the ones already developed for 1D metabolomic experiments that allow the user to check the status and some statistics of a dataset.
+
+```{r}
+  library(specmine)
+  
+  # Check if it is a valid specmine dataset
+  check_2d_dataset(tomato_dataset)
+```
+  
+```{r}
+  # Print some statistics
+  sum_2d_dataset(tomato_dataset)
+```
+
+```{r}
+  # Check the number of samples
+  num_samples(tomato_dataset)
+```
+
+## Visualizing a 2D dataset
+
+It is possible to plot one or multiple 2D spectra using *specmine*. These spectra are interpreted as surface plots using package *plotly*[5]. It is similar to *ggplot*[6] where the user initiates an object and can specify the plot input and aesthetics. We developed a function that allows the user to specify which spectra to plot (with or without metadata variable grouping). However, sometimes the user wants an overview of the dataset or which samples seem more relevant. This lead to the development of spectra' classification based on signal-to-noise ratio (SNR). Therefore if the user does not specify which spectra to plot, the function will plot the two spectra with higher and lower SNR's. Attached to the resulting plot of the function there is a dropdown menu which allows the user to select which spectrum to visualize from the ones requested and there is still an option to plot all of them togethe. Only one example will be displayed due to file size limitations. 
+
+**Note**: The plot initially displayed is white despite the dropdown menu presenting the first sample. User must select a sample from the dropdown menu to visualize a spectrum.
+
+```{r, fig.width=8, fig.height=8}
+  # Plotting 2D dataset wihtout giving any information on a metadata variable or samples
+  plot_2d_spectra(tomato_dataset, title_spectra = "2D tomato dataset (No information)")
+```
+
+```{r, fig.width=8, fig.height=8}
+  # Plotting 2D dataset giving metadata variable but no samples
+  plot_2d_spectra(tomato_dataset, title_spectra = "2D tomato dataset (Only metadata)", meta = "Factor.Value.Development.stage.")
+```
+
+```{r, fig.width=8, fig.height=8}
+  # Plotting 2D dataset giving metadata variable and sample information
+  plot_2d_spectra(tomato_dataset, title_spectra = "2D tomato dataset (Metadata and Samples)", meta = "Factor.Value.Development.stage.", spec_samples = c(1,2,20,21))
+```
+
+```{r, fig.width=8, fig.height=8}
+  # Plotting 2D dataset without giving metadata variable but giving sample information
+  plot_2d_spectra(tomato_dataset, title_spectra = "2D tomato dataset (Only samples)", spec_samples = c(1,2,20,21))
+```
+
+
+## Peak detection on a 2D Dataset
+
+Data from 2D metabolomic experiments have a lot of information as said before, i.e., the tomato dataset has 36 matrices where each matrix has 1024 rows and 512 columns which means there is 524 288 variables in the dataset and 18 874 368 values across all spectra. Since there is a lot of values that are considered noise due to instruments[7] it was develop a function to reduce the dimensionality of the dataset. The final result from this function is a standard 1D *specmine* dataset that can be further used for analysis using the already developed functions for standard *specmine* structure. This dataset should have a lot of **NA**'s (values that were not considered peaks) and an imputation method should be used as exemplified in the next section.
+
+The user can establish four parameters to this function:
+* baseline_thresh -- it establishes the baseline limit to consider a value as a peak;
+* purpose -- a string to be consider if threshold parameter is not given. It will calculate an SNR for each spectra that will be multiplied by 3 if the purpose is detection or by 10 if the purpose is quantification. Defaults to *detection*;
+* noise -- a numeric value that will apply a filter to the local maximum search. Defaults to 0;
+* negatives -- Boolean value to account or not for ppm values when building the reduced 1D dataset. Defaults to FALSE;
+
+```{r}
+  # Example without giving a threshold
+  reduced_tomato <- peak_detection2d(tomato_dataset, purp = "quantification")
+```
+
+```{r}
+  # Example giving a threshold
+  reduced_tomato_th <- peak_detection2d(tomato_dataset, baseline_thresh = 50000)
+```
+
+## PCA analysis using 1D reduced dataset
+
+Now that we have a standard 1D *specmine* dataset we can use the functions that perform univariate and multivariate analysis on this type of data structure. We present an example using PCA analysis on the simplified dataset. Remember that the new variables are combinations of ppm values from indirect and direct dimensions.
+
+```{r}
+  # Missing value imputation in order to perform PCA analysis
+  reduced_tomato_mv <- missingvalues_imputation(reduced_tomato)
+```
+
+
+```{r}
+  # Performing PCA
+  res_pca <- pca_analysis_dataset(reduced_tomato_mv)
+```
+
+```{r}
+  # Necessary step to make the metadata variable factor
+  reduced_tomato_mv_factor <- convert_to_factor(reduced_tomato, "Factor.Value.Development.stage.")
+```
+
+
+```{r}
+  #Plotting PCA
+  pca_scoresplot2D(reduced_tomato_mv_factor, res_pca, "Factor.Value.Development.stage.")
+```
+
