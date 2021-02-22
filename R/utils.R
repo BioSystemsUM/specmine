@@ -17,3 +17,13 @@
   df
 }
 # attention because order of factors is lost ...
+
+# Function to calculate the coefficient of variance
+cv <- function(x){
+  sd(x)/mean(x)
+}
+
+# Function to select only positive values
+isPositive <- function(x){
+  x >= 0
+}

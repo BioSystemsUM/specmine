@@ -194,7 +194,123 @@ plotvar_twofactor = function(dataset, variable, meta.var1, meta.var2, colour = "
 	}
 }
 
+#################################
+############2D PLOT##############
+#################################
 
+#Function to provide the signal-to-noise ratio of a spectra
+snr_spectra <- function(spec){
+  threshold <- mean(base::Filter(isPositive,spec))/(sd(base::Filter(isPositive,spec[which(apply(spec,1,cv)>15), which(apply(spec,2,cv)>15)])))
+  threshold
+}
+
+#Function to provide an ordered data frame of each sample spectra SNR
+snr_all <- function(spect, metadata = NULL) {
+  tresholds <- unlist(lapply(spect$data,snr_spectra))
+  samples <- names(spect$data)
+  if (!is.null(metadata)) {
+    meta_data <- as.factor(spect$metadata[samples,metadata])
+    res <- data.frame(SNR = tresholds, Meta = meta_data, row.names = samples)
+    res <- res[order(-res$SNR,res$Meta),]
+  } else {
+    res <- data.frame(SNR = tresholds, Samples = samples)
+    res <- res[order(-res$SNR),]
+  }
+  res
+}
+
+#Function to plot in an interactive way some samples of the specmine_2d_dataset
+#if none given, the two higher and two lowest SNR spectra are plotted
+plot_2d_spectra <- function(specmine_2d_dataset, title_spectra = "", meta = NULL,spec_samples = NULL) {
+  clrs <- c("Greys","YlGnBu","Greens","YlOrRd","Bluered","RdBu","Reds","Blues","Picnic","Rainbow","Portland","Jet","Hot","Blackbody","Earth","Electric","Viridis","Cividis")
+  colorscale2 <- list(c(0, 1), c("tan", "blue"))
+  
+  if (!is.null(spec_samples)) {
+    if (typeof(spec_samples)=="character") {
+      samples <- names(specmine_2d_dataset$data)[which(names(specmine_2d_dataset$data)==spec_samples)]
+    } else if (typeof(spec_samples)=="double") {
+      samples <- names(specmine_2d_dataset$data)[spec_samples]
+    }
+  } else {
+    if (!is.null(meta)) {
+      snr_spectra <- snr_all(spect = specmine_2d_dataset, metadata = meta)
+      samples <- rownames(snr_spectra[stats::ave(-snr_spectra$SNR,snr_spectra$Meta,FUN = rank) <= 2,])
+    } else {
+      snr_spectra <- snr_all(spect = specmine_2d_dataset)
+      samples <- rownames(snr_spectra)[c(1:2,nrow(snr_spectra)-1,nrow(snr_spectra))]
+    }
+  }
+  
+  butons <- list()
+  for (i in (1:(length(samples)+1))) {
+    temp <- list()
+    temp$method <- "restyle"
+    if (i == length(samples)+1) {
+      temp$args <- list("visible", c(rep(T, length.out = length(samples))))
+      temp$label <- "All samples"
+    } else if (i != length(samples)+1) {
+      temp$args <- list("visible",c(rep(F,length.out = length(samples))))
+      temp$args[[2]][i] <- T
+      temp$label <- samples[i]}
+    butons[[i]] <- temp
+  }
+  
+  p1 <- plotly::plot_ly(showscale = F, hovertemplate = paste(   
+    "F1: %{x:.0f}<br>",
+    "F2: %{y:.0f}<br>",
+    "Intensity: %{z:.0f}"))
+  
+  state <- specmine_2d_dataset$metadata[samples[1],meta]
+  index <- 13
+  for (sample in samples) {
+    if (!is.null(meta)) {
+      new_state <- specmine_2d_dataset$metadata[sample,meta]
+      if (new_state != state) {
+        state <- new_state
+        index <- index + 1
+      }
+      colorstate <- clrs[index]
+      p1 <- plotly::add_surface(p1, z = specmine_2d_dataset$data[[sample]], name = paste(state,sample,sep = ": "), visible = F, colorscale = colorscale2, showlegend = T, legendgroup = state)
+    } else {
+      colorstate <- clrs[index]
+      p1 <- plotly::add_surface(p1, z = specmine_2d_dataset$data[[sample]], name = sample, visible = F, showlegend = T, colorscale = colorscale2, showlegend = T)
+      index <- index + 1
+    }
+  }  
+  
+  
+  initial_val <- as.numeric(rownames(specmine_2d_dataset$data[[samples[1]]]))[1]
+  final_val <- as.numeric(rownames(specmine_2d_dataset$data[[samples[1]]]))[nrow(specmine_2d_dataset$data[[samples[1]]])]
+  if (initial_val < 0){
+    initial_val <- 0
+  }
+  if (final_val < 0){
+    final_val <- 0
+  }
+  
+  initial_val2 <- as.numeric(colnames(specmine_2d_dataset$data[[samples[1]]]))[1]
+  if (initial_val2 < 0){
+    initial_val2 <- 0
+  }
+  final_val2 <- as.numeric(colnames(specmine_2d_dataset$data[[samples[1]]]))[ncol(specmine_2d_dataset$data[[samples[1]]])]
+  if (final_val2 < 0){
+    final_val2 <- 0
+  }
+  
+  seq1 <- seq(initial_val, final_val, length.out = 5)
+  seq2 <- seq(initial_val2, final_val2, length.out = 5)
+  
+  seq_dim1 <- seq(0,nrow(specmine_2d_dataset$data[[samples[1]]]),length.out = 5)
+  seq_dim2 <- seq(0,ncol(specmine_2d_dataset$data[[samples[1]]]),length.out = 5)
+  
+  xaxis_1 <- list(title = 'F2', tickvals = seq_dim2, ticktext = seq2)
+  yaxis_2 <- list(title = 'F1', tickvals = seq_dim1, ticktext = seq1)
+  
+  p1 <- plotly::layout(p1, title = title_spectra,
+                       scene = list(xaxis = xaxis_1, yaxis = yaxis_2, zaxis = list(title = 'Intensity')),
+                       updatemenus = list(list(type = "dropdown", y = 0.8, buttons = butons)), legend = list(title=list(text=paste0('<b>',meta))))
+  p1
+}
 
 
 ##################################

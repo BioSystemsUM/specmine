@@ -4,6 +4,7 @@ list.of.spectral.types = c("nmr-spectra","ir-spectra", "uvv-spectra", "raman-spe
 
 list.of.allowed.types = c(list.of.spectral.types, "lcms-spectra", "gcms-spectra", "nmr-peaks", "lcms-peaks", "gcms-peaks", "concentrations", "integrated-data", "undefined")
 
+list.of.2d.spectral.types <- c("2d-nmr", "undefined")
 
 # function to create a dataset from existing objects 
 # datamatrix - matrix with numerical data; rows are assumed to be variables and columns assumed to be samples
@@ -108,6 +109,136 @@ list.of.allowed.types = c(list.of.spectral.types, "lcms-spectra", "gcms-spectra"
   dataset
 }
 
+# function to create a dataset from existing 2D objects 
+# list_2d - list of 2d spectra, each spectra is a matrix from one sample; 
+# rows of each matrix are ppm's from F1 dimension and columns are ppm's from F2
+# type - type of data: can be one of the following: "2d-nmr", "undefined"
+
+"create_2d_dataset" <- function(list_2d, type = "undefined", metadata = NULL, description = "", 
+                                sample.names = NULL, F1 = NULL, F2 = NULL, label.x = NULL,
+                                label.y = NULL, label.values = NULL) {
+  
+  if (is.null(list_2d))
+    stop("Invalid argument: list_2d is null")
+  
+  if (!is.list(list_2d)) {
+    if (!any(unlist(lapply(list_2d,is.matrix)))) {
+      indexes = which(unlist(lapply(list_2d,is.data.frame)), T)
+      warning("Some spectra are data frames, converting them to matrices")
+      for (ind in indexes){
+        list_2d[[ind]] <- as.matrix(list_2d[[ind]])}
+    }
+    else stop("Invalid argument: list_2d is not a list")
+  }
+  
+  if (!any(unlist(lapply(list_2d,is.numeric))))
+    stop("There is a non numeric spectra")
+  
+  if (! type %in% list.of.2d.spectral.types) 
+    stop("Type of data is not allowed")
+  
+  if (!is.null(metadata)) {
+    if (nrow(metadata) != length(list_2d))
+      stop("Number of 2D spectra samples is not the same as number of rows in metadata")
+    if (!is.data.frame(metadata)){
+      if (is.matrix(metadata)) metadata <- as.data.frame(metadata)
+      else stop("metadata is not matrix or data.frame")
+    }
+  }
+  else warning("Metadata is null; dataset will still be created with empty metadata")
+  
+  if (!is.null(label.x) | !is.null(label.values) | !is.null(label.y)) 
+    labels = list(x = label.x, y = label.y, val = label.values)
+  else {
+    labels = NULL
+    warning("Labels are null")
+  }
+  
+  if (!is.null(sample.names)) {
+    if (length(sample.names) != length(list_2d) )
+      stop("Number of 2D spectra samples is not the same as length of sample names vector")
+    names(list_2d) <- sample.names
+    
+    if (!is.null(metadata)) {
+      if(length(sample.names) != nrow(metadata))
+        stop("Number of rows in metadata not the same as length of sample names vector")
+      rownames(metadata) <- sample.names
+    }
+  }
+  else {
+    if (is.null(names(list_2d))) { # default names will be row/col numbers
+      warning("Sample names not specified; will be assumed as sequential numbers")
+      names(list_2d) <- as.character(1:length(list_2d))
+      if (!is.null(metadata)) rownames(metadata) <- as.character(1:length(list_2d))
+    }
+  }
+  
+  if (!is.null(F1)) {
+    if (length(F1) != nrow(list_2d[[1]]))
+      stop("Number of rows in 2D spectra not the same as length of F1 dimension")
+    if (type %in% list.of.spectral.types & any(is.na(as.numeric(F1))) )
+      stop("Invalid non numeric values for variable names in F1 parameter (given spectral type)")
+    for (i in 1:length(list_2d)){
+      rownames(list_2d[[i]]) <- as.character(F1)}
+  }
+  else {
+    if (is.null(rownames(list_2d[[1]]))) {
+      warning("F1 dimension range not specified; will be assumed as sequential numbers")
+      for (i in 1:length(list_2d)){
+        rownames(list_2d[[i]]) <- as.character(1:nrow(list_2d[[i]])) 
+      }
+    }
+    else
+      if (type %in% list.of.spectral.types) 
+        if(any(is.na(as.numeric(rownames(list_2d[[1]])))) )
+          stop("Invalid non numeric values for variable names in rownames of 1st spectra (given spectral type)")
+  }
+  
+  if (!is.null(F2)) {
+    if (length(F2) != ncol(list_2d[[1]]))
+      stop("Number of columns in 2D spectra not the same as length of F2 dimension")
+    if (type %in% list.of.2d.spectral.types & any(is.na(as.numeric(F2))) )
+      stop("Invalid non numeric values for variable names in F2 parameter (given spectral type)")
+    for (i in 1:length(list_2d)){
+      if (length(F2) == dim(list_2d[[i]])[2]){
+        colnames(list_2d[[i]]) <- as.character(F2)
+      }
+    }
+  }
+  else {
+    if (is.null(colnames(list_2d[[1]]))) {
+      warning("F2 dimension range not specified; will be assumed as sequential numbers")
+      for (i in 1:length(list_2d)){
+        colnames(list_2d[[i]]) <- as.character(1:ncol(list_2d[[i]])) 
+      }
+    }
+    else
+      if (type %in% list.of.spectral.types) 
+        if(any(is.na(as.numeric(colnames(list_2d[[1]])))) )
+          stop("Invalid non numeric values for variable names in colnames of 1st spectra (given spectral type)")
+  }
+  
+  
+  if (!is.null(metadata)){
+    if (!is.null(rownames(metadata))){
+      metadata.ordered <- data.frame(metadata[match(names(list_2d),rownames(metadata)),])
+      colnames(metadata.ordered) <- colnames(metadata)
+      rownames(metadata.ordered) <- names(list_2d)
+      metadata = metadata.ordered
+    } else {
+      rownames(metadata) <- names(list_2d)
+    }
+  }
+  
+  
+  dataset <- list(data = list_2d, type = type, description = description, metadata = metadata, F1_ppm = F1, F2_ppm = F2, labels = labels)
+  
+  
+  dataset
+}
+
+
+
 "check_dataset" = function(dataset)
 {
   if (is.null(dataset$data)) 
@@ -128,6 +259,36 @@ list.of.allowed.types = c(list.of.spectral.types, "lcms-spectra", "gcms-spectra"
   cat("Valid dataset\n")
   res = TRUE
 }
+
+# Performs general checks on the 2D dataset
+"check_2d_dataset" <- function(dataset_2d) {
+  if (!is.null(dataset_2d$data)){
+    if (any(unlist(lapply(dataset_2d$data,is.null)))){
+      nulls <- which(unlist(lapply(dataset_2d$data,is.null)), T)
+      warning(paste("Spectra",nulls,"are null\n"))
+    }
+  } 
+  else stop("Invalid dataset: 2D Spectra List is null")
+  
+  if (!is.null(dataset_2d$metadata)) {
+    if (nrow(dataset_2d$metadata) != length(dataset_2d$data) )
+      stop("Invalid dataset: Number of 2D spectra samples in dataset not the same as number of rows in metadata")
+  }
+  else warning("Metadata is null")
+  
+  if (!dataset_2d$type %in% list.of.2d.spectral.types) stop("Type of data is not allowed")
+  
+  if (dataset_2d$type %in% list.of.2d.spectral.types) 
+    if (any(is.na(as.numeric(rownames(dataset_2d$data[[1]])))) ){
+      stop("Invalid non numeric values for variable names in rownames of 1st spectra (given spectral type)")}
+  else if ((any(is.na(as.numeric(colnames(dataset_2d$data[[1]])))) )){
+    stop("Invalid non numeric values for variable names in colnames of 1st spectra (given spectral type)")}
+  
+  cat("Valid dataset\n")
+  res = TRUE
+}
+
+
 
 # provides a summary of the dataset, printing its main features
 # stats - if TRUE prints some global statistics of the data values
@@ -158,6 +319,39 @@ list.of.allowed.types = c(list.of.spectral.types, "lcms-spectra", "gcms-spectra"
   }
 }
 
+# provides a summary of the 2D dataset, printing its main features
+# stats - if TRUE prints some global statistics of the data values
+"sum_2d_dataset" <- function(dataset_2d, stats = TRUE)
+{
+  cat("Dataset summary:\n")
+  check_2d_dataset(dataset_2d)
+  cat ("Description: ", dataset_2d$description, "\n")
+  cat("Type of data: ", dataset_2d$type, "\n")
+  cat("Number of samples: ", length(dataset_2d$data), "\n")
+  cat("Number of data points", nrow(dataset_2d$data[[1]])*ncol(dataset_2d$data[[1]]), "\n")
+  if (!is.null(dataset_2d$metadata))
+    cat("Number of metadata variables: ", ncol(dataset_2d$metadata), "\n")
+  if (!is.null(dataset_2d$labels)) {
+    if (!is.null(dataset_2d$labels$x)) 
+      cat("Label of x-axis values: ", as.character(dataset_2d$labels$x), "\n")
+    if (!is.null(dataset_2d$labels$y)) 
+      cat("Label of y-axis values: ", as.character(dataset_2d$labels$y), "\n")
+    if (!is.null(dataset_2d$labels$val))
+      cat("Label of pair'(x,y) values: ", as.character(dataset_2d$labels$val), "\n")
+  }
+  if (stats) {
+    cat("Number of missing values in data: ", "\n")
+    print(unlist(lapply(dataset_2d$data,function(x)sum(is.na(x)))))
+    cat("Mean of data values: ", "\n")
+    print(unlist(lapply(dataset_2d$data,function(x)mean(x, na.rm=TRUE))))
+    cat("Median of data values: ", "\n")
+    print(unlist(lapply(dataset_2d$data,function(x)median(x, na.rm=TRUE))))
+    cat("Standard deviation: ", "\n")
+    print(unlist(lapply(dataset_2d$data,function(x)sd(x, na.rm=TRUE))))
+  }
+}
+
+
 # QUERY functions
 # functions to access data from a dataset
 
@@ -171,6 +365,10 @@ list.of.allowed.types = c(list.of.spectral.types, "lcms-spectra", "gcms-spectra"
 "get_data_as_df" = function(dataset)
 {
   as.data.frame(dataset$data)
+}
+
+"get_sample_2d_data" <- function(dataset_2d, sample) {
+  dataset_2d$data[[sample]]
 }
 
 # returns metadata (data frame)
