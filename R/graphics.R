@@ -270,10 +270,10 @@ plot_2d_spectra <- function(specmine_2d_dataset, title_spectra = "", meta = NULL
         index <- index + 1
       }
       colorstate <- clrs[index]
-      p1 <- plotly::add_surface(p1, z = specmine_2d_dataset$data[[sample]], name = paste(state,sample,sep = ": "), visible = F, colorscale = colorscale, showlegend = T, legendgroup = state)
+      p1 <- plotly::add_surface(p1, z = specmine_2d_dataset$data[[sample]], name = paste(state,sample,sep = ": "), visible = F, colorscale = colorstate, showlegend = T, legendgroup = state)
     } else {
       colorstate <- clrs[index]
-      p1 <- plotly::add_surface(p1, z = specmine_2d_dataset$data[[sample]], name = sample, visible = F, showlegend = T, colorscale = colorscale, showlegend = T)
+      p1 <- plotly::add_surface(p1, z = specmine_2d_dataset$data[[sample]], name = sample, visible = F, showlegend = T, colorscale = colorstate, showlegend = T)
       index <- index + 1
     }
   }  
