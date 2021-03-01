@@ -304,7 +304,8 @@ read_Bruker_files_2d <- function(bruker_directory, metadata_file=NULL,
     cat("Reading sample ", sample_name, " in ", dir)
     cat("\n")
     
-    matrix_sample <- mrbin::readBruker(folder=dir,dimension="2D")
+    sample <- mrbin::readBruker(folder=dir,dimension="2D")
+    matrix_sample <- sample$currentSpectrum
     if (!is.null(matrix_sample)){
       rownames(matrix_sample) <- round(as.numeric(rownames(matrix_sample)),digits=2)
       colnames(matrix_sample) <- round(as.numeric(colnames(matrix_sample)),digits=2)
