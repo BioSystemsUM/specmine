@@ -223,7 +223,7 @@ snr_all <- function(spect, metadata = NULL) {
 #if none given, the two higher and two lowest SNR spectra are plotted
 plot_2d_spectra <- function(specmine_2d_dataset, title_spectra = "", meta = NULL,spec_samples = NULL) {
   clrs <- c("Greys","YlGnBu","Greens","YlOrRd","Bluered","RdBu","Reds","Blues","Picnic","Rainbow","Portland","Jet","Hot","Blackbody","Earth","Electric","Viridis","Cividis")
-  colorscale2 <- list(c(0, 1), c("tan", "blue"))
+  #colorscale2 <- list(c(0, 1), c("tan", "blue"))
   
   if (!is.null(spec_samples)) {
     if (typeof(spec_samples)=="character") {
@@ -270,10 +270,10 @@ plot_2d_spectra <- function(specmine_2d_dataset, title_spectra = "", meta = NULL
         index <- index + 1
       }
       colorstate <- clrs[index]
-      p1 <- plotly::add_surface(p1, z = specmine_2d_dataset$data[[sample]], name = paste(state,sample,sep = ": "), visible = F, colorscale = colorscale2, showlegend = T, legendgroup = state)
+      p1 <- plotly::add_surface(p1, z = specmine_2d_dataset$data[[sample]], name = paste(state,sample,sep = ": "), visible = F, colorscale = colorscale, showlegend = T, legendgroup = state)
     } else {
       colorstate <- clrs[index]
-      p1 <- plotly::add_surface(p1, z = specmine_2d_dataset$data[[sample]], name = sample, visible = F, showlegend = T, colorscale = colorscale2, showlegend = T)
+      p1 <- plotly::add_surface(p1, z = specmine_2d_dataset$data[[sample]], name = sample, visible = F, showlegend = T, colorscale = colorscale, showlegend = T)
       index <- index + 1
     }
   }  
