@@ -261,7 +261,7 @@ plot_2d_spectra <- function(specmine_2d_dataset, title_spectra = "", meta = NULL
     "Intensity: %{z:.0f}"))
   
   state <- specmine_2d_dataset$metadata[samples[1],meta]
-  index <- 13
+  index <- 2
   for (sample in samples) {
     if (!is.null(meta)) {
       new_state <- specmine_2d_dataset$metadata[sample,meta]
