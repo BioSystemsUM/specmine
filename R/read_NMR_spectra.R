@@ -304,7 +304,8 @@ read_Bruker_files_2d <- function(bruker_directory, metadata_file=NULL,
     cat("Reading sample ", sample_name, " in ", dir)
     cat("\n")
     
-    matrix_sample <- mrbin::readBruker(folder=dir,dimension="2D")
+    sample <- mrbin::readBruker(folder=dir,dimension="2D")
+    matrix_sample <- sample$currentSpectrum
     if (!is.null(matrix_sample)){
       rownames(matrix_sample) <- round(as.numeric(rownames(matrix_sample)),digits=2)
       colnames(matrix_sample) <- round(as.numeric(colnames(matrix_sample)),digits=2)
@@ -472,10 +473,13 @@ read_varian_2dspectrum_raw=function(directory, zero_filling=T, apodization=T){
     reticulate::py_config()
   }
   
-  env=new.env()
-  reticulate::source_python("read_varian_2dspec_raw.py",  envir = env)
   
-  spec=env$read_varian_spec2d_raw(directory, fid_file, procpar_file, zero_filling=zero_filling, apodization=apodization)
+  varian_2draw_py <- system.file("read_varian_2dspec_raw.py", package="specmine")
+  env <- new.env()
+  reticulate::source_python(varian_2draw_py,  envir = env)
+  
+
+  spec <- env$read_varian_spec2d_raw(directory, fid_file, procpar_file, zero_filling=zero_filling, apodization=apodization)
   names(spec) = c("ppms","intensities")
   names(spec$ppms) = c("F2","F1")
   return(spec)
