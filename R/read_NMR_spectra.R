@@ -473,10 +473,13 @@ read_varian_2dspectrum_raw=function(directory, zero_filling=T, apodization=T){
     reticulate::py_config()
   }
   
-  env=new.env()
-  reticulate::source_python("read_varian_2dspec_raw.py",  envir = env)
   
-  spec=env$read_varian_spec2d_raw(directory, fid_file, procpar_file, zero_filling=zero_filling, apodization=apodization)
+  varian_2draw_py <- system.file("read_varian_2dspec_raw.py", package="specmine")
+  env <- new.env()
+  reticulate::source_python(varian_2draw_py,  envir = env)
+  
+
+  spec <- env$read_varian_spec2d_raw(directory, fid_file, procpar_file, zero_filling=zero_filling, apodization=apodization)
   names(spec) = c("ppms","intensities")
   names(spec$ppms) = c("F2","F1")
   return(spec)
