@@ -40,7 +40,7 @@ legend.place = "topright", ...)
 \donttest{
   ### Example of a 3d pca plot
   library(specmine.datasets)
-  data(cachexia)
+  data("cachexia")
   train.result = train_models_performance(cachexia, "pls", 
 	"Muscle.loss", "cv")
   pca_plot_3d(cachexia, train.result$final.models$pls, "Muscle.loss")

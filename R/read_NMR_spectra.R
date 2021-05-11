@@ -697,10 +697,10 @@ peaklist <- function(spectrum, threshold = NULL, noise=0) {
     points <- spectrum[result]
     
     #Associate its point to its row and column
-    locations <- as.matrix(sapply(points,function(x)(which(x==spectrum,arr.ind = T))))
+    locations <- as.matrix(lapply(points,function(x)(which(x==spectrum,arr.ind = T))))
     
     #Return the data frame with peak information
-    peaks <- data.frame(rows = sapply(locations[1,],function(x)rownames(spectrum)[x]),cols = sapply(locations[2,],function(x)(colnames(spectrum)[x])))
+    peaks <- data.frame(rows = unlist(lapply(locations,function(x)rownames(spectrum)[x[1,][1]])),cols = unlist(lapply(locations,function(x)(colnames(spectrum)[x[1,][2]]))))
     
   } else {
     #No threshold given so, mean of intensity values used
