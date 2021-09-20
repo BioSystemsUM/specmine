@@ -19,9 +19,3 @@ get_metabolights_study_samples_files(studyID, assay, directory)
 \references{
 MetaboLights database: https://www.ebi.ac.uk/metabolights/
 }
-
-\examples{
-\donttest{
- get_metabolights_study_samples_files('MTBLS346',1, tempdir())
- }
-}
