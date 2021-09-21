@@ -14,11 +14,19 @@ metabolights_studies_list=function(){
 
 
 get_files_list_per_assay=function(studyID){#, directory){
+  if(!studyID%in%metabolights_studies_list()){
+    message('Invalid studyID')
+    return(NULL)
+  }
   ftp_base=paste("ftp://ftp.ebi.ac.uk/pub/databases/metabolights/studies/public/", studyID, "/", sep="")
   
   assays_files=list()
   
-  i_file=readLines(paste(ftp_base, "i_Investigation.txt", sep=""))
+  if(!curl::has_internet()){
+    message('No internet connection')
+    return(NULL)
+  }
+  else{i_file=readLines(paste(ftp_base, "i_Investigation.txt", sep=""))}
   #curl::curl_download(paste(ftp_base, "i_Investigation.txt", sep=""), paste(directory, "i_Investigation.txt", sep="/"))
   #i_file=readLines(paste(directory, "i_Investigation.txt", sep="/"))
   
@@ -77,17 +85,31 @@ get_metabolights_study_files_assay=function(studyID, assay, directory){
     dir.create(paste(directory, assay, "data", sep="/"))
   }
   
-  for (i in 1:length(files_to_download)) curl::curl_download(files_to_download_paths[i], files_dest[i], quiet=FALSE)
+  for (i in 1:length(files_to_download)){
+    if(!curl::has_internet()){
+      message('No internet connection')
+      return(NULL)
+    }
+    else{curl::curl_download(files_to_download_paths[i], files_dest[i], quiet=FALSE)}
+  }
 }
 
 
 
 get_metabolights_study_metadata_assay=function(studyID, assay, directory){
+  if(!studyID%in%metabolights_studies_list()){
+    message('Invalid studyID')
+    return(NULL)
+  }
   
   #Get factor names:
   ftp_base=paste("ftp://ftp.ebi.ac.uk/pub/databases/metabolights/studies/public/", studyID, "/", sep="")
   
-  i_file=readLines(paste(ftp_base, "i_Investigation.txt", sep=""))
+  if(!curl::has_internet()){
+    message('No internet connection')
+    return(NULL)
+  }
+  else{i_file=readLines(paste(ftp_base, "i_Investigation.txt", sep=""))}
   #curl::curl_download(paste(ftp_base, "i_Investigation.txt", sep=""), paste(directory, "i_Investigation.txt", sep="/"))
   #i_file=readLines(paste(directory, "i_Investigation.txt", sep="/"))
   

@@ -20,8 +20,3 @@ A list with one or more item. Each item corresponds to an assay of the MetaboLig
 \references{
 MetaboLights database: https://www.ebi.ac.uk/metabolights/
 }
-\examples{
-\donttest{
-get_files_list_per_assay('MTBLS346')
-}
-}

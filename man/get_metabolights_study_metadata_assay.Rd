@@ -24,10 +24,3 @@ The metadata file is a csv file with the metadata information on each sample of 
 \references{
 MetaboLights database: https://www.ebi.ac.uk/metabolights/
 }
-
-\examples{
-\donttest{
- get_metabolights_study_files_assay('MTBLS346', 1, tempdir())
- get_metabolights_study_metadata_assay('MTBLS346', 1, tempdir())
-}
-}

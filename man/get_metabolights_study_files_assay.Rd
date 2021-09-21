@@ -30,10 +30,3 @@ Also, some data formats of some metabolights studies are not yet readable by spe
 \references{
 MetaboLights database: https://www.ebi.ac.uk/metabolights/
 }
-
-\examples{
-\donttest{
-get_metabolights_study_files_assay('MTBLS346', 1, tempdir())
-get_metabolights_study_metadata_assay('MTBLS346', 1, tempdir())
-}
-}

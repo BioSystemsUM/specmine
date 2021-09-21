@@ -32,15 +32,3 @@ pathway_analysis(compounds, pathway,
 \value{
 Shows the pathway created.
 }
-\examples{
-\donttest{
-cpds=c("HMDB0000042", "HMDB0000050", "HMDB0000452", "HMDB0001851", "HMDB0001964", "HMDB0000055",
-       "HMDB0000094", "HMDB0000092", "HMDB0000174", "HMDB0000639", "HMDB0000500", "HMDB0002092",
-       "HMDB0000176", "HMDB0000744", "HMDB0000223", "HMDB0000239", "HMDB0001545", "HMDB0001431",
-       "HMDB0001257", "HMDB0000254", "HMDB0000254", "HMDB0000258", "HMDB0002085", "HMDB0000975",
-       "HMDB0000300")
-compounds=convert_hmdb_to_kegg(cpds)
-##You can also convert CHEBI and SPCMNM (specmine code for metabolites) codes to KEGG
-pathway_analysis(compounds, "mus00750", nodeNames="names", map.layout="preset")
-}
-}
